@@ -310,9 +310,9 @@ Network Analysis with R</a></li>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="chapter-3a-r-tutorial-on-network-data.html#cb25-1" aria-hidden="true" tabindex="-1"></a>class_netbymatrix <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(<span class="at">adjmatrix =</span> class_mat, </span>
 <span id="cb25-2"><a href="chapter-3a-r-tutorial-on-network-data.html#cb25-2" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">mode =</span> <span class="st">&quot;directed&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="chapter-3a-r-tutorial-on-network-data.html#cb26-1" aria-hidden="true" tabindex="-1"></a>class_netbymatrix</span></code></pre></div>
-<pre><code>## IGRAPH ccbe683 DN-- 24 77 -- 
+<pre><code>## IGRAPH 24c65e1 DN-- 24 77 -- 
 ## + attr: name (v/c)
-## + edges from ccbe683 (vertex names):
+## + edges from 24c65e1 (vertex names):
 ##  [1] 1 -&gt;3  1 -&gt;5  1 -&gt;7  1 -&gt;21 2 -&gt;3  2 -&gt;6  3 -&gt;6  3 -&gt;8  3 -&gt;16 3 -&gt;24 4 -&gt;13 4 -&gt;18 7 -&gt;1  7 -&gt;9  7 -&gt;10 7 -&gt;16 8 -&gt;3  8 -&gt;9  8 -&gt;13 9 -&gt;5  9 -&gt;8  10-&gt;6  10-&gt;14 10-&gt;19 10-&gt;20 10-&gt;24 11-&gt;12 11-&gt;15 11-&gt;18 11-&gt;24 12-&gt;11 12-&gt;15 12-&gt;24 13-&gt;8  14-&gt;10 14-&gt;13 14-&gt;19 14-&gt;21 14-&gt;24 15-&gt;10 15-&gt;11 15-&gt;13
 ## [43] 15-&gt;14 15-&gt;24 16-&gt;3  16-&gt;5  16-&gt;9  16-&gt;19 17-&gt;8  17-&gt;13 17-&gt;18 17-&gt;23 17-&gt;24 18-&gt;13 18-&gt;17 18-&gt;23 18-&gt;24 19-&gt;14 19-&gt;16 19-&gt;20 19-&gt;21 20-&gt;19 20-&gt;21 20-&gt;24 21-&gt;5  21-&gt;19 21-&gt;20 22-&gt;23 23-&gt;5  23-&gt;13 23-&gt;17 23-&gt;18 24-&gt;6  24-&gt;10 24-&gt;14 24-&gt;15 24-&gt;21</code></pre>
 <p>We can see that the igraph object contains lots of useful information, including the size of the network (24), the number of edges (77) and specific edge information. Now, let’s map the node attributes we read in above, like gender and race, onto our igraph object. Here we need to use a set_vertex_attr function. This makes it possible to take an attribute, like gender, and map it to the nodes in the network (so we will know what the gender of each node in the network is). The arguments are:</p>
@@ -334,9 +334,9 @@ Network Analysis with R</a></li>
 <span id="cb29-6"><a href="chapter-3a-r-tutorial-on-network-data.html#cb29-6" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">name =</span> <span class="st">&quot;race&quot;</span>,</span>
 <span id="cb29-7"><a href="chapter-3a-r-tutorial-on-network-data.html#cb29-7" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">value =</span> class_attributes<span class="sc">$</span>race)</span></code></pre></div>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="chapter-3a-r-tutorial-on-network-data.html#cb30-1" aria-hidden="true" tabindex="-1"></a>class_netbymatrix</span></code></pre></div>
-<pre><code>## IGRAPH ccbe683 DN-- 24 77 -- 
+<pre><code>## IGRAPH 24c65e1 DN-- 24 77 -- 
 ## + attr: name (v/c), gender (v/x), grade (v/n), race (v/x)
-## + edges from ccbe683 (vertex names):
+## + edges from 24c65e1 (vertex names):
 ##  [1] 1 -&gt;3  1 -&gt;5  1 -&gt;7  1 -&gt;21 2 -&gt;3  2 -&gt;6  3 -&gt;6  3 -&gt;8  3 -&gt;16 3 -&gt;24 4 -&gt;13 4 -&gt;18 7 -&gt;1  7 -&gt;9  7 -&gt;10 7 -&gt;16 8 -&gt;3  8 -&gt;9  8 -&gt;13 9 -&gt;5  9 -&gt;8  10-&gt;6  10-&gt;14 10-&gt;19 10-&gt;20 10-&gt;24 11-&gt;12 11-&gt;15 11-&gt;18 11-&gt;24 12-&gt;11 12-&gt;15 12-&gt;24 13-&gt;8  14-&gt;10 14-&gt;13 14-&gt;19 14-&gt;21 14-&gt;24 15-&gt;10 15-&gt;11 15-&gt;13
 ## [43] 15-&gt;14 15-&gt;24 16-&gt;3  16-&gt;5  16-&gt;9  16-&gt;19 17-&gt;8  17-&gt;13 17-&gt;18 17-&gt;23 17-&gt;24 18-&gt;13 18-&gt;17 18-&gt;23 18-&gt;24 19-&gt;14 19-&gt;16 19-&gt;20 19-&gt;21 20-&gt;19 20-&gt;21 20-&gt;24 21-&gt;5  21-&gt;19 21-&gt;20 22-&gt;23 23-&gt;5  23-&gt;13 23-&gt;17 23-&gt;18 24-&gt;6  24-&gt;10 24-&gt;14 24-&gt;15 24-&gt;21</code></pre>
 <p>We can see that we have now added gender, grade and race as node (or vertex) attributes to the igraph object (looking at the attr line in the output). At this point we have the basic network constructed and can start to analyze, plot, etc.</p>
@@ -367,18 +367,18 @@ Network Analysis with R</a></li>
 <p>Here we create an igraph object called class_netbyedgelist based on the edgelist, class_edges. Note that we do not need to turn the edgelist into a matrix, as the function takes a data frame as input.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="chapter-3a-r-tutorial-on-network-data.html#cb35-1" aria-hidden="true" tabindex="-1"></a>class_netbyedgelist <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> class_edges, <span class="at">directed =</span> T)</span></code></pre></div>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="chapter-3a-r-tutorial-on-network-data.html#cb36-1" aria-hidden="true" tabindex="-1"></a>class_netbyedgelist</span></code></pre></div>
-<pre><code>## IGRAPH 6b8727c DNW- 24 77 -- 
+<pre><code>## IGRAPH 2fe9e79 DNW- 24 77 -- 
 ## + attr: name (v/c), weight (e/n)
-## + edges from 6b8727c (vertex names):
+## + edges from 2fe9e79 (vertex names):
 ##  [1] 1 -&gt;3  1 -&gt;5  1 -&gt;7  1 -&gt;21 2 -&gt;3  2 -&gt;6  3 -&gt;6  3 -&gt;8  3 -&gt;16 3 -&gt;24 4 -&gt;13 4 -&gt;18 7 -&gt;1  7 -&gt;9  7 -&gt;10 7 -&gt;16 8 -&gt;3  8 -&gt;9  8 -&gt;13 9 -&gt;5  9 -&gt;8  10-&gt;6  10-&gt;14 10-&gt;19 10-&gt;20 10-&gt;24 11-&gt;12 11-&gt;15 11-&gt;18 11-&gt;24 12-&gt;11 12-&gt;15 12-&gt;24 13-&gt;8  14-&gt;10 14-&gt;13 14-&gt;19 14-&gt;21 14-&gt;24 15-&gt;10 15-&gt;11 15-&gt;13
 ## [43] 15-&gt;14 15-&gt;24 16-&gt;3  16-&gt;5  16-&gt;9  16-&gt;19 17-&gt;8  17-&gt;13 17-&gt;18 17-&gt;23 17-&gt;24 18-&gt;13 18-&gt;17 18-&gt;23 18-&gt;24 19-&gt;14 19-&gt;16 19-&gt;20 19-&gt;21 20-&gt;19 20-&gt;21 20-&gt;24 21-&gt;5  21-&gt;19 21-&gt;20 22-&gt;23 23-&gt;5  23-&gt;13 23-&gt;17 23-&gt;18 24-&gt;6  24-&gt;10 24-&gt;14 24-&gt;15 24-&gt;21</code></pre>
 <p>As we can see, igraph will automatically add the edge attributes (here ‘weight’) to the igraph object. One advantage of using an edgelist is that it is easy to incorporate node attributes into the igraph object. This simply requires using a vertices argument when specifying the graph_from_data_frame command. The input to vertices is a data frame of the attributes of each node, here class_attributes. igraph will add every column in the data frame (except the first column, which is assumed to be the ids of the nodes) to the created igraph object. The ids in the attribute data frame must correspond to the ids in the edgelist. Here we will go ahead and redo the command above using a vertices argument.</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="chapter-3a-r-tutorial-on-network-data.html#cb38-1" aria-hidden="true" tabindex="-1"></a>class_netbyedgelist <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> class_edges, <span class="at">directed =</span> T,</span>
 <span id="cb38-2"><a href="chapter-3a-r-tutorial-on-network-data.html#cb38-2" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">vertices =</span> class_attributes)</span></code></pre></div>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="chapter-3a-r-tutorial-on-network-data.html#cb39-1" aria-hidden="true" tabindex="-1"></a>class_netbyedgelist</span></code></pre></div>
-<pre><code>## IGRAPH b56e4c3 DNW- 24 77 -- 
+<pre><code>## IGRAPH d3c444d DNW- 24 77 -- 
 ## + attr: name (v/c), gender (v/c), grade (v/n), race (v/c), weight (e/n)
-## + edges from b56e4c3 (vertex names):
+## + edges from d3c444d (vertex names):
 ##  [1] 1 -&gt;3  1 -&gt;5  1 -&gt;7  1 -&gt;21 2 -&gt;3  2 -&gt;6  3 -&gt;6  3 -&gt;8  3 -&gt;16 3 -&gt;24 4 -&gt;13 4 -&gt;18 7 -&gt;1  7 -&gt;9  7 -&gt;10 7 -&gt;16 8 -&gt;3  8 -&gt;9  8 -&gt;13 9 -&gt;5  9 -&gt;8  10-&gt;6  10-&gt;14 10-&gt;19 10-&gt;20 10-&gt;24 11-&gt;12 11-&gt;15 11-&gt;18 11-&gt;24 12-&gt;11 12-&gt;15 12-&gt;24 13-&gt;8  14-&gt;10 14-&gt;13 14-&gt;19 14-&gt;21 14-&gt;24 15-&gt;10 15-&gt;11 15-&gt;13
 ## [43] 15-&gt;14 15-&gt;24 16-&gt;3  16-&gt;5  16-&gt;9  16-&gt;19 17-&gt;8  17-&gt;13 17-&gt;18 17-&gt;23 17-&gt;24 18-&gt;13 18-&gt;17 18-&gt;23 18-&gt;24 19-&gt;14 19-&gt;16 19-&gt;20 19-&gt;21 20-&gt;19 20-&gt;21 20-&gt;24 21-&gt;5  21-&gt;19 21-&gt;20 22-&gt;23 23-&gt;5  23-&gt;13 23-&gt;17 23-&gt;18 24-&gt;6  24-&gt;10 24-&gt;14 24-&gt;15 24-&gt;21</code></pre>
 <p>Note that the attributes will be added to the igraph object in the same order as in the input data frame (important when we extract information from the igraph object; see below). We can check the order of the nodes in our igraph object using:</p>
@@ -836,7 +836,7 @@ Network Analysis with R</a></li>
 <div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="chapter-3a-r-tutorial-on-network-data.html#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all_shortest_paths</span>(class_netbyedgelist, <span class="at">from =</span> <span class="dv">1</span>, <span class="at">to =</span> <span class="dv">6</span>) </span></code></pre></div>
 <pre><code>## $res
 ## $res[[1]]
-## + 3/24 vertices, named, from b56e4c3:
+## + 3/24 vertices, named, from d3c444d:
 ## [1] 1 3 6
 ## 
 ## 
@@ -846,11 +846,11 @@ Network Analysis with R</a></li>
 <div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="chapter-3a-r-tutorial-on-network-data.html#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all_shortest_paths</span>(class_netbyedgelist, <span class="at">from =</span> <span class="dv">1</span>, <span class="at">to =</span> <span class="dv">16</span>) </span></code></pre></div>
 <pre><code>## $res
 ## $res[[1]]
-## + 3/24 vertices, named, from b56e4c3:
+## + 3/24 vertices, named, from d3c444d:
 ## [1] 1  3  16
 ## 
 ## $res[[2]]
-## + 3/24 vertices, named, from b56e4c3:
+## + 3/24 vertices, named, from d3c444d:
 ## [1] 1  7  16
 ## 
 ## 
