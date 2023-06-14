@@ -67,7 +67,7 @@ Many of the R labs presented in this textbook were built off prior versions deve
 
 ## Session information
 
-This book was built using R version 4.3.0 on June 13, 2023. See below for the session information:
+This book was built using R version 4.3.0 on June 14, 2023. See below for the session information:
 
 
 ```
@@ -81,7 +81,7 @@ This book was built using R version 4.3.0 on June 13, 2023. See below for the se
 ##  collate  en_US.UTF-8
 ##  ctype    en_US.UTF-8
 ##  tz       America/Halifax
-##  date     2023-06-13
+##  date     2023-06-14
 ##  pandoc   2.11.4 @ /Applications/RStudio.app/Contents/MacOS/pandoc/ (via rmarkdown)
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────

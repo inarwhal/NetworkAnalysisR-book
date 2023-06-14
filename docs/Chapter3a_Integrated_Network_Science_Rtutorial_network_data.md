@@ -1,45 +1,3 @@
----
-title: 
-bibliography: references.bib
-output: 
-  html_document:
-    theme: cerulean
-    highlight: textmate
-    md_extensions:  -smart
-    toc: true
-    toc_depth: 3
-    toc_float:
-      collapsed: false
-      smooth_scroll: false
----
-
-
-<style>
-pre code, pre, code {
-  white-space: pre !important;
-  overflow-x: scroll !important;
-  word-break: keep-all !important;
-  word-wrap: initial !important;
-}
-</style>
-
-<div class="head">Network Analysis: Integrating Social Network Theory, Method, and Application with R  
-Craig M. Rawlings, Jeffrey A. Smith, James Moody and Daniel A. McFarland </div>
-
-<style type="text/css">
-.main-container {
-    max-width: 1500px !important;
-  margin-left: 0;
-  margin-right: auto;
-}
-
-</style>
-
-
-
-
-<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 10px;"></div>
-
 # Chapter 3a: R Tutorial on Network Data
 
 Built with R version
@@ -269,11 +227,17 @@ class_netbymatrix
 ```
 
 ```
-## IGRAPH 24c65e1 DN-- 24 77 -- 
+## IGRAPH 5a1f29a DN-- 24 77 -- 
 ## + attr: name (v/c)
-## + edges from 24c65e1 (vertex names):
-##  [1] 1 ->3  1 ->5  1 ->7  1 ->21 2 ->3  2 ->6  3 ->6  3 ->8  3 ->16 3 ->24 4 ->13 4 ->18 7 ->1  7 ->9  7 ->10 7 ->16 8 ->3  8 ->9  8 ->13 9 ->5  9 ->8  10->6  10->14 10->19 10->20 10->24 11->12 11->15 11->18 11->24 12->11 12->15 12->24 13->8  14->10 14->13 14->19 14->21 14->24 15->10 15->11 15->13
-## [43] 15->14 15->24 16->3  16->5  16->9  16->19 17->8  17->13 17->18 17->23 17->24 18->13 18->17 18->23 18->24 19->14 19->16 19->20 19->21 20->19 20->21 20->24 21->5  21->19 21->20 22->23 23->5  23->13 23->17 23->18 24->6  24->10 24->14 24->15 24->21
+## + edges from 5a1f29a (vertex names):
+##  [1] 1 ->3  1 ->5  1 ->7  1 ->21 2 ->3  2 ->6  3 ->6  3 ->8  3 ->16 3 ->24
+## [11] 4 ->13 4 ->18 7 ->1  7 ->9  7 ->10 7 ->16 8 ->3  8 ->9  8 ->13 9 ->5 
+## [21] 9 ->8  10->6  10->14 10->19 10->20 10->24 11->12 11->15 11->18 11->24
+## [31] 12->11 12->15 12->24 13->8  14->10 14->13 14->19 14->21 14->24 15->10
+## [41] 15->11 15->13 15->14 15->24 16->3  16->5  16->9  16->19 17->8  17->13
+## [51] 17->18 17->23 17->24 18->13 18->17 18->23 18->24 19->14 19->16 19->20
+## [61] 19->21 20->19 20->21 20->24 21->5  21->19 21->20 22->23 23->5  23->13
+## [71] 23->17 23->18 24->6  24->10 24->14 24->15 24->21
 ```
 
 We can see that the igraph object contains lots of useful information, including the size of the network (24), the number of edges (77) and specific edge information. Now, let's map the node attributes we read in above, like gender and race, onto our igraph object. Here we need to use a set_vertex_attr function. This makes it possible to take an attribute, like gender, and map it to the nodes in the network (so we will know what the gender of each node in the network is). The arguments are: 
@@ -310,11 +274,17 @@ class_netbymatrix
 ```
 
 ```
-## IGRAPH 24c65e1 DN-- 24 77 -- 
+## IGRAPH 5a1f29a DN-- 24 77 -- 
 ## + attr: name (v/c), gender (v/x), grade (v/n), race (v/x)
-## + edges from 24c65e1 (vertex names):
-##  [1] 1 ->3  1 ->5  1 ->7  1 ->21 2 ->3  2 ->6  3 ->6  3 ->8  3 ->16 3 ->24 4 ->13 4 ->18 7 ->1  7 ->9  7 ->10 7 ->16 8 ->3  8 ->9  8 ->13 9 ->5  9 ->8  10->6  10->14 10->19 10->20 10->24 11->12 11->15 11->18 11->24 12->11 12->15 12->24 13->8  14->10 14->13 14->19 14->21 14->24 15->10 15->11 15->13
-## [43] 15->14 15->24 16->3  16->5  16->9  16->19 17->8  17->13 17->18 17->23 17->24 18->13 18->17 18->23 18->24 19->14 19->16 19->20 19->21 20->19 20->21 20->24 21->5  21->19 21->20 22->23 23->5  23->13 23->17 23->18 24->6  24->10 24->14 24->15 24->21
+## + edges from 5a1f29a (vertex names):
+##  [1] 1 ->3  1 ->5  1 ->7  1 ->21 2 ->3  2 ->6  3 ->6  3 ->8  3 ->16 3 ->24
+## [11] 4 ->13 4 ->18 7 ->1  7 ->9  7 ->10 7 ->16 8 ->3  8 ->9  8 ->13 9 ->5 
+## [21] 9 ->8  10->6  10->14 10->19 10->20 10->24 11->12 11->15 11->18 11->24
+## [31] 12->11 12->15 12->24 13->8  14->10 14->13 14->19 14->21 14->24 15->10
+## [41] 15->11 15->13 15->14 15->24 16->3  16->5  16->9  16->19 17->8  17->13
+## [51] 17->18 17->23 17->24 18->13 18->17 18->23 18->24 19->14 19->16 19->20
+## [61] 19->21 20->19 20->21 20->24 21->5  21->19 21->20 22->23 23->5  23->13
+## [71] 23->17 23->18 24->6  24->10 24->14 24->15 24->21
 ```
 
 We can see that we have now added gender, grade and race as node (or vertex) attributes to the igraph object (looking at the attr line in the output). At this point we have the basic network constructed and can start to analyze, plot, etc.
@@ -369,11 +339,17 @@ class_netbyedgelist
 ```
 
 ```
-## IGRAPH 2fe9e79 DNW- 24 77 -- 
+## IGRAPH 5f02ba0 DNW- 24 77 -- 
 ## + attr: name (v/c), weight (e/n)
-## + edges from 2fe9e79 (vertex names):
-##  [1] 1 ->3  1 ->5  1 ->7  1 ->21 2 ->3  2 ->6  3 ->6  3 ->8  3 ->16 3 ->24 4 ->13 4 ->18 7 ->1  7 ->9  7 ->10 7 ->16 8 ->3  8 ->9  8 ->13 9 ->5  9 ->8  10->6  10->14 10->19 10->20 10->24 11->12 11->15 11->18 11->24 12->11 12->15 12->24 13->8  14->10 14->13 14->19 14->21 14->24 15->10 15->11 15->13
-## [43] 15->14 15->24 16->3  16->5  16->9  16->19 17->8  17->13 17->18 17->23 17->24 18->13 18->17 18->23 18->24 19->14 19->16 19->20 19->21 20->19 20->21 20->24 21->5  21->19 21->20 22->23 23->5  23->13 23->17 23->18 24->6  24->10 24->14 24->15 24->21
+## + edges from 5f02ba0 (vertex names):
+##  [1] 1 ->3  1 ->5  1 ->7  1 ->21 2 ->3  2 ->6  3 ->6  3 ->8  3 ->16 3 ->24
+## [11] 4 ->13 4 ->18 7 ->1  7 ->9  7 ->10 7 ->16 8 ->3  8 ->9  8 ->13 9 ->5 
+## [21] 9 ->8  10->6  10->14 10->19 10->20 10->24 11->12 11->15 11->18 11->24
+## [31] 12->11 12->15 12->24 13->8  14->10 14->13 14->19 14->21 14->24 15->10
+## [41] 15->11 15->13 15->14 15->24 16->3  16->5  16->9  16->19 17->8  17->13
+## [51] 17->18 17->23 17->24 18->13 18->17 18->23 18->24 19->14 19->16 19->20
+## [61] 19->21 20->19 20->21 20->24 21->5  21->19 21->20 22->23 23->5  23->13
+## [71] 23->17 23->18 24->6  24->10 24->14 24->15 24->21
 ```
 As we can see, igraph will automatically add the edge attributes (here 'weight') to the igraph object. One advantage of using an edgelist is that it is easy to incorporate node attributes into the igraph object. This simply requires using a vertices argument when specifying the graph_from_data_frame command. The input to vertices is a data frame of the attributes of each node, here class_attributes. igraph will add every column in the data frame (except the first column, which is assumed to be the ids of the nodes) to the created igraph object. The ids in the attribute data frame must correspond to the ids in the edgelist.  Here we will go ahead and redo the command above using a vertices argument. 
 
@@ -389,11 +365,17 @@ class_netbyedgelist
 ```
 
 ```
-## IGRAPH d3c444d DNW- 24 77 -- 
+## IGRAPH dfa8249 DNW- 24 77 -- 
 ## + attr: name (v/c), gender (v/c), grade (v/n), race (v/c), weight (e/n)
-## + edges from d3c444d (vertex names):
-##  [1] 1 ->3  1 ->5  1 ->7  1 ->21 2 ->3  2 ->6  3 ->6  3 ->8  3 ->16 3 ->24 4 ->13 4 ->18 7 ->1  7 ->9  7 ->10 7 ->16 8 ->3  8 ->9  8 ->13 9 ->5  9 ->8  10->6  10->14 10->19 10->20 10->24 11->12 11->15 11->18 11->24 12->11 12->15 12->24 13->8  14->10 14->13 14->19 14->21 14->24 15->10 15->11 15->13
-## [43] 15->14 15->24 16->3  16->5  16->9  16->19 17->8  17->13 17->18 17->23 17->24 18->13 18->17 18->23 18->24 19->14 19->16 19->20 19->21 20->19 20->21 20->24 21->5  21->19 21->20 22->23 23->5  23->13 23->17 23->18 24->6  24->10 24->14 24->15 24->21
+## + edges from dfa8249 (vertex names):
+##  [1] 1 ->3  1 ->5  1 ->7  1 ->21 2 ->3  2 ->6  3 ->6  3 ->8  3 ->16 3 ->24
+## [11] 4 ->13 4 ->18 7 ->1  7 ->9  7 ->10 7 ->16 8 ->3  8 ->9  8 ->13 9 ->5 
+## [21] 9 ->8  10->6  10->14 10->19 10->20 10->24 11->12 11->15 11->18 11->24
+## [31] 12->11 12->15 12->24 13->8  14->10 14->13 14->19 14->21 14->24 15->10
+## [41] 15->11 15->13 15->14 15->24 16->3  16->5  16->9  16->19 17->8  17->13
+## [51] 17->18 17->23 17->24 18->13 18->17 18->23 18->24 19->14 19->16 19->20
+## [61] 19->21 20->19 20->21 20->24 21->5  21->19 21->20 22->23 23->5  23->13
+## [71] 23->17 23->18 24->6  24->10 24->14 24->15 24->21
 ```
 
 Note that the attributes will be added to the igraph object in the same order as in the input data frame (important when we extract information from the igraph object; see below). We can check the order of the nodes in our igraph object using: 
@@ -404,7 +386,8 @@ V(class_netbyedgelist)$name
 ```
 
 ```
-##  [1] "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10" "11" "12" "13" "14" "15" "16" "17" "18" "19" "20" "21" "22" "23" "24"
+##  [1] "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10" "11" "12" "13" "14" "15"
+## [16] "16" "17" "18" "19" "20" "21" "22" "23" "24"
 ```
 
 We offer one final note on constructing networks from an edgelist. As discussed above, the edgelist does not contain information about isolates. If there are isolates in the network and we want to construct the network from an edgelist, we need to be careful. One simple solution is to include a vertices argument, with a data frame of node attributes. Even if no attributes are available, including a data frame of just ids will tell igraph how big the network really is, including isolates (who would be missed by the edgelist alone). For example, the following code creates a network with two isolates, with ids of 25 and 26.
@@ -416,7 +399,7 @@ net <- graph_from_data_frame(d = class_edges, directed = T,
 plot(net)
 ```
 
-<img src="Chapter3a_Integrated_Network_Science_Rtutorial_network_data_files/figure-html/unnamed-chunk-28-1.png" width="720" />
+<img src="Chapter3a_Integrated_Network_Science_Rtutorial_network_data_files/figure-html/unnamed-chunk-27-1.png" width="720" />
 
 More generally, it is good practice to use a vertices argument when using graph_from_data_frame. This ensures that the order of the nodes (in the created object) is set in a clear manner; rather than allow the function to set the order, which can sometimes lead to unexpected results.  
 
@@ -678,13 +661,17 @@ attribute_list
 ##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
 ## 
 ## $gender
-##  [1] "Male"   "Female" "Female" "Female" "Male"   "Female" "Male"   "Male"   "Male"   "Female" "Female" "Female" "Male"   "Male"   "Female" "Male"   "Female" "Female" "Female" "Female" "Female" "Female" "Female" "Female"
+##  [1] "Male"   "Female" "Female" "Female" "Male"   "Female" "Male"   "Male"  
+##  [9] "Male"   "Female" "Female" "Female" "Male"   "Male"   "Female" "Male"  
+## [17] "Female" "Female" "Female" "Female" "Female" "Female" "Female" "Female"
 ## 
 ## $grade
 ##  [1] 12 12 12 12 12 12 11 11 11 11 10 10 10 10 10 10 10 10 10 10 10 10 10 10
 ## 
 ## $race
-##  [1] "White" "White" "White" "White" "White" "White" "Black" "White" "White" "White" "White" "White" "White" "White" "White" "White" "White" "White" "White" "White" "White" "White" "White" "White"
+##  [1] "White" "White" "White" "White" "White" "White" "Black" "White" "White"
+## [10] "White" "White" "White" "White" "White" "White" "White" "White" "White"
+## [19] "White" "White" "White" "White" "White" "White"
 ```
 
 Now, let's create the network using the network function but this time add a vertex.attr argument, set equal to the list of vertex (or node) attributes.
@@ -1191,7 +1178,7 @@ all_shortest_paths(class_netbyedgelist, from = 1, to = 6)
 ```
 ## $res
 ## $res[[1]]
-## + 3/24 vertices, named, from d3c444d:
+## + 3/24 vertices, named, from dfa8249:
 ## [1] 1 3 6
 ## 
 ## 
@@ -1209,11 +1196,11 @@ all_shortest_paths(class_netbyedgelist, from = 1, to = 16)
 ```
 ## $res
 ## $res[[1]]
-## + 3/24 vertices, named, from d3c444d:
+## + 3/24 vertices, named, from dfa8249:
 ## [1] 1  3  16
 ## 
 ## $res[[2]]
-## + 3/24 vertices, named, from d3c444d:
+## + 3/24 vertices, named, from dfa8249:
 ## [1] 1  7  16
 ## 
 ## 

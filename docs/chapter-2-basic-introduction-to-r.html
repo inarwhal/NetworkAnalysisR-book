@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | Network Analysis: Integrating Social Network Theory, Method, and Application with R</title>
+  <title>2 Chapter 2: Basic Introduction to R | Network Analysis: Integrating Social Network Theory, Method, and Application with R</title>
   <meta name="description" content="This is the website for the R labs associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | Network Analysis: Integrating Social Network Theory, Method, and Application with R" />
+  <meta property="og:title" content="2 Chapter 2: Basic Introduction to R | Network Analysis: Integrating Social Network Theory, Method, and Application with R" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the website for the R labs associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | Network Analysis: Integrating Social Network Theory, Method, and Application with R" />
+  <meta name="twitter:title" content="2 Chapter 2: Basic Introduction to R | Network Analysis: Integrating Social Network Theory, Method, and Application with R" />
   
   <meta name="twitter:description" content="This is the website for the R labs associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-
+<link rel="prev" href="index.html"/>
+<link rel="next" href="chapter-3a-r-tutorial-on-network-data.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -220,19 +220,78 @@ Network Analysis with R</a></li>
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="chapter-2-basic-introduction-to-r" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">2</span> Chapter 2: Basic Introduction to R<a href="chapter-2-basic-introduction-to-r.html#chapter-2-basic-introduction-to-r" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Built with R version
+4.3.0</p>
+<p>This tutorial offers an introduction to the basics of R. R is a general platform for performing statistical and programming tasks. R offers a wide variety of network functionality, making it possible to do everything from simple network construction and graphing to sophisticated statistical models, all under one platform. Through a series of R tutorials, we will offer R code and examples for each major topic covered in the main text. In this tutorial, we offer a very brief overview of R and R packages, just enough to make sure that everyone can run and follow the tutorials that follow.</p>
+<p>Note that we do not offer a dedicated tutorial on R programming. All tutorials (except this one) are motivated by a problem related to network analysis. It will be useful to have some basic familiarity with R and its syntax (or be willing to learn as we go along!) but this is not strictly necessary. Each tutorial includes both R code and results, making it easier for readers to follow along, even without detailed knowledge of R. Readers interested in learning R in more depth should consider one of the many introductory R textbooks.</p>
+<div id="preliminaries" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> 1. Preliminaries<a href="chapter-2-basic-introduction-to-r.html#preliminaries" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The first step is to gain access to R, which is free and available on the R website: <a href="http://cran.r-project.org/" class="uri">http://cran.r-project.org/</a>. Simply go to the R website, select the appropriate location and operating system, and follow the instructions to download the base distribution of R. RStudio (<a href="https://rstudio.com/" class="uri">https://rstudio.com/</a>) offers a user friendly environment to run R and is recommended.</p>
+<p>Once R is opened we can begin to run commands. R commands can be run directly from the command line, from the R editor or from a text editor separate from R. For example, the following does a bit of simple math:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="chapter-2-basic-introduction-to-r.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="sc">+</span> <span class="dv">5</span></span></code></pre></div>
+<pre><code>## [1] 10</code></pre>
+<p>As another example, here we sum up a series of numbers using a sum function.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="chapter-2-basic-introduction-to-r.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">4</span>)</span></code></pre></div>
+<pre><code>## [1] 14</code></pre>
+<p>R offers detailed help files for each function. To access help, type <code>?name_of_function</code>. For example, for help on the sum function, run:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="chapter-2-basic-introduction-to-r.html#cb6-1" aria-hidden="true" tabindex="-1"></a>?sum</span></code></pre></div>
+<p>All lines proceeded by a # are comments and will not run. For example:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="chapter-2-basic-introduction-to-r.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is a comment. R will not recognize this as a command.</span></span></code></pre></div>
+</div>
+<div id="packages" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> 2. Packages<a href="chapter-2-basic-introduction-to-r.html#packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The functionality of R is extended by loading packages that researchers have contributed to the R community. Packages are sets of useful functions that accomplish a set of tasks, such as graphing a network. In this book we will primarily make use of: igraph <span class="citation">(<a href="#ref-igraph2006" role="doc-biblioref">Csardi and Nepusz 2006</a>)</span>, sna <span class="citation">(<a href="#ref-sna" role="doc-biblioref">Butts 2023</a>)</span>, network <span class="citation">(<a href="#ref-network" role="doc-biblioref">Butts 2015</a>)</span>, networkDynamic <span class="citation">(<a href="#ref-networkDynamic" role="doc-biblioref">Butts et al. 2023</a>)</span>, ergm <span class="citation">(<a href="#ref-ergm" role="doc-biblioref">Handcock et al. 2023</a>)</span>, tergm <span class="citation">(<a href="#ref-tergm" role="doc-biblioref">Krivitsky and Handcock 2023</a>)</span>, and RSiena <span class="citation">(<a href="#ref-RSiena" role="doc-biblioref">Ripley et al. 2023</a>)</span>. igraph, network and sna perform similar tasks related to network construction, graphing and network measurement. sna and network work in tandem while igraph is a fairly stand alone package. Note that igraph and sna/network construct networks in very different manners and there is little overlap in syntax. We will present the code for performing different calculations and tasks in both igraph and sna/network, where appropriate. The other packages, like ergm, tergm, and RSiena, estimate more advanced statistical models and we will cover them later in the book. Each package of interest must be installed and loaded before it can be used. The packages will not be immediately available when R is opened. A package only has to be installed once on a computer, but the package will have to be loaded every time R is restarted. To install all of the packages used in this book, run the following:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="chapter-2-basic-introduction-to-r.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/R/setup.R&quot;</span>)</span></code></pre></div>
+<p>It is also possible to install each package individually as we need them. For example, to install igraph, sna, and network, we would do:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="chapter-2-basic-introduction-to-r.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;igraph&quot;</span>)</span>
+<span id="cb9-2"><a href="chapter-2-basic-introduction-to-r.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;sna&quot;</span>)</span>
+<span id="cb9-3"><a href="chapter-2-basic-introduction-to-r.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;network&quot;</span>)</span></code></pre></div>
+<p>Now that we have our packages successfully installed, we can go ahead and load them into R. Here we will load the network package as an example. We can use of all the functions available in that package once it is loaded into R. We load packages by using a library command. The input is the name of the package, not in quotes.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="chapter-2-basic-introduction-to-r.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(network)</span></code></pre></div>
+<p>We can look up all of the functions within a package by using a help command. For example, let’s look at the functions available in the network package.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="chapter-2-basic-introduction-to-r.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="at">package =</span> network)</span></code></pre></div>
+<p>Note that the package argument is necessary to look up all of the functions. We can also detach a package if we no longer want it loaded. This is sometimes useful if two packages do not play well together. Here we will use a detach command.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="chapter-2-basic-introduction-to-r.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">detach</span>(package<span class="sc">:</span>network)</span></code></pre></div>
+<p>For simplicity, we will assume that the reader has restarted R at the beginning of each tutorial. This will ensure that the code will run without any complications. We will now turn to the basics of data management and network construction in R, covered in Chapter 3.</p>
+</div>
+<div id="references" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> References<a href="chapter-2-basic-introduction-to-r.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-network" class="csl-entry">
+Butts, Carter T. 2015. <em><span class="nocase">n</span>etwork: Classes for Relational Data</em>. The Statnet Project (<a href="http://www.statnet.org">http://www.statnet.org</a>). <a href="https://CRAN.R-project.org/package=network">https://CRAN.R-project.org/package=network</a>.
+</div>
+<div id="ref-sna" class="csl-entry">
+———. 2023. <em><span class="nocase">s</span>na: Tools for Social Network Analysis</em>. <a href="https://CRAN.R-project.org/package=sna">https://CRAN.R-project.org/package=sna</a>.
+</div>
+<div id="ref-networkDynamic" class="csl-entry">
+Butts, Carter T., Ayn Leslie-Cook, Pavel N. Krivitsky, and Skye Bender-deMoll. 2023. <em>networkDynamic: Dynamic Extensions for Network Objects</em>. <a href="https://CRAN.R-project.org/package=networkDynamic">https://CRAN.R-project.org/package=networkDynamic</a>.
+</div>
+<div id="ref-igraph2006" class="csl-entry">
+Csardi, Gabor, and Tamas Nepusz. 2006. <span>“The Igraph Software Package for Complex Network Research.”</span> <em>InterJournal</em> Complex Systems: 1695. <a href="https://igraph.org">https://igraph.org</a>.
+</div>
+<div id="ref-ergm" class="csl-entry">
+Handcock, Mark S., David R. Hunter, Carter T. Butts, Steven M. Goodreau, Pavel N. Krivitsky, and Martina Morris. 2023. <em><span class="nocase">e</span>rgm: Fit, Simulate and Diagnose Exponential-Family Models for Networks</em>. The Statnet Project (<a href="https://statnet.org">https://statnet.org</a>). <a href="https://CRAN.R-project.org/package=ergm">https://CRAN.R-project.org/package=ergm</a>.
+</div>
+<div id="ref-tergm" class="csl-entry">
+Krivitsky, Pavel N., and Mark S. Handcock. 2023. <em>Tergm: Fit, Simulate and Diagnose Models for Network Evolution Based on Exponential-Family Random Graph Models</em>. The Statnet Project (<a href="https://statnet.org">https://statnet.org</a>). <a href="https://CRAN.R-project.org/package=tergm">https://CRAN.R-project.org/package=tergm</a>.
+</div>
+<div id="ref-RSiena" class="csl-entry">
+Ripley, Ruth M., Tom A. B. Snijders, Zsofia Boda, Andras Voros, and Paulina Preciado. 2023. <span>“Manual for <span>Siena</span> Version 4.0.”</span> Oxford: University of Oxford, Department of Statistics; Nuffield College.
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="chapter-3a-r-tutorial-on-network-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

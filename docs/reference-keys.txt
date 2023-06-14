@@ -4,6 +4,10 @@ citations-and-use
 updates-and-feedback
 acknowledgments
 session-information
+chapter-2-basic-introduction-to-r
+preliminaries
+packages
+references
 chapter-3a-r-tutorial-on-network-data
 reading-data-into-r
 networks-in-igraph
