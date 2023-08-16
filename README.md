@@ -1,3 +1,1 @@
-[![Build Status]()
-
-You can find the preview of this example at ....
+This GitHub repository is used to build the website of R tutorials associated with: Network Analysis: Integrating Social Network Theory, Method, and Application with R by Craig Rawlings, Jeffrey A. Smith, James Moody, and Daniel McFarland.
