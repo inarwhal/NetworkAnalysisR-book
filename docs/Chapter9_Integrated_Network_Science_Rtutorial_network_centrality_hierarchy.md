@@ -317,7 +317,7 @@ head(eigen_social)
 
 ```
 ##            1            2            3            4            5            6 
-## 2.418251e-01 1.735366e-01 0.000000e+00 1.851194e-17 2.418251e-01 1.004841e-01
+## 2.418251e-01 1.735366e-01 3.654745e-17 3.060687e-17 2.418251e-01 1.004841e-01
 ```
 
 Note that we can calculate a closely related Bonacich power centrality score using the `power_centrality()` function.
@@ -351,8 +351,8 @@ head(central_social)
 ##   ids    net indegree outdegree incloseness2 outcloseness2 between        eigen
 ## 1   1 social        3         3   0.34682540    0.39444444      24 2.418251e-01
 ## 2   2 social        1         1   0.27936508    0.32698413       0 1.735366e-01
-## 3   3 social        0         0   0.00000000    0.00000000       0 0.000000e+00
-## 4   4 social        1         1   0.04761905    0.04761905       0 1.851194e-17
+## 3   3 social        0         0   0.00000000    0.00000000       0 3.654745e-17
+## 4   4 social        1         1   0.04761905    0.04761905       0 3.060687e-17
 ## 5   5 social        3         3   0.34682540    0.39444444      24 2.418251e-01
 ## 6   6 social        3         3   0.29523810    0.32698413      28 1.004841e-01
 ```
@@ -376,8 +376,8 @@ apply(central_social[, -c(1, 2)], MARGIN = 2, FUN = order, decreasing = T)
 ##  [6,]       17        21           17             1      10    17
 ##  [7,]        1         1           12             5       1    20
 ##  [8,]        5         5           11            17       5    12
-##  [9,]        6         6            1            12      11     1
-## [10,]       12        12            5            20      19     5
+##  [9,]        6         6            1            12      11     5
+## [10,]       12        12            5            20      19     1
 ## [11,]       20        20           20             2      21    11
 ## [12,]       10        10            6             6      17     2
 ## [13,]       11         2            2            10      20     6
@@ -385,11 +385,11 @@ apply(central_social[, -c(1, 2)], MARGIN = 2, FUN = order, decreasing = T)
 ## [15,]        4         7           15             7       3    15
 ## [16,]        7         8            9             4       4     9
 ## [17,]        8         9            7             8       7     7
-## [18,]        9        11            4            11       8     8
-## [19,]       15        15            8            15       9     4
-## [20,]        3         3            3             3      13     3
-## [21,]       13        13           13            13      14    13
-## [22,]       14        14           14            14      15    14
+## [18,]        9        11            4            11       8     3
+## [19,]       15        15            8            15       9    13
+## [20,]        3         3            3             3      13    14
+## [21,]       13        13           13            13      14     4
+## [22,]       14        14           14            14      15     8
 ```
 
 If we start with indegree, we see the top nodes are 18, 22 and 16. Or, for outdegree, the top three nodes are 22, 18 and 19.  We see nodes 18, 22 and 16 are most central for inclosenss. Finally, we see similar, but somewhat different ordering for betweenness, with nodes 22, 12 and 16 the top three. Node 12 in particular has much higher betweenness centrality than they do for degree, closeness, etc. 
@@ -518,8 +518,8 @@ head(central_task)
 ##   ids  net degree closeness2 between        eigen
 ## 1   1 task      1 0.42857143       0 2.154856e-01
 ## 2   2 task      1 0.42857143       0 2.154856e-01
-## 3   3 task      0 0.00000000       0 8.549252e-17
-## 4   4 task      1 0.04761905       0 4.274626e-17
+## 3   3 task      0 0.00000000       0 3.205969e-17
+## 4   4 task      1 0.04761905       0 3.205969e-17
 ## 5   5 task      1 0.42857143       0 2.154856e-01
 ## 6   6 task      1 0.42857143       0 2.154856e-01
 ```
@@ -535,26 +535,26 @@ apply(central_task[, -c(1, 2)], MARGIN = 2, FUN = order, decreasing = T)
 ##       degree closeness2 between eigen
 ##  [1,]     22         22      22    22
 ##  [2,]     18         18      18    18
-##  [3,]     17         17      19    21
-##  [4,]     19         19       1    17
+##  [3,]     17         17      19    17
+##  [4,]     19         19       1    21
 ##  [5,]     21         21       2    19
 ##  [6,]     13         13       3    13
-##  [7,]     16         16       4    16
-##  [8,]     20         20       5    20
-##  [9,]      1          1       6    14
-## [10,]      2          2       7     6
-## [11,]      4          5       8    11
-## [12,]      5          6       9    15
-## [13,]      6          7      10     2
-## [14,]      7          9      11     7
+##  [7,]     16         16       4    20
+##  [8,]     20         20       5    16
+##  [9,]      1          1       6     2
+## [10,]      2          2       7    14
+## [11,]      4          5       8     6
+## [12,]      5          6       9     7
+## [13,]      6          7      10    11
+## [14,]      7          9      11     1
 ## [15,]      8         10      12     5
-## [16,]      9         11      13     9
-## [17,]     10         14      14    10
-## [18,]     11         15      15     1
+## [16,]      9         11      13    10
+## [17,]     10         14      14    15
+## [18,]     11         15      15     9
 ## [19,]     14          4      16     8
 ## [20,]     15          8      17     3
-## [21,]      3          3      20    12
-## [22,]     12         12      21     4
+## [21,]      3          3      20     4
+## [22,]     12         12      21    12
 ```
 
 In this case, we can see nodes 22, 18 and 17 are consistently the most important nodes, but node 22 is by the far most central. This becomes clear if we plot the network, scaling the nodes by degree: 

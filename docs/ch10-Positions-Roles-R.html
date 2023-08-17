@@ -561,9 +561,9 @@ Network Analysis with R</a></li>
 <div class="sourceCode" id="cb848"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb848-1"><a href="ch10-Positions-Roles-R.html#cb848-1" aria-hidden="true" tabindex="-1"></a>net182_friend <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> edgelist_friendship, <span class="at">directed =</span> T, </span>
 <span id="cb848-2"><a href="ch10-Positions-Roles-R.html#cb848-2" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">vertices =</span> class182_attributes) </span></code></pre></div>
 <div class="sourceCode" id="cb849"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb849-1"><a href="ch10-Positions-Roles-R.html#cb849-1" aria-hidden="true" tabindex="-1"></a>net182_friend</span></code></pre></div>
-<pre><code>## IGRAPH 51e058c DN-- 16 62 -- 
+<pre><code>## IGRAPH c4d0331 DN-- 16 62 -- 
 ## + attr: name (v/c), race (v/c), grade (v/n), gender (v/c), friend_tie (e/n)
-## + edges from 51e058c (vertex names):
+## + edges from c4d0331 (vertex names):
 ##  [1] 2 -&gt;1  2 -&gt;7  2 -&gt;8  2 -&gt;13 2 -&gt;14 3 -&gt;5  3 -&gt;6  3 -&gt;11 3 -&gt;14 3 -&gt;15 5 -&gt;1  5 -&gt;3  5 -&gt;6  5 -&gt;8  5 -&gt;10 5 -&gt;11 6 -&gt;1  6 -&gt;3  6 -&gt;5  6 -&gt;7  6 -&gt;10 6 -&gt;11 6 -&gt;12 7 -&gt;2  7 -&gt;8  7 -&gt;13 7 -&gt;14 8 -&gt;2  8 -&gt;5  8 -&gt;7  8 -&gt;13 8 -&gt;14 8 -&gt;15 9 -&gt;1  9 -&gt;3  9 -&gt;10 9 -&gt;12 9 -&gt;15 10-&gt;1  10-&gt;9  10-&gt;12 10-&gt;15 11-&gt;1  11-&gt;3  11-&gt;5  11-&gt;6  11-&gt;10 12-&gt;1  12-&gt;9  12-&gt;15 13-&gt;2  13-&gt;7  13-&gt;8  13-&gt;14 14-&gt;2  14-&gt;3  14-&gt;8  14-&gt;12 15-&gt;1  15-&gt;7  15-&gt;9  15-&gt;12</code></pre>
 <p>We can see that the friendship network has been created, with <code>friend_tie</code> defining the edge weights. And now we create the task interaction network. We create the edgelist from dyads where the task interaction value is &gt; 0.</p>
 <div class="sourceCode" id="cb851"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb851-1"><a href="ch10-Positions-Roles-R.html#cb851-1" aria-hidden="true" tabindex="-1"></a>edgelist_task <span class="ot">&lt;-</span> class182_networkdata[class182_networkdata<span class="sc">$</span>task_tie <span class="sc">&gt;</span> <span class="dv">0</span>,</span>
@@ -575,9 +575,9 @@ Network Analysis with R</a></li>
 <span id="cb852-4"><a href="ch10-Positions-Roles-R.html#cb852-4" aria-hidden="true" tabindex="-1"></a>net182_task <span class="ot">&lt;-</span> <span class="fu">as.undirected</span>(net182_task, <span class="at">mode=</span><span class="st">&quot;collapse&quot;</span>, </span>
 <span id="cb852-5"><a href="ch10-Positions-Roles-R.html#cb852-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">edge.attr.comb =</span> <span class="st">&quot;mean&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb853"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb853-1"><a href="ch10-Positions-Roles-R.html#cb853-1" aria-hidden="true" tabindex="-1"></a>net182_task</span></code></pre></div>
-<pre><code>## IGRAPH bd6dc77 UN-- 16 47 -- 
+<pre><code>## IGRAPH c3d39f3 UN-- 16 47 -- 
 ## + attr: name (v/c), race (v/c), grade (v/n), gender (v/c), task_tie (e/n)
-## + edges from bd6dc77 (vertex names):
+## + edges from c3d39f3 (vertex names):
 ##  [1] 1 --5  3 --5  3 --6  5 --6  2 --7  2 --8  7 --8  1 --9  1 --10 4 --10 6 --10 9 --10 3 --11 5 --11 6 --11 1 --12 9 --12 10--12 2 --13 5 --13 7 --13 8 --13 2 --14 5 --14 6 --14 7 --14 8 --14 1 --15 2 --15 9 --15 10--15 12--15 1 --16 2 --16 3 --16 4 --16 5 --16 6 --16 7 --16 8 --16 9 --16 10--16 11--16 12--16 13--16 14--16 15--16</code></pre>
 <p>And now we do the same thing for the social interaction network.</p>
 <div class="sourceCode" id="cb855"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb855-1"><a href="ch10-Positions-Roles-R.html#cb855-1" aria-hidden="true" tabindex="-1"></a>edgelist_social <span class="ot">&lt;-</span> class182_networkdata[class182_networkdata<span class="sc">$</span>social_tie <span class="sc">&gt;</span> <span class="dv">0</span>, </span>

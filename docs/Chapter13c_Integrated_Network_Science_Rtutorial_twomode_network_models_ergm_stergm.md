@@ -397,7 +397,7 @@ summary(mod2)
 ## AIC: 21517  BIC: 21526  (Smaller is better. MC Std. Err. = 0)
 ```
 
-All of the offset terms are set to -10, although they are not printed out here. We see that the edge coefficient is different than with mod1, suggesting the importance of adjusting our model for structural/logical constraints. Note also that the model fit should only be compared to other models with the same set of offset terms. 
+All of the offset terms are set to -10, although they are not printed out here. We see that the edge coefficient is different than with `mod1`, suggesting the importance of adjusting our model for structural/logical constraints. Note also that the model fit should only be compared to other models with the same set of offset terms. 
 
 In this case, we used nodemix terms to capture structural conditions in the data, but we could imagine using nodemix terms to answer more substantive questions. We could test if certain types of students (e.g., girls) are more likely to join certain types of clubs (academic, leadership, etc.), although we will not consider this here.
 

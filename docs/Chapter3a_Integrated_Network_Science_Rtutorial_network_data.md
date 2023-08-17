@@ -224,9 +224,9 @@ class_netbymatrix
 ```
 
 ```
-## IGRAPH 54bea70 DN-- 24 77 -- 
+## IGRAPH 59d7f6d DN-- 24 77 -- 
 ## + attr: name (v/c)
-## + edges from 54bea70 (vertex names):
+## + edges from 59d7f6d (vertex names):
 ##  [1] 1 ->3  1 ->5  1 ->7  1 ->21 2 ->3  2 ->6  3 ->6  3 ->8  3 ->16 3 ->24
 ## [11] 4 ->13 4 ->18 7 ->1  7 ->9  7 ->10 7 ->16 8 ->3  8 ->9  8 ->13 9 ->5 
 ## [21] 9 ->8  10->6  10->14 10->19 10->20 10->24 11->12 11->15 11->18 11->24
@@ -271,9 +271,9 @@ class_netbymatrix
 ```
 
 ```
-## IGRAPH 54bea70 DN-- 24 77 -- 
+## IGRAPH 59d7f6d DN-- 24 77 -- 
 ## + attr: name (v/c), gender (v/x), grade (v/n), race (v/x)
-## + edges from 54bea70 (vertex names):
+## + edges from 59d7f6d (vertex names):
 ##  [1] 1 ->3  1 ->5  1 ->7  1 ->21 2 ->3  2 ->6  3 ->6  3 ->8  3 ->16 3 ->24
 ## [11] 4 ->13 4 ->18 7 ->1  7 ->9  7 ->10 7 ->16 8 ->3  8 ->9  8 ->13 9 ->5 
 ## [21] 9 ->8  10->6  10->14 10->19 10->20 10->24 11->12 11->15 11->18 11->24
@@ -336,9 +336,9 @@ class_netbyedgelist
 ```
 
 ```
-## IGRAPH dd8b373 DNW- 24 77 -- 
+## IGRAPH a725539 DNW- 24 77 -- 
 ## + attr: name (v/c), weight (e/n)
-## + edges from dd8b373 (vertex names):
+## + edges from a725539 (vertex names):
 ##  [1] 1 ->3  1 ->5  1 ->7  1 ->21 2 ->3  2 ->6  3 ->6  3 ->8  3 ->16 3 ->24
 ## [11] 4 ->13 4 ->18 7 ->1  7 ->9  7 ->10 7 ->16 8 ->3  8 ->9  8 ->13 9 ->5 
 ## [21] 9 ->8  10->6  10->14 10->19 10->20 10->24 11->12 11->15 11->18 11->24
@@ -362,9 +362,9 @@ class_netbyedgelist
 ```
 
 ```
-## IGRAPH b2bf692 DNW- 24 77 -- 
+## IGRAPH e77deaa DNW- 24 77 -- 
 ## + attr: name (v/c), gender (v/c), grade (v/n), race (v/c), weight (e/n)
-## + edges from b2bf692 (vertex names):
+## + edges from e77deaa (vertex names):
 ##  [1] 1 ->3  1 ->5  1 ->7  1 ->21 2 ->3  2 ->6  3 ->6  3 ->8  3 ->16 3 ->24
 ## [11] 4 ->13 4 ->18 7 ->1  7 ->9  7 ->10 7 ->16 8 ->3  8 ->9  8 ->13 9 ->5 
 ## [21] 9 ->8  10->6  10->14 10->19 10->20 10->24 11->12 11->15 11->18 11->24
@@ -1173,7 +1173,7 @@ all_shortest_paths(class_netbyedgelist, from = 1, to = 6)
 ```
 ## $res
 ## $res[[1]]
-## + 3/24 vertices, named, from b2bf692:
+## + 3/24 vertices, named, from e77deaa:
 ## [1] 1 3 6
 ## 
 ## 
@@ -1191,11 +1191,11 @@ all_shortest_paths(class_netbyedgelist, from = 1, to = 16)
 ```
 ## $res
 ## $res[[1]]
-## + 3/24 vertices, named, from b2bf692:
+## + 3/24 vertices, named, from e77deaa:
 ## [1] 1  3  16
 ## 
 ## $res[[2]]
-## + 3/24 vertices, named, from b2bf692:
+## + 3/24 vertices, named, from e77deaa:
 ## [1] 1  7  16
 ## 
 ## 

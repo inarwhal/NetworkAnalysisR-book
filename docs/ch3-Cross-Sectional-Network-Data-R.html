@@ -629,9 +629,9 @@ Network Analysis with R</a></li>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb36-1" aria-hidden="true" tabindex="-1"></a>class_netbymatrix <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(<span class="at">adjmatrix =</span> class_mat, </span>
 <span id="cb36-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb36-2" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">mode =</span> <span class="st">&quot;directed&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb37-1" aria-hidden="true" tabindex="-1"></a>class_netbymatrix</span></code></pre></div>
-<pre><code>## IGRAPH 54bea70 DN-- 24 77 -- 
+<pre><code>## IGRAPH 59d7f6d DN-- 24 77 -- 
 ## + attr: name (v/c)
-## + edges from 54bea70 (vertex names):
+## + edges from 59d7f6d (vertex names):
 ##  [1] 1 -&gt;3  1 -&gt;5  1 -&gt;7  1 -&gt;21 2 -&gt;3  2 -&gt;6  3 -&gt;6  3 -&gt;8  3 -&gt;16 3 -&gt;24
 ## [11] 4 -&gt;13 4 -&gt;18 7 -&gt;1  7 -&gt;9  7 -&gt;10 7 -&gt;16 8 -&gt;3  8 -&gt;9  8 -&gt;13 9 -&gt;5 
 ## [21] 9 -&gt;8  10-&gt;6  10-&gt;14 10-&gt;19 10-&gt;20 10-&gt;24 11-&gt;12 11-&gt;15 11-&gt;18 11-&gt;24
@@ -659,9 +659,9 @@ Network Analysis with R</a></li>
 <span id="cb40-6"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb40-6" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">name =</span> <span class="st">&quot;race&quot;</span>,</span>
 <span id="cb40-7"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb40-7" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">value =</span> class_attributes<span class="sc">$</span>race)</span></code></pre></div>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb41-1" aria-hidden="true" tabindex="-1"></a>class_netbymatrix</span></code></pre></div>
-<pre><code>## IGRAPH 54bea70 DN-- 24 77 -- 
+<pre><code>## IGRAPH 59d7f6d DN-- 24 77 -- 
 ## + attr: name (v/c), gender (v/x), grade (v/n), race (v/x)
-## + edges from 54bea70 (vertex names):
+## + edges from 59d7f6d (vertex names):
 ##  [1] 1 -&gt;3  1 -&gt;5  1 -&gt;7  1 -&gt;21 2 -&gt;3  2 -&gt;6  3 -&gt;6  3 -&gt;8  3 -&gt;16 3 -&gt;24
 ## [11] 4 -&gt;13 4 -&gt;18 7 -&gt;1  7 -&gt;9  7 -&gt;10 7 -&gt;16 8 -&gt;3  8 -&gt;9  8 -&gt;13 9 -&gt;5 
 ## [21] 9 -&gt;8  10-&gt;6  10-&gt;14 10-&gt;19 10-&gt;20 10-&gt;24 11-&gt;12 11-&gt;15 11-&gt;18 11-&gt;24
@@ -698,9 +698,9 @@ Network Analysis with R</a></li>
 <p>Here we create an igraph object called <code>class_netbyedgelist</code> based on the edgelist, <code>class_edges</code>. Note that we do not need to turn the edgelist into a matrix, as the function takes a data frame as input.</p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb46-1" aria-hidden="true" tabindex="-1"></a>class_netbyedgelist <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> class_edges, <span class="at">directed =</span> T)</span></code></pre></div>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb47-1" aria-hidden="true" tabindex="-1"></a>class_netbyedgelist</span></code></pre></div>
-<pre><code>## IGRAPH dd8b373 DNW- 24 77 -- 
+<pre><code>## IGRAPH a725539 DNW- 24 77 -- 
 ## + attr: name (v/c), weight (e/n)
-## + edges from dd8b373 (vertex names):
+## + edges from a725539 (vertex names):
 ##  [1] 1 -&gt;3  1 -&gt;5  1 -&gt;7  1 -&gt;21 2 -&gt;3  2 -&gt;6  3 -&gt;6  3 -&gt;8  3 -&gt;16 3 -&gt;24
 ## [11] 4 -&gt;13 4 -&gt;18 7 -&gt;1  7 -&gt;9  7 -&gt;10 7 -&gt;16 8 -&gt;3  8 -&gt;9  8 -&gt;13 9 -&gt;5 
 ## [21] 9 -&gt;8  10-&gt;6  10-&gt;14 10-&gt;19 10-&gt;20 10-&gt;24 11-&gt;12 11-&gt;15 11-&gt;18 11-&gt;24
@@ -713,9 +713,9 @@ Network Analysis with R</a></li>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb49-1" aria-hidden="true" tabindex="-1"></a>class_netbyedgelist <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> class_edges, <span class="at">directed =</span> T,</span>
 <span id="cb49-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb49-2" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">vertices =</span> class_attributes)</span></code></pre></div>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb50-1" aria-hidden="true" tabindex="-1"></a>class_netbyedgelist</span></code></pre></div>
-<pre><code>## IGRAPH b2bf692 DNW- 24 77 -- 
+<pre><code>## IGRAPH e77deaa DNW- 24 77 -- 
 ## + attr: name (v/c), gender (v/c), grade (v/n), race (v/c), weight (e/n)
-## + edges from b2bf692 (vertex names):
+## + edges from e77deaa (vertex names):
 ##  [1] 1 -&gt;3  1 -&gt;5  1 -&gt;7  1 -&gt;21 2 -&gt;3  2 -&gt;6  3 -&gt;6  3 -&gt;8  3 -&gt;16 3 -&gt;24
 ## [11] 4 -&gt;13 4 -&gt;18 7 -&gt;1  7 -&gt;9  7 -&gt;10 7 -&gt;16 8 -&gt;3  8 -&gt;9  8 -&gt;13 9 -&gt;5 
 ## [21] 9 -&gt;8  10-&gt;6  10-&gt;14 10-&gt;19 10-&gt;20 10-&gt;24 11-&gt;12 11-&gt;15 11-&gt;18 11-&gt;24
@@ -1183,7 +1183,7 @@ Network Analysis with R</a></li>
 <div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all_shortest_paths</span>(class_netbyedgelist, <span class="at">from =</span> <span class="dv">1</span>, <span class="at">to =</span> <span class="dv">6</span>) </span></code></pre></div>
 <pre><code>## $res
 ## $res[[1]]
-## + 3/24 vertices, named, from b2bf692:
+## + 3/24 vertices, named, from e77deaa:
 ## [1] 1 3 6
 ## 
 ## 
@@ -1193,11 +1193,11 @@ Network Analysis with R</a></li>
 <div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all_shortest_paths</span>(class_netbyedgelist, <span class="at">from =</span> <span class="dv">1</span>, <span class="at">to =</span> <span class="dv">16</span>) </span></code></pre></div>
 <pre><code>## $res
 ## $res[[1]]
-## + 3/24 vertices, named, from b2bf692:
+## + 3/24 vertices, named, from e77deaa:
 ## [1] 1  3  16
 ## 
 ## $res[[2]]
-## + 3/24 vertices, named, from b2bf692:
+## + 3/24 vertices, named, from e77deaa:
 ## [1] 1  7  16
 ## 
 ## 

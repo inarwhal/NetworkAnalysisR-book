@@ -434,9 +434,9 @@ net_impute_sym
 ```
 
 ```
-## IGRAPH e310253 DN-- 71 189 -- 
+## IGRAPH cad98d4 DN-- 71 189 -- 
 ## + attr: name (v/c)
-## + edges from e310253 (vertex names):
+## + edges from cad98d4 (vertex names):
 ##  [1] id1 ->id39 id1 ->id42 id2 ->id13 id2 ->id62 id3 ->id1  id3 ->id7 
 ##  [7] id3 ->id26 id3 ->id64 id3 ->id66 id7 ->id3  id8 ->id1  id8 ->id42
 ## [13] id8 ->id55 id9 ->id25 id9 ->id28 id9 ->id63 id9 ->id64 id9 ->id72

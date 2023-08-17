@@ -104,9 +104,9 @@ net182_friend
 ```
 
 ```
-## IGRAPH 51e058c DN-- 16 62 -- 
+## IGRAPH c4d0331 DN-- 16 62 -- 
 ## + attr: name (v/c), race (v/c), grade (v/n), gender (v/c), friend_tie (e/n)
-## + edges from 51e058c (vertex names):
+## + edges from c4d0331 (vertex names):
 ##  [1] 2 ->1  2 ->7  2 ->8  2 ->13 2 ->14 3 ->5  3 ->6  3 ->11 3 ->14 3 ->15 5 ->1  5 ->3  5 ->6  5 ->8  5 ->10 5 ->11 6 ->1  6 ->3  6 ->5  6 ->7  6 ->10 6 ->11 6 ->12 7 ->2  7 ->8  7 ->13 7 ->14 8 ->2  8 ->5  8 ->7  8 ->13 8 ->14 8 ->15 9 ->1  9 ->3  9 ->10 9 ->12 9 ->15 10->1  10->9  10->12 10->15 11->1  11->3  11->5  11->6  11->10 12->1  12->9  12->15 13->2  13->7  13->8  13->14 14->2  14->3  14->8  14->12 15->1  15->7  15->9  15->12
 ```
 We can see that the friendship network has been created, with `friend_tie` defining the edge weights. And now we create the task interaction network. We create the edgelist from dyads where the task interaction value is > 0. 
@@ -134,9 +134,9 @@ net182_task
 ```
 
 ```
-## IGRAPH bd6dc77 UN-- 16 47 -- 
+## IGRAPH c3d39f3 UN-- 16 47 -- 
 ## + attr: name (v/c), race (v/c), grade (v/n), gender (v/c), task_tie (e/n)
-## + edges from bd6dc77 (vertex names):
+## + edges from c3d39f3 (vertex names):
 ##  [1] 1 --5  3 --5  3 --6  5 --6  2 --7  2 --8  7 --8  1 --9  1 --10 4 --10 6 --10 9 --10 3 --11 5 --11 6 --11 1 --12 9 --12 10--12 2 --13 5 --13 7 --13 8 --13 2 --14 5 --14 6 --14 7 --14 8 --14 1 --15 2 --15 9 --15 10--15 12--15 1 --16 2 --16 3 --16 4 --16 5 --16 6 --16 7 --16 8 --16 9 --16 10--16 11--16 12--16 13--16 14--16 15--16
 ```
 

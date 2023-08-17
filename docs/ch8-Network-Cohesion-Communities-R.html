@@ -572,9 +572,9 @@ Network Analysis with R</a></li>
 <div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb598-1" aria-hidden="true" tabindex="-1"></a>net182_friend <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> edgelist_friendship, <span class="at">directed =</span> T, </span>
 <span id="cb598-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb598-2" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">vertices =</span> class182_attributes) </span></code></pre></div>
 <div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb599-1" aria-hidden="true" tabindex="-1"></a>net182_friend </span></code></pre></div>
-<pre><code>## IGRAPH c32a7c6 DN-- 16 62 -- 
+<pre><code>## IGRAPH 45bbf9a DN-- 16 62 -- 
 ## + attr: name (v/c), race (v/c), grade (v/n), gender (v/c), friend_tie (e/n)
-## + edges from c32a7c6 (vertex names):
+## + edges from 45bbf9a (vertex names):
 ##  [1] 2 -&gt;1  2 -&gt;7  2 -&gt;8  2 -&gt;13 2 -&gt;14 3 -&gt;5  3 -&gt;6  3 -&gt;11 3 -&gt;14 3 -&gt;15 5 -&gt;1  5 -&gt;3  5 -&gt;6  5 -&gt;8  5 -&gt;10 5 -&gt;11 6 -&gt;1  6 -&gt;3  6 -&gt;5  6 -&gt;7  6 -&gt;10 6 -&gt;11 6 -&gt;12 7 -&gt;2  7 -&gt;8  7 -&gt;13 7 -&gt;14 8 -&gt;2  8 -&gt;5  8 -&gt;7  8 -&gt;13 8 -&gt;14 8 -&gt;15 9 -&gt;1  9 -&gt;3  9 -&gt;10 9 -&gt;12 9 -&gt;15 10-&gt;1  10-&gt;9  10-&gt;12 10-&gt;15 11-&gt;1  11-&gt;3  11-&gt;5  11-&gt;6  11-&gt;10 12-&gt;1  12-&gt;9  12-&gt;15 13-&gt;2  13-&gt;7  13-&gt;8  13-&gt;14 14-&gt;2  14-&gt;3  14-&gt;8  14-&gt;12 15-&gt;1  15-&gt;7  15-&gt;9  15-&gt;12</code></pre>
 <p>Note that the network is directed and has an edge attribute, <code>friend_tie</code>, showing the strength of the relationship.</p>
 </div>
@@ -611,16 +611,16 @@ Network Analysis with R</a></li>
 <p>The output is a list. The main item of interest is the nodes that are in each bicomponent. This can be found in the components part of the list.</p>
 <div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb610-1" aria-hidden="true" tabindex="-1"></a>bicomponents_friendship<span class="sc">$</span>components</span></code></pre></div>
 <pre><code>## [[1]]
-## + 14/16 vertices, named, from c32a7c6:
+## + 14/16 vertices, named, from 45bbf9a:
 ##  [1] 10 15 11 9  12 14 13 8  5  3  6  7  2  1</code></pre>
 <p>In this case 14 out of 16 nodes are in a single bicomponent, connected by at least two independent paths. Again, the only nodes who are not in this main bicomponent are our two isolates. This would suggest that the network has high cohesion, as all nodes (save for two isolates) are connected to each other in multiple ways.</p>
 <p>Building on the ideas of bicomponent size and component size, we can also explore the connectivity of specific pairs of nodes in the network, or vertex connectivity. Here we utilize the <code>vertex_disjoint_paths()</code> function. The arguments are graph, source (starting node) and target (end node). The output is the number of nodes that would need to be removed so that i can no longer reach j (excluding any direct tie from i to j).</p>
 <p>To be consistent with the component and bicomponent calculations above, let’s create an undirected network to look at vertex connectivity. We set mode to the "collapse" option, which uses a 'weak' rule, so if i is tied to j or j is tied to i, there is a tie between i and j.</p>
 <div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb612-1" aria-hidden="true" tabindex="-1"></a>net182_friend_und <span class="ot">&lt;-</span> <span class="fu">as.undirected</span>(net182_friend, <span class="at">mode =</span> <span class="st">&quot;collapse&quot;</span>) </span></code></pre></div>
 <div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb613-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb613-1" aria-hidden="true" tabindex="-1"></a>net182_friend_und</span></code></pre></div>
-<pre><code>## IGRAPH 661f23b UN-- 16 42 -- 
+<pre><code>## IGRAPH 0b7b0f7 UN-- 16 42 -- 
 ## + attr: name (v/c), race (v/c), grade (v/n), gender (v/c)
-## + edges from 661f23b (vertex names):
+## + edges from 0b7b0f7 (vertex names):
 ##  [1] 1 --2  1 --5  3 --5  1 --6  3 --6  5 --6  2 --7  6 --7  2 --8  5 --8  7 --8  1 --9  3 --9  1 --10 5 --10 6 --10 9 --10 1 --11 3 --11 5 --11 6 --11 10--11 1 --12 6 --12 9 --12 10--12 2 --13 7 --13 8 --13 2 --14 3 --14 7 --14 8 --14 12--14 13--14 1 --15 3 --15 7 --15 8 --15 9 --15 10--15 12--15</code></pre>
 <p>Here we will calculate vertex connectivity for two example nodes, 1 and 9:</p>
 <div class="sourceCode" id="cb615"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb615-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb615-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vertex_disjoint_paths</span>(<span class="at">graph =</span> net182_friend_und, <span class="at">source =</span> <span class="dv">1</span>, <span class="at">target =</span> <span class="dv">9</span>)</span></code></pre></div>

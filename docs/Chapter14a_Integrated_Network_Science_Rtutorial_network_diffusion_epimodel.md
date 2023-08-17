@@ -613,11 +613,11 @@ head(summary_data_baseline)
 ```
 ##   time sim.num  s.num i.num num si.flow is.flow
 ## 1    1     750 729.00 21.00 750     NaN     NaN
-## 2    2     750 727.00 23.00 750    2.00    0.00
-## 3    3     750 725.25 24.75 750    1.75    0.00
-## 4    4     750 724.25 25.75 750    1.50    0.50
-## 5    5     750 721.25 28.75 750    3.25    0.25
-## 6    6     750 719.25 30.75 750    2.25    0.25
+## 2    2     750 727.50 22.50 750    2.50    1.00
+## 3    3     750 726.00 24.00 750    2.25    0.75
+## 4    4     750 723.25 26.75 750    2.75    0.00
+## 5    5     750 721.25 28.75 750    2.00    0.00
+## 6    6     750 719.00 31.00 750    2.25    0.00
 ```
 
 Each row in the data frame corresponds to a different time period in the simulation. The `s.num` column shows how many people in that period are susceptible (but not infected) while `i.num` shows how many people are infected. `i.num` shows the total number infected, while `si.flow` shows how many move from susceptible to infected (and `is.flow` shows the opposite) in a given period. The values correspond to the mean number over all simulations. We can also print the rate of infected and susceptible at particular days using a summary command and an at argument. Here we look at period 1.
@@ -677,12 +677,12 @@ summary(episim_baseline, at = 100)
 ## ------------------------------
 ## Time: 100 
 ## ------------------------------ 
-##             mean      sd   pct
-## Suscept.  127.50  10.083  0.17
-## Infect.   622.50  10.083  0.83
-## Total     750.00   0.000  1.00
-## S -> I      8.50   2.082    NA
-## I -> S      6.25   2.754    NA
+##             mean     sd    pct
+## Suscept.  118.75  7.805  0.158
+## Infect.   631.25  7.805  0.842
+## Total     750.00  0.000  1.000
+## S -> I      7.50  1.000     NA
+## I -> S      8.75  2.062     NA
 ## ------------------------------
 ```
 
@@ -776,12 +776,12 @@ compare_dat
 
 ```
 ##   period i.num.baseline i.num.lowdegree
-## 1     10          39.00           29.75
-## 2     25         100.50           46.00
-## 3     50         336.25           94.75
-## 4    100         622.50          257.75
-## 5    150         649.75          419.50
-## 6    300         657.50          545.25
+## 1     10          39.50           28.25
+## 2     25          93.75           40.75
+## 3     50         331.00           75.50
+## 4    100         631.25          203.75
+## 5    150         649.75          371.75
+## 6    300         653.75          545.25
 ```
 
 Each row reports the number infected for each simulation for that time period. The second column reports the baseline model, run above (using mean degree of 3.707), while the third column reports the low degree simulation results. We can see that the low degree simulation has a lower number of infected at each time period, but the differences are striking around periods 50 to 150. We can also plot the difference in number infected between the two simulations.
