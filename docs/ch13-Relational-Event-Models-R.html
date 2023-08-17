@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>13, Part 4. Relational Event Models | Network Analysis: Integrating Social Network Theory, Method, and Application with R</title>
+  <meta name="description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="13, Part 4. Relational Event Models | Network Analysis: Integrating Social Network Theory, Method, and Application with R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="13, Part 4. Relational Event Models | Network Analysis: Integrating Social Network Theory, Method, and Application with R" />
+  
+  <meta name="twitter:description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  
+
+<meta name="author" content="Craig Rawlings, Jeffrey A. Smith, James Moody, and Daniel McFarland" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"/>
+<link rel="next" href="ch14-Network-Diffusion-R.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/d3-4.5.0/d3.min.js"></script>
+<script src="libs/forceNetwork-binding-0.4/forceNetwork.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="https://inarwhal.github.io/NetworkAnalysisR-book/">
+Network Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#how-to-read-the-book"><i class="fa fa-check"></i><b>1.1</b> How to Read the Book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#citations-and-use"><i class="fa fa-check"></i><b>1.2</b> Citations and Use</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#updates-and-feedback"><i class="fa fa-check"></i><b>1.3</b> Updates and Feedback</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i><b>1.4</b> Acknowledgments</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#author-informtion"><i class="fa fa-check"></i><b>1.5</b> Author Informtion</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#session-information"><i class="fa fa-check"></i><b>1.6</b> Session Information</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html"><i class="fa fa-check"></i><b>2</b> Basic Introduction to R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html#preliminaries"><i class="fa fa-check"></i><b>2.1</b> Preliminaries</a></li>
+<li class="chapter" data-level="2.2" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html#packages"><i class="fa fa-check"></i><b>2.2</b> Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ch3-Network-Data-R.html"><a href="ch3-Network-Data-R.html"><i class="fa fa-check"></i><b>3</b> Network Data</a></li>
+<li class="chapter" data-level="" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html"><i class="fa fa-check"></i>3, Part 1. Cross-Sectional Network Data</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#reading-data-into-r"><i class="fa fa-check"></i><b>3.1</b> Reading Data into R</a></li>
+<li class="chapter" data-level="3.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#networks-in-igraph"><i class="fa fa-check"></i><b>3.2</b> Networks in igraph</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-a-matrix-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.1</b> Using a Matrix to Construct the Network</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-edgelist-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.2</b> Using an Edgelist to Construct the Network</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#extracting-information-from-igraph-objects"><i class="fa fa-check"></i><b>3.2.3</b> Extracting Information from igraph Objects</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-adjacency-list-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.4</b> Using an Adjacency List to Construct the Network</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-the-network-package"><i class="fa fa-check"></i><b>3.3</b> Using the network Package</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-a-matrix-to-construct-the-network-1"><i class="fa fa-check"></i><b>3.3.1</b> Using a Matrix to Construct the Network</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-edgelist-to-construct-the-network-1"><i class="fa fa-check"></i><b>3.3.2</b> Using an Edgelist to Construct the Network</a></li>
+<li class="chapter" data-level="3.3.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#putting-edge-attributes-onto-the-network"><i class="fa fa-check"></i><b>3.3.3</b> Putting Edge Attributes onto the Network</a></li>
+<li class="chapter" data-level="3.3.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#moving-between-igraph-and-network-objects"><i class="fa fa-check"></i><b>3.3.4</b> Moving between igraph and network Objects</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#some-key-network-measures"><i class="fa fa-check"></i><b>3.4</b> Some Key Network Measures</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#degree"><i class="fa fa-check"></i><b>3.4.1</b> Degree</a></li>
+<li class="chapter" data-level="3.4.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#density"><i class="fa fa-check"></i><b>3.4.2</b> Density</a></li>
+<li class="chapter" data-level="3.4.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#walks"><i class="fa fa-check"></i><b>3.4.3</b> Walks</a></li>
+<li class="chapter" data-level="3.4.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#paths-distance-and-closeness"><i class="fa fa-check"></i><b>3.4.4</b> Paths, Distance, and Closeness</a></li>
+<li class="chapter" data-level="3.4.5" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#reachability"><i class="fa fa-check"></i><b>3.4.5</b> Reachability</a></li>
+<li class="chapter" data-level="3.4.6" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#diameter"><i class="fa fa-check"></i><b>3.4.6</b> Diameter</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html"><i class="fa fa-check"></i>3, Part 2. Dynamic Network Data</a>
+<ul>
+<li class="chapter" data-level="3.5" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#discrete-longitudinal-networks"><i class="fa fa-check"></i><b>3.5</b> Discrete Longitudinal Networks</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#getting-the-data-ready"><i class="fa fa-check"></i><b>3.5.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="3.5.2" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#constructing-networkdynamic-objects"><i class="fa fa-check"></i><b>3.5.2</b> Constructing networkDynamic Objects</a></li>
+<li class="chapter" data-level="3.5.3" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#summary-statistics"><i class="fa fa-check"></i><b>3.5.3</b> Summary Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#continuous-time-networks"><i class="fa fa-check"></i><b>3.6</b> Continuous-Time Networks</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#getting-the-data-ready-1"><i class="fa fa-check"></i><b>3.6.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="3.6.2" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#constructing-networkdynamic-objects-1"><i class="fa fa-check"></i><b>3.6.2</b> Constructing networkDynamic Objects</a></li>
+<li class="chapter" data-level="3.6.3" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#summary-statistics-1"><i class="fa fa-check"></i><b>3.6.3</b> Summary Statistics</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html"><i class="fa fa-check"></i><b>4</b> Missing Network Data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#missing-data"><i class="fa fa-check"></i><b>4.1</b> Missing Data</a></li>
+<li class="chapter" data-level="4.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#listwise-deletion"><i class="fa fa-check"></i><b>4.2</b> Listwise Deletion</a></li>
+<li class="chapter" data-level="4.3" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-the-level-of-bias"><i class="fa fa-check"></i><b>4.3</b> Gauging the Level of Bias</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-bias-using-past-results"><i class="fa fa-check"></i><b>4.3.1</b> Gauging Bias Using Past Results</a></li>
+<li class="chapter" data-level="4.3.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-bias-using-predictive-models"><i class="fa fa-check"></i><b>4.3.2</b> Gauging Bias Using Predictive Models</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-options"><i class="fa fa-check"></i><b>4.4</b> Simple Imputation Options</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-asymmetric-option"><i class="fa fa-check"></i><b>4.4.1</b> Simple Imputation with Asymmetric Option</a></li>
+<li class="chapter" data-level="4.4.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-symmetric-option"><i class="fa fa-check"></i><b>4.4.2</b> Simple Imputation with Symmetric Option</a></li>
+<li class="chapter" data-level="4.4.3" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-probabilistic-option"><i class="fa fa-check"></i><b>4.4.3</b> Simple Imputation with Probabilistic Option</a></li>
+<li class="chapter" data-level="4.4.4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#comparing-estimates"><i class="fa fa-check"></i><b>4.4.4</b> Comparing Estimates</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html"><i class="fa fa-check"></i><b>5</b> Network Visualization</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#setting-up-the-session"><i class="fa fa-check"></i><b>5.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="5.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#network-plots-using-igraph"><i class="fa fa-check"></i><b>5.2</b> Network Plots using igraph</a></li>
+<li class="chapter" data-level="5.3" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#network-plots-based-on-ggplot"><i class="fa fa-check"></i><b>5.3</b> Network Plots based on ggplot</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#ggally-package"><i class="fa fa-check"></i><b>5.3.1</b> GGally package</a></li>
+<li class="chapter" data-level="5.3.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#ggnetwork-package"><i class="fa fa-check"></i><b>5.3.2</b> ggnetwork package</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#contour-plots"><i class="fa fa-check"></i><b>5.4</b> Contour Plots</a></li>
+<li class="chapter" data-level="5.5" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#interactive-plots"><i class="fa fa-check"></i><b>5.5</b> Interactive Plots</a></li>
+<li class="chapter" data-level="5.6" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#dynamic-network-visualizations"><i class="fa fa-check"></i><b>5.6</b> Dynamic Network Visualizations</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#getting-the-data-ready-2"><i class="fa fa-check"></i><b>5.6.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="5.6.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#time-flattened-visualizations"><i class="fa fa-check"></i><b>5.6.2</b> Time Flattened Visualizations</a></li>
+<li class="chapter" data-level="5.6.3" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#dynamic-network-movies"><i class="fa fa-check"></i><b>5.6.3</b> Dynamic Network Movies</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html"><i class="fa fa-check"></i><b>6</b> Ego Network Data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#working-with-ego-network-data"><i class="fa fa-check"></i><b>6.1</b> Working with Ego Network Data</a></li>
+<li class="chapter" data-level="6.2" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#plotting-networks"><i class="fa fa-check"></i><b>6.2</b> Plotting Networks</a></li>
+<li class="chapter" data-level="6.3" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#homophily-ego-alter-attributes"><i class="fa fa-check"></i><b>6.3</b> Homophily: Ego-Alter Attributes</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#proportion-of-alters-matching-ego"><i class="fa fa-check"></i><b>6.3.1</b> Proportion of Alters Matching Ego</a></li>
+<li class="chapter" data-level="6.3.2" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#analyzing-homophily-at-the-dyadic-level-ego-alter-pairs"><i class="fa fa-check"></i><b>6.3.2</b> Analyzing Homophily at the Dyadic Level: Ego-Alter Pairs</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#homophily-alter-attributes"><i class="fa fa-check"></i><b>6.4</b> Homophily: Alter Attributes</a></li>
+<li class="chapter" data-level="6.5" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#ego-networks-as-predictors"><i class="fa fa-check"></i><b>6.5</b> Ego Networks as Predictors</a></li>
+<li class="chapter" data-level="6.6" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#working-with-one-input-file"><i class="fa fa-check"></i><b>6.6</b> Working with One Input File</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html"><i class="fa fa-check"></i><b>7</b> Dyads and Triads</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#setting-up-the-session-1"><i class="fa fa-check"></i><b>7.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="7.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyadic-processes"><i class="fa fa-check"></i><b>7.2</b> Dyadic Processes</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyad-census-and-reciprocity"><i class="fa fa-check"></i><b>7.2.1</b> Dyad Census and Reciprocity</a></li>
+<li class="chapter" data-level="7.2.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#conditional-uniform-graph-tests"><i class="fa fa-check"></i><b>7.2.2</b> Conditional Uniform Graph Tests</a></li>
+<li class="chapter" data-level="7.2.3" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyad-census-by-attributes-of-nodes"><i class="fa fa-check"></i><b>7.2.3</b> Dyad Census by Attributes of Nodes</a></li>
+<li class="chapter" data-level="7.2.4" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#advice-and-friendship-together"><i class="fa fa-check"></i><b>7.2.4</b> Advice and Friendship Together</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#triadic-processes"><i class="fa fa-check"></i><b>7.3</b> Triadic Processes</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#triad-census"><i class="fa fa-check"></i><b>7.3.1</b> Triad Census</a></li>
+<li class="chapter" data-level="7.3.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#transitivity"><i class="fa fa-check"></i><b>7.3.2</b> Transitivity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html"><i class="fa fa-check"></i><b>8</b> Network Cohesion and Communities</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#first-example-network"><i class="fa fa-check"></i><b>8.1</b> First Example Network</a></li>
+<li class="chapter" data-level="8.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#cohesion"><i class="fa fa-check"></i><b>8.2</b> Cohesion</a></li>
+<li class="chapter" data-level="8.3" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#community-or-group-detection"><i class="fa fa-check"></i><b>8.3</b> Community (or Group) Detection</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#walktrap"><i class="fa fa-check"></i><b>8.3.1</b> Walktrap</a></li>
+<li class="chapter" data-level="8.3.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#edge-betweenness"><i class="fa fa-check"></i><b>8.3.2</b> Edge Betweenness</a></li>
+<li class="chapter" data-level="8.3.3" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#scree-plots"><i class="fa fa-check"></i><b>8.3.3</b> Scree Plots</a></li>
+<li class="chapter" data-level="8.3.4" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#multi-level-clustering"><i class="fa fa-check"></i><b>8.3.4</b> Multi-level Clustering</a></li>
+<li class="chapter" data-level="8.3.5" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#cohesive-blocking"><i class="fa fa-check"></i><b>8.3.5</b> Cohesive Blocking</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#demographic-characteristics"><i class="fa fa-check"></i><b>8.4</b> Demographic Characteristics</a></li>
+<li class="chapter" data-level="8.5" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#community-overlap"><i class="fa fa-check"></i><b>8.5</b> Community Overlap</a></li>
+<li class="chapter" data-level="8.6" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#big-data-example"><i class="fa fa-check"></i><b>8.6</b> Big Data Example</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#multi-level-clustering-1"><i class="fa fa-check"></i><b>8.6.1</b> Multi-level Clustering</a></li>
+<li class="chapter" data-level="8.6.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#looking-at-the-community-structure-within-the-initial-communities"><i class="fa fa-check"></i><b>8.6.2</b> Looking at the Community Structure within the Initial Communities</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html"><i class="fa fa-check"></i><b>9</b> Network Centrality and Hierarchy</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#setting-up-the-session-2"><i class="fa fa-check"></i><b>9.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="9.2" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality"><i class="fa fa-check"></i><b>9.2</b> Centrality</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality-measures-for-social-interactions"><i class="fa fa-check"></i><b>9.2.1</b> Centrality Measures for Social Interactions</a></li>
+<li class="chapter" data-level="9.2.2" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#correlations-between-centrality-measures"><i class="fa fa-check"></i><b>9.2.2</b> Correlations between Centrality Measures</a></li>
+<li class="chapter" data-level="9.2.3" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality-for-task-interactions"><i class="fa fa-check"></i><b>9.2.3</b> Centrality for Task Interactions</a></li>
+<li class="chapter" data-level="9.2.4" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#tasksocial-correlations"><i class="fa fa-check"></i><b>9.2.4</b> Task/Social Correlations</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centralization"><i class="fa fa-check"></i><b>9.3</b> Centralization</a></li>
+<li class="chapter" data-level="9.4" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#clustering-and-hierarchy"><i class="fa fa-check"></i><b>9.4</b> Clustering and Hierarchy</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html"><i class="fa fa-check"></i><b>10</b> Positions and Roles</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#classroom-network-data"><i class="fa fa-check"></i><b>10.1</b> Classroom Network Data</a></li>
+<li class="chapter" data-level="10.2" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#getting-the-data-ready-3"><i class="fa fa-check"></i><b>10.2</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="10.3" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#structural-equivalence"><i class="fa fa-check"></i><b>10.3</b> Structural Equivalence</a></li>
+<li class="chapter" data-level="10.4" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#defining-positions"><i class="fa fa-check"></i><b>10.4</b> Defining Positions</a></li>
+<li class="chapter" data-level="10.5" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#role-analysis"><i class="fa fa-check"></i><b>10.5</b> Role Analysis</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#permuting-the-matrix-by-position"><i class="fa fa-check"></i><b>10.5.1</b> Permuting the Matrix by Position</a></li>
+<li class="chapter" data-level="10.5.2" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#constructing-a-blockmodel"><i class="fa fa-check"></i><b>10.5.2</b> Constructing a Blockmodel</a></li>
+<li class="chapter" data-level="10.5.3" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#plotting-a-blockmodel"><i class="fa fa-check"></i><b>10.5.3</b> Plotting a Blockmodel</a></li>
+<li class="chapter" data-level="10.5.4" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#interpretation-of-blockmodel"><i class="fa fa-check"></i><b>10.5.4</b> Interpretation of Blockmodel</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#local-equivalence"><i class="fa fa-check"></i><b>10.6</b> Local Equivalence</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html"><i class="fa fa-check"></i><b>11</b> Two-mode Networks: Affilitations and Dualities</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#example-affiliation-data"><i class="fa fa-check"></i><b>11.1</b> Example Affiliation Data</a></li>
+<li class="chapter" data-level="11.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#plotting-the-network"><i class="fa fa-check"></i><b>11.2</b> Plotting the Network</a></li>
+<li class="chapter" data-level="11.3" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#single-mode-networks"><i class="fa fa-check"></i><b>11.3</b> Single Mode Networks</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#constructing-one-mode-projections"><i class="fa fa-check"></i><b>11.3.1</b> Constructing One-Mode Projections</a></li>
+<li class="chapter" data-level="11.3.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#plotting-one-mode-projections"><i class="fa fa-check"></i><b>11.3.2</b> Plotting One-Mode Projections</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#club-to-club-network"><i class="fa fa-check"></i><b>11.4</b> Club-to-Club Network</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#centrality-1"><i class="fa fa-check"></i><b>11.4.1</b> Centrality</a></li>
+<li class="chapter" data-level="11.4.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#groups"><i class="fa fa-check"></i><b>11.4.2</b> Groups</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#using-the-tnet-package"><i class="fa fa-check"></i><b>11.5</b> Using the tnet package</a></li>
+<li class="chapter" data-level="11.6" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#racial-segregation"><i class="fa fa-check"></i><b>11.6</b> Racial Segregation</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#proportion-of-co-membership-edges-where-students-match-on-race"><i class="fa fa-check"></i><b>11.6.1</b> Proportion of Co-membership Edges where Students Match on Race</a></li>
+<li class="chapter" data-level="11.6.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#do-students-match-racially-with-at-least-one-other-student"><i class="fa fa-check"></i><b>11.6.2</b> Do Students Match Racially with at Least One Other Student?</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#club-centrality-and-attributes"><i class="fa fa-check"></i><b>11.7</b> Club Centrality and Attributes</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="ch12-Networks-Culture-R.html"><a href="ch12-Networks-Culture-R.html"><i class="fa fa-check"></i><b>12</b> Networks and Culture</a></li>
+<li class="chapter" data-level="" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html"><i class="fa fa-check"></i>12, Part 1. Cultural Structures</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#getting-the-data-ready-4"><i class="fa fa-check"></i><b>12.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="12.2" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#topic-modeling"><i class="fa fa-check"></i><b>12.2</b> Topic Modeling</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#lda-initial-model"><i class="fa fa-check"></i><b>12.2.1</b> LDA: Initial Model</a></li>
+<li class="chapter" data-level="12.2.2" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#lda-picking-the-number-of-topics"><i class="fa fa-check"></i><b>12.2.2</b> LDA: Picking the Number of Topics</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#a-network-representation"><i class="fa fa-check"></i><b>12.3</b> A Network Representation</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html"><i class="fa fa-check"></i>12, Part 2. Cultural Spaces</a>
+<ul>
+<li class="chapter" data-level="12.4" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#correspondence-analysis"><i class="fa fa-check"></i><b>12.4</b> Correspondence Analysis</a></li>
+<li class="chapter" data-level="12.5" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#number-of-dimensions"><i class="fa fa-check"></i><b>12.5</b> Number of Dimensions</a></li>
+<li class="chapter" data-level="12.6" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#importance-of-rowscolumns"><i class="fa fa-check"></i><b>12.6</b> Importance of Rows/Columns</a></li>
+<li class="chapter" data-level="12.7" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#hierarchical-clustering"><i class="fa fa-check"></i><b>12.7</b> Hierarchical Clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="ch13-Statistical-Models-Networks-R.html"><a href="ch13-Statistical-Models-Networks-R.html"><i class="fa fa-check"></i><b>13</b> Statistical Models for Networks</a></li>
+<li class="chapter" data-level="" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><i class="fa fa-check"></i>13, Part 1. Cross-Sectional Network Models: ERGM</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#setting-up-the-session-3"><i class="fa fa-check"></i><b>13.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="13.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#descriptive-statistics"><i class="fa fa-check"></i><b>13.2</b> Descriptive Statistics</a></li>
+<li class="chapter" data-level="13.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#cug-tests"><i class="fa fa-check"></i><b>13.3</b> CUG Tests</a></li>
+<li class="chapter" data-level="13.4" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#fitting-an-ergm"><i class="fa fa-check"></i><b>13.4</b> Fitting an ERGM</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-only"><i class="fa fa-check"></i><b>13.4.1</b> Edges Only</a></li>
+<li class="chapter" data-level="13.4.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-and-homophily"><i class="fa fa-check"></i><b>13.4.2</b> Edges and Homophily</a></li>
+<li class="chapter" data-level="13.4.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-homophily-and-node-covariates"><i class="fa fa-check"></i><b>13.4.3</b> Edges, Homophily, and Node Covariates</a></li>
+<li class="chapter" data-level="13.4.4" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-homophily-node-covariates-and-reciprocity"><i class="fa fa-check"></i><b>13.4.4</b> Edges, Homophily, Node Covariates, and Reciprocity</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#checking-model-convergence"><i class="fa fa-check"></i><b>13.5</b> Checking Model Convergence</a></li>
+<li class="chapter" data-level="13.6" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#goodness-of-fit"><i class="fa fa-check"></i><b>13.6</b> Goodness of Fit</a></li>
+<li class="chapter" data-level="13.7" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#adding-gwesp-to-the-model"><i class="fa fa-check"></i><b>13.7</b> Adding GWESP to the Model</a></li>
+<li class="chapter" data-level="13.8" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#simulation"><i class="fa fa-check"></i><b>13.8</b> Simulation</a></li>
+<li class="chapter" data-level="13.9" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#example-on-a-large-network"><i class="fa fa-check"></i><b>13.9</b> Example on a Large Network</a></li>
+<li class="chapter" data-level="13.10" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#ergm-on-a-valued-network"><i class="fa fa-check"></i><b>13.10</b> ERGM on a Valued Network</a>
+<ul>
+<li class="chapter" data-level="13.10.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#baseline-ergm-on-valued-network"><i class="fa fa-check"></i><b>13.10.1</b> Baseline ERGM on Valued Network</a></li>
+<li class="chapter" data-level="13.10.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#adding-nodematch-and-nodefactor-terms"><i class="fa fa-check"></i><b>13.10.2</b> Adding Nodematch and Nodefactor Terms</a></li>
+<li class="chapter" data-level="13.10.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#transitivity-in-valued-networks"><i class="fa fa-check"></i><b>13.10.3</b> Transitivity in Valued Networks</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html"><i class="fa fa-check"></i>13, Part 2. Longitudinal Network Models: STERGM</a>
+<ul>
+<li class="chapter" data-level="13.11" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#getting-the-data-ready-5"><i class="fa fa-check"></i><b>13.11</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="13.12" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#stergms"><i class="fa fa-check"></i><b>13.12</b> STERGMs</a>
+<ul>
+<li class="chapter" data-level="13.12.1" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-1-just-edges"><i class="fa fa-check"></i><b>13.12.1</b> Model 1: Just Edges</a></li>
+<li class="chapter" data-level="13.12.2" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-2-edges-homophily-and-nodefactor"><i class="fa fa-check"></i><b>13.12.2</b> Model 2: Edges, Homophily and Nodefactor</a></li>
+<li class="chapter" data-level="13.12.3" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-3-edges-nodefactor-and-seating"><i class="fa fa-check"></i><b>13.12.3</b> Model 3: Edges, Nodefactor, and Seating</a></li>
+<li class="chapter" data-level="13.12.4" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-4-adding-gwesp-to-the-model"><i class="fa fa-check"></i><b>13.12.4</b> Model 4: Adding GWESP to the Model</a></li>
+</ul></li>
+<li class="chapter" data-level="13.13" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#checking-model-fit"><i class="fa fa-check"></i><b>13.13</b> Checking Model Fit</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><i class="fa fa-check"></i>13, Part 3. Two-mode Network Models</a>
+<ul>
+<li class="chapter" data-level="13.14" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#affiliation-data"><i class="fa fa-check"></i><b>13.14</b> Affiliation Data</a></li>
+<li class="chapter" data-level="13.15" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#ergm-on-a-two-mode-network"><i class="fa fa-check"></i><b>13.15</b> ERGM on a Two-mode Network</a>
+<ul>
+<li class="chapter" data-level="13.15.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#edges"><i class="fa fa-check"></i><b>13.15.1</b> Edges</a></li>
+<li class="chapter" data-level="13.15.2" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#adjusting-for-structural-issues-gender-and-grade-specific-clubs"><i class="fa fa-check"></i><b>13.15.2</b> Adjusting for Structural Issues: Gender and Grade Specific Clubs</a></li>
+</ul></li>
+<li class="chapter" data-level="13.16" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#second-mode-terms"><i class="fa fa-check"></i><b>13.16</b> Second Mode Terms</a>
+<ul>
+<li class="chapter" data-level="13.16.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#nodefactor"><i class="fa fa-check"></i><b>13.16.1</b> Nodefactor</a></li>
+<li class="chapter" data-level="13.16.2" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#homophily"><i class="fa fa-check"></i><b>13.16.2</b> Homophily</a></li>
+</ul></li>
+<li class="chapter" data-level="13.17" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#first-mode-terms"><i class="fa fa-check"></i><b>13.17</b> First Mode Terms</a></li>
+<li class="chapter" data-level="13.18" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#clustering"><i class="fa fa-check"></i><b>13.18</b> Clustering</a></li>
+<li class="chapter" data-level="13.19" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#two-mode-longitudinal-networks"><i class="fa fa-check"></i><b>13.19</b> Two-mode Longitudinal Networks</a>
+<ul>
+<li class="chapter" data-level="13.19.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#entry-and-exit-of-nodes"><i class="fa fa-check"></i><b>13.19.1</b> Entry and Exit of Nodes</a></li>
+</ul></li>
+<li class="chapter" data-level="13.20" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#stergm-on-a-two-mode-network"><i class="fa fa-check"></i><b>13.20</b> STERGM on a Two-mode Network</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html"><i class="fa fa-check"></i>13, Part 4. Relational Event Models</a>
+<ul>
+<li class="chapter" data-level="13.21" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#getting-the-data-ready-6"><i class="fa fa-check"></i><b>13.21</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="13.22" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#running-initial-models"><i class="fa fa-check"></i><b>13.22</b> Running Initial Models</a>
+<ul>
+<li class="chapter" data-level="13.22.1" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#intercept-only-model"><i class="fa fa-check"></i><b>13.22.1</b> Intercept Only Model</a></li>
+<li class="chapter" data-level="13.22.2" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#adding-sender-and-receiver-effects"><i class="fa fa-check"></i><b>13.22.2</b> Adding Sender and Receiver Effects</a></li>
+<li class="chapter" data-level="13.22.3" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#adding-covariate-event-terms"><i class="fa fa-check"></i><b>13.22.3</b> Adding Covariate Event Terms</a></li>
+</ul></li>
+<li class="chapter" data-level="13.23" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#micro-rules-of-interaction"><i class="fa fa-check"></i><b>13.23</b> Micro Rules of Interaction</a></li>
+<li class="chapter" data-level="13.24" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#assessing-model-fit"><i class="fa fa-check"></i><b>13.24</b> Assessing Model Fit</a></li>
+<li class="chapter" data-level="13.25" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#comparison-to-a-second-date"><i class="fa fa-check"></i><b>13.25</b> Comparison to a Second Date</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="ch14-Network-Diffusion-R.html"><a href="ch14-Network-Diffusion-R.html"><i class="fa fa-check"></i><b>14</b> Network Diffusion</a></li>
+<li class="chapter" data-level="" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html"><i class="fa fa-check"></i>14, Part 1. Network Diffusion: Infectious Diseases</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#reading-in-data"><i class="fa fa-check"></i><b>14.1</b> Reading in Data</a></li>
+<li class="chapter" data-level="14.2" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#specifying-the-network-model"><i class="fa fa-check"></i><b>14.2</b> Specifying the Network Model</a></li>
+<li class="chapter" data-level="14.3" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#estimating-the-network-model"><i class="fa fa-check"></i><b>14.3</b> Estimating the Network Model</a></li>
+<li class="chapter" data-level="14.4" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#specifying-the-epidemic-model"><i class="fa fa-check"></i><b>14.4</b> Specifying the Epidemic Model</a></li>
+<li class="chapter" data-level="14.5" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#running-simulations"><i class="fa fa-check"></i><b>14.5</b> Running Simulations</a>
+<ul>
+<li class="chapter" data-level="14.5.1" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#running-baseline-model"><i class="fa fa-check"></i><b>14.5.1</b> Running Baseline Model</a></li>
+<li class="chapter" data-level="14.5.2" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#varying-network-features"><i class="fa fa-check"></i><b>14.5.2</b> Varying Network Features</a></li>
+<li class="chapter" data-level="14.5.3" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#varying-epidemic-model"><i class="fa fa-check"></i><b>14.5.3</b> Varying Epidemic Model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html"><i class="fa fa-check"></i>14, Part 2. Social Diffusion Processes</a>
+<ul>
+<li class="chapter" data-level="14.6" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#setting-up-the-session-4"><i class="fa fa-check"></i><b>14.6</b> Setting up the Session</a></li>
+<li class="chapter" data-level="14.7" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simple-diffusion-models"><i class="fa fa-check"></i><b>14.7</b> Simple Diffusion Models</a></li>
+<li class="chapter" data-level="14.8" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#threshold-models-of-diffusion"><i class="fa fa-check"></i><b>14.8</b> Threshold Models of Diffusion</a>
+<ul>
+<li class="chapter" data-level="14.8.1" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simulating-diffusion-processes-using-the-netdiffuser-package"><i class="fa fa-check"></i><b>14.8.1</b> Simulating Diffusion Processes using the netdiffuseR Package</a></li>
+<li class="chapter" data-level="14.8.2" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#comparing-diffusion-under-different-network-and-adoption-behavior-conditions"><i class="fa fa-check"></i><b>14.8.2</b> Comparing Diffusion under Different Network and Adoption Behavior Conditions</a></li>
+<li class="chapter" data-level="14.8.3" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simulations-using-multiple-runs"><i class="fa fa-check"></i><b>14.8.3</b> Simulations using Multiple Runs</a></li>
+</ul></li>
+<li class="chapter" data-level="14.9" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#working-with-empirical-data"><i class="fa fa-check"></i><b>14.9</b> Working with Empirical Data</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html"><i class="fa fa-check"></i><b>15</b> Social Influence: Coevolution of Networks and Behaviors</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#reading-in-classroom-data"><i class="fa fa-check"></i><b>15.1</b> Reading in Classroom Data</a></li>
+<li class="chapter" data-level="15.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#siena-model-setup"><i class="fa fa-check"></i><b>15.2</b> SIENA Model Setup</a></li>
+<li class="chapter" data-level="15.3" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification"><i class="fa fa-check"></i><b>15.3</b> Model Specification</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-behavioral-model"><i class="fa fa-check"></i><b>15.3.1</b> Model Specification: Behavioral Model</a></li>
+<li class="chapter" data-level="15.3.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-network-model"><i class="fa fa-check"></i><b>15.3.2</b> Model Specification: Network Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-estimation"><i class="fa fa-check"></i><b>15.4</b> Model Estimation</a></li>
+<li class="chapter" data-level="15.5" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpretation"><i class="fa fa-check"></i><b>15.5</b> Interpretation</a>
+<ul>
+<li class="chapter" data-level="15.5.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpreting-network-model"><i class="fa fa-check"></i><b>15.5.1</b> Interpreting Network Model</a></li>
+<li class="chapter" data-level="15.5.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpreting-behavioral-model"><i class="fa fa-check"></i><b>15.5.2</b> Interpreting Behavioral Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.6" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#checking-model-fit-1"><i class="fa fa-check"></i><b>15.6</b> Checking Model Fit</a></li>
+<li class="chapter" data-level="15.7" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#example-with-3-time-periods"><i class="fa fa-check"></i><b>15.7</b> Example with 3 Time Periods</a>
+<ul>
+<li class="chapter" data-level="15.7.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-and-estimation"><i class="fa fa-check"></i><b>15.7.1</b> Model Specification and Estimation</a></li>
+<li class="chapter" data-level="15.7.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#time-heterogeneity"><i class="fa fa-check"></i><b>15.7.2</b> Time Heterogeneity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="how-to-cite.html"><a href="how-to-cite.html"><i class="fa fa-check"></i>How to Cite</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Network Analysis: Integrating Social Network Theory, Method, and Application with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ch13-Relational-Event-Models-R" class="section level1 unnumbered hasAnchor">
+<h1>13, Part 4. Relational Event Models<a href="ch13-Relational-Event-Models-R.html#ch13-Relational-Event-Models-R" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This is the fourth tutorial for Chapter 13 on statistical network models. The first tutorial covered the case of <a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#ch13-Cross-Sectional-Network-Models-ERGM-R">cross-sectional network data</a>. The second tutorial covered statistical models for discrete, <a href="ch13-Longitudinal-Network-Models-STERGM-R.html#ch13-Longitudinal-Network-Models-STERGM-R">longitudinal networks</a>. The third tutorial covered statistical models for <a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#ch13-Two-mode-Network-Models-ERGM-STERGM-R">two-mode networks</a>. Here, we will walk through relational event models, appropriate for continuous-time network data. Relational event models are based on micro-interaction data. The model assumes that there is time-stamped (or at least ordered) information on the interactions between a set of actors. This shifts the focus from discrete relationships (friend, advice, etc.) to the specific interactions between actors in a setting. The goal of the model is to predict what the next event is likely to be, based on the interactional tendencies, or rules, of behavior in the setting. Compare this to STERGM, where the goal is to predict the adding/dropping of ties from one period to the next, based on discretely defined networks.</p>
+<p>Our data for this tutorial are based on streaming interaction data collected by Daniel McFarland on students in classrooms. Time-stamped interactions in each classroom were recorded, with information on the 'sender' and 'receiver' of the interaction, as well as the nature of the interaction. Interactions could be social or task-based, for example, although we focus just on social interactions in this tutorial. Data were collected across a large number of classrooms and days. See also <a href="ch3-Dynamic-Network-Data-R.html#ch3-Dynamic-Network-Data-R">Chapter 3, Part 2</a> (data processing for dynamic network data) and <a href="ch5-Network-Visualization-R.html#ch5-Network-Visualization-R">Chapter 5</a> (on visualization). Here we consider one classroom on two different days; both days are in the second semester of the year. We pick two days as a means of comparison. The first day was relatively uneventful and class was orderly. The second day was different, as there was a much higher rate of sanctioning behavior (i.e., disagreements between students and teacher on what was going on in the classroom). By examining two days, we see if the interactional signatures of order and disorder are different.</p>
+<div id="getting-the-data-ready-6" class="section level2 hasAnchor" number="13.21">
+<h2><span class="header-section-number">13.21</span> Getting the Data Ready<a href="ch13-Relational-Event-Models-R.html#getting-the-data-ready-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let’s begin by loading the main packages and getting the data ready to run the models.</p>
+<div class="sourceCode" id="cb1557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1557-1"><a href="ch13-Relational-Event-Models-R.html#cb1557-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(relevent)</span>
+<span id="cb1557-2"><a href="ch13-Relational-Event-Models-R.html#cb1557-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sna)</span></code></pre></div>
+<p><strong>relevent</strong> <span class="citation">(Butts 2023a)</span> contains the functions to run relational event models.</p>
+<p>Now, let's read in the interactional data for the first date. This is a data set reporting on the social interactions, i.e. talking, between individuals in the classroom (specifically classroom 182). This will serve as the outcome of interest, as we will predict what interactional features make certain events more likely to occur than others.</p>
+<div class="sourceCode" id="cb1558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1558-1"><a href="ch13-Relational-Event-Models-R.html#cb1558-1" aria-hidden="true" tabindex="-1"></a>url1 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/class_interactions_date1.txt&quot;</span></span>
+<span id="cb1558-2"><a href="ch13-Relational-Event-Models-R.html#cb1558-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1558-3"><a href="ch13-Relational-Event-Models-R.html#cb1558-3" aria-hidden="true" tabindex="-1"></a>interactions_date1 <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> url1, <span class="at">header =</span> T)</span></code></pre></div>
+<p>Here we take a look at the first six rows of the data, for the main variables of interest: <code>send_col</code> (id of sender), <code>receive_col</code> (id of receiver), and <code>time_estimate_col</code> (time that interaction occurred).</p>
+<div class="sourceCode" id="cb1559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1559-1"><a href="ch13-Relational-Event-Models-R.html#cb1559-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(interactions_date1[, <span class="fu">c</span>(<span class="st">&quot;send_col&quot;</span>, <span class="st">&quot;receive_col&quot;</span>, <span class="st">&quot;time_estimate_col&quot;</span>)])</span></code></pre></div>
+<pre><code>##   send_col receive_col time_estimate_col
+## 1       11           2             0.143
+## 2        2          11             0.286
+## 3        2           5             0.429
+## 4        5           2             0.571
+## 5        9           8             0.714
+## 6        8           9             0.857</code></pre>
+<p>Each row corresponds to an interaction between sender and receiver. For example, we can see that the third social interaction in this class period involved node 2 talking to node 5.</p>
+<p>We need to manipulate the data a bit to get it in a form that the relational event model can use. For example, the events must be sorted in sequential order before we run any models. In this case, this is already done, but if it were not we would have to sort our data appropriately. Additionally, each interaction must also happen at a unique time period. The models are based on sequences of interactions, so a distinct order of events must be possible to establish. This means that relational event models are not so appropriate in cases where there are a large number of simultaneous events. For the sake of simplicity, we will remove all interactions directed from the teacher to all students or from all students to the teacher.</p>
+<p>We can use the <code>to_all_col</code> and <code>from_all_col</code> to exclude these cases. <code>to_all_col</code> is equal to 1 if node i broadcasts to all other nodes simultaneously, while <code>from_all_col</code> is equal to 1 if node j receives from all nodes simultaneously. We will only keep those interactions where those variables are equal to 0 (i.e., i is not broadcasting to everyone in the class).</p>
+<div class="sourceCode" id="cb1561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1561-1"><a href="ch13-Relational-Event-Models-R.html#cb1561-1" aria-hidden="true" tabindex="-1"></a>not_to_all <span class="ot">&lt;-</span> interactions_date1<span class="sc">$</span>to_all_col <span class="sc">==</span> <span class="dv">0</span></span>
+<span id="cb1561-2"><a href="ch13-Relational-Event-Models-R.html#cb1561-2" aria-hidden="true" tabindex="-1"></a>not_from_all <span class="ot">&lt;-</span> interactions_date1<span class="sc">$</span>from_all_col <span class="sc">==</span> <span class="dv">0</span></span>
+<span id="cb1561-3"><a href="ch13-Relational-Event-Models-R.html#cb1561-3" aria-hidden="true" tabindex="-1"></a>interactions_date1 <span class="ot">&lt;-</span> interactions_date1[not_to_all <span class="sc">&amp;</span> not_from_all, ]</span></code></pre></div>
+<p>Now, in order to run the model, we need to create an edgelist (as a matrix object), where the first column is the time of the event, the second column is the sender and the third column is the receiver. Again, the events must be ordered sequentially.</p>
+<div class="sourceCode" id="cb1562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1562-1"><a href="ch13-Relational-Event-Models-R.html#cb1562-1" aria-hidden="true" tabindex="-1"></a>edgelist_date1 <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(interactions_date1[, <span class="fu">c</span>(<span class="st">&quot;time_estimate_col&quot;</span>,</span>
+<span id="cb1562-2"><a href="ch13-Relational-Event-Models-R.html#cb1562-2" aria-hidden="true" tabindex="-1"></a>                                                   <span class="st">&quot;send_col&quot;</span>, </span>
+<span id="cb1562-3"><a href="ch13-Relational-Event-Models-R.html#cb1562-3" aria-hidden="true" tabindex="-1"></a>                                                   <span class="st">&quot;receive_col&quot;</span>)])</span></code></pre></div>
+<p>As a final data manipulation, we need to add a row to the end of the edgelist, showing the stop time where no more interactions are possible. Let's look at the end of the data frame:</p>
+<div class="sourceCode" id="cb1563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1563-1"><a href="ch13-Relational-Event-Models-R.html#cb1563-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(edgelist_date1)</span></code></pre></div>
+<pre><code>##     time_estimate_col send_col receive_col
+## 274            42.528       11          17
+## 275            42.623       17          11
+## 276            42.717        3          11
+## 277            42.811       11           3
+## 278            42.906        7           8
+## 279            43.000        8           7</code></pre>
+<p>We can see that the last social interaction occurred at minute 43 in the class period. We will set the end of the interactional period at 43.10 (i.e., 6 seconds after the final interaction). To do this we add a row to the end of the edgelist, with the end time and then two NA values (for sender and receiver).</p>
+<div class="sourceCode" id="cb1565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1565-1"><a href="ch13-Relational-Event-Models-R.html#cb1565-1" aria-hidden="true" tabindex="-1"></a>edgelist_date1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(edgelist_date1, <span class="fu">c</span>(<span class="fl">43.10</span>, <span class="cn">NA</span>, <span class="cn">NA</span>))</span></code></pre></div>
+<p>Now, we will read in some attribute data, as we want to use information on gender, grade, etc. as predictors in the model.</p>
+<div class="sourceCode" id="cb1566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1566-1"><a href="ch13-Relational-Event-Models-R.html#cb1566-1" aria-hidden="true" tabindex="-1"></a>url2 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/class_attributes.txt&quot;</span></span>
+<span id="cb1566-2"><a href="ch13-Relational-Event-Models-R.html#cb1566-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1566-3"><a href="ch13-Relational-Event-Models-R.html#cb1566-3" aria-hidden="true" tabindex="-1"></a>attributes <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> url2, <span class="at">header =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb1567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1567-1"><a href="ch13-Relational-Event-Models-R.html#cb1567-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(attributes)</span></code></pre></div>
+<pre><code>##   id gnd grd rce
+## 1  1   2  10   4
+## 2  2   2  10   3
+## 3  3   2  10   3
+## 4  4   2  10   3
+## 5  5   2  10   3
+## 6  6   1  10   4</code></pre>
+<p>There are four variables: <code>id</code>, <code>gnd</code> (gender: 1 = male; 2 = female); <code>grd</code> (grade: 10 = 10; 11 = 11; 16 = teacher); <code>rce</code> (race: 3 = Black; 4 = White).</p>
+<p>The relevent package requires that a researcher construct the node-level predictors as distinct columns (as opposed to using a <code>factor()</code> function within the formula). So, we will recode our variables to create the desired dummy variables of interest. In this case, we will create a predictor for whether the node is a teacher or not and for gender. We also need to create a term for the intercept. We will utilize the <code>recode()</code> function in the <strong>car</strong> package.</p>
+<div class="sourceCode" id="cb1569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1569-1"><a href="ch13-Relational-Event-Models-R.html#cb1569-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code></pre></div>
+<p>We first will create a variable for the intercept, which is a simple 1 for all nodes in the class.</p>
+<div class="sourceCode" id="cb1570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1570-1"><a href="ch13-Relational-Event-Models-R.html#cb1570-1" aria-hidden="true" tabindex="-1"></a>attributes<span class="sc">$</span>intercept <span class="ot">&lt;-</span> <span class="dv">1</span></span></code></pre></div>
+<p>Now, we create a variable called <code>male</code> that is a 0 if <code>gnd</code> is equal to 2 (female) and 1 if <code>gnd</code> is equal to 1 (male).</p>
+<div class="sourceCode" id="cb1571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1571-1"><a href="ch13-Relational-Event-Models-R.html#cb1571-1" aria-hidden="true" tabindex="-1"></a>attributes<span class="sc">$</span>male <span class="ot">&lt;-</span> <span class="fu">recode</span>(attributes<span class="sc">$</span>gnd, <span class="at">as.factor =</span> F, <span class="st">&quot;1 = 1; 2 = 0&quot;</span>)</span></code></pre></div>
+<p>And here we do the same thing for <code>grd</code>, creating a binary variable called <code>teacher</code>. <code>teacher</code> is equal to 1 if they are a teacher (<code>grd</code> = 16) and 0 otherwise.</p>
+<div class="sourceCode" id="cb1572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1572-1"><a href="ch13-Relational-Event-Models-R.html#cb1572-1" aria-hidden="true" tabindex="-1"></a>attributes<span class="sc">$</span>teacher <span class="ot">&lt;-</span> <span class="fu">recode</span>(attributes<span class="sc">$</span>grd, <span class="at">as.factor =</span> F, </span>
+<span id="cb1572-2"><a href="ch13-Relational-Event-Models-R.html#cb1572-2" aria-hidden="true" tabindex="-1"></a>                             <span class="st">&quot;16 = 1; NA = NA; else = 0&quot;</span>)</span></code></pre></div>
+<p>Finally, it will also be useful to have the size of the class handy. We can calculate that as the number of rows in the attribute data frame.</p>
+<div class="sourceCode" id="cb1573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1573-1"><a href="ch13-Relational-Event-Models-R.html#cb1573-1" aria-hidden="true" tabindex="-1"></a>class_size <span class="ot">&lt;-</span> <span class="fu">nrow</span>(attributes)</span></code></pre></div>
+</div>
+<div id="running-initial-models" class="section level2 hasAnchor" number="13.22">
+<h2><span class="header-section-number">13.22</span> Running Initial Models<a href="ch13-Relational-Event-Models-R.html#running-initial-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Relational event modeling is based on the logic of hazard models (or event history models), where the model predicts the risk of an event occurring (i.e., the hazard) as a function of different kind of interactional terms. There are a number of terms that we can include, including terms for baseline node effects (e.g., girls interact more than boys). We can also include terms that capture more micro-dynamics. These are labeled p-shifts, or participation shifts, and are only based on the previous event in the sequence. For example, if A talks to B, then we might expect the very next event to be B talking to A. The model allows us to include these different kinds of terms as a means of seeing what rules govern the interactions in the case of interest.</p>
+<p>We are now in a position to run an initial relational event model. The function is <code>rem.dyad()</code>. The main arguments are:</p>
+<ul>
+<li>edgelist = input edgelist in the form of time of event, sender, receiver</li>
+<li>n = size of network</li>
+<li>effects = vector with names of effects to be included in the model</li>
+<li>covar = list of covariates that must correspond to the terms specified in effects</li>
+<li>ordinal = T/F; T if data are ordinal (ordered but without specific time stamps); F if data include time specific information for each event</li>
+</ul>
+<div id="intercept-only-model" class="section level3 hasAnchor" number="13.22.1">
+<h3><span class="header-section-number">13.22.1</span> Intercept Only Model<a href="ch13-Relational-Event-Models-R.html#intercept-only-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Our first model will be very simple and just includes an intercept, capturing the baseline rate for events to occur. We will set the effects to CovSnd. CovSnd is a basic sender effect, in this case initiating social interactions with others. We use the covar option to include specific terms for CovSnd. In this case we include the intercept (so all nodes are assumed to initiate interactions at the same rate). We set ordinal to FALSE as the data has time stamped information. Let's also set a seed to make it easier to replicate.</p>
+<div class="sourceCode" id="cb1574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1574-1"><a href="ch13-Relational-Event-Models-R.html#cb1574-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1000</span>) </span>
+<span id="cb1574-2"><a href="ch13-Relational-Event-Models-R.html#cb1574-2" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">rem.dyad</span>(<span class="at">edgelist =</span> edgelist_date1, <span class="at">n =</span> class_size, </span>
+<span id="cb1574-3"><a href="ch13-Relational-Event-Models-R.html#cb1574-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">effects =</span> <span class="fu">c</span>(<span class="st">&quot;CovSnd&quot;</span>), </span>
+<span id="cb1574-4"><a href="ch13-Relational-Event-Models-R.html#cb1574-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">covar =</span> <span class="fu">list</span>(<span class="at">CovSnd =</span> attributes<span class="sc">$</span>intercept), </span>
+<span id="cb1574-5"><a href="ch13-Relational-Event-Models-R.html#cb1574-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">ordinal =</span> <span class="cn">FALSE</span>, <span class="at">hessian =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>And now we look at the results:</p>
+<div class="sourceCode" id="cb1575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1575-1"><a href="ch13-Relational-Event-Models-R.html#cb1575-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code></pre></div>
+<pre><code>## Relational Event Model (Temporal Likelihood)
+## 
+##           Estimate   Std.Err Z value  Pr(&gt;|z|)    
+## CovSnd.1 -4.057353  0.066213 -61.277 &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Null deviance: 2306.34 on 228 degrees of freedom
+## Residual deviance: 2306.34 on 228 degrees of freedom
+##  Chi-square: -3.830135e-05 on 0 degrees of freedom, asymptotic p-value 1 
+## AIC: 2308.34 AICC: 2308.357 BIC: 2311.769</code></pre>
+<p>The coefficient for the intercept (CovSnd.1) isn't all that interesting in itself, but it is important to understand what the coefficients mean (and how we can manipulate them) before moving to more complicated models. The first thing to note is that if we exponentiate this coefficient, we get the hazard of any event (i talking to j) occurring. Higher hazards mean the risk for an event occurring is higher. Second, if we multiple the hazard rate by the number of possible node pairs who could interact in a given moment, n * (n - 1), we should get the expected number of interactions occurring per minute in the classroom. Finally, if we take the inverse of that (1 / number of interactions per minute), we get the expected amount of time between events, or the wait time between events.</p>
+<div class="sourceCode" id="cb1577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1577-1"><a href="ch13-Relational-Event-Models-R.html#cb1577-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">/</span> (<span class="dv">18</span> <span class="sc">*</span> <span class="dv">17</span> <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fl">4.057353</span>))</span></code></pre></div>
+<pre><code>## [1] 0.1889577</code></pre>
+<p>The expected time between any event occurring is .189 standardized minutes (or .189 * 60 = 11.34 seconds). And let's check this against the real data. We will take the total number of minutes for that class and divide that by the total number of interactions that occurred. We will define the total number of minutes as 43.1, the end time set above.</p>
+<div class="sourceCode" id="cb1579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1579-1"><a href="ch13-Relational-Event-Models-R.html#cb1579-1" aria-hidden="true" tabindex="-1"></a>total_classtime <span class="ot">&lt;-</span> <span class="fl">43.1</span></span></code></pre></div>
+<p>We now define the total number of interactions. We will take the number of rows in the edgelist and subtract 1, as the last row is the stop time (not an interaction).</p>
+<div class="sourceCode" id="cb1580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1580-1"><a href="ch13-Relational-Event-Models-R.html#cb1580-1" aria-hidden="true" tabindex="-1"></a>num_interations <span class="ot">&lt;-</span> <span class="fu">nrow</span>(edgelist_date1) <span class="sc">-</span> <span class="dv">1</span> </span>
+<span id="cb1580-2"><a href="ch13-Relational-Event-Models-R.html#cb1580-2" aria-hidden="true" tabindex="-1"></a>time_between_events <span class="ot">&lt;-</span> total_classtime <span class="sc">/</span> num_interations</span></code></pre></div>
+<div class="sourceCode" id="cb1581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1581-1"><a href="ch13-Relational-Event-Models-R.html#cb1581-1" aria-hidden="true" tabindex="-1"></a>time_between_events</span></code></pre></div>
+<pre><code>## [1] 0.1890351</code></pre>
+<p>We can see the estimate from the model approximates the raw data quite well.</p>
+</div>
+<div id="adding-sender-and-receiver-effects" class="section level3 hasAnchor" number="13.22.2">
+<h3><span class="header-section-number">13.22.2</span> Adding Sender and Receiver Effects<a href="ch13-Relational-Event-Models-R.html#adding-sender-and-receiver-effects" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can do more substantively interesting things by incorporating the attributes of the nodes into the model. Let's first add a term for gender (coded as male = 1 and female = 0). We will add a sender effect, capturing whether males initiate fewer or greater interactions than females, as well as a receiver effect, capturing whether males receive fewer/greater interactions than females.</p>
+<p>Here we create two matrices, one for sending and one for receiving. Each matrix will include the covariates we want to include for the sending or receiving effects. We start with the sender covariate matrix, where we will include variables for the intercept (it still must be included) and male.</p>
+<div class="sourceCode" id="cb1583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1583-1"><a href="ch13-Relational-Event-Models-R.html#cb1583-1" aria-hidden="true" tabindex="-1"></a>CovSnd1 <span class="ot">&lt;-</span> <span class="fu">cbind</span>(attributes[, <span class="fu">c</span>(<span class="st">&quot;intercept&quot;</span>, <span class="st">&quot;male&quot;</span>)])</span></code></pre></div>
+<p>And now we do the same thing for the receiver covariate matrix, including a variable for male (note that no intercept term is included here). Note that even though we already had male as a sender effect we need to include it separately as part of the receiver covariate matrix if we want to specify it as a receiver effect.</p>
+<div class="sourceCode" id="cb1584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1584-1"><a href="ch13-Relational-Event-Models-R.html#cb1584-1" aria-hidden="true" tabindex="-1"></a>CovRec1 <span class="ot">&lt;-</span> <span class="fu">cbind</span>(attributes[, <span class="fu">c</span>(<span class="st">&quot;male&quot;</span>)])</span></code></pre></div>
+<p>And now we are ready to estimate the model. The only difference from before is that we include "CovRec" in the effects and <code>CovRec1</code> as part of the covariate (covar) list.</p>
+<div class="sourceCode" id="cb1585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1585-1"><a href="ch13-Relational-Event-Models-R.html#cb1585-1" aria-hidden="true" tabindex="-1"></a>mod2a <span class="ot">&lt;-</span> <span class="fu">rem.dyad</span>(edgelist_date1, <span class="at">n =</span> class_size, </span>
+<span id="cb1585-2"><a href="ch13-Relational-Event-Models-R.html#cb1585-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">effects =</span> <span class="fu">c</span>(<span class="st">&quot;CovSnd&quot;</span>, <span class="st">&quot;CovRec&quot;</span>), </span>
+<span id="cb1585-3"><a href="ch13-Relational-Event-Models-R.html#cb1585-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">covar =</span> <span class="fu">list</span>(<span class="at">CovSnd =</span> CovSnd1, <span class="at">CovRec =</span> CovRec1), </span>
+<span id="cb1585-4"><a href="ch13-Relational-Event-Models-R.html#cb1585-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ordinal =</span> <span class="cn">FALSE</span>, <span class="at">hessian =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1586-1"><a href="ch13-Relational-Event-Models-R.html#cb1586-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod2a)</span></code></pre></div>
+<pre><code>## Relational Event Model (Temporal Likelihood)
+## 
+##           Estimate   Std.Err  Z value  Pr(&gt;|z|)    
+## CovSnd.1 -3.760406  0.084699 -44.3973 &lt; 2.2e-16 ***
+## CovSnd.2 -0.601249  0.160226  -3.7525 0.0001751 ***
+## CovRec.1 -0.460132  0.154017  -2.9875 0.0028123 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Null deviance: 2306.34 on 228 degrees of freedom
+## Residual deviance: 2282.406 on 226 degrees of freedom
+##  Chi-square: 23.93399 on 2 degrees of freedom, asymptotic p-value 6.350391e-06 
+## AIC: 2288.406 AICC: 2288.513 BIC: 2298.694</code></pre>
+<p>We can see that the names of the variables are difficult to interpret. So, let's create a vector of more useful names, and put that on the outputted object.</p>
+<div class="sourceCode" id="cb1588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1588-1"><a href="ch13-Relational-Event-Models-R.html#cb1588-1" aria-hidden="true" tabindex="-1"></a>coef_names2a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Intercept&quot;</span>, <span class="st">&quot;Sender_male&quot;</span>, <span class="st">&quot;Receiver_male&quot;</span>)</span></code></pre></div>
+<p>And now we put those names on the coef part of the rem object and redo the summary of the model.</p>
+<div class="sourceCode" id="cb1589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1589-1"><a href="ch13-Relational-Event-Models-R.html#cb1589-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mod2a<span class="sc">$</span>coef) <span class="ot">&lt;-</span> coef_names2a</span></code></pre></div>
+<div class="sourceCode" id="cb1590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1590-1"><a href="ch13-Relational-Event-Models-R.html#cb1590-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod2a)</span></code></pre></div>
+<pre><code>## Relational Event Model (Temporal Likelihood)
+## 
+##                Estimate   Std.Err  Z value  Pr(&gt;|z|)    
+## Intercept     -3.760406  0.084699 -44.3973 &lt; 2.2e-16 ***
+## Sender_male   -0.601249  0.160226  -3.7525 0.0001751 ***
+## Receiver_male -0.460132  0.154017  -2.9875 0.0028123 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Null deviance: 2306.34 on 228 degrees of freedom
+## Residual deviance: 2282.406 on 226 degrees of freedom
+##  Chi-square: 23.93399 on 2 degrees of freedom, asymptotic p-value 6.350391e-06 
+## AIC: 2288.406 AICC: 2288.513 BIC: 2298.694</code></pre>
+<p>The summarized output now has more easily interpretable names for the variables. Let's go ahead and interpret the coefficient on sender_male. We can start by interpreting the sender_male coefficient in terms of hazards. By exponentiating the coefficient, we get the relative hazard for males to initiate the next interaction compared to females. exp(-0.601249) = 0.548. This means that an event with males initiating has a hazard that is 0.548 times lower than an event with females initiating.</p>
+<p>Hazards themselves are bit hard to interpret. As an alternative, we can calculate mean wait times, or the expected time between events. Let's first calculate the expected time between two male-male events (where there is a male sender and a male receiver). Note that this calculation must incorporate all of the coefficients (intercept, Sender_male and Receiver_male). The calculation is the same as we did above with the intercept only model, where the expected wait is equal to: 1 / (dyads_at_risk * hazard), where dyads_at_risk is the number of different ways that the event could occur, in this case the number of possible events that could involve two males.</p>
+<p>Let's do a quick table to see how many males are in the classroom.</p>
+<div class="sourceCode" id="cb1592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1592-1"><a href="ch13-Relational-Event-Models-R.html#cb1592-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(attributes<span class="sc">$</span>male)</span></code></pre></div>
+<pre><code>## 
+##  0  1 
+## 12  6</code></pre>
+<p>We can see that there are 12 females and 6 males. This means that there are 6 * 5 different ways that we could have a boy as a sender and a boy as a receiver. We will use that in the calculation below:</p>
+<div class="sourceCode" id="cb1594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1594-1"><a href="ch13-Relational-Event-Models-R.html#cb1594-1" aria-hidden="true" tabindex="-1"></a>dyads_at_risk <span class="ot">&lt;-</span> <span class="dv">6</span> <span class="sc">*</span> <span class="dv">5</span></span></code></pre></div>
+<p>Now we calculate the hazard. We take the coefficients, multiply them by the vector of input values (here setting Sender_male and Receiver_male to 1), sum it up and then exponentiate it.</p>
+<div class="sourceCode" id="cb1595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1595-1"><a href="ch13-Relational-Event-Models-R.html#cb1595-1" aria-hidden="true" tabindex="-1"></a>inputs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">intercept =</span> <span class="dv">1</span>, <span class="at">Sender_male =</span> <span class="dv">1</span>, <span class="at">Receiver_male =</span> <span class="dv">1</span>)</span>
+<span id="cb1595-2"><a href="ch13-Relational-Event-Models-R.html#cb1595-2" aria-hidden="true" tabindex="-1"></a>hazard_male_male <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">sum</span>(mod2a<span class="sc">$</span>coef <span class="sc">*</span> inputs))</span></code></pre></div>
+<div class="sourceCode" id="cb1596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1596-1"><a href="ch13-Relational-Event-Models-R.html#cb1596-1" aria-hidden="true" tabindex="-1"></a>hazard_male_male</span></code></pre></div>
+<pre><code>## [1] 0.008052391</code></pre>
+<p>And now to calculate wait time:</p>
+<div class="sourceCode" id="cb1598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1598-1"><a href="ch13-Relational-Event-Models-R.html#cb1598-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">/</span> (dyads_at_risk <span class="sc">*</span> hazard_male_male)</span></code></pre></div>
+<pre><code>## [1] 4.139557</code></pre>
+<p>This means that we would expect to wait 4.14 minutes between events that involve two boys. Now, let's do the same thing for girl-girl interactions. Here we set Sender_male to 0 and Receiver_male to 0.</p>
+<div class="sourceCode" id="cb1600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1600-1"><a href="ch13-Relational-Event-Models-R.html#cb1600-1" aria-hidden="true" tabindex="-1"></a>inputs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">intercept =</span> <span class="dv">1</span>, <span class="at">Sender_male =</span> <span class="dv">0</span>, <span class="at">Receiver_male =</span> <span class="dv">0</span>)</span></code></pre></div>
+<p>We define the dyads at risk to be 12 * 11 as there are 12 females in the class.</p>
+<div class="sourceCode" id="cb1601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1601-1"><a href="ch13-Relational-Event-Models-R.html#cb1601-1" aria-hidden="true" tabindex="-1"></a>dyads_at_risk <span class="ot">&lt;-</span> <span class="dv">12</span> <span class="sc">*</span> <span class="dv">11</span></span></code></pre></div>
+<p>Here we calculate the hazard.</p>
+<div class="sourceCode" id="cb1602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1602-1"><a href="ch13-Relational-Event-Models-R.html#cb1602-1" aria-hidden="true" tabindex="-1"></a>hazard_female_female <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">sum</span>(mod2a<span class="sc">$</span>coef <span class="sc">*</span> inputs))</span></code></pre></div>
+<div class="sourceCode" id="cb1603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1603-1"><a href="ch13-Relational-Event-Models-R.html#cb1603-1" aria-hidden="true" tabindex="-1"></a>hazard_female_female</span></code></pre></div>
+<pre><code>## [1] 0.02327429</code></pre>
+<p>We can see that the hazard for female-female events is higher than male-male events. And now for the wait time.</p>
+<div class="sourceCode" id="cb1605"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1605-1"><a href="ch13-Relational-Event-Models-R.html#cb1605-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">/</span> (dyads_at_risk <span class="sc">*</span> hazard_female_female)</span></code></pre></div>
+<pre><code>## [1] 0.325499</code></pre>
+<p>We can see also that the wait time between female-female events is much lower. This is the case both because there are more females in the class and because males have a lower hazard of taking part in social interactions.</p>
+<p>Now, let's add our teacher variable to the model. This is accomplished by creating new CovSnd and CovRec matrices that include the teacher variable.</p>
+<div class="sourceCode" id="cb1607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1607-1"><a href="ch13-Relational-Event-Models-R.html#cb1607-1" aria-hidden="true" tabindex="-1"></a>CovSnd2 <span class="ot">&lt;-</span> <span class="fu">cbind</span>(attributes[, <span class="fu">c</span>(<span class="st">&quot;intercept&quot;</span>, <span class="st">&quot;male&quot;</span>, <span class="st">&quot;teacher&quot;</span>)])</span>
+<span id="cb1607-2"><a href="ch13-Relational-Event-Models-R.html#cb1607-2" aria-hidden="true" tabindex="-1"></a>CovRec2 <span class="ot">&lt;-</span> <span class="fu">cbind</span>(attributes[, <span class="fu">c</span>(<span class="st">&quot;male&quot;</span>, <span class="st">&quot;teacher&quot;</span>)])</span></code></pre></div>
+<p>And now we rerun our model with the updated CovSnd and CovRec matrices.</p>
+<div class="sourceCode" id="cb1608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1608-1"><a href="ch13-Relational-Event-Models-R.html#cb1608-1" aria-hidden="true" tabindex="-1"></a>mod2b <span class="ot">&lt;-</span> <span class="fu">rem.dyad</span>(edgelist_date1, <span class="at">n =</span> class_size, </span>
+<span id="cb1608-2"><a href="ch13-Relational-Event-Models-R.html#cb1608-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">effects =</span> <span class="fu">c</span>(<span class="st">&quot;CovSnd&quot;</span>, <span class="st">&quot;CovRec&quot;</span>), </span>
+<span id="cb1608-3"><a href="ch13-Relational-Event-Models-R.html#cb1608-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">covar =</span> <span class="fu">list</span>(<span class="at">CovSnd =</span> CovSnd2, <span class="at">CovRec =</span> CovRec2),  </span>
+<span id="cb1608-4"><a href="ch13-Relational-Event-Models-R.html#cb1608-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ordinal =</span> <span class="cn">FALSE</span>, <span class="at">hessian =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Again, we can add better labels to the variable names and summarize the results.</p>
+<div class="sourceCode" id="cb1609"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1609-1"><a href="ch13-Relational-Event-Models-R.html#cb1609-1" aria-hidden="true" tabindex="-1"></a>coef_names2b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Intercept&quot;</span>, <span class="st">&quot;Sender_male&quot;</span>, <span class="st">&quot;Sender_teacher&quot;</span>,</span>
+<span id="cb1609-2"><a href="ch13-Relational-Event-Models-R.html#cb1609-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;Receiver_male&quot;</span>, <span class="st">&quot;Receiver_teacher&quot;</span>)</span>
+<span id="cb1609-3"><a href="ch13-Relational-Event-Models-R.html#cb1609-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mod2b<span class="sc">$</span>coef) <span class="ot">&lt;-</span> coef_names2b</span></code></pre></div>
+<div class="sourceCode" id="cb1610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1610-1"><a href="ch13-Relational-Event-Models-R.html#cb1610-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod2b)</span></code></pre></div>
+<pre><code>## Relational Event Model (Temporal Likelihood)
+## 
+##                   Estimate   Std.Err  Z value  Pr(&gt;|z|)    
+## Intercept        -3.759707  0.084668 -44.4054 &lt; 2.2e-16 ***
+## Sender_male      -0.483081  0.164160  -2.9427  0.003253 ** 
+## Sender_teacher   -1.132818  0.596658  -1.8986  0.057617 .  
+## Receiver_male    -0.514723  0.169125  -3.0434  0.002339 ** 
+## Receiver_teacher  0.280787  0.325987   0.8613  0.389048    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Null deviance: 2306.34 on 228 degrees of freedom
+## Residual deviance: 2276.504 on 224 degrees of freedom
+##  Chi-square: 29.83545 on 4 degrees of freedom, asymptotic p-value 5.286827e-06 
+## AIC: 2286.504 AICC: 2286.775 BIC: 2303.651</code></pre>
+<p>It looks like the teacher variables do not add much to the model. Let's compare the fit using BIC across the two models.</p>
+<div class="sourceCode" id="cb1612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1612-1"><a href="ch13-Relational-Event-Models-R.html#cb1612-1" aria-hidden="true" tabindex="-1"></a>mod2a<span class="sc">$</span>BIC <span class="sc">-</span> mod2b<span class="sc">$</span>BIC</span></code></pre></div>
+<pre><code>## [1] -4.957228</code></pre>
+<p>Given that we want lower values, the simple model (<code>mod2a</code>, which just includes gender) would appear to be the better option.</p>
+</div>
+<div id="adding-covariate-event-terms" class="section level3 hasAnchor" number="13.22.3">
+<h3><span class="header-section-number">13.22.3</span> Adding Covariate Event Terms<a href="ch13-Relational-Event-Models-R.html#adding-covariate-event-terms" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As a third kind of term, we will consider adding covariate event terms to the model. Covariate events are predictors that are based on attributes of a dyad. Here, we will add the seating structure of the class to the model. The basic idea is that nodes who are close in the classroom are more likely to talk to one another. Let's first read in the data:</p>
+<div class="sourceCode" id="cb1614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1614-1"><a href="ch13-Relational-Event-Models-R.html#cb1614-1" aria-hidden="true" tabindex="-1"></a>url3 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/class_seating_date1.txt&quot;</span></span>
+<span id="cb1614-2"><a href="ch13-Relational-Event-Models-R.html#cb1614-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1614-3"><a href="ch13-Relational-Event-Models-R.html#cb1614-3" aria-hidden="true" tabindex="-1"></a>seating_date1 <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> url3, <span class="at">header =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb1615"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1615-1"><a href="ch13-Relational-Event-Models-R.html#cb1615-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(seating_date1)</span></code></pre></div>
+<pre><code>##   ego_id alter_id
+## 1      1        7
+## 2      1        9
+## 3      1       15
+## 4      2        3
+## 5      2        5
+## 6      2       11</code></pre>
+<p>As in the previous tutorial, the data is stored as an edgelist, indicating if node i is sitting adjacent to node j. The <code>rem.dyad()</code> function requires that this information be transformed into a matrix. So, we will go ahead and create a matrix of seating, where there is a 1 if i and j are next to each other in the class and 0 otherwise. We will accomplish this by taking the seating edgelist, turning it into a directed network object, and then symmetrizing it to make it undirected (this simply fixes any mistakes in the data where i may be recorded as being next to j but j is not recorded as being next to i). We will use a 'weak' rule when symmetrizing the matrix, so if i is recorded as sitting next to j or j is recorded as sitting next to i, the matrix will have a 1 for both ij and ji. Note that the <code>symmetrize()</code> function will output a matrix by default.</p>
+<div class="sourceCode" id="cb1617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1617-1"><a href="ch13-Relational-Event-Models-R.html#cb1617-1" aria-hidden="true" tabindex="-1"></a>seating_network_date1 <span class="ot">&lt;-</span> <span class="fu">network</span>(<span class="at">x =</span> seating_date1, <span class="at">directed =</span> T, </span>
+<span id="cb1617-2"><a href="ch13-Relational-Event-Models-R.html#cb1617-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">vertices =</span> <span class="fu">data.frame</span>(<span class="at">ids =</span> <span class="dv">1</span><span class="sc">:</span>class_size)) </span>
+<span id="cb1617-3"><a href="ch13-Relational-Event-Models-R.html#cb1617-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1617-4"><a href="ch13-Relational-Event-Models-R.html#cb1617-4" aria-hidden="true" tabindex="-1"></a>seating_matrix_date1 <span class="ot">&lt;-</span> <span class="fu">symmetrize</span>(seating_network_date1, <span class="at">rule =</span> <span class="st">&quot;weak&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1618"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1618-1"><a href="ch13-Relational-Event-Models-R.html#cb1618-1" aria-hidden="true" tabindex="-1"></a>seating_matrix_date1</span></code></pre></div>
+<pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14] [,15] [,16] [,17] [,18]
+##  [1,]    0    0    0    0    0    0    1    0    1     0     0     0     0     0     1     0     0     0
+##  [2,]    0    0    1    0    1    0    0    0    0     0     1     0     0     0     0     0     1     0
+##  [3,]    0    1    0    0    1    0    0    0    0     0     1     1     0     0     0     0     1     0
+##  [4,]    0    0    0    0    0    1    0    1    0     0     0     0     0     1     0     0     0     1
+##  [5,]    0    1    1    0    0    0    0    0    0     0     1     1     0     0     0     0     1     0
+##  [6,]    0    0    0    1    0    0    0    1    0     0     0     1     0     1     0     0     0     1
+##  [7,]    1    0    0    0    0    0    0    0    1     0     0     0     0     0     1     0     0     0
+##  [8,]    0    0    0    1    0    1    0    0    0     0     0     0     0     1     0     0     0     1
+##  [9,]    1    0    0    0    0    0    1    0    0     0     0     0     0     0     1     0     0     0
+## [10,]    0    0    0    0    0    0    0    0    0     0     0     0     0     0     0     0     0     0
+## [11,]    0    1    1    0    1    0    0    0    0     0     0     0     0     0     0     0     1     0
+## [12,]    0    0    1    0    1    1    0    0    0     0     0     0     0     0     0     1     0     0
+## [13,]    0    0    0    0    0    0    0    0    0     0     0     0     0     0     0     0     0     0
+## [14,]    0    0    0    1    0    1    0    1    0     0     0     0     0     0     0     0     0     1
+## [15,]    1    0    0    0    0    0    1    0    1     0     0     0     0     0     0     0     0     0
+## [16,]    0    0    0    0    0    0    0    0    0     0     0     1     0     0     0     0     0     0
+## [17,]    0    1    1    0    1    0    0    0    0     0     1     0     0     0     0     0     0     0
+## [18,]    0    0    0    1    0    1    0    1    0     0     0     0     0     1     0     0     0     0</code></pre>
+<p>Now, we can run our model. We must include "CovEvent" in the effects input. We must also add the seating matrix to the list of covariates (covar), set with CovEvent. We will use the CovSnd and CovRec matrices that only include gender (so no teacher variable).</p>
+<div class="sourceCode" id="cb1620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1620-1"><a href="ch13-Relational-Event-Models-R.html#cb1620-1" aria-hidden="true" tabindex="-1"></a>mod3a <span class="ot">&lt;-</span> <span class="fu">rem.dyad</span>(edgelist_date1, <span class="at">n =</span> class_size, </span>
+<span id="cb1620-2"><a href="ch13-Relational-Event-Models-R.html#cb1620-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">effects =</span> <span class="fu">c</span>(<span class="st">&quot;CovSnd&quot;</span>, <span class="st">&quot;CovRec&quot;</span>, <span class="st">&quot;CovEvent&quot;</span>),  </span>
+<span id="cb1620-3"><a href="ch13-Relational-Event-Models-R.html#cb1620-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">covar =</span> <span class="fu">list</span>(<span class="at">CovSnd =</span> CovSnd1, <span class="at">CovRec =</span> CovRec1, </span>
+<span id="cb1620-4"><a href="ch13-Relational-Event-Models-R.html#cb1620-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">CovEvent =</span> seating_matrix_date1), </span>
+<span id="cb1620-5"><a href="ch13-Relational-Event-Models-R.html#cb1620-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ordinal =</span> <span class="cn">FALSE</span>, <span class="at">hessian =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Let's compare the fit between our previously preferred model and our new model.</p>
+<div class="sourceCode" id="cb1621"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1621-1"><a href="ch13-Relational-Event-Models-R.html#cb1621-1" aria-hidden="true" tabindex="-1"></a>mod2a<span class="sc">$</span>BIC <span class="sc">-</span> mod3a<span class="sc">$</span>BIC</span></code></pre></div>
+<pre><code>## [1] 416.5262</code></pre>
+<p>It looks like the seating arrangement does strongly shape what events occur in the classroom, as the fit is dramatically improved. Now, let’s go ahead and add a second covariate event matrix to the model. Here, we add information about the friendships that exist in the classroom. Friendship information was collected for each semester. Students were asked who they hung around with in the class. We will treat this information like a covariate event, with the idea that interactions during the class period are more likely to involve friends than non-friends. We will first read in the data for friendship during the second semester (when the class of interest took place).</p>
+<div class="sourceCode" id="cb1623"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1623-1"><a href="ch13-Relational-Event-Models-R.html#cb1623-1" aria-hidden="true" tabindex="-1"></a>url4 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/class_edgelist_sem2.txt&quot;</span></span>
+<span id="cb1623-2"><a href="ch13-Relational-Event-Models-R.html#cb1623-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1623-3"><a href="ch13-Relational-Event-Models-R.html#cb1623-3" aria-hidden="true" tabindex="-1"></a>friends_sem2 <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> url4 , <span class="at">header =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb1624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1624-1"><a href="ch13-Relational-Event-Models-R.html#cb1624-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(friends_sem2)</span></code></pre></div>
+<pre><code>##   sender receiver
+## 1      1        4
+## 2      1        5
+## 3      1        7
+## 4      1        9
+## 5      1       15
+## 6      2        3</code></pre>
+<p>The edgelist captures if student i nominated student j as a friend. Note that the ids must match that found on the other data (interaction data, attributes, etc.). As before, we need to need to turn our edgelist into a matrix of 0s and 1s.</p>
+<div class="sourceCode" id="cb1626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1626-1"><a href="ch13-Relational-Event-Models-R.html#cb1626-1" aria-hidden="true" tabindex="-1"></a>friends_sem2_network <span class="ot">&lt;-</span> <span class="fu">network</span>(<span class="at">x =</span> friends_sem2, <span class="at">directed =</span> T, </span>
+<span id="cb1626-2"><a href="ch13-Relational-Event-Models-R.html#cb1626-2" aria-hidden="true" tabindex="-1"></a>                                <span class="at">vertices =</span> <span class="fu">data.frame</span>(<span class="at">ids =</span> <span class="dv">1</span><span class="sc">:</span>class_size)) </span>
+<span id="cb1626-3"><a href="ch13-Relational-Event-Models-R.html#cb1626-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1626-4"><a href="ch13-Relational-Event-Models-R.html#cb1626-4" aria-hidden="true" tabindex="-1"></a>friends_matrix_sem2 <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(friends_sem2_network)</span></code></pre></div>
+<div class="sourceCode" id="cb1627"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1627-1"><a href="ch13-Relational-Event-Models-R.html#cb1627-1" aria-hidden="true" tabindex="-1"></a>friends_matrix_sem2</span></code></pre></div>
+<pre><code>##    1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18
+## 1  0 0 0 1 1 0 1 0 1  0  0  0  0  0  1  0  0  0
+## 2  0 0 1 0 1 0 0 0 0  0  1  0  0  0  0  0  1  0
+## 3  0 1 0 0 1 1 0 0 0  0  1  0  0  0  0  0  1  0
+## 4  0 1 0 0 0 1 0 0 0  0  0  0  0  1  0  0  0  1
+## 5  1 0 1 0 0 0 0 0 0  0  0  0  0  0  0  0  1  1
+## 6  0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0
+## 7  1 1 0 0 0 1 0 1 1  0  0  0  0  0  1  0  0  1
+## 8  0 0 0 1 0 1 0 0 0  0  0  0  0  1  0  0  0  1
+## 9  1 0 0 0 0 1 1 1 0  0  0  0  0  0  1  0  1  0
+## 10 0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0
+## 11 0 1 1 0 1 0 0 0 0  0  0  0  0  0  0  0  1  0
+## 12 0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0
+## 13 0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0
+## 14 1 0 0 1 0 1 0 1 0  0  0  0  0  0  0  0  0  1
+## 15 1 0 0 0 0 1 1 1 1  0  0  0  0  0  0  0  0  0
+## 16 0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0
+## 17 0 1 1 1 1 0 0 0 1  0  1  0  0  0  0  0  0  0
+## 18 0 0 0 1 0 1 0 0 0  0  0  0  0  1  0  0  0  0</code></pre>
+<p>While it is relatively simple to include a single covariate event matrix in the model (see seating example above), it is a bit tricky to include multiple event matrices. The <code>rem.dyad()</code> function requires that multiple matrices first be put together as an p X n X n array, where p is the number of matrices and n is the size of the network.</p>
+<p>We will go ahead and create that array. We will first create an array of NAs with the right structure (2 X 18 X 18).</p>
+<div class="sourceCode" id="cb1629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1629-1"><a href="ch13-Relational-Event-Models-R.html#cb1629-1" aria-hidden="true" tabindex="-1"></a>CovEvent_date1 <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data =</span> <span class="cn">NA</span>, <span class="at">dim =</span> <span class="fu">c</span>(<span class="dv">2</span>, class_size, class_size))</span></code></pre></div>
+<p>We will now put the first matrix, the seating matrix, in the first slot.</p>
+<div class="sourceCode" id="cb1630"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1630-1"><a href="ch13-Relational-Event-Models-R.html#cb1630-1" aria-hidden="true" tabindex="-1"></a>CovEvent_date1[<span class="dv">1</span>, , ] <span class="ot">&lt;-</span> seating_matrix_date1</span></code></pre></div>
+<p>We will now put the second matrix, the friendship matrix, in the second slot.</p>
+<div class="sourceCode" id="cb1631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1631-1"><a href="ch13-Relational-Event-Models-R.html#cb1631-1" aria-hidden="true" tabindex="-1"></a>CovEvent_date1[<span class="dv">2</span>, , ] <span class="ot">&lt;-</span> friends_matrix_sem2</span></code></pre></div>
+<p>Checking the dimensions:</p>
+<div class="sourceCode" id="cb1632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1632-1"><a href="ch13-Relational-Event-Models-R.html#cb1632-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(CovEvent_date1)</span></code></pre></div>
+<pre><code>## [1]  2 18 18</code></pre>
+<p>Note, that we would get unexpected (i.e., wrong) results if we had created the array to be 18 X 18 X 2. We are now in a position to run the model, putting in the newly created CovEvent array as input into the covar list.</p>
+<div class="sourceCode" id="cb1634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1634-1"><a href="ch13-Relational-Event-Models-R.html#cb1634-1" aria-hidden="true" tabindex="-1"></a>mod3b <span class="ot">&lt;-</span> <span class="fu">rem.dyad</span>(edgelist_date1, <span class="at">n =</span> class_size, </span>
+<span id="cb1634-2"><a href="ch13-Relational-Event-Models-R.html#cb1634-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">effects =</span> <span class="fu">c</span>(<span class="st">&quot;CovSnd&quot;</span>, <span class="st">&quot;CovRec&quot;</span>, <span class="st">&quot;CovEvent&quot;</span>),</span>
+<span id="cb1634-3"><a href="ch13-Relational-Event-Models-R.html#cb1634-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">covar =</span> <span class="fu">list</span>(<span class="at">CovSnd =</span> CovSnd1, <span class="at">CovRec =</span> CovRec1, </span>
+<span id="cb1634-4"><a href="ch13-Relational-Event-Models-R.html#cb1634-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">CovEvent =</span> CovEvent_date1), </span>
+<span id="cb1634-5"><a href="ch13-Relational-Event-Models-R.html#cb1634-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ordinal =</span> <span class="cn">FALSE</span>, <span class="at">hessian =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>And let's add some useful names to the output (adding seating and friendship to the original vector of names) and summarize the results.</p>
+<div class="sourceCode" id="cb1635"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1635-1"><a href="ch13-Relational-Event-Models-R.html#cb1635-1" aria-hidden="true" tabindex="-1"></a>coef_names3b <span class="ot">&lt;-</span> <span class="fu">c</span>(coef_names2a, <span class="st">&quot;Seating&quot;</span>, <span class="st">&quot;Friendship&quot;</span>)</span>
+<span id="cb1635-2"><a href="ch13-Relational-Event-Models-R.html#cb1635-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mod3b<span class="sc">$</span>coef) <span class="ot">&lt;-</span> coef_names3b</span></code></pre></div>
+<div class="sourceCode" id="cb1636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1636-1"><a href="ch13-Relational-Event-Models-R.html#cb1636-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod3b)</span></code></pre></div>
+<pre><code>## Relational Event Model (Temporal Likelihood)
+## 
+##               Estimate  Std.Err  Z value  Pr(&gt;|z|)    
+## Intercept     -5.49675  0.17648 -31.1470 &lt; 2.2e-16 ***
+## Sender_male   -0.47785  0.16200  -2.9498  0.003180 ** 
+## Receiver_male -0.43877  0.15428  -2.8440  0.004455 ** 
+## Seating        1.82666  0.23713   7.7031 1.332e-14 ***
+## Friendship     1.52491  0.23856   6.3921 1.636e-10 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Null deviance: 2306.34 on 228 degrees of freedom
+## Residual deviance: 1812.664 on 224 degrees of freedom
+##  Chi-square: 493.6753 on 4 degrees of freedom, asymptotic p-value 0 
+## AIC: 1822.664 AICC: 1822.935 BIC: 1839.811</code></pre>
+<p>We can see that both friendship and adjacent seating predict the occurrence of a social interaction event between i and j. Thus, an interaction event (i talks to j) is much more likely to occur if i sits next to j and/or i is friends with j. The gender differences in sending and receiving still seem to be present.</p>
+</div>
+</div>
+<div id="micro-rules-of-interaction" class="section level2 hasAnchor" number="13.23">
+<h2><span class="header-section-number">13.23</span> Micro Rules of Interaction<a href="ch13-Relational-Event-Models-R.html#micro-rules-of-interaction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>So far we have built up a simple but plausible model of interactions in this classroom. Girls tend to talk more than boys, while friends and those sitting close to each other also tend to interact during class. What we have yet to capture is something about the 'rules' of interaction. For example, we might expect turn taking (i talks to j and then j talks to i) above what we can capture from friendship and seating effects alone.</p>
+<p>We will build up our model slowly, including more complicated rules as we go along. As a start, let's include terms that capture recency of events. The two terms of interest are "RRecSnd" and "RSndSnd". With RRecSnd, we test if i is more likely to talk to j if j recently talked to i. With RSndSnd, we test if i is more likely to talk to j if i recently talked to j. The effects capture the idea that if j recently talked to i (or i recently talked to j), then an i-&gt;j event is more likely to be the next event. We will specify this model by including the "RRecSnd" and "RSndSnd" in the vector of effects. Note that we do not need to add anything to the covar list. For this first model we will not control for friendship or seating.</p>
+<div class="sourceCode" id="cb1638"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1638-1"><a href="ch13-Relational-Event-Models-R.html#cb1638-1" aria-hidden="true" tabindex="-1"></a>mod4a <span class="ot">&lt;-</span> <span class="fu">rem.dyad</span>(edgelist_date1, <span class="at">n =</span> class_size, </span>
+<span id="cb1638-2"><a href="ch13-Relational-Event-Models-R.html#cb1638-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">effects =</span> <span class="fu">c</span>(<span class="st">&quot;CovSnd&quot;</span>, <span class="st">&quot;CovRec&quot;</span>, <span class="st">&quot;RRecSnd&quot;</span>, <span class="st">&quot;RSndSnd&quot;</span>),</span>
+<span id="cb1638-3"><a href="ch13-Relational-Event-Models-R.html#cb1638-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">covar =</span> <span class="fu">list</span>(<span class="at">CovSnd =</span> CovSnd1, <span class="at">CovRec =</span> CovRec1), </span>
+<span id="cb1638-4"><a href="ch13-Relational-Event-Models-R.html#cb1638-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ordinal =</span> <span class="cn">FALSE</span>, <span class="at">hessian =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Let's check the order of the coefficients using:</p>
+<div class="sourceCode" id="cb1639"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1639-1"><a href="ch13-Relational-Event-Models-R.html#cb1639-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mod4a<span class="sc">$</span>coef)</span></code></pre></div>
+<pre><code>## [1] &quot;RRecSnd&quot;  &quot;RSndSnd&quot;  &quot;CovSnd.1&quot; &quot;CovSnd.2&quot; &quot;CovRec.1&quot;</code></pre>
+<p>In this case, the recency effects are the first variables in the summary output. Let's set the names with this order in mind (adding the recency effects to the original vector of names).</p>
+<div class="sourceCode" id="cb1641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1641-1"><a href="ch13-Relational-Event-Models-R.html#cb1641-1" aria-hidden="true" tabindex="-1"></a>coef_names4a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Recency_ji&quot;</span>, <span class="st">&quot;Recency_ij&quot;</span>, coef_names2a)</span>
+<span id="cb1641-2"><a href="ch13-Relational-Event-Models-R.html#cb1641-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mod4a<span class="sc">$</span>coef) <span class="ot">&lt;-</span> coef_names4a</span></code></pre></div>
+<div class="sourceCode" id="cb1642"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1642-1"><a href="ch13-Relational-Event-Models-R.html#cb1642-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod4a)</span></code></pre></div>
+<pre><code>## Relational Event Model (Temporal Likelihood)
+## 
+##               Estimate  Std.Err  Z value  Pr(&gt;|z|)    
+## Recency_ji     6.31792  0.22376  28.2355 &lt; 2.2e-16 ***
+## Recency_ij    -2.44296  0.21764 -11.2250 &lt; 2.2e-16 ***
+## Intercept     -5.14311  0.14179 -36.2717 &lt; 2.2e-16 ***
+## Sender_male   -0.82672  0.17750  -4.6575   3.2e-06 ***
+## Receiver_male -0.47810  0.16423  -2.9112  0.003601 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Null deviance: 2306.34 on 228 degrees of freedom
+## Residual deviance: 1419.167 on 224 degrees of freedom
+##  Chi-square: 887.1722 on 4 degrees of freedom, asymptotic p-value 0 
+## AIC: 1429.167 AICC: 1429.438 BIC: 1446.314</code></pre>
+<p>We see a positive coefficient on the recency receiver effects, suggesting that if j recently talked to i then i is likely to talk to j. On the other hand, there is a negative coefficient for the recency sender effects. This means that if i recently talked to j the next event is actually less likely to be i to j again. Note that the gender effects remain. Now we run the full model with seating and friendship included.</p>
+<div class="sourceCode" id="cb1644"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1644-1"><a href="ch13-Relational-Event-Models-R.html#cb1644-1" aria-hidden="true" tabindex="-1"></a>mod4b <span class="ot">&lt;-</span> <span class="fu">rem.dyad</span>(edgelist_date1, <span class="at">n =</span> class_size, </span>
+<span id="cb1644-2"><a href="ch13-Relational-Event-Models-R.html#cb1644-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">effects =</span> <span class="fu">c</span>(<span class="st">&quot;CovSnd&quot;</span>, <span class="st">&quot;CovRec&quot;</span>, </span>
+<span id="cb1644-3"><a href="ch13-Relational-Event-Models-R.html#cb1644-3" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;CovEvent&quot;</span>, <span class="st">&quot;RRecSnd&quot;</span>, <span class="st">&quot;RSndSnd&quot;</span>), </span>
+<span id="cb1644-4"><a href="ch13-Relational-Event-Models-R.html#cb1644-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">covar =</span> <span class="fu">list</span>(<span class="at">CovSnd =</span> CovSnd1, <span class="at">CovRec =</span> CovRec1, </span>
+<span id="cb1644-5"><a href="ch13-Relational-Event-Models-R.html#cb1644-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">CovEvent =</span> CovEvent_date1), </span>
+<span id="cb1644-6"><a href="ch13-Relational-Event-Models-R.html#cb1644-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ordinal =</span> <span class="cn">FALSE</span>, <span class="at">hessian =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1645-1"><a href="ch13-Relational-Event-Models-R.html#cb1645-1" aria-hidden="true" tabindex="-1"></a>coef_names4b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Recency_ji&quot;</span>, <span class="st">&quot;Recency_ij&quot;</span>, coef_names3b)</span>
+<span id="cb1645-2"><a href="ch13-Relational-Event-Models-R.html#cb1645-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mod4b<span class="sc">$</span>coef) <span class="ot">&lt;-</span> coef_names4b</span></code></pre></div>
+<div class="sourceCode" id="cb1646"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1646-1"><a href="ch13-Relational-Event-Models-R.html#cb1646-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod4b)</span></code></pre></div>
+<pre><code>## Relational Event Model (Temporal Likelihood)
+## 
+##                Estimate   Std.Err  Z value  Pr(&gt;|z|)    
+## Recency_ji     5.726043  0.223170  25.6577 &lt; 2.2e-16 ***
+## Recency_ij    -3.051556  0.224246 -13.6080 &lt; 2.2e-16 ***
+## Intercept     -6.070958  0.218092 -27.8367 &lt; 2.2e-16 ***
+## Sender_male   -0.201135  0.175123  -1.1485 0.2507488    
+## Receiver_male -0.089231  0.164541  -0.5423 0.5876111    
+## Seating        1.060937  0.278799   3.8054 0.0001416 ***
+## Friendship     0.919033  0.272150   3.3769 0.0007330 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Null deviance: 2306.34 on 228 degrees of freedom
+## Residual deviance: 1348.516 on 222 degrees of freedom
+##  Chi-square: 957.8238 on 6 degrees of freedom, asymptotic p-value 0 
+## AIC: 1362.516 AICC: 1363.025 BIC: 1386.521</code></pre>
+<p>The first thing to note is that the model fit is much improved from our previously preferred model.</p>
+<div class="sourceCode" id="cb1648"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1648-1"><a href="ch13-Relational-Event-Models-R.html#cb1648-1" aria-hidden="true" tabindex="-1"></a>mod3b<span class="sc">$</span>BIC <span class="sc">-</span> mod4b<span class="sc">$</span>BIC</span></code></pre></div>
+<pre><code>## [1] 453.2898</code></pre>
+<p>The second thing to note is that the gender coefficients are no longer significant. This suggests that controlling for both recency of events and seating explains the gender differences in social interaction. Girls are more likely to sit next to each other; couple this with the interactional tendencies to respond to a recent interaction, and we see why girls are more likely to be involved in events.</p>
+<p>Now, let's see if we can consider other rules that may be shaping how nodes in this classroom interact with each other. We will now consider terms that capture p-shifts, or participation shifts. p-shifts are based strictly on the most recent event that occurred, rather than recency effects which can go back further in time. The idea is to capture micro rules in how interactions play out, based on the last interaction that took place. For our first example, we will add a turn taking rule, where A talks to B and the very next event is B talking to A. This is specified as "PSAB-BA" (as part of the effects vector). The rest of the model is the same as the previous model.</p>
+<div class="sourceCode" id="cb1650"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1650-1"><a href="ch13-Relational-Event-Models-R.html#cb1650-1" aria-hidden="true" tabindex="-1"></a>mod4c <span class="ot">&lt;-</span> <span class="fu">rem.dyad</span>(edgelist_date1, <span class="at">n =</span> class_size, </span>
+<span id="cb1650-2"><a href="ch13-Relational-Event-Models-R.html#cb1650-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">effects =</span> <span class="fu">c</span>(<span class="st">&quot;CovSnd&quot;</span>, <span class="st">&quot;CovRec&quot;</span>, <span class="st">&quot;CovEvent&quot;</span>, </span>
+<span id="cb1650-3"><a href="ch13-Relational-Event-Models-R.html#cb1650-3" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;RRecSnd&quot;</span>, <span class="st">&quot;RSndSnd&quot;</span>, <span class="st">&quot;PSAB-BA&quot;</span>), </span>
+<span id="cb1650-4"><a href="ch13-Relational-Event-Models-R.html#cb1650-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">covar =</span> <span class="fu">list</span>(<span class="at">CovSnd =</span> CovSnd1, <span class="at">CovRec =</span> CovRec1, </span>
+<span id="cb1650-5"><a href="ch13-Relational-Event-Models-R.html#cb1650-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">CovEvent =</span> CovEvent_date1), </span>
+<span id="cb1650-6"><a href="ch13-Relational-Event-Models-R.html#cb1650-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">ordinal =</span> <span class="cn">FALSE</span>, <span class="at">hessian =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1651"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1651-1"><a href="ch13-Relational-Event-Models-R.html#cb1651-1" aria-hidden="true" tabindex="-1"></a>coef_names4c <span class="ot">&lt;-</span> <span class="fu">c</span>(coef_names4b, <span class="st">&quot;PSAB_BA&quot;</span>)</span>
+<span id="cb1651-2"><a href="ch13-Relational-Event-Models-R.html#cb1651-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mod4c<span class="sc">$</span>coef) <span class="ot">&lt;-</span> coef_names4c</span></code></pre></div>
+<div class="sourceCode" id="cb1652"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1652-1"><a href="ch13-Relational-Event-Models-R.html#cb1652-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod4c)</span></code></pre></div>
+<pre><code>## Relational Event Model (Temporal Likelihood)
+## 
+##                Estimate   Std.Err  Z value  Pr(&gt;|z|)    
+## Recency_ji     3.140606  0.300287  10.4587 &lt; 2.2e-16 ***
+## Recency_ij    -1.447230  0.209216  -6.9174   4.6e-12 ***
+## Intercept     -6.023163  0.207242 -29.0635 &lt; 2.2e-16 ***
+## Sender_male    0.003476  0.168344   0.0206  0.983526    
+## Receiver_male  0.135468  0.162346   0.8344  0.404031    
+## Seating        0.960246  0.252733   3.7995  0.000145 ***
+## Friendship     0.892416  0.249509   3.5767  0.000348 ***
+## PSAB_BA        3.334932  0.187187  17.8161 &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Null deviance: 2306.34 on 228 degrees of freedom
+## Residual deviance: 1006.862 on 221 degrees of freedom
+##  Chi-square: 1299.478 on 7 degrees of freedom, asymptotic p-value 0 
+## AIC: 1022.862 AICC: 1023.519 BIC: 1050.296</code></pre>
+<p>We can see that the fit is improved greatly, as there is a large effect of turn taking in social interactions. We can also see that the effects for recency are much reduced from the previous model. Now, let's add a somewhat more complicated interactional rule. Here we will add a term for 'turn continuing', "PSAB-AY". This means that A talks with B and the very next event is A talking to someone else (besides B). We will also add a term for 'turn receiving', "PSAB-BY". Here, A talks to B and the very next event is B talking to someone else (besides A).</p>
+<div class="sourceCode" id="cb1654"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1654-1"><a href="ch13-Relational-Event-Models-R.html#cb1654-1" aria-hidden="true" tabindex="-1"></a>mod4d <span class="ot">&lt;-</span> <span class="fu">rem.dyad</span>(edgelist_date1, <span class="at">n =</span> class_size, </span>
+<span id="cb1654-2"><a href="ch13-Relational-Event-Models-R.html#cb1654-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">effects =</span> <span class="fu">c</span>(<span class="st">&quot;CovSnd&quot;</span>, <span class="st">&quot;CovRec&quot;</span>, <span class="st">&quot;CovEvent&quot;</span>, </span>
+<span id="cb1654-3"><a href="ch13-Relational-Event-Models-R.html#cb1654-3" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;RRecSnd&quot;</span>, <span class="st">&quot;RSndSnd&quot;</span>, <span class="st">&quot;PSAB-BA&quot;</span>, </span>
+<span id="cb1654-4"><a href="ch13-Relational-Event-Models-R.html#cb1654-4" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;PSAB-BY&quot;</span>, <span class="st">&quot;PSAB-AY&quot;</span>), </span>
+<span id="cb1654-5"><a href="ch13-Relational-Event-Models-R.html#cb1654-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">covar =</span> <span class="fu">list</span>(<span class="at">CovSnd =</span> CovSnd1, <span class="at">CovRec =</span> CovRec1, </span>
+<span id="cb1654-6"><a href="ch13-Relational-Event-Models-R.html#cb1654-6" aria-hidden="true" tabindex="-1"></a>                               <span class="at">CovEvent =</span> CovEvent_date1), </span>
+<span id="cb1654-7"><a href="ch13-Relational-Event-Models-R.html#cb1654-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ordinal =</span> <span class="cn">FALSE</span>, <span class="at">hessian =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1655"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1655-1"><a href="ch13-Relational-Event-Models-R.html#cb1655-1" aria-hidden="true" tabindex="-1"></a>coef_names4d <span class="ot">&lt;-</span> <span class="fu">c</span>(coef_names4b, <span class="st">&quot;PSAB_BA&quot;</span>, <span class="st">&quot;PSAB_BY&quot;</span>, <span class="st">&quot;PSAB_AY&quot;</span>)</span>
+<span id="cb1655-2"><a href="ch13-Relational-Event-Models-R.html#cb1655-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mod4d<span class="sc">$</span>coef) <span class="ot">&lt;-</span> coef_names4d</span></code></pre></div>
+<div class="sourceCode" id="cb1656"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1656-1"><a href="ch13-Relational-Event-Models-R.html#cb1656-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod4d)</span></code></pre></div>
+<pre><code>## Relational Event Model (Temporal Likelihood)
+## 
+##                Estimate   Std.Err  Z value  Pr(&gt;|z|)    
+## Recency_ji     3.277781  0.306184  10.7053 &lt; 2.2e-16 ***
+## Recency_ij    -1.445992  0.209454  -6.9036 5.069e-12 ***
+## Intercept     -6.166525  0.218196 -28.2614 &lt; 2.2e-16 ***
+## Sender_male    0.026820  0.168885   0.1588 0.8738219    
+## Receiver_male  0.148590  0.162915   0.9121 0.3617316    
+## Seating        0.960858  0.253539   3.7898 0.0001508 ***
+## Friendship     0.858706  0.249644   3.4397 0.0005823 ***
+## PSAB_BA        3.364859  0.190066  17.7036 &lt; 2.2e-16 ***
+## PSAB_BY        1.180523  0.305242   3.8675 0.0001100 ***
+## PSAB_AY        0.098728  0.423907   0.2329 0.8158395    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Null deviance: 2306.34 on 228 degrees of freedom
+## Residual deviance: 995.3731 on 219 degrees of freedom
+##  Chi-square: 1310.967 on 9 degrees of freedom, asymptotic p-value 0 
+## AIC: 1015.373 AICC: 1016.387 BIC: 1049.667</code></pre>
+<p>Looking at our two added terms, we see that only the PSAB-BY coefficient is significant (at traditional levels). This suggest that there are norms about whose 'turn it is' to talk. Once A talks to B, it is now B's turn to talk. They are very likely to talk back to A (PSAB-BA) but may also talk to another node (PSAB-BY). There is little evidence for nodes talking twice in a row to different people. It looks like the model fit is improved very slightly from the previous model:</p>
+<div class="sourceCode" id="cb1658"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1658-1"><a href="ch13-Relational-Event-Models-R.html#cb1658-1" aria-hidden="true" tabindex="-1"></a>mod4c<span class="sc">$</span>BIC <span class="sc">-</span> mod4d<span class="sc">$</span>BIC</span></code></pre></div>
+<pre><code>## [1] 0.629751</code></pre>
+<p>Let's look at one more set of terms, here focusing on interactional tendencies related to usurping the conversation. We include p-shift terms for "PSAB-XA" and "PSAB-XB". With PSAB-XA, A talks to B and then another node (X) usurps the conversation and answers A. With PSAB-XB, A talks to B and then another node (X) usurps the conversation and talks to B. In both cases, a node talks 'out of turn' relative to the previous event. Let's go ahead and add these terms to the model.</p>
+<div class="sourceCode" id="cb1660"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1660-1"><a href="ch13-Relational-Event-Models-R.html#cb1660-1" aria-hidden="true" tabindex="-1"></a>mod4e <span class="ot">&lt;-</span> <span class="fu">rem.dyad</span>(edgelist_date1, <span class="at">n =</span> class_size, </span>
+<span id="cb1660-2"><a href="ch13-Relational-Event-Models-R.html#cb1660-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">effects =</span> <span class="fu">c</span>(<span class="st">&quot;CovSnd&quot;</span>, <span class="st">&quot;CovRec&quot;</span>, <span class="st">&quot;CovEvent&quot;</span>, <span class="st">&quot;RRecSnd&quot;</span>,</span>
+<span id="cb1660-3"><a href="ch13-Relational-Event-Models-R.html#cb1660-3" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;RSndSnd&quot;</span>, <span class="st">&quot;PSAB-BA&quot;</span>, <span class="st">&quot;PSAB-BY&quot;</span>,</span>
+<span id="cb1660-4"><a href="ch13-Relational-Event-Models-R.html#cb1660-4" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;PSAB-AY&quot;</span>, <span class="st">&quot;PSAB-XA&quot;</span>, <span class="st">&quot;PSAB-XB&quot;</span>), </span>
+<span id="cb1660-5"><a href="ch13-Relational-Event-Models-R.html#cb1660-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">covar =</span> <span class="fu">list</span>(<span class="at">CovSnd =</span> CovSnd1, <span class="at">CovRec =</span> CovRec1, </span>
+<span id="cb1660-6"><a href="ch13-Relational-Event-Models-R.html#cb1660-6" aria-hidden="true" tabindex="-1"></a>                               <span class="at">CovEvent =</span> CovEvent_date1), </span>
+<span id="cb1660-7"><a href="ch13-Relational-Event-Models-R.html#cb1660-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ordinal =</span> <span class="cn">FALSE</span>, <span class="at">hessian =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Let's check the order of the coefficients:</p>
+<div class="sourceCode" id="cb1661"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1661-1"><a href="ch13-Relational-Event-Models-R.html#cb1661-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mod4e<span class="sc">$</span>coef)</span></code></pre></div>
+<pre><code>##  [1] &quot;RRecSnd&quot;    &quot;RSndSnd&quot;    &quot;CovSnd.1&quot;   &quot;CovSnd.2&quot;   &quot;CovRec.1&quot;   &quot;CovEvent.1&quot; &quot;CovEvent.2&quot; &quot;PSAB-BA&quot;    &quot;PSAB-BY&quot;    &quot;PSAB-XA&quot;    &quot;PSAB-XB&quot;    &quot;PSAB-AY&quot;</code></pre>
+<p>And now we set the names to be consistent with the output.</p>
+<div class="sourceCode" id="cb1663"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1663-1"><a href="ch13-Relational-Event-Models-R.html#cb1663-1" aria-hidden="true" tabindex="-1"></a>coef_names4e <span class="ot">&lt;-</span> <span class="fu">c</span>(coef_names4b, <span class="st">&quot;PSAB_BA&quot;</span>, <span class="st">&quot;PSAB_BY&quot;</span>, <span class="st">&quot;PSAB_XA&quot;</span>, </span>
+<span id="cb1663-2"><a href="ch13-Relational-Event-Models-R.html#cb1663-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;PSAB_XB&quot;</span>, <span class="st">&quot;PSAB_AY&quot;</span>)</span>
+<span id="cb1663-3"><a href="ch13-Relational-Event-Models-R.html#cb1663-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mod4e<span class="sc">$</span>coef) <span class="ot">&lt;-</span> coef_names4e</span></code></pre></div>
+<div class="sourceCode" id="cb1664"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1664-1"><a href="ch13-Relational-Event-Models-R.html#cb1664-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod4e)</span></code></pre></div>
+<pre><code>## Relational Event Model (Temporal Likelihood)
+## 
+##                Estimate   Std.Err  Z value  Pr(&gt;|z|)    
+## Recency_ji     3.255338  0.305936  10.6406 &lt; 2.2e-16 ***
+## Recency_ij    -1.435095  0.208876  -6.8706 6.394e-12 ***
+## Intercept     -6.345151  0.229722 -27.6210 &lt; 2.2e-16 ***
+## Sender_male    0.052905  0.169351   0.3124 0.7547377    
+## Receiver_male  0.189967  0.163464   1.1621 0.2451804    
+## Seating        0.965638  0.252719   3.8210 0.0001329 ***
+## Friendship     0.869857  0.248674   3.4980 0.0004688 ***
+## PSAB_BA        3.532669  0.200569  17.6133 &lt; 2.2e-16 ***
+## PSAB_BY        1.332496  0.311164   4.2823 1.850e-05 ***
+## PSAB_XA        0.389227  0.397964   0.9780 0.3280511    
+## PSAB_XB        1.179550  0.286743   4.1136 3.895e-05 ***
+## PSAB_AY        0.256821  0.428279   0.5997 0.5487334    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Null deviance: 2306.34 on 228 degrees of freedom
+## Residual deviance: 981.8918 on 217 degrees of freedom
+##  Chi-square: 1324.448 on 11 degrees of freedom, asymptotic p-value 0 
+## AIC: 1005.892 AICC: 1007.343 BIC: 1047.044</code></pre>
+<p>We can see that the PSAB-XB effect is much stronger than the PSAB-XA effect. This suggests that if one usurps the conversation from A to B, then one must interact with B in the next interaction, in essence giving B their rightful turn coming up next. And again, it looks like the model fit is improved a bit from the previous model.</p>
+<div class="sourceCode" id="cb1666"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1666-1"><a href="ch13-Relational-Event-Models-R.html#cb1666-1" aria-hidden="true" tabindex="-1"></a>mod4d<span class="sc">$</span>BIC <span class="sc">-</span> mod4e<span class="sc">$</span>BIC</span></code></pre></div>
+<pre><code>## [1] 2.622677</code></pre>
+<p>So, the overall story is one where there are clear micro rules to interacting in a classroom (above the effects for friendship, seating and so on). The basic rules could be summarized as: if A talks to B then the next event should be B to A; B to someone else; or someone else to B. Thus, there are clear norms about turn taking. If A talks to B, B is very likely to be part of the next event (one way or another). Of course, we could imagine looking at other kinds of terms, but this is pretty good start to the model.</p>
+</div>
+<div id="assessing-model-fit" class="section level2 hasAnchor" number="13.24">
+<h2><span class="header-section-number">13.24</span> Assessing Model Fit<a href="ch13-Relational-Event-Models-R.html#assessing-model-fit" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In interpreting our results, it is useful to see if our models are fitting well. While BIC can offer some evidence if one model is preferred to another, we can look at the residuals and the predicted classification to see how well the model is actually predicting the data. Here we will work with mod4e, our preferred model from above. One useful part of the output is <code>predicted.match</code>.</p>
+<div class="sourceCode" id="cb1668"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1668-1"><a href="ch13-Relational-Event-Models-R.html#cb1668-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mod4e<span class="sc">$</span>predicted.match)</span></code></pre></div>
+<pre><code>##   send_col receive_col
+## 1    FALSE       FALSE
+## 2     TRUE        TRUE
+## 3    FALSE       FALSE
+## 4     TRUE        TRUE
+## 5    FALSE       FALSE
+## 6     TRUE        TRUE</code></pre>
+<p>Each row corresponds to an observed event. The first column shows if the model predicted the sender of that event correctly and the second column shows if the model predicted the receiver of that event correctly. Note that the model is trying to predict the specific sequence of events (i.e., the exact order of sender-receiver events). Let's see how we did by doing a table of the send and receive columns.</p>
+<div class="sourceCode" id="cb1670"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1670-1"><a href="ch13-Relational-Event-Models-R.html#cb1670-1" aria-hidden="true" tabindex="-1"></a>send_col <span class="ot">&lt;-</span> mod4e<span class="sc">$</span>predicted.match[, <span class="st">&quot;send_col&quot;</span>]</span>
+<span id="cb1670-2"><a href="ch13-Relational-Event-Models-R.html#cb1670-2" aria-hidden="true" tabindex="-1"></a>receive_col <span class="ot">&lt;-</span> mod4e<span class="sc">$</span>predicted.match[, <span class="st">&quot;receive_col&quot;</span>]</span>
+<span id="cb1670-3"><a href="ch13-Relational-Event-Models-R.html#cb1670-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1670-4"><a href="ch13-Relational-Event-Models-R.html#cb1670-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(send_col, receive_col)</span></code></pre></div>
+<pre><code>##         receive_col
+## send_col FALSE TRUE
+##    FALSE    89    6
+##    TRUE     14  119</code></pre>
+<p>We can see that 119 times we predicted the exact sender and the exact receiver correct (in sequence), while 89 times we got neither the sender nor the receiver correct. And now let's transform the table into proportions, showing the proportion where we get the exact sequence right (wrong, etc.).</p>
+<div class="sourceCode" id="cb1672"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1672-1"><a href="ch13-Relational-Event-Models-R.html#cb1672-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(send_col, receive_col))</span></code></pre></div>
+<pre><code>##         receive_col
+## send_col      FALSE       TRUE
+##    FALSE 0.39035088 0.02631579
+##    TRUE  0.06140351 0.52192982</code></pre>
+<p>We can see that about 52% of the time we get the exact event correct, while 39% of the time we miss completely and do not get the sender or receiver. The model is thus doing an okay job of prediction but is clearly missing some element that is important for predicting interaction events. Let's see if we can identify the cases (i.e., events) where the model is not doing such a good job at prediction. We first summarize the residuals for the model.</p>
+<div class="sourceCode" id="cb1674"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1674-1"><a href="ch13-Relational-Event-Models-R.html#cb1674-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod4e<span class="sc">$</span>residuals)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -2.2790 -0.8395  1.2354  4.3030  8.7932 25.5613</code></pre>
+<p>Now, we will identify some of the outlying cases, those with high residuals. We will define that for convenience as cases with residuals greater than 10.</p>
+<div class="sourceCode" id="cb1676"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1676-1"><a href="ch13-Relational-Event-Models-R.html#cb1676-1" aria-hidden="true" tabindex="-1"></a>high_resids <span class="ot">&lt;-</span> <span class="fu">which</span>(mod4e<span class="sc">$</span>residuals <span class="sc">&gt;</span> <span class="dv">10</span>)</span></code></pre></div>
+<p>Here we take a look at the events with high residuals, reducing the edgelist to just those cases where the model is not fitting well.</p>
+<div class="sourceCode" id="cb1677"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1677-1"><a href="ch13-Relational-Event-Models-R.html#cb1677-1" aria-hidden="true" tabindex="-1"></a>edgelist_date1[high_resids, ]</span></code></pre></div>
+<pre><code>##     time_estimate_col send_col receive_col
+## 5               0.714        9           8
+## 9               1.429        3          11
+## 21              3.286        8           7
+## 25              4.286        5           2
+## 37              6.321        3           2
+## 45              7.393       18           4
+## 55              8.893       11           3
+## 57             10.041       14          18
+## 59             10.419        5           2
+## 71             12.595        5          17
+## 79             13.446        9           8
+## 101            16.391        3          12
+## 104            16.913       11          12
+## 106            17.826        3          12
+## 107            18.609        2          17
+## 111            19.789       15           8
+## 113            21.105       11          12
+## 119            22.289       11           2
+## 121            22.947        4          14
+## 127            24.500        8          12
+## 130            25.125        8          12
+## 154            26.970       11          12
+## 155            27.091        2          12
+## 156            27.333       11          12
+## 157            27.455        2          12
+## 160            28.909       11          12
+## 165            29.758        8          12
+## 184            33.152       11          17
+## 188            34.640        7           1
+## 200            37.520       11          17
+## 204            38.566        5           2
+## 210            39.132        8          15
+## 212            39.321        1           8
+## 216            39.698        8          15
+## 235            40.264        7           8
+## 260            41.208        8          15
+## 278            42.906        7           8</code></pre>
+<p>Node 12 seems to show up quite a bit in the receiver column of these events. Let's take a look at the attributes for node 12.</p>
+<div class="sourceCode" id="cb1679"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1679-1"><a href="ch13-Relational-Event-Models-R.html#cb1679-1" aria-hidden="true" tabindex="-1"></a>attributes[<span class="dv">12</span>, ]</span></code></pre></div>
+<pre><code>##    id gnd grd rce intercept male teacher
+## 12 12   1  16   3         1    1       1</code></pre>
+<p>Node 12 is the teacher in the class. So, perhaps we were too hasty in removing the teacher variable, as it looks like we are missing the set of interactions where students talk socially to the teacher. Let’s rerun our model but use <code>CovSnd2</code> and <code>CovRec2</code>, which includes both the gender and teacher effects.</p>
+<div class="sourceCode" id="cb1681"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1681-1"><a href="ch13-Relational-Event-Models-R.html#cb1681-1" aria-hidden="true" tabindex="-1"></a>mod4f <span class="ot">&lt;-</span> <span class="fu">rem.dyad</span>(edgelist_date1, <span class="at">n =</span> class_size,</span>
+<span id="cb1681-2"><a href="ch13-Relational-Event-Models-R.html#cb1681-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">effects =</span> <span class="fu">c</span>(<span class="st">&quot;CovSnd&quot;</span>, <span class="st">&quot;CovRec&quot;</span>, <span class="st">&quot;CovEvent&quot;</span>, </span>
+<span id="cb1681-3"><a href="ch13-Relational-Event-Models-R.html#cb1681-3" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;RRecSnd&quot;</span>, <span class="st">&quot;RSndSnd&quot;</span>, </span>
+<span id="cb1681-4"><a href="ch13-Relational-Event-Models-R.html#cb1681-4" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;PSAB-BA&quot;</span>, <span class="st">&quot;PSAB-BY&quot;</span>,<span class="st">&quot;PSAB-AY&quot;</span>, </span>
+<span id="cb1681-5"><a href="ch13-Relational-Event-Models-R.html#cb1681-5" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;PSAB-XA&quot;</span>, <span class="st">&quot;PSAB-XB&quot;</span>), </span>
+<span id="cb1681-6"><a href="ch13-Relational-Event-Models-R.html#cb1681-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">covar =</span> <span class="fu">list</span>(<span class="at">CovSnd =</span> CovSnd2, <span class="at">CovRec =</span> CovRec2,</span>
+<span id="cb1681-7"><a href="ch13-Relational-Event-Models-R.html#cb1681-7" aria-hidden="true" tabindex="-1"></a>                               <span class="at">CovEvent =</span> CovEvent_date1), </span>
+<span id="cb1681-8"><a href="ch13-Relational-Event-Models-R.html#cb1681-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ordinal =</span> <span class="cn">FALSE</span>, <span class="at">hessian =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Let's check the fit compared to the previous model (with no teacher sender/receiver effects).</p>
+<div class="sourceCode" id="cb1682"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1682-1"><a href="ch13-Relational-Event-Models-R.html#cb1682-1" aria-hidden="true" tabindex="-1"></a>mod4e<span class="sc">$</span>BIC <span class="sc">-</span> mod4f<span class="sc">$</span>BIC</span></code></pre></div>
+<pre><code>## [1] 8.172225</code></pre>
+<p>It looks like adding the teacher terms did help the fit a bit. And now let's look at the results.</p>
+<div class="sourceCode" id="cb1684"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1684-1"><a href="ch13-Relational-Event-Models-R.html#cb1684-1" aria-hidden="true" tabindex="-1"></a>coef_names4f <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Recency_ji&quot;</span>, <span class="st">&quot;Recency_ij&quot;</span>, <span class="st">&quot;Intercept&quot;</span>, </span>
+<span id="cb1684-2"><a href="ch13-Relational-Event-Models-R.html#cb1684-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;Sender_male&quot;</span>, <span class="st">&quot;Sender_teacher&quot;</span>, </span>
+<span id="cb1684-3"><a href="ch13-Relational-Event-Models-R.html#cb1684-3" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;Receiver_male&quot;</span>, <span class="st">&quot;Receiver_teacher&quot;</span>, </span>
+<span id="cb1684-4"><a href="ch13-Relational-Event-Models-R.html#cb1684-4" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;Seating&quot;</span>, <span class="st">&quot;Friendship&quot;</span>, </span>
+<span id="cb1684-5"><a href="ch13-Relational-Event-Models-R.html#cb1684-5" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;PSAB_BA&quot;</span>, <span class="st">&quot;PSAB_BY&quot;</span>, </span>
+<span id="cb1684-6"><a href="ch13-Relational-Event-Models-R.html#cb1684-6" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;PSAB_XA&quot;</span>, <span class="st">&quot;PSAB_XB&quot;</span>, <span class="st">&quot;PSAB_AY&quot;</span>)</span>
+<span id="cb1684-7"><a href="ch13-Relational-Event-Models-R.html#cb1684-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1684-8"><a href="ch13-Relational-Event-Models-R.html#cb1684-8" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mod4f<span class="sc">$</span>coef) <span class="ot">&lt;-</span> coef_names4f</span></code></pre></div>
+<div class="sourceCode" id="cb1685"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1685-1"><a href="ch13-Relational-Event-Models-R.html#cb1685-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod4f)</span></code></pre></div>
+<pre><code>## Relational Event Model (Temporal Likelihood)
+## 
+##                   Estimate   Std.Err  Z value  Pr(&gt;|z|)    
+## Recency_ji        3.505637  0.324673  10.7975 &lt; 2.2e-16 ***
+## Recency_ij       -1.576398  0.210819  -7.4775 7.572e-14 ***
+## Intercept        -6.447691  0.242990 -26.5348 &lt; 2.2e-16 ***
+## Sender_male       0.214817  0.171486   1.2527 0.2103209    
+## Sender_teacher   -1.149423  0.635645  -1.8083 0.0705631 .  
+## Receiver_male     0.015602  0.179619   0.0869 0.9307795    
+## Receiver_teacher  1.431023  0.381847   3.7476 0.0001785 ***
+## Seating           0.857973  0.256406   3.3461 0.0008194 ***
+## Friendship        0.992714  0.292978   3.3884 0.0007031 ***
+## PSAB_BA           3.478400  0.202099  17.2113 &lt; 2.2e-16 ***
+## PSAB_BY           1.362145  0.311813   4.3685 1.251e-05 ***
+## PSAB_XA           0.400141  0.398097   1.0051 0.3148317    
+## PSAB_XB           1.151296  0.286724   4.0154 5.936e-05 ***
+## PSAB_AY           0.231155  0.428187   0.5398 0.5893027    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Null deviance: 2306.34 on 228 degrees of freedom
+## Residual deviance: 962.8608 on 215 degrees of freedom
+##  Chi-square: 1343.479 on 13 degrees of freedom, asymptotic p-value 0 
+## AIC: 990.8608 AICC: 992.8327 BIC: 1038.872</code></pre>
+<p>We can see that the teacher is part of more interactions as the receiver (being talked to) than we would expect based on other terms in the model. This is likely the case because the teacher can easily talk to anyone in the class (i.e., the teacher is not subject to only talking to those adjacent to them in the classroom), and so the term on the seating arrangement pushes the previous model to under predict interactions with the teacher. This is now rectified in the current model.</p>
+</div>
+<div id="comparison-to-a-second-date" class="section level2 hasAnchor" number="13.25">
+<h2><span class="header-section-number">13.25</span> Comparison to a Second Date<a href="ch13-Relational-Event-Models-R.html#comparison-to-a-second-date" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We have so far run a number of models, interpreted the results and learned a bit about the interactional dynamics in this classroom. Here, we run through the same exercise (an abbreviated version) using interactional data from a different date. The classroom is the same, so the actors are the same, but this class takes place later in the second semester. More importantly, this was a date where there was a great deal more misbehaving in the class and the teacher had to sanction students to a much larger extent. Our question is how (or if) the interactional tendencies are different in a day where the class is less orderly and controlled. We begin by reading in the interactional data for this second date.</p>
+<div class="sourceCode" id="cb1687"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1687-1"><a href="ch13-Relational-Event-Models-R.html#cb1687-1" aria-hidden="true" tabindex="-1"></a>url5 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/class_interactions_date2.txt&quot;</span></span>
+<span id="cb1687-2"><a href="ch13-Relational-Event-Models-R.html#cb1687-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1687-3"><a href="ch13-Relational-Event-Models-R.html#cb1687-3" aria-hidden="true" tabindex="-1"></a>interactions_date2 <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> url5, <span class="at">header =</span> T)</span></code></pre></div>
+<p>And again, we will take out those interactions where one node talks to the entire class simultaneously.</p>
+<div class="sourceCode" id="cb1688"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1688-1"><a href="ch13-Relational-Event-Models-R.html#cb1688-1" aria-hidden="true" tabindex="-1"></a>not_to_all2 <span class="ot">&lt;-</span> interactions_date2<span class="sc">$</span>to_all_col <span class="sc">==</span> <span class="dv">0</span></span>
+<span id="cb1688-2"><a href="ch13-Relational-Event-Models-R.html#cb1688-2" aria-hidden="true" tabindex="-1"></a>not_from_all2 <span class="ot">&lt;-</span> interactions_date2<span class="sc">$</span>from_all_col <span class="sc">==</span> <span class="dv">0</span></span>
+<span id="cb1688-3"><a href="ch13-Relational-Event-Models-R.html#cb1688-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1688-4"><a href="ch13-Relational-Event-Models-R.html#cb1688-4" aria-hidden="true" tabindex="-1"></a>interactions_date2 <span class="ot">&lt;-</span> interactions_date2[not_to_all2 <span class="sc">&amp;</span> not_from_all2, ]</span></code></pre></div>
+<p>And now we create the edgelist matrix, adding a row for the stop time for the interactions (again, .10 standardized minutes after the last recorded interaction).</p>
+<div class="sourceCode" id="cb1689"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1689-1"><a href="ch13-Relational-Event-Models-R.html#cb1689-1" aria-hidden="true" tabindex="-1"></a>var_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;time_estimate_col&quot;</span>, <span class="st">&quot;send_col&quot;</span>, <span class="st">&quot;receive_col&quot;</span>)</span>
+<span id="cb1689-2"><a href="ch13-Relational-Event-Models-R.html#cb1689-2" aria-hidden="true" tabindex="-1"></a>edgelist_date2 <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(interactions_date2[, var_names])</span></code></pre></div>
+<div class="sourceCode" id="cb1690"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1690-1"><a href="ch13-Relational-Event-Models-R.html#cb1690-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(edgelist_date2)</span></code></pre></div>
+<pre><code>##     time_estimate_col send_col receive_col
+## 398            32.242       17          11
+## 399            32.394       11          17
+## 400            32.545       17           5
+## 401            32.697        5          17
+## 402            32.848        8           6
+## 403            33.000        6           8</code></pre>
+<div class="sourceCode" id="cb1692"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1692-1"><a href="ch13-Relational-Event-Models-R.html#cb1692-1" aria-hidden="true" tabindex="-1"></a>edgelist_date2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(edgelist_date2, <span class="fu">c</span>(<span class="fl">33.10</span>, <span class="cn">NA</span>, <span class="cn">NA</span>))</span></code></pre></div>
+<p>The friendship data is the same as above (corresponding to the second semester) but we need to read in the seating data for this day.</p>
+<div class="sourceCode" id="cb1693"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1693-1"><a href="ch13-Relational-Event-Models-R.html#cb1693-1" aria-hidden="true" tabindex="-1"></a>url6 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/class_seating_date2.txt&quot;</span></span>
+<span id="cb1693-2"><a href="ch13-Relational-Event-Models-R.html#cb1693-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1693-3"><a href="ch13-Relational-Event-Models-R.html#cb1693-3" aria-hidden="true" tabindex="-1"></a>seating_date2 <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> url6, <span class="at">header =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb1694"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1694-1"><a href="ch13-Relational-Event-Models-R.html#cb1694-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(seating_date2)</span></code></pre></div>
+<pre><code>##   ego_id alter_id
+## 1      1        7
+## 2      3        5
+## 3      3       11
+## 4      3       17
+## 5      4       14
+## 6      4       18</code></pre>
+<p>Here we turn the edgelist into a matrix, as we did before.</p>
+<div class="sourceCode" id="cb1696"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1696-1"><a href="ch13-Relational-Event-Models-R.html#cb1696-1" aria-hidden="true" tabindex="-1"></a>seating_network_date2 <span class="ot">&lt;-</span> <span class="fu">network</span>(<span class="at">x =</span> seating_date2, <span class="at">directed =</span> T, </span>
+<span id="cb1696-2"><a href="ch13-Relational-Event-Models-R.html#cb1696-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">vertices =</span> <span class="fu">data.frame</span>(<span class="at">ids =</span> <span class="dv">1</span><span class="sc">:</span>class_size)) </span>
+<span id="cb1696-3"><a href="ch13-Relational-Event-Models-R.html#cb1696-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1696-4"><a href="ch13-Relational-Event-Models-R.html#cb1696-4" aria-hidden="true" tabindex="-1"></a>seating_matrix_date2 <span class="ot">&lt;-</span> <span class="fu">symmetrize</span>(seating_network_date2, </span>
+<span id="cb1696-5"><a href="ch13-Relational-Event-Models-R.html#cb1696-5" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">rule =</span> <span class="st">&quot;weak&quot;</span>)</span></code></pre></div>
+<p>And once again, we need to create a covEvent array with the new seating matrix.</p>
+<div class="sourceCode" id="cb1697"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1697-1"><a href="ch13-Relational-Event-Models-R.html#cb1697-1" aria-hidden="true" tabindex="-1"></a>CovEvent_date2 <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data =</span> <span class="cn">NA</span>, <span class="at">dim =</span> <span class="fu">c</span>(<span class="dv">2</span>, class_size, class_size))</span></code></pre></div>
+<p>We will now put the first matrix, the seating matrix, in the first slot.</p>
+<div class="sourceCode" id="cb1698"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1698-1"><a href="ch13-Relational-Event-Models-R.html#cb1698-1" aria-hidden="true" tabindex="-1"></a>CovEvent_date2[<span class="dv">1</span>, , ] <span class="ot">&lt;-</span> seating_matrix_date2</span></code></pre></div>
+<p>We will now put the second matrix, the friendship matrix, in the second slot.</p>
+<div class="sourceCode" id="cb1699"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1699-1"><a href="ch13-Relational-Event-Models-R.html#cb1699-1" aria-hidden="true" tabindex="-1"></a>CovEvent_date2[<span class="dv">2</span>, , ] <span class="ot">&lt;-</span> friends_matrix_sem2</span></code></pre></div>
+<p>We are now in a position to run the same model as we did above. We will just run the preferred model (mod4f), with all terms included. Note that the CovRec and CovSnd matrices are the same as above (as the attributes are the same across time in this case).</p>
+<div class="sourceCode" id="cb1700"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1700-1"><a href="ch13-Relational-Event-Models-R.html#cb1700-1" aria-hidden="true" tabindex="-1"></a>mod4f_date2 <span class="ot">&lt;-</span> <span class="fu">rem.dyad</span>(edgelist_date2, <span class="at">n =</span> class_size, </span>
+<span id="cb1700-2"><a href="ch13-Relational-Event-Models-R.html#cb1700-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">effects =</span> <span class="fu">c</span>(<span class="st">&quot;CovSnd&quot;</span>, <span class="st">&quot;CovRec&quot;</span>, </span>
+<span id="cb1700-3"><a href="ch13-Relational-Event-Models-R.html#cb1700-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;CovEvent&quot;</span>, <span class="st">&quot;RRecSnd&quot;</span>, <span class="st">&quot;RSndSnd&quot;</span>, </span>
+<span id="cb1700-4"><a href="ch13-Relational-Event-Models-R.html#cb1700-4" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;PSAB-BA&quot;</span>, <span class="st">&quot;PSAB-BY&quot;</span>,<span class="st">&quot;PSAB-AY&quot;</span>, </span>
+<span id="cb1700-5"><a href="ch13-Relational-Event-Models-R.html#cb1700-5" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;PSAB-XA&quot;</span>, <span class="st">&quot;PSAB-XB&quot;</span>), </span>
+<span id="cb1700-6"><a href="ch13-Relational-Event-Models-R.html#cb1700-6" aria-hidden="true" tabindex="-1"></a>                        <span class="at">covar =</span> <span class="fu">list</span>(<span class="at">CovSnd =</span> CovSnd2, </span>
+<span id="cb1700-7"><a href="ch13-Relational-Event-Models-R.html#cb1700-7" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">CovRec =</span> CovRec2, </span>
+<span id="cb1700-8"><a href="ch13-Relational-Event-Models-R.html#cb1700-8" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">CovEvent =</span> CovEvent_date2), </span>
+<span id="cb1700-9"><a href="ch13-Relational-Event-Models-R.html#cb1700-9" aria-hidden="true" tabindex="-1"></a>                        <span class="at">ordinal =</span> <span class="cn">FALSE</span>, <span class="at">hessian =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Let's add some more meaningful variable names. In, this case the terms are the same as with <code>mod4f</code>, so we can use those names directly.</p>
+<div class="sourceCode" id="cb1701"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1701-1"><a href="ch13-Relational-Event-Models-R.html#cb1701-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mod4f_date2<span class="sc">$</span>coef) <span class="ot">&lt;-</span> coef_names4f</span></code></pre></div>
+<div class="sourceCode" id="cb1702"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1702-1"><a href="ch13-Relational-Event-Models-R.html#cb1702-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod4f_date2)</span></code></pre></div>
+<pre><code>## Relational Event Model (Temporal Likelihood)
+## 
+##                   Estimate   Std.Err  Z value  Pr(&gt;|z|)    
+## Recency_ji        2.750119  0.308910   8.9027 &lt; 2.2e-16 ***
+## Recency_ij       -0.669371  0.211804  -3.1603  0.001576 ** 
+## Intercept        -7.099843  0.302566 -23.4655 &lt; 2.2e-16 ***
+## Sender_male       0.151122  0.139798   1.0810  0.279695    
+## Sender_teacher    0.634194  0.445500   1.4236  0.154575    
+## Receiver_male     0.028309  0.143930   0.1967  0.844076    
+## Receiver_teacher  2.368058  0.337425   7.0180 2.250e-12 ***
+## Seating           1.569521  0.254591   6.1649 7.054e-10 ***
+## Friendship        1.442215  0.294275   4.9009 9.540e-07 ***
+## PSAB_BA           3.613222  0.160670  22.4885 &lt; 2.2e-16 ***
+## PSAB_BY           1.980571  0.270852   7.3124 2.625e-13 ***
+## PSAB_XA           0.722097  0.371719   1.9426  0.052066 .  
+## PSAB_XB           0.968778  0.313233   3.0928  0.001983 ** 
+## PSAB_AY           0.538744  0.398285   1.3527  0.176164    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Null deviance: 2598.114 on 284 degrees of freedom
+## Residual deviance: 704.5596 on 271 degrees of freedom
+##  Chi-square: 1893.554 on 13 degrees of freedom, asymptotic p-value 0 
+## AIC: 732.5596 AICC: 734.1209 BIC: 783.6452</code></pre>
+<p>We will create a little data frame to compare the coefficients from our two days.</p>
+<div class="sourceCode" id="cb1704"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1704-1"><a href="ch13-Relational-Event-Models-R.html#cb1704-1" aria-hidden="true" tabindex="-1"></a>compare_coefs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">date1 =</span> mod4f<span class="sc">$</span>coef, <span class="at">date2 =</span> mod4f_date2<span class="sc">$</span>coef)</span></code></pre></div>
+<div class="sourceCode" id="cb1705"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1705-1"><a href="ch13-Relational-Event-Models-R.html#cb1705-1" aria-hidden="true" tabindex="-1"></a>compare_coefs</span></code></pre></div>
+<pre><code>##                        date1      date2
+## Recency_ji        3.50563742  2.7501192
+## Recency_ij       -1.57639768 -0.6693709
+## Intercept        -6.44769065 -7.0998433
+## Sender_male       0.21481729  0.1511222
+## Sender_teacher   -1.14942292  0.6341937
+## Receiver_male     0.01560242  0.0283086
+## Receiver_teacher  1.43102317  2.3680580
+## Seating           0.85797281  1.5695214
+## Friendship        0.99271415  1.4422153
+## PSAB_BA           3.47840049  3.6132221
+## PSAB_BY           1.36214460  1.9805708
+## PSAB_XA           0.40014146  0.7220974
+## PSAB_XB           1.15129647  0.9687781
+## PSAB_AY           0.23115535  0.5387436</code></pre>
+<p>Overall, much of the same interactional rules we saw above (in the 'normal' day) hold when looking at this second date, where the class was more unruly. We still see turn taking in interactions, for example (AB and then BA). We still see rules around usurping the conversation, such that when A talks to B and then X jumps in, they are likely to talk to B. Still, there would appear to be some potentially important differences (we would want to explore this more formally). For example, the effects for friendship and seating are particularly important for the second day. Similarly, there is some evidence that the tendency for PSAB-BY p-shifts are relatively high here. A class that is more unruly tends to have interactions that are based more on friendship and adjacent seating (i.e. talking to neighbors rather than doing discussion). Additionally, there may be a higher (relative) tendency for nodes to form a kind of two-step interaction (A-B-Y) rather than just a simple return to the person addressing them (A-B-A). This would potentially create more disruption in the classroom, as a larger number of students are brought into the initial interaction event.</p>
+<p>It is also useful to compare these results to the kind of models we saw in the previous tutorial on STERGM. In general, STERG models allow us to test hypotheses about formation and persistence of ties. This opens up questions about triadic effects and larger group structures. In the language of relational event models, A may talk to B, and then B may talk to Y; but when B talks to Y, Y is very likely to be someone that A generally talks with. Thus, little groups in the classroom emerge that are harder to see in the relational event model than with STERGM. On the other hand, STERGM completely obscures the actual dynamics of moment-to-moment interactions, missing some of the ‘rules’ of interaction that come out so clearly in the relational event results.</p>
+<p>Chapter 13 has covered statistical network models, moving from the cross-sectional case all the way up to continuous-time network data. In <a href="ch14-Network-Diffusion-R.html#ch14-Network-Diffusion-R">Chapter 14</a>, we still utilize statistical network models, but we focus on problems related to diffusion.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ch14-Network-Diffusion-R.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "serif",
+"size": 2.5
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"info": false
+});
+});
+</script>
+
+</body>
+
+</html>

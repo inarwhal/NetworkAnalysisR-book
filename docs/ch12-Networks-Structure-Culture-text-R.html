@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>12, Part 1. Cultural Structures | Network Analysis: Integrating Social Network Theory, Method, and Application with R</title>
+  <meta name="description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="12, Part 1. Cultural Structures | Network Analysis: Integrating Social Network Theory, Method, and Application with R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="12, Part 1. Cultural Structures | Network Analysis: Integrating Social Network Theory, Method, and Application with R" />
+  
+  <meta name="twitter:description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  
+
+<meta name="author" content="Craig Rawlings, Jeffrey A. Smith, James Moody, and Daniel McFarland" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ch12-Networks-Culture-R.html"/>
+<link rel="next" href="ch12-Networks-Cultural-Spaces-CA-R.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/d3-4.5.0/d3.min.js"></script>
+<script src="libs/forceNetwork-binding-0.4/forceNetwork.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="https://inarwhal.github.io/NetworkAnalysisR-book/">
+Network Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#how-to-read-the-book"><i class="fa fa-check"></i><b>1.1</b> How to Read the Book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#citations-and-use"><i class="fa fa-check"></i><b>1.2</b> Citations and Use</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#updates-and-feedback"><i class="fa fa-check"></i><b>1.3</b> Updates and Feedback</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i><b>1.4</b> Acknowledgments</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#author-informtion"><i class="fa fa-check"></i><b>1.5</b> Author Informtion</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#session-information"><i class="fa fa-check"></i><b>1.6</b> Session Information</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html"><i class="fa fa-check"></i><b>2</b> Basic Introduction to R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html#preliminaries"><i class="fa fa-check"></i><b>2.1</b> Preliminaries</a></li>
+<li class="chapter" data-level="2.2" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html#packages"><i class="fa fa-check"></i><b>2.2</b> Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ch3-Network-Data-R.html"><a href="ch3-Network-Data-R.html"><i class="fa fa-check"></i><b>3</b> Network Data</a></li>
+<li class="chapter" data-level="" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html"><i class="fa fa-check"></i>3, Part 1. Cross-Sectional Network Data</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#reading-data-into-r"><i class="fa fa-check"></i><b>3.1</b> Reading Data into R</a></li>
+<li class="chapter" data-level="3.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#networks-in-igraph"><i class="fa fa-check"></i><b>3.2</b> Networks in igraph</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-a-matrix-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.1</b> Using a Matrix to Construct the Network</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-edgelist-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.2</b> Using an Edgelist to Construct the Network</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#extracting-information-from-igraph-objects"><i class="fa fa-check"></i><b>3.2.3</b> Extracting Information from igraph Objects</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-adjacency-list-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.4</b> Using an Adjacency List to Construct the Network</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-the-network-package"><i class="fa fa-check"></i><b>3.3</b> Using the network Package</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-a-matrix-to-construct-the-network-1"><i class="fa fa-check"></i><b>3.3.1</b> Using a Matrix to Construct the Network</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-edgelist-to-construct-the-network-1"><i class="fa fa-check"></i><b>3.3.2</b> Using an Edgelist to Construct the Network</a></li>
+<li class="chapter" data-level="3.3.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#putting-edge-attributes-onto-the-network"><i class="fa fa-check"></i><b>3.3.3</b> Putting Edge Attributes onto the Network</a></li>
+<li class="chapter" data-level="3.3.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#moving-between-igraph-and-network-objects"><i class="fa fa-check"></i><b>3.3.4</b> Moving between igraph and network Objects</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#some-key-network-measures"><i class="fa fa-check"></i><b>3.4</b> Some Key Network Measures</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#degree"><i class="fa fa-check"></i><b>3.4.1</b> Degree</a></li>
+<li class="chapter" data-level="3.4.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#density"><i class="fa fa-check"></i><b>3.4.2</b> Density</a></li>
+<li class="chapter" data-level="3.4.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#walks"><i class="fa fa-check"></i><b>3.4.3</b> Walks</a></li>
+<li class="chapter" data-level="3.4.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#paths-distance-and-closeness"><i class="fa fa-check"></i><b>3.4.4</b> Paths, Distance, and Closeness</a></li>
+<li class="chapter" data-level="3.4.5" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#reachability"><i class="fa fa-check"></i><b>3.4.5</b> Reachability</a></li>
+<li class="chapter" data-level="3.4.6" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#diameter"><i class="fa fa-check"></i><b>3.4.6</b> Diameter</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html"><i class="fa fa-check"></i>3, Part 2. Dynamic Network Data</a>
+<ul>
+<li class="chapter" data-level="3.5" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#discrete-longitudinal-networks"><i class="fa fa-check"></i><b>3.5</b> Discrete Longitudinal Networks</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#getting-the-data-ready"><i class="fa fa-check"></i><b>3.5.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="3.5.2" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#constructing-networkdynamic-objects"><i class="fa fa-check"></i><b>3.5.2</b> Constructing networkDynamic Objects</a></li>
+<li class="chapter" data-level="3.5.3" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#summary-statistics"><i class="fa fa-check"></i><b>3.5.3</b> Summary Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#continuous-time-networks"><i class="fa fa-check"></i><b>3.6</b> Continuous-Time Networks</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#getting-the-data-ready-1"><i class="fa fa-check"></i><b>3.6.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="3.6.2" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#constructing-networkdynamic-objects-1"><i class="fa fa-check"></i><b>3.6.2</b> Constructing networkDynamic Objects</a></li>
+<li class="chapter" data-level="3.6.3" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#summary-statistics-1"><i class="fa fa-check"></i><b>3.6.3</b> Summary Statistics</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html"><i class="fa fa-check"></i><b>4</b> Missing Network Data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#missing-data"><i class="fa fa-check"></i><b>4.1</b> Missing Data</a></li>
+<li class="chapter" data-level="4.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#listwise-deletion"><i class="fa fa-check"></i><b>4.2</b> Listwise Deletion</a></li>
+<li class="chapter" data-level="4.3" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-the-level-of-bias"><i class="fa fa-check"></i><b>4.3</b> Gauging the Level of Bias</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-bias-using-past-results"><i class="fa fa-check"></i><b>4.3.1</b> Gauging Bias Using Past Results</a></li>
+<li class="chapter" data-level="4.3.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-bias-using-predictive-models"><i class="fa fa-check"></i><b>4.3.2</b> Gauging Bias Using Predictive Models</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-options"><i class="fa fa-check"></i><b>4.4</b> Simple Imputation Options</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-asymmetric-option"><i class="fa fa-check"></i><b>4.4.1</b> Simple Imputation with Asymmetric Option</a></li>
+<li class="chapter" data-level="4.4.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-symmetric-option"><i class="fa fa-check"></i><b>4.4.2</b> Simple Imputation with Symmetric Option</a></li>
+<li class="chapter" data-level="4.4.3" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-probabilistic-option"><i class="fa fa-check"></i><b>4.4.3</b> Simple Imputation with Probabilistic Option</a></li>
+<li class="chapter" data-level="4.4.4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#comparing-estimates"><i class="fa fa-check"></i><b>4.4.4</b> Comparing Estimates</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html"><i class="fa fa-check"></i><b>5</b> Network Visualization</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#setting-up-the-session"><i class="fa fa-check"></i><b>5.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="5.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#network-plots-using-igraph"><i class="fa fa-check"></i><b>5.2</b> Network Plots using igraph</a></li>
+<li class="chapter" data-level="5.3" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#network-plots-based-on-ggplot"><i class="fa fa-check"></i><b>5.3</b> Network Plots based on ggplot</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#ggally-package"><i class="fa fa-check"></i><b>5.3.1</b> GGally package</a></li>
+<li class="chapter" data-level="5.3.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#ggnetwork-package"><i class="fa fa-check"></i><b>5.3.2</b> ggnetwork package</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#contour-plots"><i class="fa fa-check"></i><b>5.4</b> Contour Plots</a></li>
+<li class="chapter" data-level="5.5" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#interactive-plots"><i class="fa fa-check"></i><b>5.5</b> Interactive Plots</a></li>
+<li class="chapter" data-level="5.6" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#dynamic-network-visualizations"><i class="fa fa-check"></i><b>5.6</b> Dynamic Network Visualizations</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#getting-the-data-ready-2"><i class="fa fa-check"></i><b>5.6.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="5.6.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#time-flattened-visualizations"><i class="fa fa-check"></i><b>5.6.2</b> Time Flattened Visualizations</a></li>
+<li class="chapter" data-level="5.6.3" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#dynamic-network-movies"><i class="fa fa-check"></i><b>5.6.3</b> Dynamic Network Movies</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html"><i class="fa fa-check"></i><b>6</b> Ego Network Data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#working-with-ego-network-data"><i class="fa fa-check"></i><b>6.1</b> Working with Ego Network Data</a></li>
+<li class="chapter" data-level="6.2" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#plotting-networks"><i class="fa fa-check"></i><b>6.2</b> Plotting Networks</a></li>
+<li class="chapter" data-level="6.3" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#homophily-ego-alter-attributes"><i class="fa fa-check"></i><b>6.3</b> Homophily: Ego-Alter Attributes</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#proportion-of-alters-matching-ego"><i class="fa fa-check"></i><b>6.3.1</b> Proportion of Alters Matching Ego</a></li>
+<li class="chapter" data-level="6.3.2" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#analyzing-homophily-at-the-dyadic-level-ego-alter-pairs"><i class="fa fa-check"></i><b>6.3.2</b> Analyzing Homophily at the Dyadic Level: Ego-Alter Pairs</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#homophily-alter-attributes"><i class="fa fa-check"></i><b>6.4</b> Homophily: Alter Attributes</a></li>
+<li class="chapter" data-level="6.5" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#ego-networks-as-predictors"><i class="fa fa-check"></i><b>6.5</b> Ego Networks as Predictors</a></li>
+<li class="chapter" data-level="6.6" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#working-with-one-input-file"><i class="fa fa-check"></i><b>6.6</b> Working with One Input File</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html"><i class="fa fa-check"></i><b>7</b> Dyads and Triads</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#setting-up-the-session-1"><i class="fa fa-check"></i><b>7.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="7.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyadic-processes"><i class="fa fa-check"></i><b>7.2</b> Dyadic Processes</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyad-census-and-reciprocity"><i class="fa fa-check"></i><b>7.2.1</b> Dyad Census and Reciprocity</a></li>
+<li class="chapter" data-level="7.2.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#conditional-uniform-graph-tests"><i class="fa fa-check"></i><b>7.2.2</b> Conditional Uniform Graph Tests</a></li>
+<li class="chapter" data-level="7.2.3" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyad-census-by-attributes-of-nodes"><i class="fa fa-check"></i><b>7.2.3</b> Dyad Census by Attributes of Nodes</a></li>
+<li class="chapter" data-level="7.2.4" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#advice-and-friendship-together"><i class="fa fa-check"></i><b>7.2.4</b> Advice and Friendship Together</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#triadic-processes"><i class="fa fa-check"></i><b>7.3</b> Triadic Processes</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#triad-census"><i class="fa fa-check"></i><b>7.3.1</b> Triad Census</a></li>
+<li class="chapter" data-level="7.3.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#transitivity"><i class="fa fa-check"></i><b>7.3.2</b> Transitivity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html"><i class="fa fa-check"></i><b>8</b> Network Cohesion and Communities</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#first-example-network"><i class="fa fa-check"></i><b>8.1</b> First Example Network</a></li>
+<li class="chapter" data-level="8.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#cohesion"><i class="fa fa-check"></i><b>8.2</b> Cohesion</a></li>
+<li class="chapter" data-level="8.3" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#community-or-group-detection"><i class="fa fa-check"></i><b>8.3</b> Community (or Group) Detection</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#walktrap"><i class="fa fa-check"></i><b>8.3.1</b> Walktrap</a></li>
+<li class="chapter" data-level="8.3.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#edge-betweenness"><i class="fa fa-check"></i><b>8.3.2</b> Edge Betweenness</a></li>
+<li class="chapter" data-level="8.3.3" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#scree-plots"><i class="fa fa-check"></i><b>8.3.3</b> Scree Plots</a></li>
+<li class="chapter" data-level="8.3.4" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#multi-level-clustering"><i class="fa fa-check"></i><b>8.3.4</b> Multi-level Clustering</a></li>
+<li class="chapter" data-level="8.3.5" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#cohesive-blocking"><i class="fa fa-check"></i><b>8.3.5</b> Cohesive Blocking</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#demographic-characteristics"><i class="fa fa-check"></i><b>8.4</b> Demographic Characteristics</a></li>
+<li class="chapter" data-level="8.5" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#community-overlap"><i class="fa fa-check"></i><b>8.5</b> Community Overlap</a></li>
+<li class="chapter" data-level="8.6" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#big-data-example"><i class="fa fa-check"></i><b>8.6</b> Big Data Example</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#multi-level-clustering-1"><i class="fa fa-check"></i><b>8.6.1</b> Multi-level Clustering</a></li>
+<li class="chapter" data-level="8.6.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#looking-at-the-community-structure-within-the-initial-communities"><i class="fa fa-check"></i><b>8.6.2</b> Looking at the Community Structure within the Initial Communities</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html"><i class="fa fa-check"></i><b>9</b> Network Centrality and Hierarchy</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#setting-up-the-session-2"><i class="fa fa-check"></i><b>9.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="9.2" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality"><i class="fa fa-check"></i><b>9.2</b> Centrality</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality-measures-for-social-interactions"><i class="fa fa-check"></i><b>9.2.1</b> Centrality Measures for Social Interactions</a></li>
+<li class="chapter" data-level="9.2.2" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#correlations-between-centrality-measures"><i class="fa fa-check"></i><b>9.2.2</b> Correlations between Centrality Measures</a></li>
+<li class="chapter" data-level="9.2.3" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality-for-task-interactions"><i class="fa fa-check"></i><b>9.2.3</b> Centrality for Task Interactions</a></li>
+<li class="chapter" data-level="9.2.4" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#tasksocial-correlations"><i class="fa fa-check"></i><b>9.2.4</b> Task/Social Correlations</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centralization"><i class="fa fa-check"></i><b>9.3</b> Centralization</a></li>
+<li class="chapter" data-level="9.4" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#clustering-and-hierarchy"><i class="fa fa-check"></i><b>9.4</b> Clustering and Hierarchy</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html"><i class="fa fa-check"></i><b>10</b> Positions and Roles</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#classroom-network-data"><i class="fa fa-check"></i><b>10.1</b> Classroom Network Data</a></li>
+<li class="chapter" data-level="10.2" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#getting-the-data-ready-3"><i class="fa fa-check"></i><b>10.2</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="10.3" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#structural-equivalence"><i class="fa fa-check"></i><b>10.3</b> Structural Equivalence</a></li>
+<li class="chapter" data-level="10.4" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#defining-positions"><i class="fa fa-check"></i><b>10.4</b> Defining Positions</a></li>
+<li class="chapter" data-level="10.5" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#role-analysis"><i class="fa fa-check"></i><b>10.5</b> Role Analysis</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#permuting-the-matrix-by-position"><i class="fa fa-check"></i><b>10.5.1</b> Permuting the Matrix by Position</a></li>
+<li class="chapter" data-level="10.5.2" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#constructing-a-blockmodel"><i class="fa fa-check"></i><b>10.5.2</b> Constructing a Blockmodel</a></li>
+<li class="chapter" data-level="10.5.3" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#plotting-a-blockmodel"><i class="fa fa-check"></i><b>10.5.3</b> Plotting a Blockmodel</a></li>
+<li class="chapter" data-level="10.5.4" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#interpretation-of-blockmodel"><i class="fa fa-check"></i><b>10.5.4</b> Interpretation of Blockmodel</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#local-equivalence"><i class="fa fa-check"></i><b>10.6</b> Local Equivalence</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html"><i class="fa fa-check"></i><b>11</b> Two-mode Networks: Affilitations and Dualities</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#example-affiliation-data"><i class="fa fa-check"></i><b>11.1</b> Example Affiliation Data</a></li>
+<li class="chapter" data-level="11.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#plotting-the-network"><i class="fa fa-check"></i><b>11.2</b> Plotting the Network</a></li>
+<li class="chapter" data-level="11.3" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#single-mode-networks"><i class="fa fa-check"></i><b>11.3</b> Single Mode Networks</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#constructing-one-mode-projections"><i class="fa fa-check"></i><b>11.3.1</b> Constructing One-Mode Projections</a></li>
+<li class="chapter" data-level="11.3.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#plotting-one-mode-projections"><i class="fa fa-check"></i><b>11.3.2</b> Plotting One-Mode Projections</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#club-to-club-network"><i class="fa fa-check"></i><b>11.4</b> Club-to-Club Network</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#centrality-1"><i class="fa fa-check"></i><b>11.4.1</b> Centrality</a></li>
+<li class="chapter" data-level="11.4.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#groups"><i class="fa fa-check"></i><b>11.4.2</b> Groups</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#using-the-tnet-package"><i class="fa fa-check"></i><b>11.5</b> Using the tnet package</a></li>
+<li class="chapter" data-level="11.6" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#racial-segregation"><i class="fa fa-check"></i><b>11.6</b> Racial Segregation</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#proportion-of-co-membership-edges-where-students-match-on-race"><i class="fa fa-check"></i><b>11.6.1</b> Proportion of Co-membership Edges where Students Match on Race</a></li>
+<li class="chapter" data-level="11.6.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#do-students-match-racially-with-at-least-one-other-student"><i class="fa fa-check"></i><b>11.6.2</b> Do Students Match Racially with at Least One Other Student?</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#club-centrality-and-attributes"><i class="fa fa-check"></i><b>11.7</b> Club Centrality and Attributes</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="ch12-Networks-Culture-R.html"><a href="ch12-Networks-Culture-R.html"><i class="fa fa-check"></i><b>12</b> Networks and Culture</a></li>
+<li class="chapter" data-level="" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html"><i class="fa fa-check"></i>12, Part 1. Cultural Structures</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#getting-the-data-ready-4"><i class="fa fa-check"></i><b>12.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="12.2" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#topic-modeling"><i class="fa fa-check"></i><b>12.2</b> Topic Modeling</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#lda-initial-model"><i class="fa fa-check"></i><b>12.2.1</b> LDA: Initial Model</a></li>
+<li class="chapter" data-level="12.2.2" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#lda-picking-the-number-of-topics"><i class="fa fa-check"></i><b>12.2.2</b> LDA: Picking the Number of Topics</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#a-network-representation"><i class="fa fa-check"></i><b>12.3</b> A Network Representation</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html"><i class="fa fa-check"></i>12, Part 2. Cultural Spaces</a>
+<ul>
+<li class="chapter" data-level="12.4" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#correspondence-analysis"><i class="fa fa-check"></i><b>12.4</b> Correspondence Analysis</a></li>
+<li class="chapter" data-level="12.5" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#number-of-dimensions"><i class="fa fa-check"></i><b>12.5</b> Number of Dimensions</a></li>
+<li class="chapter" data-level="12.6" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#importance-of-rowscolumns"><i class="fa fa-check"></i><b>12.6</b> Importance of Rows/Columns</a></li>
+<li class="chapter" data-level="12.7" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#hierarchical-clustering"><i class="fa fa-check"></i><b>12.7</b> Hierarchical Clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="ch13-Statistical-Models-Networks-R.html"><a href="ch13-Statistical-Models-Networks-R.html"><i class="fa fa-check"></i><b>13</b> Statistical Models for Networks</a></li>
+<li class="chapter" data-level="" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><i class="fa fa-check"></i>13, Part 1. Cross-Sectional Network Models: ERGM</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#setting-up-the-session-3"><i class="fa fa-check"></i><b>13.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="13.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#descriptive-statistics"><i class="fa fa-check"></i><b>13.2</b> Descriptive Statistics</a></li>
+<li class="chapter" data-level="13.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#cug-tests"><i class="fa fa-check"></i><b>13.3</b> CUG Tests</a></li>
+<li class="chapter" data-level="13.4" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#fitting-an-ergm"><i class="fa fa-check"></i><b>13.4</b> Fitting an ERGM</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-only"><i class="fa fa-check"></i><b>13.4.1</b> Edges Only</a></li>
+<li class="chapter" data-level="13.4.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-and-homophily"><i class="fa fa-check"></i><b>13.4.2</b> Edges and Homophily</a></li>
+<li class="chapter" data-level="13.4.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-homophily-and-node-covariates"><i class="fa fa-check"></i><b>13.4.3</b> Edges, Homophily, and Node Covariates</a></li>
+<li class="chapter" data-level="13.4.4" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-homophily-node-covariates-and-reciprocity"><i class="fa fa-check"></i><b>13.4.4</b> Edges, Homophily, Node Covariates, and Reciprocity</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#checking-model-convergence"><i class="fa fa-check"></i><b>13.5</b> Checking Model Convergence</a></li>
+<li class="chapter" data-level="13.6" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#goodness-of-fit"><i class="fa fa-check"></i><b>13.6</b> Goodness of Fit</a></li>
+<li class="chapter" data-level="13.7" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#adding-gwesp-to-the-model"><i class="fa fa-check"></i><b>13.7</b> Adding GWESP to the Model</a></li>
+<li class="chapter" data-level="13.8" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#simulation"><i class="fa fa-check"></i><b>13.8</b> Simulation</a></li>
+<li class="chapter" data-level="13.9" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#example-on-a-large-network"><i class="fa fa-check"></i><b>13.9</b> Example on a Large Network</a></li>
+<li class="chapter" data-level="13.10" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#ergm-on-a-valued-network"><i class="fa fa-check"></i><b>13.10</b> ERGM on a Valued Network</a>
+<ul>
+<li class="chapter" data-level="13.10.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#baseline-ergm-on-valued-network"><i class="fa fa-check"></i><b>13.10.1</b> Baseline ERGM on Valued Network</a></li>
+<li class="chapter" data-level="13.10.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#adding-nodematch-and-nodefactor-terms"><i class="fa fa-check"></i><b>13.10.2</b> Adding Nodematch and Nodefactor Terms</a></li>
+<li class="chapter" data-level="13.10.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#transitivity-in-valued-networks"><i class="fa fa-check"></i><b>13.10.3</b> Transitivity in Valued Networks</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html"><i class="fa fa-check"></i>13, Part 2. Longitudinal Network Models: STERGM</a>
+<ul>
+<li class="chapter" data-level="13.11" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#getting-the-data-ready-5"><i class="fa fa-check"></i><b>13.11</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="13.12" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#stergms"><i class="fa fa-check"></i><b>13.12</b> STERGMs</a>
+<ul>
+<li class="chapter" data-level="13.12.1" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-1-just-edges"><i class="fa fa-check"></i><b>13.12.1</b> Model 1: Just Edges</a></li>
+<li class="chapter" data-level="13.12.2" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-2-edges-homophily-and-nodefactor"><i class="fa fa-check"></i><b>13.12.2</b> Model 2: Edges, Homophily and Nodefactor</a></li>
+<li class="chapter" data-level="13.12.3" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-3-edges-nodefactor-and-seating"><i class="fa fa-check"></i><b>13.12.3</b> Model 3: Edges, Nodefactor, and Seating</a></li>
+<li class="chapter" data-level="13.12.4" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-4-adding-gwesp-to-the-model"><i class="fa fa-check"></i><b>13.12.4</b> Model 4: Adding GWESP to the Model</a></li>
+</ul></li>
+<li class="chapter" data-level="13.13" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#checking-model-fit"><i class="fa fa-check"></i><b>13.13</b> Checking Model Fit</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><i class="fa fa-check"></i>13, Part 3. Two-mode Network Models</a>
+<ul>
+<li class="chapter" data-level="13.14" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#affiliation-data"><i class="fa fa-check"></i><b>13.14</b> Affiliation Data</a></li>
+<li class="chapter" data-level="13.15" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#ergm-on-a-two-mode-network"><i class="fa fa-check"></i><b>13.15</b> ERGM on a Two-mode Network</a>
+<ul>
+<li class="chapter" data-level="13.15.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#edges"><i class="fa fa-check"></i><b>13.15.1</b> Edges</a></li>
+<li class="chapter" data-level="13.15.2" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#adjusting-for-structural-issues-gender-and-grade-specific-clubs"><i class="fa fa-check"></i><b>13.15.2</b> Adjusting for Structural Issues: Gender and Grade Specific Clubs</a></li>
+</ul></li>
+<li class="chapter" data-level="13.16" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#second-mode-terms"><i class="fa fa-check"></i><b>13.16</b> Second Mode Terms</a>
+<ul>
+<li class="chapter" data-level="13.16.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#nodefactor"><i class="fa fa-check"></i><b>13.16.1</b> Nodefactor</a></li>
+<li class="chapter" data-level="13.16.2" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#homophily"><i class="fa fa-check"></i><b>13.16.2</b> Homophily</a></li>
+</ul></li>
+<li class="chapter" data-level="13.17" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#first-mode-terms"><i class="fa fa-check"></i><b>13.17</b> First Mode Terms</a></li>
+<li class="chapter" data-level="13.18" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#clustering"><i class="fa fa-check"></i><b>13.18</b> Clustering</a></li>
+<li class="chapter" data-level="13.19" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#two-mode-longitudinal-networks"><i class="fa fa-check"></i><b>13.19</b> Two-mode Longitudinal Networks</a>
+<ul>
+<li class="chapter" data-level="13.19.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#entry-and-exit-of-nodes"><i class="fa fa-check"></i><b>13.19.1</b> Entry and Exit of Nodes</a></li>
+</ul></li>
+<li class="chapter" data-level="13.20" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#stergm-on-a-two-mode-network"><i class="fa fa-check"></i><b>13.20</b> STERGM on a Two-mode Network</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html"><i class="fa fa-check"></i>13, Part 4. Relational Event Models</a>
+<ul>
+<li class="chapter" data-level="13.21" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#getting-the-data-ready-6"><i class="fa fa-check"></i><b>13.21</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="13.22" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#running-initial-models"><i class="fa fa-check"></i><b>13.22</b> Running Initial Models</a>
+<ul>
+<li class="chapter" data-level="13.22.1" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#intercept-only-model"><i class="fa fa-check"></i><b>13.22.1</b> Intercept Only Model</a></li>
+<li class="chapter" data-level="13.22.2" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#adding-sender-and-receiver-effects"><i class="fa fa-check"></i><b>13.22.2</b> Adding Sender and Receiver Effects</a></li>
+<li class="chapter" data-level="13.22.3" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#adding-covariate-event-terms"><i class="fa fa-check"></i><b>13.22.3</b> Adding Covariate Event Terms</a></li>
+</ul></li>
+<li class="chapter" data-level="13.23" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#micro-rules-of-interaction"><i class="fa fa-check"></i><b>13.23</b> Micro Rules of Interaction</a></li>
+<li class="chapter" data-level="13.24" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#assessing-model-fit"><i class="fa fa-check"></i><b>13.24</b> Assessing Model Fit</a></li>
+<li class="chapter" data-level="13.25" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#comparison-to-a-second-date"><i class="fa fa-check"></i><b>13.25</b> Comparison to a Second Date</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="ch14-Network-Diffusion-R.html"><a href="ch14-Network-Diffusion-R.html"><i class="fa fa-check"></i><b>14</b> Network Diffusion</a></li>
+<li class="chapter" data-level="" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html"><i class="fa fa-check"></i>14, Part 1. Network Diffusion: Infectious Diseases</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#reading-in-data"><i class="fa fa-check"></i><b>14.1</b> Reading in Data</a></li>
+<li class="chapter" data-level="14.2" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#specifying-the-network-model"><i class="fa fa-check"></i><b>14.2</b> Specifying the Network Model</a></li>
+<li class="chapter" data-level="14.3" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#estimating-the-network-model"><i class="fa fa-check"></i><b>14.3</b> Estimating the Network Model</a></li>
+<li class="chapter" data-level="14.4" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#specifying-the-epidemic-model"><i class="fa fa-check"></i><b>14.4</b> Specifying the Epidemic Model</a></li>
+<li class="chapter" data-level="14.5" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#running-simulations"><i class="fa fa-check"></i><b>14.5</b> Running Simulations</a>
+<ul>
+<li class="chapter" data-level="14.5.1" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#running-baseline-model"><i class="fa fa-check"></i><b>14.5.1</b> Running Baseline Model</a></li>
+<li class="chapter" data-level="14.5.2" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#varying-network-features"><i class="fa fa-check"></i><b>14.5.2</b> Varying Network Features</a></li>
+<li class="chapter" data-level="14.5.3" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#varying-epidemic-model"><i class="fa fa-check"></i><b>14.5.3</b> Varying Epidemic Model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html"><i class="fa fa-check"></i>14, Part 2. Social Diffusion Processes</a>
+<ul>
+<li class="chapter" data-level="14.6" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#setting-up-the-session-4"><i class="fa fa-check"></i><b>14.6</b> Setting up the Session</a></li>
+<li class="chapter" data-level="14.7" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simple-diffusion-models"><i class="fa fa-check"></i><b>14.7</b> Simple Diffusion Models</a></li>
+<li class="chapter" data-level="14.8" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#threshold-models-of-diffusion"><i class="fa fa-check"></i><b>14.8</b> Threshold Models of Diffusion</a>
+<ul>
+<li class="chapter" data-level="14.8.1" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simulating-diffusion-processes-using-the-netdiffuser-package"><i class="fa fa-check"></i><b>14.8.1</b> Simulating Diffusion Processes using the netdiffuseR Package</a></li>
+<li class="chapter" data-level="14.8.2" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#comparing-diffusion-under-different-network-and-adoption-behavior-conditions"><i class="fa fa-check"></i><b>14.8.2</b> Comparing Diffusion under Different Network and Adoption Behavior Conditions</a></li>
+<li class="chapter" data-level="14.8.3" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simulations-using-multiple-runs"><i class="fa fa-check"></i><b>14.8.3</b> Simulations using Multiple Runs</a></li>
+</ul></li>
+<li class="chapter" data-level="14.9" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#working-with-empirical-data"><i class="fa fa-check"></i><b>14.9</b> Working with Empirical Data</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html"><i class="fa fa-check"></i><b>15</b> Social Influence: Coevolution of Networks and Behaviors</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#reading-in-classroom-data"><i class="fa fa-check"></i><b>15.1</b> Reading in Classroom Data</a></li>
+<li class="chapter" data-level="15.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#siena-model-setup"><i class="fa fa-check"></i><b>15.2</b> SIENA Model Setup</a></li>
+<li class="chapter" data-level="15.3" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification"><i class="fa fa-check"></i><b>15.3</b> Model Specification</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-behavioral-model"><i class="fa fa-check"></i><b>15.3.1</b> Model Specification: Behavioral Model</a></li>
+<li class="chapter" data-level="15.3.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-network-model"><i class="fa fa-check"></i><b>15.3.2</b> Model Specification: Network Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-estimation"><i class="fa fa-check"></i><b>15.4</b> Model Estimation</a></li>
+<li class="chapter" data-level="15.5" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpretation"><i class="fa fa-check"></i><b>15.5</b> Interpretation</a>
+<ul>
+<li class="chapter" data-level="15.5.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpreting-network-model"><i class="fa fa-check"></i><b>15.5.1</b> Interpreting Network Model</a></li>
+<li class="chapter" data-level="15.5.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpreting-behavioral-model"><i class="fa fa-check"></i><b>15.5.2</b> Interpreting Behavioral Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.6" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#checking-model-fit-1"><i class="fa fa-check"></i><b>15.6</b> Checking Model Fit</a></li>
+<li class="chapter" data-level="15.7" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#example-with-3-time-periods"><i class="fa fa-check"></i><b>15.7</b> Example with 3 Time Periods</a>
+<ul>
+<li class="chapter" data-level="15.7.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-and-estimation"><i class="fa fa-check"></i><b>15.7.1</b> Model Specification and Estimation</a></li>
+<li class="chapter" data-level="15.7.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#time-heterogeneity"><i class="fa fa-check"></i><b>15.7.2</b> Time Heterogeneity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="how-to-cite.html"><a href="how-to-cite.html"><i class="fa fa-check"></i>How to Cite</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Network Analysis: Integrating Social Network Theory, Method, and Application with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ch12-Networks-Structure-Culture-text-R" class="section level1 unnumbered hasAnchor">
+<h1>12, Part 1. Cultural Structures<a href="ch12-Networks-Structure-Culture-text-R.html#ch12-Networks-Structure-Culture-text-R" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This is the first tutorial for Chapter 12, covering the application of network ideas to the analysis of cultural data. This tutorial will build directly on the material from Chapter 11, on two-mode data. In <a href="ch11-Two-mode-Networks.html#ch11-Two-mode-Networks">Chapter 11</a>, we analyzed typical affiliation data, where the rows were actors and the columns organizations. In this tutorial, we will be working with textual data, applying the ideas of duality to a very different kind of data source, one based on words in documents. We will walk through the basics of topic modeling in R. Topic modeling is a natural language processing technique that uncovers the latent topics that structure the words used in a set of documents. We will cover the following: basic data management of textual data; modeling textual data using LDA (latent Dirichlet allocation); and representing textual data as a network.</p>
+<p>For our empirical case, we analyze textual data based on a set of sociology abstracts (drawn from recent dissertations). We are interested in discovering the latent topics that exist in the data, where each topic is defined by having a distinct pattern of words associated with it. We are also interested in seeing which abstracts get placed together and why. In this way we are trying to uncover the underlying structure of the field of sociology (as represented in abstracts), where certain words and researchers are associated with a topic and certain topics are closer to each other than others. We thus see the intuition of a network approach played out using textual data. As this is a textbook on network analysis, we will not focus on the technical details of topic modeling; instead, we will focus on the substantive application of network ideas to textual data. For those interested in more technical details on topic models, see the <strong>topicmodels</strong> <a href="https://cran.r-project.org/web/packages/topicmodels/vignettes/topicmodels.pdf">documentation</a>. And for information on text mining and textual analysis in general, see <span class="citation">Feinerer, Hornik, and Meyer (2008)</span>.</p>
+<div id="getting-the-data-ready-4" class="section level2 hasAnchor" number="12.1">
+<h2><span class="header-section-number">12.1</span> Getting the Data Ready<a href="ch12-Networks-Structure-Culture-text-R.html#getting-the-data-ready-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We will need a number of packages to analyze our textual data, here dissertation abstracts in sociology. We will need: <strong>NLP</strong> (basic processing of natural language), <strong>tm</strong> (text mining package), <strong>SnowballC</strong> (word stemming package), <strong>topicmodels</strong> (package for modeling the topics), and <strong>ldatuning</strong> (package for evaluating the models). Let's go ahead and load them all.</p>
+<div class="sourceCode" id="cb1137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1137-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1137-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NLP)</span>
+<span id="cb1137-2"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1137-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tm)</span>
+<span id="cb1137-3"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1137-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SnowballC)</span>
+<span id="cb1137-4"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1137-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(topicmodels) </span>
+<span id="cb1137-5"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1137-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ldatuning) </span></code></pre></div>
+<p>Note that topic modeling is computationally heavy and can require a long run time. The data we will use for this lab is only a very small (random) sample of the original corpus of dissertations. If this was an analysis for an actual paper, we would want to use the whole set of data, or at least a much larger sample. Let's read in the data, treating our text strings as strings rather than as categories:</p>
+<div class="sourceCode" id="cb1138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1138-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1138-1" aria-hidden="true" tabindex="-1"></a>url1 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/sociologysample.csv&quot;</span></span>
+<span id="cb1138-2"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1138-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1138-3"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1138-3" aria-hidden="true" tabindex="-1"></a>abstracts <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> url1, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>We can use the <code>str()</code> function to take a look at the data.</p>
+<div class="sourceCode" id="cb1139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1139-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(abstracts) </span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    199 obs. of  2 variables:
+##  $ obs : int  39628 39745 49780 18794 17548 6848 34226 12683 1170 34437 ...
+##  $ text: chr  &quot;Ontogenic variables, such as the experience of the parent&#39;s abuse as a child and current_depression or substanc&quot;| __truncated__ &quot;This study_analyzes attitudes of area residents toward mineral_extraction and processing in the Northern Great_&quot;| __truncated__ &quot;This dissertation is an experiment in thinking with the story, not about the story in order to erase_the_bounda&quot;| __truncated__ &quot;The concepts of parent_empowerment and participation, currently popular in the disability field, that emerge fr&quot;| __truncated__ ...</code></pre>
+<p>We see there are two columns (<code>obs</code> and <code>text</code>), the first for the observation and the second for the actual text of the abstract. There are 199 abstracts in the data. For example, let’s look at the text of the first abstract.</p>
+<div class="sourceCode" id="cb1141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1141-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1141-1" aria-hidden="true" tabindex="-1"></a>abstracts[<span class="dv">1</span>, <span class="st">&quot;text&quot;</span>] </span></code></pre></div>
+<pre><code>## [1] &quot;Ontogenic variables, such as the experience of the parent&#39;s abuse as a child and current_depression or substance abuse, were expected_to_have_a_greater_impact on the risk of child_abuse than microsystem and exosystem_variables such as family functioning, domestic violence, income, community safety, and social support. It was expected that social_support would have the greatest_impact of these broader system variables. It is believed that attachment_style_mediates the relationship between the ontogenic system level and microsystem/exosystem level variables. Secondary data were used to examine these systemic impacts. The dataset was obtained from the National_Data_Archive on Child Abuse and Neglect. The sample_consisted of 265 women, the majority of whom were African-American and who had a high_school_education or GED. The majority of these women were employed, while others were in school or a training_program at the time of the interview. Over 50 percent_of_the_sample had never been married. A multiple_regression_analysis_was_conducted_to_examine_the_impact of factors from three systems levels on the risk of child abuse. Variables were entered into the multiple_regression equation after they had demonstrated significance in bi-variate analyses with Bonferroni corrections. Mother&#39;s age was entered first in this equation in order to control for any potential effect of this variable as it has been shown_to_be_significantly_related_to_risk of abuse. Entered in the second step were the ontogenic variables found to be significant: depression and locus of control. In the third and final step, the microsystem and exosystem_variables found_to_have_a_significant_impact on the risk of abuse were entered: the number of social supports available to the mother, the mother&#39;s assessment_of_family_functioning and the frequency of domestic_violence perpetrated against her. Locus of control and mother&#39;s depression were demonstrated to be the most important predictors in the equation. Domestic violence_and_social_support were the next most important predictors, with family_functioning becoming non-significant in this equation. This supports the hypothesis that ontogenic variables have the greater_impact in predicting risk of physical abuse. A path_analysis_was_conducted_in_order_to_examine the possible time order and causal_nature of these variables. All variables were included in this analysis. The only variables found to impact the risk of physical_abuse were depression and locus of control. The only route from experiencing childhood_sexual_abuse to the risk of committing child_physical_abuse was through the level of depression currently being experienced by the mother. Mother&#39;s locus_of_control impacted the risk of abuse directly as well as through its impact on depression. Risk of abuse was not influenced directly by the experience_of_sexual abuse.&quot;</code></pre>
+<p>We can see that this is literally the text of the dissertation abstract, word for word. This is the data that we want to analyze. Before we can analyze the data, we need to create a corpus based on the words used in the abstracts. We basically need to transform the raw text data into a set of words (for each abstract) that are directly comparable across abstracts. We want to know which words are used together frequently and which abstracts are using which words. We thus need to have the data in a format where such comparisons are possible. By creating a Corpus object from our abstracts, we will be able to use various functions in R that are designed to standardize text data.</p>
+<p>Here we will use a <code>Corpus()</code> function. Note that the <code>Corpus()</code> function will not take text data directly as input. We thus need to use a <code>VectorSource()</code> function within the main function, with the input as the text of interest (<code>abstracts$text</code>).</p>
+<div class="sourceCode" id="cb1143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1143-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1143-1" aria-hidden="true" tabindex="-1"></a>abstracts_corp <span class="ot">&lt;-</span> <span class="fu">Corpus</span>(<span class="fu">VectorSource</span>(abstracts<span class="sc">$</span>text))</span></code></pre></div>
+<div class="sourceCode" id="cb1144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1144-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1144-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(abstracts_corp)</span></code></pre></div>
+<pre><code>## [1] 199</code></pre>
+<p>The length is 199, one for each of the abstracts in our original data. It will be useful to clean the corpus a bit before we actually try to analyze it. Textual data can be messy. We need to make the inputs (abstracts in this case) as uniform as possible, to facilitate comparison. We will go through a series of steps on how to streamline the textual data, making the abstracts consistent and informative. For example, let's change everything to lower case. If one dissertation uses the word "network" and another uses "Network", we don’t want to treat them as having used different words. We will make use of the <code>tm_map()</code> function to clean up the corpus. The inputs are the corpus and the function we want to use (telling R how to change the text). Here we will set the function to tolower.</p>
+<div class="sourceCode" id="cb1146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1146-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1146-1" aria-hidden="true" tabindex="-1"></a>abstracts_corp <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(abstracts_corp, tolower)</span></code></pre></div>
+<p>Let's take a look at the first abstract:</p>
+<div class="sourceCode" id="cb1147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1147-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1147-1" aria-hidden="true" tabindex="-1"></a>abstracts_corp[[<span class="dv">1</span>]]<span class="sc">$</span>content</span></code></pre></div>
+<pre><code>## [1] &quot;ontogenic variables, such as the experience of the parent&#39;s abuse as a child and current_depression or substance abuse, were expected_to_have_a_greater_impact on the risk of child_abuse than microsystem and exosystem_variables such as family functioning, domestic violence, income, community safety, and social support. it was expected that social_support would have the greatest_impact of these broader system variables. it is believed that attachment_style_mediates the relationship between the ontogenic system level and microsystem/exosystem level variables. secondary data were used to examine these systemic impacts. the dataset was obtained from the national_data_archive on child abuse and neglect. the sample_consisted of 265 women, the majority of whom were african-american and who had a high_school_education or ged. the majority of these women were employed, while others were in school or a training_program at the time of the interview. over 50 percent_of_the_sample had never been married. a multiple_regression_analysis_was_conducted_to_examine_the_impact of factors from three systems levels on the risk of child abuse. variables were entered into the multiple_regression equation after they had demonstrated significance in bi-variate analyses with bonferroni corrections. mother&#39;s age was entered first in this equation in order to control for any potential effect of this variable as it has been shown_to_be_significantly_related_to_risk of abuse. entered in the second step were the ontogenic variables found to be significant: depression and locus of control. in the third and final step, the microsystem and exosystem_variables found_to_have_a_significant_impact on the risk of abuse were entered: the number of social supports available to the mother, the mother&#39;s assessment_of_family_functioning and the frequency of domestic_violence perpetrated against her. locus of control and mother&#39;s depression were demonstrated to be the most important predictors in the equation. domestic violence_and_social_support were the next most important predictors, with family_functioning becoming non-significant in this equation. this supports the hypothesis that ontogenic variables have the greater_impact in predicting risk of physical abuse. a path_analysis_was_conducted_in_order_to_examine the possible time order and causal_nature of these variables. all variables were included in this analysis. the only variables found to impact the risk of physical_abuse were depression and locus of control. the only route from experiencing childhood_sexual_abuse to the risk of committing child_physical_abuse was through the level of depression currently being experienced by the mother. mother&#39;s locus_of_control impacted the risk of abuse directly as well as through its impact on depression. risk of abuse was not influenced directly by the experience_of_sexual abuse.&quot;</code></pre>
+<p>We can see all the words are now lower case. We also need to deal with some odd mistakes in the data. We can see from the first abstract that the raw textual data sometimes has multiple words stuck together. For example, in the first abstract current and depression are put together as current_depression. That does not yield a meaningful word, so we need to split those words up into separate words, whenever that happens. In this case, we need to write our own little function (called <code>split_words()</code>) to perform this task. This function will make use of <code>content_transformer()</code>, which is a function used to create text transformations that are not already built into R. Here, we will write a little function within <code>content_transformer()</code> that will find all the _ and replace them with a space. This is accomplished using the <code>gsub()</code> function. The main arguments to <code>gsub()</code> are pattern (the pattern to look for) and replacement (the replacement text for the specified pattern). x is the text of interest.</p>
+<div class="sourceCode" id="cb1149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1149-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1149-1" aria-hidden="true" tabindex="-1"></a>gsub_function <span class="ot">&lt;-</span> <span class="cf">function</span>(x, pattern) <span class="fu">gsub</span>(pattern, <span class="at">replacement =</span> <span class="st">&quot; &quot;</span>, x)</span>
+<span id="cb1149-2"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1149-2" aria-hidden="true" tabindex="-1"></a>split_words <span class="ot">&lt;-</span> <span class="fu">content_transformer</span>(gsub_function)</span></code></pre></div>
+<p>And here we apply our function to the corpus using <code>tm_map()</code>.</p>
+<div class="sourceCode" id="cb1150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1150-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1150-1" aria-hidden="true" tabindex="-1"></a>abstracts_corp <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(abstracts_corp, split_words, <span class="at">pattern =</span> <span class="st">&quot;_&quot;</span>)</span></code></pre></div>
+<p>Let’s check to make sure it worked, looking at the first abstract:</p>
+<div class="sourceCode" id="cb1151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1151-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1151-1" aria-hidden="true" tabindex="-1"></a>abstracts_corp[[<span class="dv">1</span>]]<span class="sc">$</span>content </span></code></pre></div>
+<pre><code>## [1] &quot;ontogenic variables, such as the experience of the parent&#39;s abuse as a child and current depression or substance abuse, were expected to have a greater impact on the risk of child abuse than microsystem and exosystem variables such as family functioning, domestic violence, income, community safety, and social support. it was expected that social support would have the greatest impact of these broader system variables. it is believed that attachment style mediates the relationship between the ontogenic system level and microsystem/exosystem level variables. secondary data were used to examine these systemic impacts. the dataset was obtained from the national data archive on child abuse and neglect. the sample consisted of 265 women, the majority of whom were african-american and who had a high school education or ged. the majority of these women were employed, while others were in school or a training program at the time of the interview. over 50 percent of the sample had never been married. a multiple regression analysis was conducted to examine the impact of factors from three systems levels on the risk of child abuse. variables were entered into the multiple regression equation after they had demonstrated significance in bi-variate analyses with bonferroni corrections. mother&#39;s age was entered first in this equation in order to control for any potential effect of this variable as it has been shown to be significantly related to risk of abuse. entered in the second step were the ontogenic variables found to be significant: depression and locus of control. in the third and final step, the microsystem and exosystem variables found to have a significant impact on the risk of abuse were entered: the number of social supports available to the mother, the mother&#39;s assessment of family functioning and the frequency of domestic violence perpetrated against her. locus of control and mother&#39;s depression were demonstrated to be the most important predictors in the equation. domestic violence and social support were the next most important predictors, with family functioning becoming non-significant in this equation. this supports the hypothesis that ontogenic variables have the greater impact in predicting risk of physical abuse. a path analysis was conducted in order to examine the possible time order and causal nature of these variables. all variables were included in this analysis. the only variables found to impact the risk of physical abuse were depression and locus of control. the only route from experiencing childhood sexual abuse to the risk of committing child physical abuse was through the level of depression currently being experienced by the mother. mother&#39;s locus of control impacted the risk of abuse directly as well as through its impact on depression. risk of abuse was not influenced directly by the experience of sexual abuse.&quot;</code></pre>
+<p>It looks right. We can see that current and depression are now separate words, rather than current_depression. Let’s do a similar splitting based on words put together with a /.</p>
+<div class="sourceCode" id="cb1153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1153-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1153-1" aria-hidden="true" tabindex="-1"></a>abstracts_corp <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(abstracts_corp, split_words, <span class="at">pattern =</span> <span class="st">&quot;/&quot;</span>)</span></code></pre></div>
+<p>Let's also remove punctuation as this is not substantively useful. The function here is <code>removePunctation()</code>. This will take out commas, periods, apostrophes and so on. In this case we do not need to use a content_transformer function as <code>removePunctuation()</code> is a built-in transformation in the <strong>tm</strong> package.</p>
+<div class="sourceCode" id="cb1154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1154-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1154-1" aria-hidden="true" tabindex="-1"></a>abstracts_corp <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(abstracts_corp, removePunctuation)</span></code></pre></div>
+<p>Let's also remove all of the numbers from the corpus.</p>
+<div class="sourceCode" id="cb1155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1155-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1155-1" aria-hidden="true" tabindex="-1"></a>abstracts_corp <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(abstracts_corp, removeNumbers)</span></code></pre></div>
+<p>Now let's designate a set of words to remove. For example, we may want to remove commonly used words that don't add much to differentiate word use in the abstracts. For example, if everyone uses "is" it may make sense to remove it from all abstracts. Here we can use the <code>stopwords()</code> function (set to english) to get commonly used words.</p>
+<div class="sourceCode" id="cb1156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1156-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1156-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stopwords</span>(<span class="st">&quot;english&quot;</span>)</span></code></pre></div>
+<pre><code>##   [1] &quot;i&quot;          &quot;me&quot;         &quot;my&quot;         &quot;myself&quot;     &quot;we&quot;         &quot;our&quot;        &quot;ours&quot;       &quot;ourselves&quot;  &quot;you&quot;        &quot;your&quot;       &quot;yours&quot;      &quot;yourself&quot;   &quot;yourselves&quot; &quot;he&quot;         &quot;him&quot;        &quot;his&quot;        &quot;himself&quot;    &quot;she&quot;        &quot;her&quot;        &quot;hers&quot;       &quot;herself&quot;    &quot;it&quot;        
+##  [23] &quot;its&quot;        &quot;itself&quot;     &quot;they&quot;       &quot;them&quot;       &quot;their&quot;      &quot;theirs&quot;     &quot;themselves&quot; &quot;what&quot;       &quot;which&quot;      &quot;who&quot;        &quot;whom&quot;       &quot;this&quot;       &quot;that&quot;       &quot;these&quot;      &quot;those&quot;      &quot;am&quot;         &quot;is&quot;         &quot;are&quot;        &quot;was&quot;        &quot;were&quot;       &quot;be&quot;         &quot;been&quot;      
+##  [45] &quot;being&quot;      &quot;have&quot;       &quot;has&quot;        &quot;had&quot;        &quot;having&quot;     &quot;do&quot;         &quot;does&quot;       &quot;did&quot;        &quot;doing&quot;      &quot;would&quot;      &quot;should&quot;     &quot;could&quot;      &quot;ought&quot;      &quot;i&#39;m&quot;        &quot;you&#39;re&quot;     &quot;he&#39;s&quot;       &quot;she&#39;s&quot;      &quot;it&#39;s&quot;       &quot;we&#39;re&quot;      &quot;they&#39;re&quot;    &quot;i&#39;ve&quot;       &quot;you&#39;ve&quot;    
+##  [67] &quot;we&#39;ve&quot;      &quot;they&#39;ve&quot;    &quot;i&#39;d&quot;        &quot;you&#39;d&quot;      &quot;he&#39;d&quot;       &quot;she&#39;d&quot;      &quot;we&#39;d&quot;       &quot;they&#39;d&quot;     &quot;i&#39;ll&quot;       &quot;you&#39;ll&quot;     &quot;he&#39;ll&quot;      &quot;she&#39;ll&quot;     &quot;we&#39;ll&quot;      &quot;they&#39;ll&quot;    &quot;isn&#39;t&quot;      &quot;aren&#39;t&quot;     &quot;wasn&#39;t&quot;     &quot;weren&#39;t&quot;    &quot;hasn&#39;t&quot;     &quot;haven&#39;t&quot;    &quot;hadn&#39;t&quot;     &quot;doesn&#39;t&quot;   
+##  [89] &quot;don&#39;t&quot;      &quot;didn&#39;t&quot;     &quot;won&#39;t&quot;      &quot;wouldn&#39;t&quot;   &quot;shan&#39;t&quot;     &quot;shouldn&#39;t&quot;  &quot;can&#39;t&quot;      &quot;cannot&quot;     &quot;couldn&#39;t&quot;   &quot;mustn&#39;t&quot;    &quot;let&#39;s&quot;      &quot;that&#39;s&quot;     &quot;who&#39;s&quot;      &quot;what&#39;s&quot;     &quot;here&#39;s&quot;     &quot;there&#39;s&quot;    &quot;when&#39;s&quot;     &quot;where&#39;s&quot;    &quot;why&#39;s&quot;      &quot;how&#39;s&quot;      &quot;a&quot;          &quot;an&quot;        
+## [111] &quot;the&quot;        &quot;and&quot;        &quot;but&quot;        &quot;if&quot;         &quot;or&quot;         &quot;because&quot;    &quot;as&quot;         &quot;until&quot;      &quot;while&quot;      &quot;of&quot;         &quot;at&quot;         &quot;by&quot;         &quot;for&quot;        &quot;with&quot;       &quot;about&quot;      &quot;against&quot;    &quot;between&quot;    &quot;into&quot;       &quot;through&quot;    &quot;during&quot;     &quot;before&quot;     &quot;after&quot;     
+## [133] &quot;above&quot;      &quot;below&quot;      &quot;to&quot;         &quot;from&quot;       &quot;up&quot;         &quot;down&quot;       &quot;in&quot;         &quot;out&quot;        &quot;on&quot;         &quot;off&quot;        &quot;over&quot;       &quot;under&quot;      &quot;again&quot;      &quot;further&quot;    &quot;then&quot;       &quot;once&quot;       &quot;here&quot;       &quot;there&quot;      &quot;when&quot;       &quot;where&quot;      &quot;why&quot;        &quot;how&quot;       
+## [155] &quot;all&quot;        &quot;any&quot;        &quot;both&quot;       &quot;each&quot;       &quot;few&quot;        &quot;more&quot;       &quot;most&quot;       &quot;other&quot;      &quot;some&quot;       &quot;such&quot;       &quot;no&quot;         &quot;nor&quot;        &quot;not&quot;        &quot;only&quot;       &quot;own&quot;        &quot;same&quot;       &quot;so&quot;         &quot;than&quot;       &quot;too&quot;        &quot;very&quot;</code></pre>
+<p>Here we remove any word in that list from each abstract using the <code>removeWords()</code> function.</p>
+<div class="sourceCode" id="cb1158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1158-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1158-1" aria-hidden="true" tabindex="-1"></a>abstracts_corp <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(abstracts_corp, removeWords, <span class="fu">stopwords</span>(<span class="st">&quot;english&quot;</span>))</span></code></pre></div>
+<p>Now, let's add a few more words to our stopword list. Again, we want to remove words that are not differentiating for the corpus at hand (here abstracts from sociology dissertations). We will add the following words that were not in the default stop list.</p>
+<div class="sourceCode" id="cb1159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1159-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1159-1" aria-hidden="true" tabindex="-1"></a>myStopwords <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;dissertation&quot;</span>, <span class="st">&quot;chapter&quot;</span>, <span class="st">&quot;chapters&quot;</span>, <span class="st">&quot;research&quot;</span>, </span>
+<span id="cb1159-2"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1159-2" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&quot;researcher&quot;</span> ,<span class="st">&quot;researchers&quot;</span> ,<span class="st">&quot;study&quot;</span>, <span class="st">&quot;studies&quot;</span>, </span>
+<span id="cb1159-3"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1159-3" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&quot;studied&quot;</span>, <span class="st">&quot;studys&quot;</span>, <span class="st">&quot;studying&quot;</span>, <span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>, <span class="st">&quot;three&quot;</span>)</span></code></pre></div>
+<p>We tried to include words that are not informative for this corpus, as they are generic and widely used. For example, many abstracts may mention a "chapter one" but that does not make it substantively important that chapter and one are used together frequently. We could, of course, imagine a slightly different list, and we must be aware that are our results will differ if we exclude different words. We now go ahead and remove those words from the corpus.</p>
+<div class="sourceCode" id="cb1160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1160-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1160-1" aria-hidden="true" tabindex="-1"></a>abstracts_corp <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(abstracts_corp, removeWords, myStopwords)</span></code></pre></div>
+<p>Now, let's take out any redundant whitespace between words using the <code>stripWhitespace()</code> function.</p>
+<div class="sourceCode" id="cb1161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1161-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1161-1" aria-hidden="true" tabindex="-1"></a>abstracts_corp <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(abstracts_corp, stripWhitespace)</span></code></pre></div>
+<p>Finally, we will stem the document using a <code>stemDocument()</code> function. This reduces similar words to a single stem word. For example, test and testing would be reduced to test. The idea is that they convey the same basic meaning and should be treated as the same.</p>
+<div class="sourceCode" id="cb1162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1162-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1162-1" aria-hidden="true" tabindex="-1"></a>abstracts_corp <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(abstracts_corp, stemDocument)</span></code></pre></div>
+<p>Let's again take a look at the first abstract:</p>
+<div class="sourceCode" id="cb1163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1163-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1163-1" aria-hidden="true" tabindex="-1"></a>abstracts_corp[[<span class="dv">1</span>]]<span class="sc">$</span>content</span></code></pre></div>
+<pre><code>## [1] &quot;ontogen variabl experi parent abus child current depress substanc abus expect greater impact risk child abus microsystem exosystem variabl famili function domest violenc incom communiti safeti social support expect social support greatest impact broader system variabl believ attach style mediat relationship ontogen system level microsystem exosystem level variabl secondari data use examin system impact dataset obtain nation data archiv child abus neglect sampl consist women major africanamerican high school educ ged major women employ other school train program time interview percent sampl never marri multipl regress analysi conduct examin impact factor system level risk child abus variabl enter multipl regress equat demonstr signific bivari analys bonferroni correct mother age enter first equat order control potenti effect variabl shown signific relat risk abus enter second step ontogen variabl found signific depress locus control third final step microsystem exosystem variabl found signific impact risk abus enter number social support avail mother mother assess famili function frequenc domest violenc perpetr locus control mother depress demonstr import predictor equat domest violenc social support next import predictor famili function becom nonsignific equat support hypothesi ontogen variabl greater impact predict risk physic abus path analysi conduct order examin possibl time order causal natur variabl variabl includ analysi variabl found impact risk physic abus depress locus control rout experienc childhood sexual abus risk commit child physic abus level depress current experienc mother mother locus control impact risk abus direct well impact depress risk abus influenc direct experi sexual abus&quot;</code></pre>
+<p>After all of this you end up with a string of word stems with many common words removed. This is done for each input (here abstract) in the corpus. Note that the cleaning process is fraught with difficulties. For example, stemming is far from perfect and can lead to some unexpected results. For example, experiment and experience have the same stem (experi) while child and children do not. This could be what you want, but it may not. More generally, synonyms will not be treated as the same word (i.e., stemming will not capture the idea that kid and child are often used to capture similar ideas). Similarly, we have to be careful about the choice of words to include in the stop list. We want to remove words that are not differentiating, but how long of a list we should construct and which words should be included are difficult (context-specific) questions.</p>
+<p>Assuming we are satisfied with the cleaning process, we are now in a position to create a document-term matrix. We need to create a document-term matrix as this will serve as input to our LDA model, where the words and abstracts are placed into latent topics. The document-term matrix is a complex object, capturing how many times each document (the rows) used a particular term (the columns). We will use a <code>DocumentTermMatrix()</code> function, with the corpus as input.</p>
+<div class="sourceCode" id="cb1165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1165-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1165-1" aria-hidden="true" tabindex="-1"></a>abstracts_dtm <span class="ot">&lt;-</span> <span class="fu">DocumentTermMatrix</span>(abstracts_corp)</span></code></pre></div>
+<div class="sourceCode" id="cb1166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1166-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1166-1" aria-hidden="true" tabindex="-1"></a>abstracts_dtm</span></code></pre></div>
+<pre><code>## &lt;&lt;DocumentTermMatrix (documents: 199, terms: 4298)&gt;&gt;
+## Non-/sparse entries: 20228/835074
+## Sparsity           : 98%
+## Maximal term length: 25
+## Weighting          : term frequency (tf)</code></pre>
+<p>We can see that there are 199 documents and 4298 unique terms in our document-term matrix. The values in the matrix correspond to the number of times each document (i.e., abstract) used a given term (i.e., word). 20228 of the values in the matrix are non-sparse, or greater than 1, and 835074 are sparse, equal to 0; where a 0 means that the document did not use the term. Thus, about 98% of the possible 'ties' between documents and terms do not actually exist (<code>835074 / (20228 + 835074)</code>), suggesting that many words are not used widely across abstracts. We also see that the longest word in the corpus is length 25 (i.e., 25 letters).</p>
+<p>We can use the <code>inspect()</code> function to take a look at particular documents or terms. Here we look at the first abstract:</p>
+<div class="sourceCode" id="cb1168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1168-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1168-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inspect</span>(abstracts_dtm[<span class="dv">1</span>, ]) </span></code></pre></div>
+<pre><code>## &lt;&lt;DocumentTermMatrix (documents: 1, terms: 4298)&gt;&gt;
+## Non-/sparse entries: 114/4184
+## Sparsity           : 97%
+## Maximal term length: 25
+## Weighting          : term frequency (tf)
+## Sample             :
+##     Terms
+## Docs abus child control depress enter impact mother risk support variabl
+##    1   14     5       5       6     4      9      6    9       5      12</code></pre>
+<p>By default, inspect will print the top ten terms used. We can see here that the first document used the word 'abus' 14 times, 'child' 5 times, and so on. We can also use inspect to look at the columns. Here we look at the top ten documents that use the term risk:</p>
+<div class="sourceCode" id="cb1170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1170-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1170-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inspect</span>(abstracts_dtm[, <span class="st">&quot;risk&quot;</span>]) </span></code></pre></div>
+<pre><code>## &lt;&lt;DocumentTermMatrix (documents: 199, terms: 1)&gt;&gt;
+## Non-/sparse entries: 11/188
+## Sparsity           : 94%
+## Maximal term length: 4
+## Weighting          : term frequency (tf)
+## Sample             :
+##      Terms
+## Docs  risk
+##   1      9
+##   116    1
+##   117    2
+##   118    1
+##   143    1
+##   173    1
+##   19     1
+##   53     2
+##   63     1
+##   75     1</code></pre>
+<p>We can see that the term 'risk' is used 9 times in the first document, 1 time in the 116th document and so on.</p>
+<p>We can also use the <code>Terms()</code> function to get all of the terms (i.e., words) used and the <code>Docs()</code> function to get all of the document ids (here abstracts). Here we look at the first 6 terms.</p>
+<div class="sourceCode" id="cb1172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1172-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1172-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">Terms</span>(abstracts_dtm))</span></code></pre></div>
+<pre><code>## [1] &quot;abus&quot;            &quot;africanamerican&quot; &quot;age&quot;             &quot;analys&quot;          &quot;analysi&quot;         &quot;archiv&quot;</code></pre>
+<p>Finally, it may be of use to extract the actual matrix from the document-term matrix. Here we apply <code>as.matrix()</code> on the document-term matrix:</p>
+<div class="sourceCode" id="cb1174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1174-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1174-1" aria-hidden="true" tabindex="-1"></a>mat_abstract_words <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(abstracts_dtm)</span></code></pre></div>
+<div class="sourceCode" id="cb1175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1175-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1175-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(mat_abstract_words)</span></code></pre></div>
+<pre><code>## [1]  199 4298</code></pre>
+<p>We can see there are 199 rows (documents) and 4298 columns (terms). And let's take a look at the first five rows and columns:</p>
+<div class="sourceCode" id="cb1177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1177-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1177-1" aria-hidden="true" tabindex="-1"></a>mat_abstract_words[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
+<pre><code>##     Terms
+## Docs abus africanamerican age analys analysi
+##    1   14               1   1      1       3
+##    2    0               0   0      0       3
+##    3    1               0   0      0       3
+##    4    0               0   0      0       0
+##    5    0               0   0      1       0</code></pre>
+<p>We can see, for example, that the first document used 'abus' 14 times (same as we saw above). We can take this matrix and calculate summary measures. For example, we can calculate how many different terms the first document used (by asking how many times the first row of the matrix is greater than 0):</p>
+<div class="sourceCode" id="cb1179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1179-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1179-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(mat_abstract_words[<span class="dv">1</span>, ] <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code></pre></div>
+<pre><code>## [1] 114</code></pre>
+<p>Note that the document-term matrix is analogous to the affiliation matrices we saw in the previous tutorial, where students were on the rows and clubs were on the columns. Here, with textual data, we have documents on the rows and terms on the columns.</p>
+</div>
+<div id="topic-modeling" class="section level2 hasAnchor" number="12.2">
+<h2><span class="header-section-number">12.2</span> Topic Modeling<a href="ch12-Networks-Structure-Culture-text-R.html#topic-modeling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now, we want to analyze our document-term matrix, applying topic models to the text-based data. We will utilize LDA, latent Dirichlet allocation. LDA attempts to uncover the underlying, or latent, topics in the corpus of interest. Different (latent) topics create different word use and we can use the co-occurrence of words in a document to uncover which words hang together under a given topic. A topic will have a high probability of yielding a set of words when those words are used together at high rates. In a similar way, we can ask which abstracts are likely to fall into which topic, based on their distribution of word choice. In many ways, this is conceptually similar to the positional analysis from <a href="ch10-Positions-Roles-R.html#ch10-Positions-Roles-R">Chapter 10</a>, where nodes were placed in the same position if they had the same pattern of ties to other nodes. Here, two abstracts are likely to be in the same topic if they use the same set of words.</p>
+<div id="lda-initial-model" class="section level3 hasAnchor" number="12.2.1">
+<h3><span class="header-section-number">12.2.1</span> LDA: Initial Model<a href="ch12-Networks-Structure-Culture-text-R.html#lda-initial-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We need to set a few parameters before we can run the model. LDA utilizes Gibbs sampling, a randomized algorithm for obtaining a sequence of observations from a multivariate probability distribution. This sequence will be used to approximate the joint distribution of topics and words. Here we set the key inputs to the algorithm:</p>
+<div class="sourceCode" id="cb1181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1181-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1181-1" aria-hidden="true" tabindex="-1"></a>burnin <span class="ot">&lt;-</span> <span class="dv">200</span> <span class="co"># number of omitted Gibbs iterations at beginning</span></span>
+<span id="cb1181-2"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1181-2" aria-hidden="true" tabindex="-1"></a>iter <span class="ot">&lt;-</span> <span class="dv">3000</span> <span class="co"># number of iterations</span></span>
+<span id="cb1181-3"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1181-3" aria-hidden="true" tabindex="-1"></a>thin <span class="ot">&lt;-</span> <span class="dv">2000</span> <span class="co"># number of omitted iterations between each kept iteration </span></span>
+<span id="cb1181-4"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1181-4" aria-hidden="true" tabindex="-1"></a>seed <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">2003</span>, <span class="dv">5</span>,<span class="dv">63</span>, <span class="dv">100001</span>, <span class="dv">765</span>) <span class="co">#seeds to enable reproducibility</span></span>
+<span id="cb1181-5"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1181-5" aria-hidden="true" tabindex="-1"></a>nstart <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co"># number of repeated random starts</span></span>
+<span id="cb1181-6"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1181-6" aria-hidden="true" tabindex="-1"></a>best <span class="ot">&lt;-</span> <span class="cn">TRUE</span> <span class="co"># only continue model on the best model</span></span></code></pre></div>
+<p>The model also requires that a researcher set the number of topics prior to estimation (similar to setting the number of clusters in <a href="ch10-Positions-Roles-R.html#ch10-Positions-Roles-R">Chapter 10</a>). Here we will set the number at 5, noting that this is a pretty arbitrary choice. We will consider more principled ways of setting the number of topics below.</p>
+<div class="sourceCode" id="cb1182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1182-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1182-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">5</span></span></code></pre></div>
+<p>Now we are ready to run LDA using Gibbs sampling. The function is <code>LDA()</code>. The main arguments are:</p>
+<ul>
+<li>x = document term matrix</li>
+<li>k = number of topics</li>
+<li>method = either VEM or Gibbs</li>
+<li>control = list of control input</li>
+</ul>
+<div class="sourceCode" id="cb1183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1183-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1183-1" aria-hidden="true" tabindex="-1"></a>ldaOut <span class="ot">&lt;-</span> <span class="fu">LDA</span>(<span class="at">x =</span> abstracts_dtm, <span class="at">k =</span> k, <span class="at">method =</span> <span class="st">&quot;Gibbs&quot;</span>, </span>
+<span id="cb1183-2"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1183-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">control=</span><span class="fu">list</span>(<span class="at">nstart =</span> nstart, <span class="at">seed =</span> seed, <span class="at">best =</span> best,</span>
+<span id="cb1183-3"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1183-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">burnin =</span> burnin, <span class="at">iter =</span> iter, <span class="at">thin =</span> thin))</span></code></pre></div>
+<p>Now let's explore the results. First, we can use a <code>topics()</code> function to extract the most likely topic for each abstract.</p>
+<div class="sourceCode" id="cb1184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1184-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1184-1" aria-hidden="true" tabindex="-1"></a>ldaOut_topics <span class="ot">&lt;-</span> <span class="fu">topics</span>(ldaOut)</span></code></pre></div>
+<div class="sourceCode" id="cb1185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1185-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1185-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ldaOut_topics)</span></code></pre></div>
+<pre><code>## 1 2 3 4 5 6 
+## 1 2 5 1 2 5</code></pre>
+<p>This suggests that the first abstract is most likely to fall into topic 1, the second is likely to fall into topic 2 and so on. We can also extract more nuanced information, looking at the probabilities of each abstract going into each latent topic. Thus, rather than just looking at the most likely topic, we can see the relative probability of a given abstract belonging to a given topic. The probabilities can be extracted using <code>@gamma</code> on the model object:</p>
+<div class="sourceCode" id="cb1187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1187-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1187-1" aria-hidden="true" tabindex="-1"></a>topicProbabilities <span class="ot">&lt;-</span> ldaOut<span class="sc">@</span>gamma</span></code></pre></div>
+<div class="sourceCode" id="cb1188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1188-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1188-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(topicProbabilities)</span></code></pre></div>
+<pre><code>##            [,1]       [,2]      [,3]      [,4]       [,5]
+## [1,] 0.59589041 0.09246575 0.1404110 0.1061644 0.06506849
+## [2,] 0.11111111 0.32659933 0.2053872 0.2424242 0.11447811
+## [3,] 0.09623431 0.14225941 0.1589958 0.1715481 0.43096234
+## [4,] 0.22147651 0.20805369 0.1610738 0.1946309 0.21476510
+## [5,] 0.11034483 0.61379310 0.1000000 0.1000000 0.07586207
+## [6,] 0.14644351 0.17991632 0.1799163 0.1422594 0.35146444</code></pre>
+<p>We can see that the first abstract has a 0.596 probability of being in topic 1 and much lower probabilities for the other topics. Of course, at this point we do not know anything about what the latent topics correspond to. So, let's go ahead and take a look at the topics. Here we will look at the most likely words associated with each latent topic. This amounts to finding the probability that a given topic will yield a given word and selecting those words with the highest probability. We use the <code>terms()</code> function with the lda object as input, as well as the number of terms to consider (here set to 10).</p>
+<div class="sourceCode" id="cb1190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1190-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1190-1" aria-hidden="true" tabindex="-1"></a>ldaOut_terms <span class="ot">&lt;-</span> <span class="fu">terms</span>(ldaOut, <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1191-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1191-1" aria-hidden="true" tabindex="-1"></a>ldaOut_terms</span></code></pre></div>
+<pre><code>##       Topic 1        Topic 2     Topic 3    Topic 4    Topic 5   
+##  [1,] &quot;parent&quot;       &quot;state&quot;     &quot;social&quot;   &quot;women&quot;    &quot;cultur&quot;  
+##  [2,] &quot;famili&quot;       &quot;polit&quot;     &quot;model&quot;    &quot;student&quot;  &quot;ident&quot;   
+##  [3,] &quot;children&quot;     &quot;organ&quot;     &quot;work&quot;     &quot;educ&quot;     &quot;social&quot;  
+##  [4,] &quot;relationship&quot; &quot;communiti&quot; &quot;use&quot;      &quot;particip&quot; &quot;ethnic&quot;  
+##  [5,] &quot;behavior&quot;     &quot;develop&quot;   &quot;interact&quot; &quot;american&quot; &quot;examin&quot;  
+##  [6,] &quot;mother&quot;       &quot;servic&quot;    &quot;theori&quot;   &quot;role&quot;     &quot;nation&quot;  
+##  [7,] &quot;support&quot;      &quot;system&quot;    &quot;relat&quot;    &quot;school&quot;   &quot;within&quot;  
+##  [8,] &quot;signific&quot;     &quot;econom&quot;    &quot;develop&quot;  &quot;black&quot;    &quot;case&quot;    
+##  [9,] &quot;child&quot;        &quot;polici&quot;    &quot;effect&quot;   &quot;group&quot;    &quot;practic&quot; 
+## [10,] &quot;result&quot;       &quot;local&quot;     &quot;individu&quot; &quot;experi&quot;   &quot;movement&quot;</code></pre>
+<p>We can see that topic 4 (for example) yields words like women, student and education, while topic 1 yields words like parent, family, and children. Note that we can get the actual probabilities for the terms using the <code>posterior()</code> function. More generally, it is important to see that the topics are simultaneously constituted by the set of words that are used together and the abstracts that tend to use those words, analogous to the ideas explored in the tutorial on two-mode, affiliation networks.</p>
+</div>
+<div id="lda-picking-the-number-of-topics" class="section level3 hasAnchor" number="12.2.2">
+<h3><span class="header-section-number">12.2.2</span> LDA: Picking the Number of Topics<a href="ch12-Networks-Structure-Culture-text-R.html#lda-picking-the-number-of-topics" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Our initial analysis set the number of latent topics to 5. But we could just as easily have used a different number, yielding a different set of results. The issue of how to determine the appropriate numbers of topics is a difficult one, in part, because there is no single, universally accepted way of doing this. One approach is to redo the analysis using different numbers of topics, interpreting the latent topics at different scales, or resolutions. A quick overview of a corpus may require 10 topics, while something more refined may require 25. We may need 100 topics for a really detailed topical inspection. This strategy is fairly robust (as one does not have to pick a single number of topics) but is also somewhat unsatisfying. It would be nice to have a simple set of results that we can point to as our best estimate of what the true latent topics are. For this, we need a systematic way of finding the optimal number of topics for the corpus. Here we can make use of the functions in the ldatuning package. The basic idea is to rerun the model using increasingly higher number of topics. As k increases, we calculate different fit statistics as a means of comparison, eventually picking the one with the best fit. There are a number of possible fit statistics we could use. Here we utilize two, one suggested by <span class="citation">Arun et al. (2010)</span> and the other by <span class="citation">Juan et al. (2009)</span>. For example, <span class="citation">Arun et al. (2010)</span> suggest selecting the model (i.e., number of latent topics) that minimizes the cosine distance between topics. The main function is <code>FindTopicNumber()</code>. The main arguments are:</p>
+<ul>
+<li>dtm = document-term matrix</li>
+<li>topics = vector of number of topics to consider</li>
+<li>metrics = which metrics to use to evaluate different topic numbers</li>
+<li>method = estimation routine, same as with LDA</li>
+<li>control = list of controls, same as with LDA</li>
+<li>mc.cores = number of cores to utilize</li>
+</ul>
+<p>Here, we rerun the model, varying the number of topics from 4 to 40 (doing it every other number to save time). We set the metrics to "CaoJuan2009" and "Arun2010". Note that this can take a bit to run.</p>
+<div class="sourceCode" id="cb1193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1193-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1193-1" aria-hidden="true" tabindex="-1"></a>fitmodel <span class="ot">&lt;-</span> <span class="fu">FindTopicsNumber</span>(<span class="at">dtm =</span> abstracts_dtm, </span>
+<span id="cb1193-2"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1193-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">topics =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">4</span>, <span class="at">to =</span> <span class="dv">40</span>, <span class="at">by =</span> <span class="dv">2</span>), </span>
+<span id="cb1193-3"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1193-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">metrics =</span> <span class="fu">c</span>(<span class="st">&quot;CaoJuan2009&quot;</span>, <span class="st">&quot;Arun2010&quot;</span>), </span>
+<span id="cb1193-4"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1193-4" aria-hidden="true" tabindex="-1"></a>                             <span class="at">method =</span> <span class="st">&quot;Gibbs&quot;</span>, </span>
+<span id="cb1193-5"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1193-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">control =</span> <span class="fu">list</span>(<span class="at">nstart =</span> <span class="dv">1</span>, <span class="at">seed =</span> <span class="fu">c</span>(<span class="dv">30</span>), </span>
+<span id="cb1193-6"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1193-6" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">best =</span> best, <span class="at">burnin =</span> burnin, </span>
+<span id="cb1193-7"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1193-7" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">iter =</span> iter, <span class="at">thin =</span> thin), </span>
+<span id="cb1193-8"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1193-8" aria-hidden="true" tabindex="-1"></a>                             <span class="at">mc.cores =</span> <span class="dv">2</span>,  <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1194-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1194-1" aria-hidden="true" tabindex="-1"></a>fitmodel</span></code></pre></div>
+<pre><code>##    topics CaoJuan2009 Arun2010
+## 1      40  0.06359749 322.2180
+## 2      38  0.06015966 325.9417
+## 3      36  0.06441433 329.1180
+## 4      34  0.06263168 333.9887
+## 5      32  0.06309096 340.8725
+## 6      30  0.05739855 342.1717
+## 7      28  0.06420134 352.2448
+## 8      26  0.06329599 361.7429
+## 9      24  0.06020666 365.6039
+## 10     22  0.06228409 372.4103
+## 11     20  0.07153718 387.0902
+## 12     18  0.06673595 398.3489
+## 13     16  0.06531436 410.1995
+## 14     14  0.07709557 428.3069
+## 15     12  0.07686266 445.5500
+## 16     10  0.06734270 462.3836
+## 17      8  0.08508528 493.6755
+## 18      6  0.08656703 528.9791
+## 19      4  0.11489348 584.0326</code></pre>
+<p>Once we fit the model under different numbers of topics, we can go ahead and plot the fit statistics. The function is <code>FindTopicsNumber_plot()</code>.</p>
+<div class="sourceCode" id="cb1196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1196-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1196-1" aria-hidden="true" tabindex="-1"></a><span class="fu">FindTopicsNumber_plot</span>(fitmodel) </span></code></pre></div>
+<p><img src="Chapter12a_Integrated_Network_Science_Rtutorial_networks_culture_topic_modeling_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<p>Based on our two fit statistics of interest, we might choose a number of topics around 30. The Arun statistic is technically minimized at 40, but given that the CaoJaun fit statistic gets worse after 30 (and the Arun statistic has basically plateaued at this point), we may be in better shape using k at 30. If we were interested in examining a less disaggregated solution, setting k to 10 or 16 would be appropriate. We will now go ahead and rerun the same model as before (with the original control parameters) but set k to 30.</p>
+<div class="sourceCode" id="cb1197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1197-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1197-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb1197-2"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1197-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1197-3"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1197-3" aria-hidden="true" tabindex="-1"></a>ldaOut2 <span class="ot">&lt;-</span> <span class="fu">LDA</span>(<span class="at">x =</span> abstracts_dtm, <span class="at">k =</span> k, <span class="at">method =</span> <span class="st">&quot;Gibbs&quot;</span>, </span>
+<span id="cb1197-4"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1197-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">control =</span> <span class="fu">list</span>(<span class="at">nstart =</span> nstart, <span class="at">seed =</span> seed, <span class="at">best =</span> best,</span>
+<span id="cb1197-5"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1197-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">burnin =</span> burnin, <span class="at">iter =</span> iter, <span class="at">thin =</span> thin))</span></code></pre></div>
+<p>And now let's look at the results. We will focus on the terms, showing the most likely terms for each topic (i.e., the terms that each topic is most likely to yield).</p>
+<div class="sourceCode" id="cb1198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1198-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1198-1" aria-hidden="true" tabindex="-1"></a>ldaOut_terms2 <span class="ot">&lt;-</span> <span class="fu">terms</span>(ldaOut2, <span class="dv">10</span>)</span></code></pre></div>
+<p>Let's look at a few example columns (out of the 30 total):</p>
+<div class="sourceCode" id="cb1199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1199-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1199-1" aria-hidden="true" tabindex="-1"></a>ldaOut_terms2[, <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">14</span>, <span class="dv">20</span>, <span class="dv">23</span>, <span class="dv">24</span>)]</span></code></pre></div>
+<pre><code>##       Topic 2     Topic 14    Topic 20       Topic 23 Topic 24  
+##  [1,] &quot;involv&quot;    &quot;japanes&quot;   &quot;parent&quot;       &quot;women&quot;  &quot;program&quot; 
+##  [2,] &quot;school&quot;    &quot;technolog&quot; &quot;children&quot;     &quot;sexual&quot; &quot;use&quot;     
+##  [3,] &quot;educ&quot;      &quot;resourc&quot;   &quot;mother&quot;       &quot;men&quot;    &quot;data&quot;    
+##  [4,] &quot;parent&quot;    &quot;right&quot;     &quot;child&quot;        &quot;gender&quot; &quot;effect&quot;  
+##  [5,] &quot;particip&quot;  &quot;firm&quot;      &quot;famili&quot;       &quot;style&quot;  &quot;measur&quot;  
+##  [6,] &quot;interview&quot; &quot;japan&quot;     &quot;relationship&quot; &quot;experi&quot; &quot;influenc&quot;
+##  [7,] &quot;teacher&quot;   &quot;arrow&quot;     &quot;adjust&quot;       &quot;race&quot;   &quot;find&quot;    
+##  [8,] &quot;scienc&quot;    &quot;foreign&quot;   &quot;support&quot;      &quot;also&quot;   &quot;perform&quot; 
+##  [9,] &quot;percept&quot;   &quot;learn&quot;     &quot;age&quot;          &quot;famili&quot; &quot;high&quot;    
+## [10,] &quot;learn&quot;     &quot;invest&quot;    &quot;matern&quot;       &quot;factor&quot; &quot;increas&quot;</code></pre>
+<p>What can we conclude substantively from our analysis? First, we can see that some of these topics are easier to interpret than others. Topic 2, for example, clearly centers on school outcomes (school, education, involve, parent). Other topics are a bit harder to parse, and may be an indication that we need to take another look at our model (or text cleaning decisions). For example, Topic 24 is defined by pretty broad, general terms (program, use, data, effect) and is not easy to label. In such cases, it may be useful to examine the abstracts directly to understand why they had been put together. Second, we can see that many of the topics do seem to center on recognizable research areas in the discipline. Topic 23, for example, is about women, gender and sexuality, while Topic 20 focuses on the family. Other topics cover more narrowly defined areas, like Topic 14 that is centered on Japan and investment firms. As a researcher, we would want to walk through the latent topics, interpreting each one and drawing out the larger implications for the substantive case in question. Given these kinds of results, a researcher could also try to predict which researchers fall into which latent topic; for example, based on type of university they attended, gender, etc. Similarly, we could ask how being in a given topic is associated with later career success (i.e., finding a job after graduation).</p>
+</div>
+</div>
+<div id="a-network-representation" class="section level2 hasAnchor" number="12.3">
+<h2><span class="header-section-number">12.3</span> A Network Representation<a href="ch12-Networks-Structure-Culture-text-R.html#a-network-representation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A researcher may also be interested in producing a network representation of the textual data. This makes it possible to apply network measures, models and visualizations to the corpus. So far we have cleaned the data, modeled the data using LDA but we have not explicitly constructed a network object. Here we go ahead and do that, creating a two-mode network of abstracts by words. Let’s load the <strong>igraph</strong> package.</p>
+<div class="sourceCode" id="cb1201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1201-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1201-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span></code></pre></div>
+<p>We will make use of the abstracts by words matrix extracted earlier. Let’s take a look at the first five rows and columns. The values in the matrix show the number of times that abstract used that word.</p>
+<div class="sourceCode" id="cb1202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1202-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1202-1" aria-hidden="true" tabindex="-1"></a>mat_abstract_words[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] </span></code></pre></div>
+<pre><code>##     Terms
+## Docs abus africanamerican age analys analysi
+##    1   14               1   1      1       3
+##    2    0               0   0      0       3
+##    3    1               0   0      0       3
+##    4    0               0   0      0       0
+##    5    0               0   0      1       0</code></pre>
+<p>In this case, let’s focus on just a subset of the full matrix. We will look at the network of abstracts and words associated with topic 20 ("family") and topic 23 ("gender"). Thus, we are using the LDA results above (specifically the latent topics) to inform our analysis here. Let’s grab the vector showing which topic each abstract is most likely to be in.</p>
+<div class="sourceCode" id="cb1204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1204-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1204-1" aria-hidden="true" tabindex="-1"></a>ldaOut_topics2 <span class="ot">&lt;-</span> <span class="fu">topics</span>(ldaOut2)</span></code></pre></div>
+<p>Now we subset the full abstract-word matrix to just include those abstracts that are most likely to be in topic in 20 or 23.</p>
+<div class="sourceCode" id="cb1205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1205-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1205-1" aria-hidden="true" tabindex="-1"></a>in_20_23 <span class="ot">&lt;-</span> ldaOut_topics2 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">23</span>)</span>
+<span id="cb1205-2"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1205-2" aria-hidden="true" tabindex="-1"></a>mat_abstract_words_subset <span class="ot">&lt;-</span> mat_abstract_words[in_20_23, ]</span></code></pre></div>
+<p>Let’s also reduce the words a bit as well. We will only consider words that are used frequently in topics 20 and 23. This will simplify the picture, eliminating words that are not so relevant for these two topics. Here we calculate the number of times each word was used.</p>
+<div class="sourceCode" id="cb1206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1206-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1206-1" aria-hidden="true" tabindex="-1"></a>worduse <span class="ot">&lt;-</span> <span class="fu">colSums</span>(mat_abstract_words_subset)</span></code></pre></div>
+<p>Let’s only keep those words that were used more than 5 times.</p>
+<div class="sourceCode" id="cb1207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1207-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1207-1" aria-hidden="true" tabindex="-1"></a>mat_abstract_words_subset <span class="ot">&lt;-</span> mat_abstract_words_subset [, worduse <span class="sc">&gt;</span> <span class="dv">5</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb1208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1208-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1208-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(mat_abstract_words_subset)</span></code></pre></div>
+<pre><code>## [1]  24 159</code></pre>
+<p>We have now reduced our matrix to 24 abstracts and 159 words. We are now in a position to construct the abstract-word network. We will construct a two-mode network, where there are two types of nodes (abstracts and words) and abstracts are connected to words (and vice versa) but there are no direct ties between nodes of the same type. An edge exists if abstract i used word j. We will use the <code>graph_from_incidence()</code> function, setting mode to all (creating mutual connections between abstract and words) and keeping the weights (based on the number of times that abstract i used word j).</p>
+<div class="sourceCode" id="cb1210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1210-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1210-1" aria-hidden="true" tabindex="-1"></a>abstract_word_net <span class="ot">&lt;-</span> <span class="fu">graph_from_incidence_matrix</span>(mat_abstract_words_subset,</span>
+<span id="cb1210-2"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1210-2" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">mode =</span> <span class="st">&quot;all&quot;</span>, <span class="at">weighted =</span> T)</span></code></pre></div>
+<p>We will now grab the vertex attribute <code>type</code> from the two-mode graph object:</p>
+<div class="sourceCode" id="cb1211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1211-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1211-1" aria-hidden="true" tabindex="-1"></a>type <span class="ot">&lt;-</span> <span class="fu">vertex_attr</span>(abstract_word_net, <span class="st">&quot;type&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb1212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1212-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1212-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(type)  </span></code></pre></div>
+<pre><code>## type
+## FALSE  TRUE 
+##    24   159</code></pre>
+<p>We see that there are 24 abstracts (FALSE) and 159 words (TRUE). Now, let’s go ahead and plot the network, to see what we can learn from turning the textual data into a network. We first set some plotting parameters. Let’s first set the words green:</p>
+<div class="sourceCode" id="cb1214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1214-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1214-1" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(abstract_word_net)<span class="sc">$</span>color[type <span class="sc">==</span> <span class="cn">TRUE</span>] <span class="ot">&lt;-</span> <span class="fu">rgb</span>(<span class="at">red =</span> <span class="dv">0</span>, <span class="at">green =</span> <span class="dv">1</span>, </span>
+<span id="cb1214-2"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1214-2" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">blue =</span> <span class="dv">0</span>, <span class="at">alpha =</span> .<span class="dv">2</span>) </span></code></pre></div>
+<p>Note that we just change the color for those nodes where <code>type</code> is equal to TRUE (the words). Now let’s set the color for the abstracts. Here we want to differentiate the two topics. Let’s color topic 20 (family) blue and topic 23 (gender) red. In order to do this we need to identify which of the abstracts are in topic 20 and which are in topic 23. We must also remember that many of the nodes are words (<code>type</code> equal to TRUE). First, let’s get the names of the abstracts in each topic:</p>
+<div class="sourceCode" id="cb1215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1215-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1215-1" aria-hidden="true" tabindex="-1"></a>in20 <span class="ot">&lt;-</span> <span class="fu">names</span>(<span class="fu">which</span>(ldaOut_topics2 <span class="sc">==</span> <span class="dv">20</span>))</span>
+<span id="cb1215-2"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1215-2" aria-hidden="true" tabindex="-1"></a>in23 <span class="ot">&lt;-</span> <span class="fu">names</span>(<span class="fu">which</span>(ldaOut_topics2 <span class="sc">==</span> <span class="dv">23</span>))</span></code></pre></div>
+<p>Now we set all those in topic 20 to blue:</p>
+<div class="sourceCode" id="cb1216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1216-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1216-1" aria-hidden="true" tabindex="-1"></a>which_topic20 <span class="ot">&lt;-</span> <span class="fu">V</span>(abstract_word_net)<span class="sc">$</span>name <span class="sc">%in%</span> in20</span>
+<span id="cb1216-2"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1216-2" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(abstract_word_net)<span class="sc">$</span>color[which_topic20] <span class="ot">&lt;-</span> <span class="fu">rgb</span>(<span class="at">red =</span> <span class="dv">0</span>, <span class="at">green =</span> <span class="dv">0</span>, </span>
+<span id="cb1216-3"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1216-3" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">blue =</span> <span class="dv">1</span>, <span class="at">alpha =</span> .<span class="dv">2</span>)</span></code></pre></div>
+<p>Note that we grabbed the vertex names from the network and then asked which matched those in topic 20. And here we do the same thing with topic 23, setting it to red.</p>
+<div class="sourceCode" id="cb1217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1217-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1217-1" aria-hidden="true" tabindex="-1"></a>which_topic23 <span class="ot">&lt;-</span> <span class="fu">V</span>(abstract_word_net)<span class="sc">$</span>name <span class="sc">%in%</span> in23</span>
+<span id="cb1217-2"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1217-2" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(abstract_word_net)<span class="sc">$</span>color[which_topic23] <span class="ot">&lt;-</span> <span class="fu">rgb</span>(<span class="at">red =</span> <span class="dv">1</span>, <span class="at">green =</span> <span class="dv">0</span>, </span>
+<span id="cb1217-3"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1217-3" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">blue =</span> <span class="dv">0</span>, <span class="at">alpha =</span> .<span class="dv">2</span>)</span></code></pre></div>
+<p>Now we'll set some other plotting arguments.</p>
+<div class="sourceCode" id="cb1218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1218-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1218-1" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(abstract_word_net)<span class="sc">$</span>label <span class="ot">&lt;-</span> <span class="fu">V</span>(abstract_word_net)<span class="sc">$</span>name</span>
+<span id="cb1218-2"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1218-2" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(abstract_word_net)<span class="sc">$</span>label.color <span class="ot">&lt;-</span> <span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">0</span>, .<span class="dv">2</span>, .<span class="dv">85</span>)</span>
+<span id="cb1218-3"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1218-3" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(abstract_word_net)<span class="sc">$</span>label.cex <span class="ot">&lt;-</span> .<span class="dv">75</span></span>
+<span id="cb1218-4"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1218-4" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(abstract_word_net)<span class="sc">$</span>size <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb1218-5"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1218-5" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(abstract_word_net)<span class="sc">$</span>frame.color <span class="ot">&lt;-</span> <span class="fu">V</span>(abstract_word_net)<span class="sc">$</span>color</span></code></pre></div>
+<p>Here we set the color of the edges.</p>
+<div class="sourceCode" id="cb1219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1219-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1219-1" aria-hidden="true" tabindex="-1"></a><span class="fu">E</span>(abstract_word_net)<span class="sc">$</span>color <span class="ot">&lt;-</span> <span class="fu">rgb</span>(.<span class="dv">5</span>, .<span class="dv">5</span>, .<span class="dv">5</span>, .<span class="dv">04</span>)</span></code></pre></div>
+<p>And now we plot the network.</p>
+<div class="sourceCode" id="cb1220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1220-1"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1220-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">106</span>)</span>
+<span id="cb1220-2"><a href="ch12-Networks-Structure-Culture-text-R.html#cb1220-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(abstract_word_net, <span class="at">layout =</span> layout_with_fr)</span></code></pre></div>
+<p><img src="Chapter12a_Integrated_Network_Science_Rtutorial_networks_culture_topic_modeling_files/figure-html/unnamed-chunk-62-1.png" width="912" /></p>
+<p>What can we learn from the graph? First, we can see that the blue nodes (topic 20) tend to cluster together and the red nodes (topic 23) tend to cluster together. This suggests that the topics found in the LDA do appear to capture meaningful distinctions amongst the abstracts.</p>
+<p>Second, we can see that there is a set of core words associated with each topic. We see words like family, children, relationship, parent, and mother cluster together close to the blue nodes, those in topic 20. We see words like women, gender, and sexuality cluster together close to the red nodes, those in topic 23. This is in line with our previous analysis but here we get the results arranged in a spatial layout.</p>
+<p>Third, we see that some the abstracts are on the periphery of the network. For example, abstract 109 (in topic 23) does not use the words at the core of the network very heavily. Instead, abstract 109 uses words like legal and speech that are rarely used by any of the abstracts in the gender (or family) topic.</p>
+<p>Fourth, the plot makes clear that there is at least some overlap in usage of words across these topics. Most of the blue nodes (the abstracts in topic 20) and the red nodes (abstracts in topic 23) are reasonably close together in the plot and the plot as a whole is quite dense. This suggests that while the usage of the core words is different across topics, there is much in common as well. A family paper is likely to mention gender (or women) even if its main concern is about family, children and the like. On the other hand, the periphery words (i.e. those words that are rarely used) are unlikely to be shared between the two topics. In this way, a topic (or subfield) carves out a niche by emphasizing certain key words that are of general interest, while also employing topic specific language that is unlikely to be shared more widely.</p>
+<p>Given this kind of initial picture, a researcher could go on to do additional analyses on the network, asking about things like centrality, group structure and the like. For example, we may be interested in examining which words serve to bridge our two topics.</p>
+<p>Overall, this tutorial has offered an initial glimpse of how to analyze textual data in R, while offering an example of how duality could be applied to a very different type of data source. We will draw on many of these ideas in the next tutorial for <a href="ch12-Networks-Cultural-Spaces-CA-R.html#ch12-Networks-Cultural-Spaces-CA-R">Chapter 12</a>, where we cover cultural spaces (using correspondence analysis).</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ch12-Networks-Culture-R.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ch12-Networks-Cultural-Spaces-CA-R.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "serif",
+"size": 2.5
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"info": false
+});
+});
+</script>
+
+</body>
+
+</html>

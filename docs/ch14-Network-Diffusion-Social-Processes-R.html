@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>14, Part 2. Social Diffusion Processes | Network Analysis: Integrating Social Network Theory, Method, and Application with R</title>
+  <meta name="description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="14, Part 2. Social Diffusion Processes | Network Analysis: Integrating Social Network Theory, Method, and Application with R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="14, Part 2. Social Diffusion Processes | Network Analysis: Integrating Social Network Theory, Method, and Application with R" />
+  
+  <meta name="twitter:description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  
+
+<meta name="author" content="Craig Rawlings, Jeffrey A. Smith, James Moody, and Daniel McFarland" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ch14-Network-Diffusion-Infectious-Diseases-R.html"/>
+<link rel="next" href="ch15-coevolution-networks-behaviors-siena-saom-R.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/d3-4.5.0/d3.min.js"></script>
+<script src="libs/forceNetwork-binding-0.4/forceNetwork.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="https://inarwhal.github.io/NetworkAnalysisR-book/">
+Network Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#how-to-read-the-book"><i class="fa fa-check"></i><b>1.1</b> How to Read the Book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#citations-and-use"><i class="fa fa-check"></i><b>1.2</b> Citations and Use</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#updates-and-feedback"><i class="fa fa-check"></i><b>1.3</b> Updates and Feedback</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i><b>1.4</b> Acknowledgments</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#author-informtion"><i class="fa fa-check"></i><b>1.5</b> Author Informtion</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#session-information"><i class="fa fa-check"></i><b>1.6</b> Session Information</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html"><i class="fa fa-check"></i><b>2</b> Basic Introduction to R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html#preliminaries"><i class="fa fa-check"></i><b>2.1</b> Preliminaries</a></li>
+<li class="chapter" data-level="2.2" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html#packages"><i class="fa fa-check"></i><b>2.2</b> Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ch3-Network-Data-R.html"><a href="ch3-Network-Data-R.html"><i class="fa fa-check"></i><b>3</b> Network Data</a></li>
+<li class="chapter" data-level="" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html"><i class="fa fa-check"></i>3, Part 1. Cross-Sectional Network Data</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#reading-data-into-r"><i class="fa fa-check"></i><b>3.1</b> Reading Data into R</a></li>
+<li class="chapter" data-level="3.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#networks-in-igraph"><i class="fa fa-check"></i><b>3.2</b> Networks in igraph</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-a-matrix-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.1</b> Using a Matrix to Construct the Network</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-edgelist-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.2</b> Using an Edgelist to Construct the Network</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#extracting-information-from-igraph-objects"><i class="fa fa-check"></i><b>3.2.3</b> Extracting Information from igraph Objects</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-adjacency-list-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.4</b> Using an Adjacency List to Construct the Network</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-the-network-package"><i class="fa fa-check"></i><b>3.3</b> Using the network Package</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-a-matrix-to-construct-the-network-1"><i class="fa fa-check"></i><b>3.3.1</b> Using a Matrix to Construct the Network</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-edgelist-to-construct-the-network-1"><i class="fa fa-check"></i><b>3.3.2</b> Using an Edgelist to Construct the Network</a></li>
+<li class="chapter" data-level="3.3.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#putting-edge-attributes-onto-the-network"><i class="fa fa-check"></i><b>3.3.3</b> Putting Edge Attributes onto the Network</a></li>
+<li class="chapter" data-level="3.3.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#moving-between-igraph-and-network-objects"><i class="fa fa-check"></i><b>3.3.4</b> Moving between igraph and network Objects</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#some-key-network-measures"><i class="fa fa-check"></i><b>3.4</b> Some Key Network Measures</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#degree"><i class="fa fa-check"></i><b>3.4.1</b> Degree</a></li>
+<li class="chapter" data-level="3.4.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#density"><i class="fa fa-check"></i><b>3.4.2</b> Density</a></li>
+<li class="chapter" data-level="3.4.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#walks"><i class="fa fa-check"></i><b>3.4.3</b> Walks</a></li>
+<li class="chapter" data-level="3.4.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#paths-distance-and-closeness"><i class="fa fa-check"></i><b>3.4.4</b> Paths, Distance, and Closeness</a></li>
+<li class="chapter" data-level="3.4.5" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#reachability"><i class="fa fa-check"></i><b>3.4.5</b> Reachability</a></li>
+<li class="chapter" data-level="3.4.6" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#diameter"><i class="fa fa-check"></i><b>3.4.6</b> Diameter</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html"><i class="fa fa-check"></i>3, Part 2. Dynamic Network Data</a>
+<ul>
+<li class="chapter" data-level="3.5" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#discrete-longitudinal-networks"><i class="fa fa-check"></i><b>3.5</b> Discrete Longitudinal Networks</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#getting-the-data-ready"><i class="fa fa-check"></i><b>3.5.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="3.5.2" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#constructing-networkdynamic-objects"><i class="fa fa-check"></i><b>3.5.2</b> Constructing networkDynamic Objects</a></li>
+<li class="chapter" data-level="3.5.3" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#summary-statistics"><i class="fa fa-check"></i><b>3.5.3</b> Summary Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#continuous-time-networks"><i class="fa fa-check"></i><b>3.6</b> Continuous-Time Networks</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#getting-the-data-ready-1"><i class="fa fa-check"></i><b>3.6.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="3.6.2" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#constructing-networkdynamic-objects-1"><i class="fa fa-check"></i><b>3.6.2</b> Constructing networkDynamic Objects</a></li>
+<li class="chapter" data-level="3.6.3" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#summary-statistics-1"><i class="fa fa-check"></i><b>3.6.3</b> Summary Statistics</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html"><i class="fa fa-check"></i><b>4</b> Missing Network Data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#missing-data"><i class="fa fa-check"></i><b>4.1</b> Missing Data</a></li>
+<li class="chapter" data-level="4.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#listwise-deletion"><i class="fa fa-check"></i><b>4.2</b> Listwise Deletion</a></li>
+<li class="chapter" data-level="4.3" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-the-level-of-bias"><i class="fa fa-check"></i><b>4.3</b> Gauging the Level of Bias</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-bias-using-past-results"><i class="fa fa-check"></i><b>4.3.1</b> Gauging Bias Using Past Results</a></li>
+<li class="chapter" data-level="4.3.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-bias-using-predictive-models"><i class="fa fa-check"></i><b>4.3.2</b> Gauging Bias Using Predictive Models</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-options"><i class="fa fa-check"></i><b>4.4</b> Simple Imputation Options</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-asymmetric-option"><i class="fa fa-check"></i><b>4.4.1</b> Simple Imputation with Asymmetric Option</a></li>
+<li class="chapter" data-level="4.4.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-symmetric-option"><i class="fa fa-check"></i><b>4.4.2</b> Simple Imputation with Symmetric Option</a></li>
+<li class="chapter" data-level="4.4.3" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-probabilistic-option"><i class="fa fa-check"></i><b>4.4.3</b> Simple Imputation with Probabilistic Option</a></li>
+<li class="chapter" data-level="4.4.4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#comparing-estimates"><i class="fa fa-check"></i><b>4.4.4</b> Comparing Estimates</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html"><i class="fa fa-check"></i><b>5</b> Network Visualization</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#setting-up-the-session"><i class="fa fa-check"></i><b>5.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="5.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#network-plots-using-igraph"><i class="fa fa-check"></i><b>5.2</b> Network Plots using igraph</a></li>
+<li class="chapter" data-level="5.3" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#network-plots-based-on-ggplot"><i class="fa fa-check"></i><b>5.3</b> Network Plots based on ggplot</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#ggally-package"><i class="fa fa-check"></i><b>5.3.1</b> GGally package</a></li>
+<li class="chapter" data-level="5.3.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#ggnetwork-package"><i class="fa fa-check"></i><b>5.3.2</b> ggnetwork package</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#contour-plots"><i class="fa fa-check"></i><b>5.4</b> Contour Plots</a></li>
+<li class="chapter" data-level="5.5" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#interactive-plots"><i class="fa fa-check"></i><b>5.5</b> Interactive Plots</a></li>
+<li class="chapter" data-level="5.6" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#dynamic-network-visualizations"><i class="fa fa-check"></i><b>5.6</b> Dynamic Network Visualizations</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#getting-the-data-ready-2"><i class="fa fa-check"></i><b>5.6.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="5.6.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#time-flattened-visualizations"><i class="fa fa-check"></i><b>5.6.2</b> Time Flattened Visualizations</a></li>
+<li class="chapter" data-level="5.6.3" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#dynamic-network-movies"><i class="fa fa-check"></i><b>5.6.3</b> Dynamic Network Movies</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html"><i class="fa fa-check"></i><b>6</b> Ego Network Data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#working-with-ego-network-data"><i class="fa fa-check"></i><b>6.1</b> Working with Ego Network Data</a></li>
+<li class="chapter" data-level="6.2" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#plotting-networks"><i class="fa fa-check"></i><b>6.2</b> Plotting Networks</a></li>
+<li class="chapter" data-level="6.3" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#homophily-ego-alter-attributes"><i class="fa fa-check"></i><b>6.3</b> Homophily: Ego-Alter Attributes</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#proportion-of-alters-matching-ego"><i class="fa fa-check"></i><b>6.3.1</b> Proportion of Alters Matching Ego</a></li>
+<li class="chapter" data-level="6.3.2" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#analyzing-homophily-at-the-dyadic-level-ego-alter-pairs"><i class="fa fa-check"></i><b>6.3.2</b> Analyzing Homophily at the Dyadic Level: Ego-Alter Pairs</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#homophily-alter-attributes"><i class="fa fa-check"></i><b>6.4</b> Homophily: Alter Attributes</a></li>
+<li class="chapter" data-level="6.5" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#ego-networks-as-predictors"><i class="fa fa-check"></i><b>6.5</b> Ego Networks as Predictors</a></li>
+<li class="chapter" data-level="6.6" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#working-with-one-input-file"><i class="fa fa-check"></i><b>6.6</b> Working with One Input File</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html"><i class="fa fa-check"></i><b>7</b> Dyads and Triads</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#setting-up-the-session-1"><i class="fa fa-check"></i><b>7.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="7.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyadic-processes"><i class="fa fa-check"></i><b>7.2</b> Dyadic Processes</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyad-census-and-reciprocity"><i class="fa fa-check"></i><b>7.2.1</b> Dyad Census and Reciprocity</a></li>
+<li class="chapter" data-level="7.2.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#conditional-uniform-graph-tests"><i class="fa fa-check"></i><b>7.2.2</b> Conditional Uniform Graph Tests</a></li>
+<li class="chapter" data-level="7.2.3" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyad-census-by-attributes-of-nodes"><i class="fa fa-check"></i><b>7.2.3</b> Dyad Census by Attributes of Nodes</a></li>
+<li class="chapter" data-level="7.2.4" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#advice-and-friendship-together"><i class="fa fa-check"></i><b>7.2.4</b> Advice and Friendship Together</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#triadic-processes"><i class="fa fa-check"></i><b>7.3</b> Triadic Processes</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#triad-census"><i class="fa fa-check"></i><b>7.3.1</b> Triad Census</a></li>
+<li class="chapter" data-level="7.3.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#transitivity"><i class="fa fa-check"></i><b>7.3.2</b> Transitivity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html"><i class="fa fa-check"></i><b>8</b> Network Cohesion and Communities</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#first-example-network"><i class="fa fa-check"></i><b>8.1</b> First Example Network</a></li>
+<li class="chapter" data-level="8.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#cohesion"><i class="fa fa-check"></i><b>8.2</b> Cohesion</a></li>
+<li class="chapter" data-level="8.3" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#community-or-group-detection"><i class="fa fa-check"></i><b>8.3</b> Community (or Group) Detection</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#walktrap"><i class="fa fa-check"></i><b>8.3.1</b> Walktrap</a></li>
+<li class="chapter" data-level="8.3.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#edge-betweenness"><i class="fa fa-check"></i><b>8.3.2</b> Edge Betweenness</a></li>
+<li class="chapter" data-level="8.3.3" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#scree-plots"><i class="fa fa-check"></i><b>8.3.3</b> Scree Plots</a></li>
+<li class="chapter" data-level="8.3.4" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#multi-level-clustering"><i class="fa fa-check"></i><b>8.3.4</b> Multi-level Clustering</a></li>
+<li class="chapter" data-level="8.3.5" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#cohesive-blocking"><i class="fa fa-check"></i><b>8.3.5</b> Cohesive Blocking</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#demographic-characteristics"><i class="fa fa-check"></i><b>8.4</b> Demographic Characteristics</a></li>
+<li class="chapter" data-level="8.5" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#community-overlap"><i class="fa fa-check"></i><b>8.5</b> Community Overlap</a></li>
+<li class="chapter" data-level="8.6" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#big-data-example"><i class="fa fa-check"></i><b>8.6</b> Big Data Example</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#multi-level-clustering-1"><i class="fa fa-check"></i><b>8.6.1</b> Multi-level Clustering</a></li>
+<li class="chapter" data-level="8.6.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#looking-at-the-community-structure-within-the-initial-communities"><i class="fa fa-check"></i><b>8.6.2</b> Looking at the Community Structure within the Initial Communities</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html"><i class="fa fa-check"></i><b>9</b> Network Centrality and Hierarchy</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#setting-up-the-session-2"><i class="fa fa-check"></i><b>9.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="9.2" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality"><i class="fa fa-check"></i><b>9.2</b> Centrality</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality-measures-for-social-interactions"><i class="fa fa-check"></i><b>9.2.1</b> Centrality Measures for Social Interactions</a></li>
+<li class="chapter" data-level="9.2.2" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#correlations-between-centrality-measures"><i class="fa fa-check"></i><b>9.2.2</b> Correlations between Centrality Measures</a></li>
+<li class="chapter" data-level="9.2.3" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality-for-task-interactions"><i class="fa fa-check"></i><b>9.2.3</b> Centrality for Task Interactions</a></li>
+<li class="chapter" data-level="9.2.4" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#tasksocial-correlations"><i class="fa fa-check"></i><b>9.2.4</b> Task/Social Correlations</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centralization"><i class="fa fa-check"></i><b>9.3</b> Centralization</a></li>
+<li class="chapter" data-level="9.4" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#clustering-and-hierarchy"><i class="fa fa-check"></i><b>9.4</b> Clustering and Hierarchy</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html"><i class="fa fa-check"></i><b>10</b> Positions and Roles</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#classroom-network-data"><i class="fa fa-check"></i><b>10.1</b> Classroom Network Data</a></li>
+<li class="chapter" data-level="10.2" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#getting-the-data-ready-3"><i class="fa fa-check"></i><b>10.2</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="10.3" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#structural-equivalence"><i class="fa fa-check"></i><b>10.3</b> Structural Equivalence</a></li>
+<li class="chapter" data-level="10.4" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#defining-positions"><i class="fa fa-check"></i><b>10.4</b> Defining Positions</a></li>
+<li class="chapter" data-level="10.5" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#role-analysis"><i class="fa fa-check"></i><b>10.5</b> Role Analysis</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#permuting-the-matrix-by-position"><i class="fa fa-check"></i><b>10.5.1</b> Permuting the Matrix by Position</a></li>
+<li class="chapter" data-level="10.5.2" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#constructing-a-blockmodel"><i class="fa fa-check"></i><b>10.5.2</b> Constructing a Blockmodel</a></li>
+<li class="chapter" data-level="10.5.3" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#plotting-a-blockmodel"><i class="fa fa-check"></i><b>10.5.3</b> Plotting a Blockmodel</a></li>
+<li class="chapter" data-level="10.5.4" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#interpretation-of-blockmodel"><i class="fa fa-check"></i><b>10.5.4</b> Interpretation of Blockmodel</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#local-equivalence"><i class="fa fa-check"></i><b>10.6</b> Local Equivalence</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html"><i class="fa fa-check"></i><b>11</b> Two-mode Networks: Affilitations and Dualities</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#example-affiliation-data"><i class="fa fa-check"></i><b>11.1</b> Example Affiliation Data</a></li>
+<li class="chapter" data-level="11.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#plotting-the-network"><i class="fa fa-check"></i><b>11.2</b> Plotting the Network</a></li>
+<li class="chapter" data-level="11.3" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#single-mode-networks"><i class="fa fa-check"></i><b>11.3</b> Single Mode Networks</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#constructing-one-mode-projections"><i class="fa fa-check"></i><b>11.3.1</b> Constructing One-Mode Projections</a></li>
+<li class="chapter" data-level="11.3.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#plotting-one-mode-projections"><i class="fa fa-check"></i><b>11.3.2</b> Plotting One-Mode Projections</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#club-to-club-network"><i class="fa fa-check"></i><b>11.4</b> Club-to-Club Network</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#centrality-1"><i class="fa fa-check"></i><b>11.4.1</b> Centrality</a></li>
+<li class="chapter" data-level="11.4.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#groups"><i class="fa fa-check"></i><b>11.4.2</b> Groups</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#using-the-tnet-package"><i class="fa fa-check"></i><b>11.5</b> Using the tnet package</a></li>
+<li class="chapter" data-level="11.6" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#racial-segregation"><i class="fa fa-check"></i><b>11.6</b> Racial Segregation</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#proportion-of-co-membership-edges-where-students-match-on-race"><i class="fa fa-check"></i><b>11.6.1</b> Proportion of Co-membership Edges where Students Match on Race</a></li>
+<li class="chapter" data-level="11.6.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#do-students-match-racially-with-at-least-one-other-student"><i class="fa fa-check"></i><b>11.6.2</b> Do Students Match Racially with at Least One Other Student?</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#club-centrality-and-attributes"><i class="fa fa-check"></i><b>11.7</b> Club Centrality and Attributes</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="ch12-Networks-Culture-R.html"><a href="ch12-Networks-Culture-R.html"><i class="fa fa-check"></i><b>12</b> Networks and Culture</a></li>
+<li class="chapter" data-level="" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html"><i class="fa fa-check"></i>12, Part 1. Cultural Structures</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#getting-the-data-ready-4"><i class="fa fa-check"></i><b>12.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="12.2" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#topic-modeling"><i class="fa fa-check"></i><b>12.2</b> Topic Modeling</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#lda-initial-model"><i class="fa fa-check"></i><b>12.2.1</b> LDA: Initial Model</a></li>
+<li class="chapter" data-level="12.2.2" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#lda-picking-the-number-of-topics"><i class="fa fa-check"></i><b>12.2.2</b> LDA: Picking the Number of Topics</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#a-network-representation"><i class="fa fa-check"></i><b>12.3</b> A Network Representation</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html"><i class="fa fa-check"></i>12, Part 2. Cultural Spaces</a>
+<ul>
+<li class="chapter" data-level="12.4" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#correspondence-analysis"><i class="fa fa-check"></i><b>12.4</b> Correspondence Analysis</a></li>
+<li class="chapter" data-level="12.5" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#number-of-dimensions"><i class="fa fa-check"></i><b>12.5</b> Number of Dimensions</a></li>
+<li class="chapter" data-level="12.6" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#importance-of-rowscolumns"><i class="fa fa-check"></i><b>12.6</b> Importance of Rows/Columns</a></li>
+<li class="chapter" data-level="12.7" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#hierarchical-clustering"><i class="fa fa-check"></i><b>12.7</b> Hierarchical Clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="ch13-Statistical-Models-Networks-R.html"><a href="ch13-Statistical-Models-Networks-R.html"><i class="fa fa-check"></i><b>13</b> Statistical Models for Networks</a></li>
+<li class="chapter" data-level="" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><i class="fa fa-check"></i>13, Part 1. Cross-Sectional Network Models: ERGM</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#setting-up-the-session-3"><i class="fa fa-check"></i><b>13.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="13.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#descriptive-statistics"><i class="fa fa-check"></i><b>13.2</b> Descriptive Statistics</a></li>
+<li class="chapter" data-level="13.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#cug-tests"><i class="fa fa-check"></i><b>13.3</b> CUG Tests</a></li>
+<li class="chapter" data-level="13.4" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#fitting-an-ergm"><i class="fa fa-check"></i><b>13.4</b> Fitting an ERGM</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-only"><i class="fa fa-check"></i><b>13.4.1</b> Edges Only</a></li>
+<li class="chapter" data-level="13.4.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-and-homophily"><i class="fa fa-check"></i><b>13.4.2</b> Edges and Homophily</a></li>
+<li class="chapter" data-level="13.4.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-homophily-and-node-covariates"><i class="fa fa-check"></i><b>13.4.3</b> Edges, Homophily, and Node Covariates</a></li>
+<li class="chapter" data-level="13.4.4" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-homophily-node-covariates-and-reciprocity"><i class="fa fa-check"></i><b>13.4.4</b> Edges, Homophily, Node Covariates, and Reciprocity</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#checking-model-convergence"><i class="fa fa-check"></i><b>13.5</b> Checking Model Convergence</a></li>
+<li class="chapter" data-level="13.6" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#goodness-of-fit"><i class="fa fa-check"></i><b>13.6</b> Goodness of Fit</a></li>
+<li class="chapter" data-level="13.7" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#adding-gwesp-to-the-model"><i class="fa fa-check"></i><b>13.7</b> Adding GWESP to the Model</a></li>
+<li class="chapter" data-level="13.8" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#simulation"><i class="fa fa-check"></i><b>13.8</b> Simulation</a></li>
+<li class="chapter" data-level="13.9" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#example-on-a-large-network"><i class="fa fa-check"></i><b>13.9</b> Example on a Large Network</a></li>
+<li class="chapter" data-level="13.10" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#ergm-on-a-valued-network"><i class="fa fa-check"></i><b>13.10</b> ERGM on a Valued Network</a>
+<ul>
+<li class="chapter" data-level="13.10.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#baseline-ergm-on-valued-network"><i class="fa fa-check"></i><b>13.10.1</b> Baseline ERGM on Valued Network</a></li>
+<li class="chapter" data-level="13.10.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#adding-nodematch-and-nodefactor-terms"><i class="fa fa-check"></i><b>13.10.2</b> Adding Nodematch and Nodefactor Terms</a></li>
+<li class="chapter" data-level="13.10.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#transitivity-in-valued-networks"><i class="fa fa-check"></i><b>13.10.3</b> Transitivity in Valued Networks</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html"><i class="fa fa-check"></i>13, Part 2. Longitudinal Network Models: STERGM</a>
+<ul>
+<li class="chapter" data-level="13.11" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#getting-the-data-ready-5"><i class="fa fa-check"></i><b>13.11</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="13.12" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#stergms"><i class="fa fa-check"></i><b>13.12</b> STERGMs</a>
+<ul>
+<li class="chapter" data-level="13.12.1" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-1-just-edges"><i class="fa fa-check"></i><b>13.12.1</b> Model 1: Just Edges</a></li>
+<li class="chapter" data-level="13.12.2" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-2-edges-homophily-and-nodefactor"><i class="fa fa-check"></i><b>13.12.2</b> Model 2: Edges, Homophily and Nodefactor</a></li>
+<li class="chapter" data-level="13.12.3" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-3-edges-nodefactor-and-seating"><i class="fa fa-check"></i><b>13.12.3</b> Model 3: Edges, Nodefactor, and Seating</a></li>
+<li class="chapter" data-level="13.12.4" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-4-adding-gwesp-to-the-model"><i class="fa fa-check"></i><b>13.12.4</b> Model 4: Adding GWESP to the Model</a></li>
+</ul></li>
+<li class="chapter" data-level="13.13" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#checking-model-fit"><i class="fa fa-check"></i><b>13.13</b> Checking Model Fit</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><i class="fa fa-check"></i>13, Part 3. Two-mode Network Models</a>
+<ul>
+<li class="chapter" data-level="13.14" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#affiliation-data"><i class="fa fa-check"></i><b>13.14</b> Affiliation Data</a></li>
+<li class="chapter" data-level="13.15" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#ergm-on-a-two-mode-network"><i class="fa fa-check"></i><b>13.15</b> ERGM on a Two-mode Network</a>
+<ul>
+<li class="chapter" data-level="13.15.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#edges"><i class="fa fa-check"></i><b>13.15.1</b> Edges</a></li>
+<li class="chapter" data-level="13.15.2" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#adjusting-for-structural-issues-gender-and-grade-specific-clubs"><i class="fa fa-check"></i><b>13.15.2</b> Adjusting for Structural Issues: Gender and Grade Specific Clubs</a></li>
+</ul></li>
+<li class="chapter" data-level="13.16" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#second-mode-terms"><i class="fa fa-check"></i><b>13.16</b> Second Mode Terms</a>
+<ul>
+<li class="chapter" data-level="13.16.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#nodefactor"><i class="fa fa-check"></i><b>13.16.1</b> Nodefactor</a></li>
+<li class="chapter" data-level="13.16.2" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#homophily"><i class="fa fa-check"></i><b>13.16.2</b> Homophily</a></li>
+</ul></li>
+<li class="chapter" data-level="13.17" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#first-mode-terms"><i class="fa fa-check"></i><b>13.17</b> First Mode Terms</a></li>
+<li class="chapter" data-level="13.18" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#clustering"><i class="fa fa-check"></i><b>13.18</b> Clustering</a></li>
+<li class="chapter" data-level="13.19" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#two-mode-longitudinal-networks"><i class="fa fa-check"></i><b>13.19</b> Two-mode Longitudinal Networks</a>
+<ul>
+<li class="chapter" data-level="13.19.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#entry-and-exit-of-nodes"><i class="fa fa-check"></i><b>13.19.1</b> Entry and Exit of Nodes</a></li>
+</ul></li>
+<li class="chapter" data-level="13.20" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#stergm-on-a-two-mode-network"><i class="fa fa-check"></i><b>13.20</b> STERGM on a Two-mode Network</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html"><i class="fa fa-check"></i>13, Part 4. Relational Event Models</a>
+<ul>
+<li class="chapter" data-level="13.21" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#getting-the-data-ready-6"><i class="fa fa-check"></i><b>13.21</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="13.22" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#running-initial-models"><i class="fa fa-check"></i><b>13.22</b> Running Initial Models</a>
+<ul>
+<li class="chapter" data-level="13.22.1" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#intercept-only-model"><i class="fa fa-check"></i><b>13.22.1</b> Intercept Only Model</a></li>
+<li class="chapter" data-level="13.22.2" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#adding-sender-and-receiver-effects"><i class="fa fa-check"></i><b>13.22.2</b> Adding Sender and Receiver Effects</a></li>
+<li class="chapter" data-level="13.22.3" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#adding-covariate-event-terms"><i class="fa fa-check"></i><b>13.22.3</b> Adding Covariate Event Terms</a></li>
+</ul></li>
+<li class="chapter" data-level="13.23" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#micro-rules-of-interaction"><i class="fa fa-check"></i><b>13.23</b> Micro Rules of Interaction</a></li>
+<li class="chapter" data-level="13.24" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#assessing-model-fit"><i class="fa fa-check"></i><b>13.24</b> Assessing Model Fit</a></li>
+<li class="chapter" data-level="13.25" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#comparison-to-a-second-date"><i class="fa fa-check"></i><b>13.25</b> Comparison to a Second Date</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="ch14-Network-Diffusion-R.html"><a href="ch14-Network-Diffusion-R.html"><i class="fa fa-check"></i><b>14</b> Network Diffusion</a></li>
+<li class="chapter" data-level="" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html"><i class="fa fa-check"></i>14, Part 1. Network Diffusion: Infectious Diseases</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#reading-in-data"><i class="fa fa-check"></i><b>14.1</b> Reading in Data</a></li>
+<li class="chapter" data-level="14.2" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#specifying-the-network-model"><i class="fa fa-check"></i><b>14.2</b> Specifying the Network Model</a></li>
+<li class="chapter" data-level="14.3" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#estimating-the-network-model"><i class="fa fa-check"></i><b>14.3</b> Estimating the Network Model</a></li>
+<li class="chapter" data-level="14.4" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#specifying-the-epidemic-model"><i class="fa fa-check"></i><b>14.4</b> Specifying the Epidemic Model</a></li>
+<li class="chapter" data-level="14.5" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#running-simulations"><i class="fa fa-check"></i><b>14.5</b> Running Simulations</a>
+<ul>
+<li class="chapter" data-level="14.5.1" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#running-baseline-model"><i class="fa fa-check"></i><b>14.5.1</b> Running Baseline Model</a></li>
+<li class="chapter" data-level="14.5.2" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#varying-network-features"><i class="fa fa-check"></i><b>14.5.2</b> Varying Network Features</a></li>
+<li class="chapter" data-level="14.5.3" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#varying-epidemic-model"><i class="fa fa-check"></i><b>14.5.3</b> Varying Epidemic Model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html"><i class="fa fa-check"></i>14, Part 2. Social Diffusion Processes</a>
+<ul>
+<li class="chapter" data-level="14.6" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#setting-up-the-session-4"><i class="fa fa-check"></i><b>14.6</b> Setting up the Session</a></li>
+<li class="chapter" data-level="14.7" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simple-diffusion-models"><i class="fa fa-check"></i><b>14.7</b> Simple Diffusion Models</a></li>
+<li class="chapter" data-level="14.8" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#threshold-models-of-diffusion"><i class="fa fa-check"></i><b>14.8</b> Threshold Models of Diffusion</a>
+<ul>
+<li class="chapter" data-level="14.8.1" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simulating-diffusion-processes-using-the-netdiffuser-package"><i class="fa fa-check"></i><b>14.8.1</b> Simulating Diffusion Processes using the netdiffuseR Package</a></li>
+<li class="chapter" data-level="14.8.2" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#comparing-diffusion-under-different-network-and-adoption-behavior-conditions"><i class="fa fa-check"></i><b>14.8.2</b> Comparing Diffusion under Different Network and Adoption Behavior Conditions</a></li>
+<li class="chapter" data-level="14.8.3" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simulations-using-multiple-runs"><i class="fa fa-check"></i><b>14.8.3</b> Simulations using Multiple Runs</a></li>
+</ul></li>
+<li class="chapter" data-level="14.9" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#working-with-empirical-data"><i class="fa fa-check"></i><b>14.9</b> Working with Empirical Data</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html"><i class="fa fa-check"></i><b>15</b> Social Influence: Coevolution of Networks and Behaviors</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#reading-in-classroom-data"><i class="fa fa-check"></i><b>15.1</b> Reading in Classroom Data</a></li>
+<li class="chapter" data-level="15.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#siena-model-setup"><i class="fa fa-check"></i><b>15.2</b> SIENA Model Setup</a></li>
+<li class="chapter" data-level="15.3" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification"><i class="fa fa-check"></i><b>15.3</b> Model Specification</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-behavioral-model"><i class="fa fa-check"></i><b>15.3.1</b> Model Specification: Behavioral Model</a></li>
+<li class="chapter" data-level="15.3.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-network-model"><i class="fa fa-check"></i><b>15.3.2</b> Model Specification: Network Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-estimation"><i class="fa fa-check"></i><b>15.4</b> Model Estimation</a></li>
+<li class="chapter" data-level="15.5" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpretation"><i class="fa fa-check"></i><b>15.5</b> Interpretation</a>
+<ul>
+<li class="chapter" data-level="15.5.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpreting-network-model"><i class="fa fa-check"></i><b>15.5.1</b> Interpreting Network Model</a></li>
+<li class="chapter" data-level="15.5.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpreting-behavioral-model"><i class="fa fa-check"></i><b>15.5.2</b> Interpreting Behavioral Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.6" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#checking-model-fit-1"><i class="fa fa-check"></i><b>15.6</b> Checking Model Fit</a></li>
+<li class="chapter" data-level="15.7" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#example-with-3-time-periods"><i class="fa fa-check"></i><b>15.7</b> Example with 3 Time Periods</a>
+<ul>
+<li class="chapter" data-level="15.7.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-and-estimation"><i class="fa fa-check"></i><b>15.7.1</b> Model Specification and Estimation</a></li>
+<li class="chapter" data-level="15.7.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#time-heterogeneity"><i class="fa fa-check"></i><b>15.7.2</b> Time Heterogeneity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="how-to-cite.html"><a href="how-to-cite.html"><i class="fa fa-check"></i>How to Cite</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Network Analysis: Integrating Social Network Theory, Method, and Application with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ch14-Network-Diffusion-Social-Processes-R" class="section level1 unnumbered hasAnchor">
+<h1>14, Part 2. Social Diffusion Processes<a href="ch14-Network-Diffusion-Social-Processes-R.html#ch14-Network-Diffusion-Social-Processes-R" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This is the second tutorial on diffusion processes in networks. The first tutorial focused on the spread of infectious diseases through a network. Here, we will focus on social diffusion processes, where the item being diffused is not biological and transmission happens via social processes (mimicry of friends, positive exposure to the item, etc.). We use the adoption of an innovation (like a new product) as the motivating case. We explore diffusion processes using a fixed network structure.</p>
+<p>The main question of this tutorial is how quickly an innovation becomes widely adopted. We are particularly interested in the conditions which increase/decrease the potential for widespread adoption. For example, how does network structure combine with adoption behavior to shape diffusion potential? Is diffusion slower when the network has strong group boundaries? If so, is this always the case, or does it depend on the process by which actors adopt the product? For example, what happens when the probability of adoption (in a given interaction) is very low or very high? We will consider two main approaches to modeling diffusion processes. First, we will consider simple contagion models, where the probability of adoption is based only on the probability of direct transmission from i to j. Second, we will consider threshold models, where there is some base number of friends that must adopt before an actor will consider adopting; e.g., an actor may only take up a risky behavior if more than 1 of their friends have already done so.</p>
+<div id="setting-up-the-session-4" class="section level2 hasAnchor" number="14.6">
+<h2><span class="header-section-number">14.6</span> Setting up the Session<a href="ch14-Network-Diffusion-Social-Processes-R.html#setting-up-the-session-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We will utilize a network from the Add Health study for this tutorial. The basic idea is to condition, or constrain, our analyses on the features of an observed network. Add Health is a study of adolescents in schools. The study collected detailed health and behavior information for each student across a large number of schools. They also collected network information, asking each student to name up to 5 male and 5 female friends. Here, we take one school network as the basis for the analysis. We will utilize a synthetic version of the network; one that is generated based on the original data (with the same basic features) but cannot be linked back to the original data. The network of interest has 658 nodes. We begin by reading in the edgelist:</p>
+<div class="sourceCode" id="cb1797"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1797-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1797-1" aria-hidden="true" tabindex="-1"></a>url1 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/addhealth_edgelist.txt&quot;</span></span>
+<span id="cb1797-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1797-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1797-3"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1797-3" aria-hidden="true" tabindex="-1"></a>ah_edgelist <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> url1, <span class="at">header =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb1798"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1798-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1798-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ah_edgelist) </span></code></pre></div>
+<pre><code>##   sender receiver
+## 1      1      274
+## 2      1      449
+## 3      1      457
+## 4      1      564
+## 5      2      417
+## 6      2      459</code></pre>
+<p>An edge exists if i nominated j as a friend. Note that the edgelist is based on a network that has already been symmetrized, so that if i nominated j or j nominated i we assume that a tie exists. Let's go ahead and make a network object to be used in our diffusion analysis. We will utilize the <strong>igraph</strong> package.</p>
+<div class="sourceCode" id="cb1800"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1800-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1800-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph) </span></code></pre></div>
+<p>Now, we will create an igraph object based on the edgelist read in above. We treat the network as undirected and denote that there are 658 nodes, setting the ids in the vertices statement.</p>
+<div class="sourceCode" id="cb1801"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1801-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1801-1" aria-hidden="true" tabindex="-1"></a>ah_network <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> ah_edgelist, <span class="at">directed =</span> F,</span>
+<span id="cb1801-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1801-2" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">vertices =</span> <span class="fu">data.frame</span>(<span class="at">ids =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">658</span>)) </span></code></pre></div>
+<p>We will also utilize a second, comparison network in our diffusion analysis. For the second network, we will use a random network with the same number of nodes and degree distribution as in the Add Health network. This offers a nice comparison, as we can see how two networks with the same degree distribution (and thus density) but different structural features yield different diffusion results. Let's go ahead and read in the edgelist for this random network (one could also have created it within R using the <code>sample_degseq()</code> function).</p>
+<div class="sourceCode" id="cb1802"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1802-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1802-1" aria-hidden="true" tabindex="-1"></a>url2 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/randnet_edgelist_ahexample.txt&quot;</span></span>
+<span id="cb1802-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1802-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1802-3"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1802-3" aria-hidden="true" tabindex="-1"></a>randnet_edgelist <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> url2, <span class="at">header =</span> T)</span></code></pre></div>
+<p>And now we create the igraph object from the edgelist:</p>
+<div class="sourceCode" id="cb1803"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1803-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1803-1" aria-hidden="true" tabindex="-1"></a>rand_network <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> randnet_edgelist, <span class="at">directed =</span> F, </span>
+<span id="cb1803-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1803-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">vertices =</span> <span class="fu">data.frame</span>(<span class="at">ids =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">658</span>))</span></code></pre></div>
+<p>Let's calculate some basic network statistics for our two networks. We start with density.</p>
+<div class="sourceCode" id="cb1804"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1804-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1804-1" aria-hidden="true" tabindex="-1"></a><span class="fu">edge_density</span>(ah_network)</span></code></pre></div>
+<pre><code>## [1] 0.01327763</code></pre>
+<div class="sourceCode" id="cb1806"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1806-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1806-1" aria-hidden="true" tabindex="-1"></a><span class="fu">edge_density</span>(rand_network) </span></code></pre></div>
+<pre><code>## [1] 0.01327763</code></pre>
+<p>We can see the density is the same across the two networks. And now we calculate transitivity.</p>
+<div class="sourceCode" id="cb1808"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1808-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1808-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transitivity</span>(ah_network)</span></code></pre></div>
+<pre><code>## [1] 0.1472136</code></pre>
+<div class="sourceCode" id="cb1810"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1810-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1810-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transitivity</span>(rand_network) </span></code></pre></div>
+<pre><code>## [1] 0.01814668</code></pre>
+<p>Clearly transitivity is higher in the Add Health network than in the random network. And now we calculate distance, doing a summary over all distances, excluding the diagonal.</p>
+<div class="sourceCode" id="cb1812"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1812-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1812-1" aria-hidden="true" tabindex="-1"></a>dist_mat_ah <span class="ot">&lt;-</span> <span class="fu">distances</span>(<span class="at">graph =</span> ah_network, <span class="at">mode =</span> <span class="st">&quot;out&quot;</span>) </span>
+<span id="cb1812-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1812-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dist_mat_ah[dist_mat_ah <span class="sc">!=</span> <span class="dv">0</span>]) </span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   1.000   3.000   4.000   3.517   4.000   7.000</code></pre>
+<div class="sourceCode" id="cb1814"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1814-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1814-1" aria-hidden="true" tabindex="-1"></a>dist_mat_randnet <span class="ot">&lt;-</span> <span class="fu">distances</span>(<span class="at">graph =</span> rand_network, <span class="at">mode =</span> <span class="st">&quot;out&quot;</span>) </span>
+<span id="cb1814-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1814-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dist_mat_randnet[dist_mat_randnet <span class="sc">!=</span> <span class="dv">0</span>])</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   1.000   3.000   3.000   3.229   4.000   7.000</code></pre>
+<p>We can see that the distance between nodes tends to be a little higher in the Add Health network. More generally, we can see that the two networks have the same density but otherwise are structurally different, with the Add Health network with higher levels of transitivity and higher distance between nodes. This is indicative of subgroups forming in the school that do not emerge when edges form randomly.</p>
+</div>
+<div id="simple-diffusion-models" class="section level2 hasAnchor" number="14.7">
+<h2><span class="header-section-number">14.7</span> Simple Diffusion Models<a href="ch14-Network-Diffusion-Social-Processes-R.html#simple-diffusion-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We will utilize simulation to explore different diffusion processes. In general, simulations are useful as they naturally capture the complex, stochastic process by which items spread (or not) through a network. This would be difficult to capture using traditional statistical models. Simulation also makes it easy to systematically vary key features, while holding others constant. Note that in this analysis we will hold the network fixed within a given simulation. Thus, items flow over a network that does not change over time (see <a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#ch15-coevolution-networks-behaviors-siena-saom-R">Chapter 15</a> for the coevolution of behaviors and networks). For concreteness, we can think of the innovation spreading through the network as a new product, where actors who are surrounded by people who adopt the product are more likely to take up the new product themselves.</p>
+<p>Let’s begin the process of specifying our diffusion model. There are a number of possible diffusion models that we may want to explore, but here we focus on simple contagion. In general, the model works by starting, in period 1, with an initial set of seeds who are 'infected' with the item of interest. This can be selected at random or using more specific criteria. In period 2, the first adopter 'interacts' with their immediate neighbor, passing it on with a given probability (either set to explore different conditions or based on actual data). Thus, once i has acquired the item of interest, they can pass it on (probabilistically) to all of the people they are directly connected to; individuals who pick it up from i can then pass it on to their friends, and so on. It is also possible to allow nodes to drop the product, so they no longer use a product they once did. In subsequent periods the process repeats itself with nodes adopting the product, dropping the product and passing it on. Thus, simple contagion works by focusing only on the direct probability of infection from i to j.</p>
+<p>To facilitate running diffusion simulations over these networks, we will make use of a set of simple R functions written for this tutorial. The functions make it easy to run a diffusion simulation where the model is based on simple contagion and the network is held fixed. Let's read these functions in:</p>
+<div class="sourceCode" id="cb1816"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1816-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1816-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/R/simple_contagion_function.R&quot;</span>)</span></code></pre></div>
+<p>The main function is <code>simple_contagion_function()</code>. The arguments are:</p>
+<ul>
+<li>net = network of interest, as an igraph object</li>
+<li>initial_seeds = vector indicating which nodes start as 'infected'</li>
+<li>time_periods = number of periods in simulation</li>
+<li>prob_infection = probability of passing from i to j</li>
+<li>prob_recovery = probability of recovering in a given time period</li>
+</ul>
+<p>The function will run a simulation model where the initial seeds start as infected, pass it to their neighbors with the probability set in prob_infection. They adopt probabilistically and the process continues until the simulation reaches the period set in time_periods.</p>
+<p>Here, we will set our inputs to explore the joint effects of network structure and adoption rules on diffusion. We set the probability of infection (or adopting the product) at two different levels, one 'high' and one 'low', to see how differing the probability of adoption shapes diffusion through the network. The high value will be set at .3 (so that j has a .3 probability of adopting the product if i has adopted the product). The low value is set at .1. We will set the recovery rate at .05 in all simulations (so that a node has a .05 probability of dropping the product once adopted). We will run the simulation over 25 time periods. We will pick one node to serve as our initial seed. Note that we would generally want to run this multiple times, with different seeds to see how this affects the results. Here we set node 3 as the seed, our initially infected node.</p>
+<div class="sourceCode" id="cb1817"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1817-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1817-1" aria-hidden="true" tabindex="-1"></a>initial_seeds <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb1817-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1817-2" aria-hidden="true" tabindex="-1"></a>time_periods <span class="ot">&lt;-</span> <span class="dv">25</span></span>
+<span id="cb1817-3"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1817-3" aria-hidden="true" tabindex="-1"></a>prob_recovery <span class="ot">&lt;-</span> .<span class="dv">05</span></span></code></pre></div>
+<p>First, let's run the simulation using the Add Health network and a high transmission probability (prob_infection = .3). For everything else we will use the values set above. Before we run the simulation, let's set a seed in R to make it easier to replicate.</p>
+<div class="sourceCode" id="cb1818"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1818-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1818-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">5000</span>) </span>
+<span id="cb1818-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1818-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1818-3"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1818-3" aria-hidden="true" tabindex="-1"></a>ah_simresults_highprob <span class="ot">&lt;-</span> <span class="fu">simple_contagion_function</span>(<span class="at">net =</span> ah_network, </span>
+<span id="cb1818-4"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1818-4" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">initial_seeds =</span> initial_seeds, </span>
+<span id="cb1818-5"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1818-5" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">time_periods =</span> time_periods, </span>
+<span id="cb1818-6"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1818-6" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">prob_infection =</span> .<span class="dv">3</span>, </span>
+<span id="cb1818-7"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1818-7" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">prob_recovery =</span> prob_recovery)</span></code></pre></div>
+<div class="sourceCode" id="cb1819"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1819-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1819-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(ah_simresults_highprob) </span></code></pre></div>
+<pre><code>## [1] &quot;results&quot;         &quot;cumulative_prop&quot;</code></pre>
+<p>The output is a list with two elements. The first part of the list is a list of results, with one element corresponding to each time period in the simulation. For each time period, we see the nodes that are infected (i.e. adopters) and those that are susceptible, those cases who are not infected but could be. The second part of the list is a cumulative distribution, showing the total proportion infected at the end of each time period.</p>
+<div class="sourceCode" id="cb1821"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1821-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1821-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ah_simresults_highprob<span class="sc">$</span>cumulative_prop)</span></code></pre></div>
+<pre><code>## [1] 0.001519757 0.004559271 0.010638298 0.025835866 0.080547112 0.220364742</code></pre>
+<p>Now, let's do the same thing using the lower value for the probability of transmission (prob_infection = .1). All other inputs are the same.</p>
+<div class="sourceCode" id="cb1823"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1823-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1823-1" aria-hidden="true" tabindex="-1"></a>ah_simresults_lowprob <span class="ot">&lt;-</span> <span class="fu">simple_contagion_function</span>(<span class="at">net =</span> ah_network, </span>
+<span id="cb1823-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1823-2" aria-hidden="true" tabindex="-1"></a>                                                   <span class="at">initial_seeds =</span> initial_seeds, </span>
+<span id="cb1823-3"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1823-3" aria-hidden="true" tabindex="-1"></a>                                                   <span class="at">time_periods =</span> time_periods,   </span>
+<span id="cb1823-4"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1823-4" aria-hidden="true" tabindex="-1"></a>                                                   <span class="at">prob_infection =</span> .<span class="dv">1</span>,  </span>
+<span id="cb1823-5"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1823-5" aria-hidden="true" tabindex="-1"></a>                                                   <span class="at">prob_recovery =</span> prob_recovery)</span></code></pre></div>
+<p>And for the sake of comparison, let's run the same simulations using the random network. Here we use the high transmission probability.</p>
+<div class="sourceCode" id="cb1824"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1824-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1824-1" aria-hidden="true" tabindex="-1"></a>rand_simresults_highprob <span class="ot">&lt;-</span> <span class="fu">simple_contagion_function</span>(<span class="at">net =</span> rand_network, </span>
+<span id="cb1824-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1824-2" aria-hidden="true" tabindex="-1"></a>                                                      <span class="at">initial_seeds =</span> initial_seeds, </span>
+<span id="cb1824-3"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1824-3" aria-hidden="true" tabindex="-1"></a>                                                      <span class="at">time_periods =</span> time_periods, </span>
+<span id="cb1824-4"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1824-4" aria-hidden="true" tabindex="-1"></a>                                                      <span class="at">prob_infection =</span> .<span class="dv">3</span>, </span>
+<span id="cb1824-5"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1824-5" aria-hidden="true" tabindex="-1"></a>                                                      <span class="at">prob_recovery =</span> prob_recovery)</span></code></pre></div>
+<p>And here we use the low transmission probability.</p>
+<div class="sourceCode" id="cb1825"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1825-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1825-1" aria-hidden="true" tabindex="-1"></a>rand_simresults_lowprob <span class="ot">&lt;-</span> <span class="fu">simple_contagion_function</span>(<span class="at">net =</span> rand_network, </span>
+<span id="cb1825-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1825-2" aria-hidden="true" tabindex="-1"></a>                                                     <span class="at">initial_seeds =</span> initial_seeds, </span>
+<span id="cb1825-3"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1825-3" aria-hidden="true" tabindex="-1"></a>                                                     <span class="at">time_periods =</span> time_periods, </span>
+<span id="cb1825-4"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1825-4" aria-hidden="true" tabindex="-1"></a>                                                     <span class="at">prob_infection =</span> .<span class="dv">1</span>, </span>
+<span id="cb1825-5"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1825-5" aria-hidden="true" tabindex="-1"></a>                                                     <span class="at">prob_recovery =</span> prob_recovery)</span></code></pre></div>
+<p>Let's take a look at the results. The easiest way to compare the results across runs is to plot the proportion who adopt for each of the four scenarios, the two networks by the two levels of adoption. First, we set up the plot to have 25 time periods on the x-axis and 0 to 1 (proportion adopting) on the y-axis. We then add 4 lines to the plot. The high probability lines will be blue while the low probability lines will be red. We will use a solid line for the random network and a dashed line for the Add Health network.</p>
+<div class="sourceCode" id="cb1826"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1826-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">type =</span> <span class="st">&quot;n&quot;</span>, </span>
+<span id="cb1826-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Time Period&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Proportion Adopting&quot;</span>, </span>
+<span id="cb1826-3"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Diffusion Curves across Networks and Adoption Behavior&quot;</span>)</span>
+<span id="cb1826-4"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1826-5"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-5" aria-hidden="true" tabindex="-1"></a><span class="co"># high transmission probability, random network</span></span>
+<span id="cb1826-6"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>, <span class="at">y =</span> rand_simresults_highprob<span class="sc">$</span>cumulative_prop, </span>
+<span id="cb1826-7"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb1826-8"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1826-9"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-9" aria-hidden="true" tabindex="-1"></a><span class="co"># high transmission probability, Add Health network</span></span>
+<span id="cb1826-10"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-10" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>, <span class="at">y =</span> ah_simresults_highprob<span class="sc">$</span>cumulative_prop, </span>
+<span id="cb1826-11"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb1826-12"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1826-13"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-13" aria-hidden="true" tabindex="-1"></a><span class="co"># low transmission probability, random network</span></span>
+<span id="cb1826-14"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-14" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>, <span class="at">y =</span> rand_simresults_lowprob<span class="sc">$</span>cumulative_prop, </span>
+<span id="cb1826-15"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb1826-16"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1826-17"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-17" aria-hidden="true" tabindex="-1"></a><span class="co"># low transmission probability, Add Health network</span></span>
+<span id="cb1826-18"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-18" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>, <span class="at">y =</span> ah_simresults_lowprob<span class="sc">$</span>cumulative_prop, </span>
+<span id="cb1826-19"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb1826-20"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1826-21"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-21" aria-hidden="true" tabindex="-1"></a><span class="co"># adding a legend</span></span>
+<span id="cb1826-22"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-22" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;Random Net High Prob&quot;</span>, <span class="st">&quot;Add Health High Prob&quot;</span>, </span>
+<span id="cb1826-23"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-23" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;Random Net Low Prob&quot;</span>, <span class="st">&quot;Add Health Low Prob&quot;</span>), </span>
+<span id="cb1826-24"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1826-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>))</span></code></pre></div>
+<p><img src="Chapter14b_Integrated_Network_Science_Rtutorial_network_diffusion_simulation_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>We can see that in this case both network structure and adoption behavior (here set by the probability of adoption) have large impacts on diffusion. For example, looking at the low probability simulations, the random network has a steeper diffusion curve than the Add Health network. The random network has higher rates of early adoption, reaches saturation earlier, and has a higher level of adoption at the end of the 25 time periods. This demonstrates how two networks with the same density (volume of ties) but different patterns of interaction can have different potential for diffusion. More specifically, the Add Health network, with stronger clustering, tends to have slower diffusion (as least in this case). The differences between the random network and the Add Health network are, however, much smaller in the high probability analysis, suggestive of the potentially complex interaction between network structure and adoption behavior. Putting the effects of network structure and behavior together can lead to large differences in diffusion. For example, compare the diffusion curve for the low probability, Add Health network (dashed red line) to the curve for the high probability, random network (solid blue line).</p>
+<p>It is important to note that the results are based on a single run (or only one iteration). If we had run the same simulation again, we would have gotten somewhat different results. More generally, these kinds of simulations can be highly variable. It is thus important to gauge the uncertainty in the estimates (and substantive conclusions) by summarizing over a large number of simulations, although we will not walk through this here. For an analysis like this, we might do 1000 simulations (although the only cost to doing more is computing time).</p>
+</div>
+<div id="threshold-models-of-diffusion" class="section level2 hasAnchor" number="14.8">
+<h2><span class="header-section-number">14.8</span> Threshold Models of Diffusion<a href="ch14-Network-Diffusion-Social-Processes-R.html#threshold-models-of-diffusion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We have so far utilized a fairly simple model of diffusion in our analysis. We assumed that nodes passed on the innovation (or cultural item more generally) to their nearest neighbors with a certain probability. But what about if the process of diffusion doesn't work like that? For example, drawing on the diffusion of innovation literature (see Tom Valente's work for example, <span class="citation">Valente and Vega Yon (2020)</span>) we might think that actors adopt (or not) based on the number of people they are connected to that have already adopted. An actor may, for example, only adopt the product if they see that a large number of their friends have already adopted. This is likely to be the case for many actual outcomes, such as adopting a new product, joining a social movement/protest and the like. This is the basic idea behind threshold models of diffusion; where diffusion occurs when a certain threshold of adopters around the focal node is met. Different outcomes may have different kinds of thresholds, while different nodes may have different thresholds for adopting.</p>
+<div id="simulating-diffusion-processes-using-the-netdiffuser-package" class="section level3 hasAnchor" number="14.8.1">
+<h3><span class="header-section-number">14.8.1</span> Simulating Diffusion Processes using the netdiffuseR Package<a href="ch14-Network-Diffusion-Social-Processes-R.html#simulating-diffusion-processes-using-the-netdiffuser-package" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We will make use of the <strong>netdiffuseR</strong> package <span class="citation">(Vega Yon and Valente 2022)</span> to run our threshold-based diffusion models. This package has many useful functions, but we will primarily focus on the diffusion simulation capabilities.</p>
+<div class="sourceCode" id="cb1827"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1827-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1827-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(netdiffuseR)</span></code></pre></div>
+<p><strong>netdiffuseR</strong> takes the network as a matrix, so we will begin by transforming our network object (in igraph) into a matrix. We will do this for both the Add Health network and the random network.</p>
+<div class="sourceCode" id="cb1828"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1828-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1828-1" aria-hidden="true" tabindex="-1"></a>ah_network_mat <span class="ot">&lt;-</span> <span class="fu">as_adjacency_matrix</span>(<span class="at">graph =</span> ah_network)</span>
+<span id="cb1828-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1828-2" aria-hidden="true" tabindex="-1"></a>rand_network_mat <span class="ot">&lt;-</span> <span class="fu">as_adjacency_matrix</span>(<span class="at">graph =</span> rand_network)</span></code></pre></div>
+<p>The function to run the diffusion simulation is <code>rdiffnet()</code>. The main arguments to <code>rdiffnet()</code> are:</p>
+<ul>
+<li>t = number of time periods in the simulation</li>
+<li>seed.nodes = nodes to be set as seeds, those who have already adopted the innovation at the beginning of the simulation. This can also be set as a character string, like "random", telling the function to select seeds at random.</li>
+<li>seed.p.adopt = proportion to be selected as seeds if seeds not set by researcher in seed.nodes</li>
+<li>seed.graph = network of interest, as a matrix (or name of random graph to create)</li>
+<li>rewire = T/F, should network slices over time be generated by randomly rewiring ties?</li>
+<li>threshold.dist = a single value or scalar setting the thresholds (at what point will node i adopt the innovation?). Could also be a function determining the thresholds of each node.</li>
+<li>exposure.args = inputs to exposure function, such as normalized (T/F, should exposure be calculated as proportion (T) or absolute number of alters who adopt (F)?)</li>
+</ul>
+<p>We need to specify the network of interest (seed.graph), either as a static or dynamic graph. We will continue our example and use the static version of the simulation, but it is important to note that it is possible to incorporate a dynamic network into the simulation (see <a href="ch3-Dynamic-Network-Data-R.html#ch3-Dynamic-Network-Data-R">Chapter 3, Part 2</a> for the data structure). We also need to specify the initial seeds (who have adopted the product prior to the start of the simulation), as well as the model of diffusion; i.e., what is the process/rules by which node i will adopt the innovation.</p>
+<p>Let's begin by setting the seeds to act as our initial adopters. We will randomly select 5% of the nodes to be seeds. Let's first define the number of nodes in the network.</p>
+<div class="sourceCode" id="cb1829"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1829-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1829-1" aria-hidden="true" tabindex="-1"></a>num_nodes <span class="ot">&lt;-</span> <span class="fu">nrow</span>(ah_network_mat)</span></code></pre></div>
+<p>Now we will define the number to be selected as initial seeds (5% of the total).</p>
+<div class="sourceCode" id="cb1830"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1830-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1830-1" aria-hidden="true" tabindex="-1"></a>num_seeds <span class="ot">&lt;-</span> <span class="fu">round</span>(.<span class="dv">05</span> <span class="sc">*</span> num_nodes)</span></code></pre></div>
+<div class="sourceCode" id="cb1831"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1831-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1831-1" aria-hidden="true" tabindex="-1"></a>num_seeds</span></code></pre></div>
+<pre><code>## [1] 33</code></pre>
+<p>And here we use a <code>sample()</code> function to randomly select 33 nodes from the full set of nodes. We use <code>set.seed()</code> to help in reproducing the results.</p>
+<div class="sourceCode" id="cb1833"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1833-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1833-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">15</span>) </span>
+<span id="cb1833-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1833-2" aria-hidden="true" tabindex="-1"></a>seeds <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>num_nodes, <span class="at">size =</span> num_seeds)</span></code></pre></div>
+<p>We will set the rest of the inputs within the function itself. We set time (t) to 10 periods, the network (seed.graph) to the Add Health network and rewire to FALSE. We will also set threshold.dist to 1. This means that each node will adopt the period after at least 1 of their nearest neighbors has adopted the innovation. We can think of this as a low risk product, as nodes adopt with relatively weak signals from their neighbors. We also set normalized to FALSE (in exposure.args) to ensure that the exposure is based on the number of people who have adopted around the focal node and not the proportion (to match the threshold model of 1 neighbor adopting leading to ego's adoption).</p>
+<div class="sourceCode" id="cb1834"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1834-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1834-1" aria-hidden="true" tabindex="-1"></a>exposure_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">normalized =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1834-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1834-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1834-3"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1834-3" aria-hidden="true" tabindex="-1"></a>ah_simresults_threshold1 <span class="ot">&lt;-</span> <span class="fu">rdiffnet</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">seed.nodes =</span> seeds, </span>
+<span id="cb1834-4"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1834-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">seed.graph =</span> ah_network_mat, </span>
+<span id="cb1834-5"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1834-5" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">rewire =</span> <span class="cn">FALSE</span>, <span class="at">threshold.dist =</span> <span class="dv">1</span>, </span>
+<span id="cb1834-6"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1834-6" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">exposure.args =</span> exposure_list)</span></code></pre></div>
+<div class="sourceCode" id="cb1835"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1835-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1835-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(ah_simresults_threshold1)</span></code></pre></div>
+<pre><code>## [1] &quot;diffnet&quot;</code></pre>
+<p>We can see the resulting object is a diffnet object. Let's take a look at the pieces of this diffnet object.</p>
+<div class="sourceCode" id="cb1837"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1837-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1837-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(ah_simresults_threshold1)</span></code></pre></div>
+<pre><code>## [1] &quot;graph&quot;               &quot;toa&quot;                 &quot;adopt&quot;               &quot;cumadopt&quot;            &quot;vertex.static.attrs&quot; &quot;vertex.dyn.attrs&quot;    &quot;graph.attrs&quot;         &quot;meta&quot;</code></pre>
+<p>There are a number of useful things here. For example, we can grab the toa vector, showing the time of adoption for each node in the simulation.</p>
+<div class="sourceCode" id="cb1839"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1839-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1839-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ah_simresults_threshold1<span class="sc">$</span>toa)</span></code></pre></div>
+<pre><code>## 1 2 3 4 5 6 
+## 3 1 3 3 2 2</code></pre>
+<p>We see that node 1 adopted in period 3, node 2 adopted in period 1 and so on. We can also grab the cumadopt matrix, showing the point of adoption for each node. The rows are the nodes and the columns are the time periods. There is a 1 if node i has adopted by time period j.</p>
+<div class="sourceCode" id="cb1841"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1841-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1841-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ah_simresults_threshold1<span class="sc">$</span>cumadopt)</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+## [1,]    0    0    1    1    1    1    1    1    1     1
+## [2,]    1    1    1    1    1    1    1    1    1     1
+## [3,]    0    0    1    1    1    1    1    1    1     1
+## [4,]    0    0    1    1    1    1    1    1    1     1
+## [5,]    0    1    1    1    1    1    1    1    1     1
+## [6,]    0    1    1    1    1    1    1    1    1     1</code></pre>
+<p>We can use this matrix to calculate the proportion adopting after each time period. We simply sum up the columns (number adopting in period j) and divide by the total number of nodes:</p>
+<div class="sourceCode" id="cb1843"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1843-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1843-1" aria-hidden="true" tabindex="-1"></a>cumul_adopt <span class="ot">&lt;-</span> <span class="fu">colSums</span>(ah_simresults_threshold1<span class="sc">$</span>cumadopt) <span class="sc">/</span> num_nodes</span></code></pre></div>
+<div class="sourceCode" id="cb1844"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1844-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1844-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cumul_adopt)</span></code></pre></div>
+<pre><code>## [1] 0.05015198 0.39361702 0.91641337 0.99848024 1.00000000 1.00000000</code></pre>
+<p>This is the same as using the <code>cumulative_adopt_count()</code> function, focusing on the prop row.</p>
+<div class="sourceCode" id="cb1846"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1846-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1846-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cumulative_adopt_count</span>(ah_simresults_threshold1)</span></code></pre></div>
+<pre><code>##                1          2           3            4           5   6   7   8   9  10
+## num  33.00000000 259.000000 603.0000000 657.00000000 6.58000e+02 658 658 658 658 658
+## prop  0.05015198   0.393617   0.9164134   0.99848024 1.00000e+00   1   1   1   1   1
+## rate  0.00000000   6.848485   1.3281853   0.08955224 1.52207e-03   0   0   0   0   0</code></pre>
+<p>We can see that 0.394 adopted by period 2, 0.916 by period 3, etc. It is also useful to plot the cumulative distribution of adopters. Here we can use the <code>plot_adopters()</code> function, with the diffnet object as input.</p>
+<div class="sourceCode" id="cb1848"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1848-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1848-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_adopters</span>(ah_simresults_threshold1)</span></code></pre></div>
+<p><img src="Chapter14b_Integrated_Network_Science_Rtutorial_network_diffusion_simulation_files/figure-html/unnamed-chunk-34-1.png" width="864" /></p>
+<p>By default, the plot shows the proportion adopting at each time period and the cumulative proportion adopting.</p>
+<p>The <code>plot_diffnet()</code> function also offers a useful way of representing the results of the simulation. <code>plot_diffnet()</code> plots the network at different time slices, coloring the nodes by whether they have adopted the innovation (also differentiating between old and new adopters). Here we plot time period 1, 3, 5 and 7.</p>
+<div class="sourceCode" id="cb1849"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1849-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1849-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_diffnet</span>(ah_simresults_threshold1, <span class="at">slices =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>))</span></code></pre></div>
+<p><img src="Chapter14b_Integrated_Network_Science_Rtutorial_network_diffusion_simulation_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p>Finally, we can do a summary on the diffnet object. Note that this will take a couple seconds to run.</p>
+<div class="sourceCode" id="cb1850"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1850-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1850-1" aria-hidden="true" tabindex="-1"></a>sum_model1 <span class="ot">&lt;-</span> <span class="fu">summary</span>(ah_simresults_threshold1)</span></code></pre></div>
+<pre><code>## Diffusion network summary statistics
+## Name     : A diffusion network
+## Behavior : Random contagion
+## -----------------------------------------------------------------------------
+##  Period   Adopters   Cum Adopt. (%)   Hazard Rate   Density   Moran&#39;s I (sd)  
+## -------- ---------- ---------------- ------------- --------- ---------------- 
+##        1         33        33 (0.05)             -      0.01 -0.00 (0.00)     
+##        2        226       259 (0.39)          0.36      0.01  0.01 (0.00) *** 
+##        3        344       603 (0.92)          0.86      0.01  0.01 (0.00) *** 
+##        4         54       657 (1.00)          0.98      0.01 -0.00 (0.00) *   
+##        5          1       658 (1.00)          1.00      0.01               -  
+##        6          0       658 (1.00)          0.00      0.01               -  
+##        7          0       658 (1.00)          0.00      0.01               -  
+##        8          0       658 (1.00)          0.00      0.01               -  
+##        9          0       658 (1.00)          0.00      0.01               -  
+##       10          0       658 (1.00)          0.00      0.01               -  
+## -----------------------------------------------------------------------------
+##  Left censoring  : 0.05 (33)
+##  Right centoring : 0.00 (0)
+##  # of nodes      : 658
+## 
+##  Moran&#39;s I was computed on contemporaneous autocorrelation using 1/geodesic
+##  values. Significane levels  *** &lt;= .01, ** &lt;= .05, * &lt;= .1.</code></pre>
+<p>The summary offers the number of adopters in each period, the cumulative number, the cumulative proportion of adopters, as well as a number of other useful summary measures. For example, the hazard (of adopting) is the proportion adopting in that period given they had already 'survived' (i.e., not adopted) prior to that period. So, for period 2 the hazard is: 226 / (658 - 33) = .362, as there are 226 adopters, 658 total nodes and 33 had adopted in period 1.</p>
+</div>
+<div id="comparing-diffusion-under-different-network-and-adoption-behavior-conditions" class="section level3 hasAnchor" number="14.8.2">
+<h3><span class="header-section-number">14.8.2</span> Comparing Diffusion under Different Network and Adoption Behavior Conditions<a href="ch14-Network-Diffusion-Social-Processes-R.html#comparing-diffusion-under-different-network-and-adoption-behavior-conditions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We are now in a position to systematically change aspects of the simulation, to see how shifts in network structure, adoption behavior, etc. affect the profile of adoption. This is one of the main strengths of simulation, as we can systematically change the features of the world, seeing how these items aggregate up to affect more global outcomes (like the cumulative adoption rate for the whole network). We begin by keeping everything the same but running the simulation over the random network generated above. Thus, only the network structure is allowed to vary from the previous simulation. We change the seed.graph argument (to the random network, specified as a matrix) but nothing else.</p>
+<div class="sourceCode" id="cb1852"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1852-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1852-1" aria-hidden="true" tabindex="-1"></a>randnet_simresults_threshold1 <span class="ot">&lt;-</span> <span class="fu">rdiffnet</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">seed.nodes =</span> seeds, </span>
+<span id="cb1852-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1852-2" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">seed.graph =</span> rand_network_mat, </span>
+<span id="cb1852-3"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1852-3" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">rewire =</span> <span class="cn">FALSE</span>, <span class="at">threshold.dist =</span> <span class="dv">1</span>, </span>
+<span id="cb1852-4"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1852-4" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">exposure.args =</span> exposure_list)</span></code></pre></div>
+<p>Let's also vary the threshold model, governing adoption behavior in the simulation. Here, we will set threshold.dist = 3. This means that nodes must have at least three friends adopt the innovation before they will pick it up themselves. We can think of this as a case of complex contagion, where the item of interest is risky, or uncertain, so that nodes need a higher number of positive signals before adopting. Let's rerun the simulation with this higher threshold, first for the Add Health network and then for the random network.</p>
+<div class="sourceCode" id="cb1853"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1853-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1853-1" aria-hidden="true" tabindex="-1"></a>ah_simresults_threshold3 <span class="ot">&lt;-</span> <span class="fu">rdiffnet</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">seed.nodes =</span> seeds, </span>
+<span id="cb1853-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1853-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">seed.graph =</span> ah_network_mat, </span>
+<span id="cb1853-3"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1853-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">rewire =</span> <span class="cn">FALSE</span>, <span class="at">threshold.dist =</span> <span class="dv">3</span>, </span>
+<span id="cb1853-4"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1853-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">exposure.args =</span> exposure_list)</span></code></pre></div>
+<div class="sourceCode" id="cb1854"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1854-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1854-1" aria-hidden="true" tabindex="-1"></a>randnet_simresults_threshold3 <span class="ot">&lt;-</span> <span class="fu">rdiffnet</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">seed.nodes =</span> seeds, </span>
+<span id="cb1854-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1854-2" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">seed.graph =</span> rand_network_mat, </span>
+<span id="cb1854-3"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1854-3" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">rewire =</span> <span class="cn">FALSE</span>, <span class="at">threshold.dist =</span> <span class="dv">3</span>, </span>
+<span id="cb1854-4"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1854-4" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">exposure.args =</span> exposure_list)</span></code></pre></div>
+<p>We will now plot the results of our four simulations. This will make it easier to compare across the four conditions of interest (random, low threshold; Add Health, low threshold; random, high threshold; Add Health high threshold). We will make use of the <code>plot_adopters function()</code>. We will do this four times, once for each of the simulations.</p>
+<p>We begin with the random network, low threshold simulation. We will set up the plot so that the color (bg) is blue and the shape is a triangle (pch = 25). We also set the what argument to "cumadopt" to get the cumulative proportion adopted. We then plot the results for the Add Health network with the low threshold. Here we set the shape to a circle (pch = 21) and also set add = T to add it to the previous plot. We then do the same thing for the high threshold simulations, setting the color to red. We once again use a triangle symbol for the random network and a circle for the Add Health network.</p>
+<div class="sourceCode" id="cb1855"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1855-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1855-1" aria-hidden="true" tabindex="-1"></a><span class="co">#random network, low threshold</span></span>
+<span id="cb1855-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1855-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_adopters</span>(randnet_simresults_threshold1, <span class="at">bg =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">pch =</span> <span class="dv">25</span>, </span>
+<span id="cb1855-3"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1855-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">include.legend =</span> <span class="cn">FALSE</span>, <span class="at">what =</span> <span class="st">&quot;cumadopt&quot;</span>, </span>
+<span id="cb1855-4"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1855-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">main =</span> <span class="st">&quot;Diffusion across Networks and Adoption Behavior&quot;</span>) </span>
+<span id="cb1855-5"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1855-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1855-6"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1855-6" aria-hidden="true" tabindex="-1"></a><span class="co">#AH network, low threshold</span></span>
+<span id="cb1855-7"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1855-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_adopters</span>(ah_simresults_threshold1, <span class="at">bg =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">pch =</span> <span class="dv">21</span>,</span>
+<span id="cb1855-8"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1855-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">what =</span> <span class="st">&quot;cumadopt&quot;</span>) </span>
+<span id="cb1855-9"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1855-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1855-10"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1855-10" aria-hidden="true" tabindex="-1"></a><span class="co">#random network, high threshold</span></span>
+<span id="cb1855-11"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1855-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_adopters</span>(randnet_simresults_threshold3, <span class="at">bg =</span> <span class="st">&quot;red&quot;</span>, <span class="at">pch =</span> <span class="dv">25</span>,</span>
+<span id="cb1855-12"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1855-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">what =</span> <span class="st">&quot;cumadopt&quot;</span>)</span>
+<span id="cb1855-13"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1855-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1855-14"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1855-14" aria-hidden="true" tabindex="-1"></a><span class="co">#AH network, high threshold</span></span>
+<span id="cb1855-15"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1855-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_adopters</span>(ah_simresults_threshold3, <span class="at">bg =</span> <span class="st">&quot;red&quot;</span>, <span class="at">pch =</span> <span class="dv">21</span>,</span>
+<span id="cb1855-16"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1855-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">what =</span> <span class="st">&quot;cumadopt&quot;</span>)</span>
+<span id="cb1855-17"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1855-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1855-18"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1855-18" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;Random Net Low Threshold&quot;</span>, </span>
+<span id="cb1855-19"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1855-19" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;Add Health Low Threshold&quot;</span>, </span>
+<span id="cb1855-20"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1855-20" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;Random Net High Threshold&quot;</span>, </span>
+<span id="cb1855-21"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1855-21" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;Add Health High Threshold&quot;</span>), </span>
+<span id="cb1855-22"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1855-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">pt.bg =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">21</span>, <span class="dv">25</span>, <span class="dv">21</span>))</span></code></pre></div>
+<p><img src="Chapter14b_Integrated_Network_Science_Rtutorial_network_diffusion_simulation_files/figure-html/unnamed-chunk-40-1.png" width="864" /></p>
+<p>There are a number of substantively important results that come out of this figure. First, it is clear that setting a higher threshold dramatically reduces the rate of adoption in the network. The red lines, with high thresholds, are much flatter, with fewer people adopting each period and lower overall rates of adoption at the end of the simulation. This is the case as nodes require more friends to adopt before they adopt, meaning fewer people will take on the innovation in each period. Second, looking at the low threshold simulations, we can see that the random network has slightly higher rates of diffusion than the Add Health network, but the lines are very close together; suggesting (again) that network structure matters less when adoption is easy and fast. Third, the story is very different with the high threshold model. Here, the Add Health network actually has faster diffusion than the random network. Thus, counter to our previous results, the network with strong group structure and higher transitivity actually has faster diffusion when the item of interest is complex (see <span class="citation">Centola and Macy (2007)</span>, for example). In the Add Health network, if i and j are friends they are likely to know the same people, making it more likely that a node will get the same kinds of signals (to adopt) from their nearest neighbors. In the random network, i and j are less likely to know the same people, making it harder to have a cluster of people all adopting. Diffusion in the random network is thus particularly slowed with complex contagion, as the focal node must have at least 3 (in this case) of their friends already adopt. More generally, we can see that random networks will not necessarily always have faster diffusion, and this depends crucially on the adoption behavior of the nodes.</p>
+<p>Threshold models can be sensitive to the initial seeds and it is substantively important to understand what happens to diffusion potential as different types of nodes are selected as early adopters. To answer this question, we will rerun the same simulations as before but this time select seeds that are central to the network. We will again use the high threshold adoption behavior model. We could, as above, set the seeds for the simulation ourselves. Alternatively, we can handle this within the <code>rdiffnet()</code> function by setting seed.nodes to "central" (with seed.p.adopt set to the proportion that are set as seeds, .05). This automates the process, selecting the nodes that are most central to the network and making them seeds. Centrality is defined based on the degree of the nodes.</p>
+<p>Here we run the simulation for the Add Health network, with central nodes as seeds and the threshold set to high (threshold.dist = 3)</p>
+<div class="sourceCode" id="cb1856"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1856-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1856-1" aria-hidden="true" tabindex="-1"></a>ah_simresults_threshold3_central <span class="ot">&lt;-</span> <span class="fu">rdiffnet</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">seed.nodes =</span> <span class="st">&quot;central&quot;</span>, </span>
+<span id="cb1856-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1856-2" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">seed.p.adopt =</span> .<span class="dv">05</span>, </span>
+<span id="cb1856-3"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1856-3" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">seed.graph =</span> ah_network_mat, </span>
+<span id="cb1856-4"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1856-4" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">rewire =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb1856-5"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1856-5" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">threshold.dist =</span> <span class="dv">3</span>,</span>
+<span id="cb1856-6"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1856-6" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">exposure.args =</span> exposure_list)</span></code></pre></div>
+<p>Here we run the same simulation for the random network.</p>
+<div class="sourceCode" id="cb1857"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1857-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1857-1" aria-hidden="true" tabindex="-1"></a>randnet_simresults_threshold3_central <span class="ot">&lt;-</span> <span class="fu">rdiffnet</span>(<span class="at">t =</span> <span class="dv">10</span>, </span>
+<span id="cb1857-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1857-2" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">seed.nodes =</span> <span class="st">&quot;central&quot;</span>, </span>
+<span id="cb1857-3"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1857-3" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">seed.p.adopt =</span> .<span class="dv">05</span>, </span>
+<span id="cb1857-4"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1857-4" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">seed.graph =</span> rand_network_mat,</span>
+<span id="cb1857-5"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1857-5" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">rewire =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb1857-6"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1857-6" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">threshold.dist =</span> <span class="dv">3</span>, </span>
+<span id="cb1857-7"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1857-7" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">exposure.args =</span> exposure_list)</span></code></pre></div>
+<p>Now, let's redo our plot, this time comparing the central versus random seed results. We will only consider the high threshold simulations. First, we plot the random network results using central seeds. We will color this blue and use a triangle as the shape (pch = 25). We then plot the Add Health network using central seeds. We color this blue and use the circle as the shape (pch = 21). We then do the same thing for the random seed simulations (here we use red for the color).</p>
+<div class="sourceCode" id="cb1858"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1858-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1858-1" aria-hidden="true" tabindex="-1"></a><span class="co">#random network, central seeds</span></span>
+<span id="cb1858-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1858-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_adopters</span>(randnet_simresults_threshold3_central, <span class="at">bg =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">pch =</span> <span class="dv">25</span>,</span>
+<span id="cb1858-3"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1858-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">include.legend =</span> <span class="cn">FALSE</span>, <span class="at">what =</span> <span class="st">&quot;cumadopt&quot;</span>, </span>
+<span id="cb1858-4"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1858-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">main =</span> <span class="st">&quot;Random Versus Central Seeds: High Threshold Results&quot;</span>)</span>
+<span id="cb1858-5"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1858-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1858-6"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1858-6" aria-hidden="true" tabindex="-1"></a><span class="co">#AH, random seeds</span></span>
+<span id="cb1858-7"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1858-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_adopters</span>(ah_simresults_threshold3_central, <span class="at">bg =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">pch =</span> <span class="dv">21</span>,</span>
+<span id="cb1858-8"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1858-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">what =</span> <span class="st">&quot;cumadopt&quot;</span>)</span>
+<span id="cb1858-9"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1858-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1858-10"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1858-10" aria-hidden="true" tabindex="-1"></a><span class="co">#random network, central seeds</span></span>
+<span id="cb1858-11"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1858-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_adopters</span>(randnet_simresults_threshold3, <span class="at">bg =</span> <span class="st">&quot;red&quot;</span>, <span class="at">pch =</span> <span class="dv">25</span>,</span>
+<span id="cb1858-12"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1858-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">what =</span> <span class="st">&quot;cumadopt&quot;</span>)</span>
+<span id="cb1858-13"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1858-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1858-14"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1858-14" aria-hidden="true" tabindex="-1"></a><span class="co">#AH, random seeds</span></span>
+<span id="cb1858-15"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1858-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_adopters</span>(ah_simresults_threshold3, <span class="at">bg =</span> <span class="st">&quot;red&quot;</span>, <span class="at">pch =</span> <span class="dv">21</span>, </span>
+<span id="cb1858-16"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1858-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">what =</span> <span class="st">&quot;cumadopt&quot;</span>)</span>
+<span id="cb1858-17"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1858-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1858-18"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1858-18" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;Random Net, Central Seeds&quot;</span>,</span>
+<span id="cb1858-19"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1858-19" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;Add Health, Central Seeds&quot;</span>, </span>
+<span id="cb1858-20"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1858-20" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;Random Net, Rand Seeds&quot;</span>, </span>
+<span id="cb1858-21"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1858-21" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;Add Health, Rand Seeds&quot;</span>), </span>
+<span id="cb1858-22"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1858-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">pt.bg =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">21</span>, <span class="dv">25</span>, <span class="dv">21</span>))</span></code></pre></div>
+<p><img src="Chapter14b_Integrated_Network_Science_Rtutorial_network_diffusion_simulation_files/figure-html/unnamed-chunk-43-1.png" width="864" /></p>
+<p>Substantively, we see that the seeds shape the simulation in important ways. Not surprisingly, when central nodes act as early adopters, diffusion tends to be quicker, and this is true for both the random and Add Health networks. What is perhaps more surprising is how much the shift in seeds affects the random network (compared to the Add Health network). With central nodes acting as seeds, the random network once again has faster diffusion than the Add Health network (at least after period 4), even with the complex contagion model. Thus, the Add Health network only has faster diffusion (under complex contagion) when seeds are selected at random. These results demonstrate the interdependencies between factors in the simulation, where having central nodes as seeds spreads the adoption far enough at the beginning to overcome the lack of group structure in the random network, leading to faster diffusion rates in the long run.</p>
+<p>There are a number of other factors we could alter in the simulation. For example, we could specify a more complicated adoption behavior model. So far we have changed the threshold levels for adoption but kept that level the same for every node in the simulation. But a more realistic simulation could allow different nodes to have different thresholds. Perhaps some actors are easily convinced to pick up the new product while others need more convincing. We can parametize this by creating a vector of thresholds, capturing how many friends must adopt before a given node will adopt.</p>
+<p>We will demonstrate how to handle heterogeneous thresholds with a simple example. We will begin by setting the threshold of each node by taking a random draw from a uniform distribution with mean 3 (min = 0 and max = 6). Thus, on average, the threshold is the same as in the previous simulations, but here nodes can be a bit above or below the mean value.</p>
+<div class="sourceCode" id="cb1859"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1859-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1859-1" aria-hidden="true" tabindex="-1"></a>thresholds <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="at">n =</span> num_nodes, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">6</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb1860"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1860-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1860-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(thresholds)</span></code></pre></div>
+<pre><code>## [1] 2 2 4 5 5 2</code></pre>
+<p>We can see, for example, that node 1 will only adopt when 2 neighbors have already adopted, while node 3 requires 4 neighbors.</p>
+<p>We will now rerun our simulation, using the random seeds (same as used above), the Add Health network, but a different adoption behavioral model than before; in this case, setting threshold.dist to the vector of thresholds, allowing each node to have a different susceptibility to adoption.</p>
+<div class="sourceCode" id="cb1862"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1862-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1862-1" aria-hidden="true" tabindex="-1"></a>ah_simresults_diffthreshold <span class="ot">&lt;-</span> <span class="fu">rdiffnet</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">seed.nodes =</span> seeds,</span>
+<span id="cb1862-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1862-2" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">seed.graph =</span> ah_network_mat, </span>
+<span id="cb1862-3"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1862-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">rewire =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb1862-4"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1862-4" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">threshold.dist =</span> thresholds,  </span>
+<span id="cb1862-5"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1862-5" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">exposure.args =</span> exposure_list)</span></code></pre></div>
+<p>And now let's compare the results. We will compare this new simulation (with variable thresholds) to the simulation using the same network and seeds but fixing the threshold at 3 for all nodes. Let's first plot the new model, with the variable thresholds. We will color this blue. We then plot the results with the fixed threshold of 3. We make this red.</p>
+<div class="sourceCode" id="cb1863"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1863-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1863-1" aria-hidden="true" tabindex="-1"></a><span class="co">#AH, variable thresholds</span></span>
+<span id="cb1863-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1863-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_adopters</span>(ah_simresults_diffthreshold, <span class="at">bg =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">pch =</span> <span class="dv">21</span>, </span>
+<span id="cb1863-3"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1863-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">include.legend =</span> <span class="cn">FALSE</span>, <span class="at">what =</span> <span class="st">&quot;cumadopt&quot;</span>, </span>
+<span id="cb1863-4"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1863-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">main =</span> <span class="st">&quot;Comparing Variable and Fixed Thresholds&quot;</span>)</span>
+<span id="cb1863-5"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1863-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1863-6"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1863-6" aria-hidden="true" tabindex="-1"></a><span class="co">#AH, fixed thresholds</span></span>
+<span id="cb1863-7"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1863-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_adopters</span>(ah_simresults_threshold3, <span class="at">bg =</span> <span class="st">&quot;red&quot;</span>, <span class="at">pch =</span> <span class="dv">21</span>, </span>
+<span id="cb1863-8"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1863-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">what =</span> <span class="st">&quot;cumadopt&quot;</span>)</span>
+<span id="cb1863-9"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1863-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1863-10"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1863-10" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>,  </span>
+<span id="cb1863-11"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1863-11" aria-hidden="true" tabindex="-1"></a>       <span class="fu">c</span>(<span class="st">&quot;Add Health, Varied Thresholds&quot;</span>, <span class="st">&quot;Add Health, Threshold = 3&quot;</span>), </span>
+<span id="cb1863-12"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1863-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">pt.bg =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">21</span>, <span class="dv">21</span>))</span></code></pre></div>
+<p><img src="Chapter14b_Integrated_Network_Science_Rtutorial_network_diffusion_simulation_files/figure-html/unnamed-chunk-47-1.png" width="864" /></p>
+<p>The results clearly show that having variable thresholds increases the rate of diffusion. While some nodes are reluctant to take up the innovation, some need very little prompting (i.e., few neighbors need to adopt before they adopt), making diffusion easier in the early time periods. On the other hand, the variable threshold model plateaus at late time periods (as high threshold nodes are likely slowing down diffusion at the very end of the simulation), while the fixed threshold model does not.</p>
+</div>
+<div id="simulations-using-multiple-runs" class="section level3 hasAnchor" number="14.8.3">
+<h3><span class="header-section-number">14.8.3</span> Simulations using Multiple Runs<a href="ch14-Network-Diffusion-Social-Processes-R.html#simulations-using-multiple-runs" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>So far, we have run the simulation models for different scenarios. In each case we ran the simulation one time, plotting the results for a particular run. The netdiffuseR package makes it easy to run a simulation multiple times, however. This is useful as it makes it possible to see how variable the results are across different runs of the same basic simulation. In this case, we will rerun our random seed models but do it multiple times, each time using different randomly selected seeds as starting points. Here we will employ a <code>rdiffnet_multiple()</code> function. This has identical arguments as rdiffnet but with a few added options to control the multiple runs:</p>
+<ul>
+<li>statistic = function describing the statistic of interest to be calculated for each run</li>
+<li>R = number of times to repeat simulation</li>
+<li>ncpus = number of cores to utilize if using parallel processing</li>
+</ul>
+<p>In this case, we first create a function to tell <code>rdiffnet_multiple()</code> what outcomes to save out for each simulation. We will create a function to save out the cumulative proportion adopting for each time period (using <code>cumulative_adopt_count</code>). Note that the input will be a diffnet object, based on the given simulation.</p>
+<div class="sourceCode" id="cb1864"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1864-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1864-1" aria-hidden="true" tabindex="-1"></a>stat_func <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {<span class="fu">cumulative_adopt_count</span>(x)[<span class="st">&quot;prop&quot;</span>, ]}</span></code></pre></div>
+<p>This function then becomes an input to <code>rdiffnet_multiple()</code>. We will also set R to 100 (doing 100 simulations) and ncpus to 2 (using 2 processors). We will repeat the analysis twice, first using threshold set to 1 and then using threshold set to 3. In both cases we will use the Add Health network. Note that we need to set seed.nodes to "random" and seed.p.adopt to .05, telling the function to randomly select 5% of the nodes as seeds in each simulation.</p>
+<div class="sourceCode" id="cb1865"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1865-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1865-1" aria-hidden="true" tabindex="-1"></a>ah_simresults_multiple_threshold1 <span class="ot">&lt;-</span> <span class="fu">rdiffnet_multiple</span>(<span class="at">statistic =</span> stat_func,</span>
+<span id="cb1865-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1865-2" aria-hidden="true" tabindex="-1"></a>                                                       <span class="at">R =</span> <span class="dv">100</span>, </span>
+<span id="cb1865-3"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1865-3" aria-hidden="true" tabindex="-1"></a>                                                       <span class="at">ncpus =</span> <span class="dv">2</span>,</span>
+<span id="cb1865-4"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1865-4" aria-hidden="true" tabindex="-1"></a>                                                       <span class="at">t =</span> <span class="dv">10</span>, </span>
+<span id="cb1865-5"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1865-5" aria-hidden="true" tabindex="-1"></a>                                                       <span class="at">seed.nodes =</span> <span class="st">&quot;random&quot;</span>,</span>
+<span id="cb1865-6"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1865-6" aria-hidden="true" tabindex="-1"></a>                                                       <span class="at">seed.p.adopt =</span> .<span class="dv">05</span>, </span>
+<span id="cb1865-7"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1865-7" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">seed.graph =</span> ah_network_mat,</span>
+<span id="cb1865-8"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1865-8" aria-hidden="true" tabindex="-1"></a>                                                      <span class="at">rewire =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb1865-9"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1865-9" aria-hidden="true" tabindex="-1"></a>                                                      <span class="at">threshold.dist =</span> <span class="dv">1</span>, </span>
+<span id="cb1865-10"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1865-10" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">exposure.args =</span> exposure_list,</span>
+<span id="cb1865-11"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1865-11" aria-hidden="true" tabindex="-1"></a>                                                      <span class="at">stop.no.diff =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1866"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1866-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1866-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(ah_simresults_multiple_threshold1)</span></code></pre></div>
+<pre><code>## [1] &quot;matrix&quot; &quot;array&quot;</code></pre>
+<div class="sourceCode" id="cb1868"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1868-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1868-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(ah_simresults_multiple_threshold1)</span></code></pre></div>
+<pre><code>## [1]  10 100</code></pre>
+<p>The output is a matrix with 10 rows and 100 columns. The rows correspond to the time periods in the simulation. The columns correspond to the different simulations performed, in this case 100 (set using R). Let's take a look at the first five columns, where each value shows the proportion adopting for that time period and simulation.</p>
+<div class="sourceCode" id="cb1870"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1870-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1870-1" aria-hidden="true" tabindex="-1"></a>ah_simresults_multiple_threshold1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
+<pre><code>##          [,1]       [,2]       [,3]       [,4]       [,5]
+## 1  0.04863222 0.04863222 0.04863222 0.04863222 0.04863222
+## 2  0.35106383 0.34802432 0.35562310 0.40577508 0.39209726
+## 3  0.90881459 0.87386018 0.92249240 0.93313070 0.92401216
+## 4  1.00000000 0.99392097 1.00000000 1.00000000 0.99848024
+## 5  1.00000000 1.00000000 1.00000000 1.00000000 1.00000000
+## 6  1.00000000 1.00000000 1.00000000 1.00000000 1.00000000
+## 7  1.00000000 1.00000000 1.00000000 1.00000000 1.00000000
+## 8  1.00000000 1.00000000 1.00000000 1.00000000 1.00000000
+## 9  1.00000000 1.00000000 1.00000000 1.00000000 1.00000000
+## 10 1.00000000 1.00000000 1.00000000 1.00000000 1.00000000</code></pre>
+<p>We can see that the first period (row) always has the same proportion adopting (as the number of seeds does not vary across the simulations), but there is variation elsewhere, with different proportions of nodes adopting after each time period in different simulations. Now we do the same thing but set the threshold to 3 for all nodes.</p>
+<div class="sourceCode" id="cb1872"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1872-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1872-1" aria-hidden="true" tabindex="-1"></a>ah_simresults_multiple_threshold3 <span class="ot">&lt;-</span> <span class="fu">rdiffnet_multiple</span>(<span class="at">statistic =</span> stat_func,</span>
+<span id="cb1872-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1872-2" aria-hidden="true" tabindex="-1"></a>                                                       <span class="at">R =</span> <span class="dv">100</span>, </span>
+<span id="cb1872-3"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1872-3" aria-hidden="true" tabindex="-1"></a>                                                       <span class="at">ncpus =</span> <span class="dv">2</span>, </span>
+<span id="cb1872-4"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1872-4" aria-hidden="true" tabindex="-1"></a>                                                       <span class="at">t =</span> <span class="dv">10</span>,</span>
+<span id="cb1872-5"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1872-5" aria-hidden="true" tabindex="-1"></a>                                                       <span class="at">seed.nodes =</span> <span class="st">&quot;random&quot;</span>, </span>
+<span id="cb1872-6"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1872-6" aria-hidden="true" tabindex="-1"></a>                                                       <span class="at">seed.p.adopt =</span> .<span class="dv">05</span>, </span>
+<span id="cb1872-7"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1872-7" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">seed.graph =</span> ah_network_mat,</span>
+<span id="cb1872-8"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1872-8" aria-hidden="true" tabindex="-1"></a>                                                       <span class="at">rewire =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb1872-9"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1872-9" aria-hidden="true" tabindex="-1"></a>                                                       <span class="at">threshold.dist =</span> <span class="dv">3</span>, </span>
+<span id="cb1872-10"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1872-10" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">exposure.args =</span> exposure_list,</span>
+<span id="cb1872-11"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1872-11" aria-hidden="true" tabindex="-1"></a>                                                      <span class="at">stop.no.diff =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>And now we will plot the two sets of results as a series of boxplots. We will have two plots, one for the low threshold model and one for the high threshold model. The x-axis will be the time period and each boxplot will capture the distribution of proportion adopting across simulations. We set up the plot to have two panels. Note that we transpose the matrices so that we put the time periods on the x-axis.</p>
+<div class="sourceCode" id="cb1873"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1873-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1873-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb1873-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1873-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1873-3"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1873-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Low threshold</span></span>
+<span id="cb1873-4"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1873-4" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">t</span>(ah_simresults_multiple_threshold1), <span class="at">xlab =</span> <span class="st">&quot;Time&quot;</span>, </span>
+<span id="cb1873-5"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1873-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">&quot;Proportion of Adopters&quot;</span>,  </span>
+<span id="cb1873-6"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1873-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Low Threshold Model&quot;</span>, <span class="at">boxwex =</span> .<span class="dv">5</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb1873-7"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1873-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1873-8"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1873-8" aria-hidden="true" tabindex="-1"></a><span class="co"># High threshold</span></span>
+<span id="cb1873-9"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1873-9" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">t</span>(ah_simresults_multiple_threshold3), <span class="at">xlab =</span> <span class="st">&quot;Time&quot;</span>,</span>
+<span id="cb1873-10"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1873-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">&quot;Proportion of Adopters&quot;</span>, </span>
+<span id="cb1873-11"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1873-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;High Threshold Model&quot;</span>, <span class="at">boxwex =</span> .<span class="dv">5</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span></code></pre></div>
+<p><img src="Chapter14b_Integrated_Network_Science_Rtutorial_network_diffusion_simulation_files/figure-html/unnamed-chunk-53-1.png" width="864" /></p>
+<p>The variance is clearly lower (across simulation runs) for the low threshold model compared to the high threshold model. The low threshold model has such easy diffusion that global adoption happens quickly in every simulation. The high threshold model has the real potential for diffusion to not occur, meaning the initial seeds matter more and there is more variation run to run.</p>
+</div>
+</div>
+<div id="working-with-empirical-data" class="section level2 hasAnchor" number="14.9">
+<h2><span class="header-section-number">14.9</span> Working with Empirical Data<a href="ch14-Network-Diffusion-Social-Processes-R.html#working-with-empirical-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Our analysis has thus far focused on using simulation to understand the conditions that amplify/dampen the potential for widespread diffusion. The netdiffuseR package also has a number of useful functions for dealing with empirical data. Here we assume that a researcher has collected information about the adoption of an innovation (product, etc.) over time and would like to model this is as a threshold process.</p>
+<p>Let's begin by reading in some example data for us to use. The data are based on the same Add Health network used above. We will read in a data frame containing the attributes of those nodes.</p>
+<div class="sourceCode" id="cb1874"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1874-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1874-1" aria-hidden="true" tabindex="-1"></a>url3 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/addhealth_attributes.txt&quot;</span></span>
+<span id="cb1874-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1874-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1874-3"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1874-3" aria-hidden="true" tabindex="-1"></a>ah_attributes <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> url3, <span class="at">header =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb1875"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1875-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1875-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ah_attributes) </span></code></pre></div>
+<pre><code>##   ids gender  race grade toa
+## 1   1 female white    12  NA
+## 2   2   male white    11  NA
+## 3   3 female white    11   8
+## 4   4 female white     9   4
+## 5   5   male white    12   4
+## 6   6   male white    10   5</code></pre>
+<p>We see that the data contain basic demographic information, like <code>gender</code> and <code>grade</code>. The data frame also contains a variable called <code>toa</code>, which is a variable showing the time of adoption for a new product (constructed for this example). NA indicates that the node never adopted the new product. A researcher with this kind of data, coupled with the network data used above, may be interested in knowing if people tend to adopt if their neighbors adopt. They may also want to know which actors have higher/lower thresholds of adoption, showing which actors take up the adoption easily and which need more prompting.</p>
+<p>The first step is to create a diffnet object based on the empirical data. Once we create our diffnet object we will able to make use of the various summary functions used above (demonstrated on the diffnet objects outputted from the simulation). We will make use of the <code>new_diffnet()</code> function to create the diffnet object. The main arguments are:</p>
+<ul>
+<li>graph = network of interest. This can be a static or dynamic (longitudinal) network.</li>
+<li>toa = vector showing time of adoption for each node</li>
+<li>vertex.static.attrs = data frame showing attributes for each node (restricted to attributes that don't change over time); see vertex.dyn.attrs for attributes that are allowed to change over time.</li>
+</ul>
+<p>Here, we create a new diffnet object based on the Add Health network, attributes and time of adoption.</p>
+<div class="sourceCode" id="cb1877"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1877-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1877-1" aria-hidden="true" tabindex="-1"></a>ah_diffnet <span class="ot">&lt;-</span> <span class="fu">new_diffnet</span>(<span class="at">graph =</span> ah_network_mat, <span class="at">toa =</span> ah_attributes<span class="sc">$</span>toa, </span>
+<span id="cb1877-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1877-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">vertex.static.attrs =</span> ah_attributes)</span></code></pre></div>
+<div class="sourceCode" id="cb1878"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1878-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1878-1" aria-hidden="true" tabindex="-1"></a>ah_diffnet</span></code></pre></div>
+<pre><code>## Dynamic network of class -diffnet-
+##  Name               : Diffusion Network
+##  Behavior           : Unspecified
+##  # of nodes         : 658 (1, 2, 3, 4, 5, 6, 7, 8, ...)
+##  # of time periods  : 10 (1 - 10)
+##  Type               : directed
+##  Final prevalence   : 0.86
+##  Static attributes  : ids, gender, race, grade, toa (5)
+##  Dynamic attributes : -</code></pre>
+<p>Let's do a summary on the diffnet object (again, this can take a few seconds to run).</p>
+<div class="sourceCode" id="cb1880"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1880-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1880-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ah_diffnet) </span></code></pre></div>
+<pre><code>## Diffusion network summary statistics
+## Name     : Diffusion Network
+## Behavior : Unspecified
+## -----------------------------------------------------------------------------
+##  Period   Adopters   Cum Adopt. (%)   Hazard Rate   Density   Moran&#39;s I (sd)  
+## -------- ---------- ---------------- ------------- --------- ---------------- 
+##        1         33        33 (0.05)             -      0.01 -0.00 (0.00)     
+##        2         31        64 (0.10)          0.05      0.01  0.00 (0.00) *** 
+##        3         47       111 (0.17)          0.08      0.01  0.01 (0.00) *** 
+##        4         74       185 (0.28)          0.14      0.01  0.01 (0.00) *** 
+##        5        104       289 (0.44)          0.22      0.01  0.02 (0.00) *** 
+##        6        109       398 (0.60)          0.30      0.01  0.02 (0.00) *** 
+##        7         87       485 (0.74)          0.33      0.01  0.01 (0.00) *** 
+##        8         55       540 (0.82)          0.32      0.01  0.01 (0.00) *** 
+##        9         18       558 (0.85)          0.15      0.01  0.01 (0.00) *** 
+##       10          7       565 (0.86)          0.07      0.01  0.01 (0.00) *** 
+## -----------------------------------------------------------------------------
+##  Left censoring  : 0.05 (33)
+##  Right centoring : 0.14 (93)
+##  # of nodes      : 658
+## 
+##  Moran&#39;s I was computed on contemporaneous autocorrelation using 1/geodesic
+##  values. Significane levels  *** &lt;= .01, ** &lt;= .05, * &lt;= .1.</code></pre>
+<p>A simple summary, as we saw above, offers important information, like number of adopters, cumulative proportion and the hazard rate of adoption. Note that we can use the plotting functions (like <code>plot_adopters()</code> and <code>plot_diffnet()</code>) to display the results.</p>
+<p>The first key question we will address is how the adoption thresholds vary across our nodes. As a researcher, we will not directly observe the threshold for each node, showing at what point they would have adopted the innovation (unlike with the simulations, where this was a known input). Rather, we simply get the exposure of each node to the innovation and the time of adoption. We can, however, use these two pieces of information to estimate the range of possible thresholds for each node (assuming that a threshold model of adoption fits this case well, so that nodes actually adopt the innovation after a certain number of their neighbors have done so).</p>
+<p>We will begin by getting the exposure of each node to the innovation using the <code>exposure()</code> function. The arguments are:</p>
+<ul>
+<li>graph = the diffnet object</li>
+<li>normalized = T/F; T if results should be presented as proportion of neighbors who have adopted; F if reported as counts</li>
+<li>lags = period, in lags, from which to output exposure; if set to 0 then outputs level of exposure in given period.</li>
+</ul>
+<p>First, let's grab the level of exposure at each time period with no lags.</p>
+<div class="sourceCode" id="cb1882"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1882-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1882-1" aria-hidden="true" tabindex="-1"></a>exposure_overall <span class="ot">&lt;-</span> <span class="fu">exposure</span>(ah_diffnet, <span class="at">normalized =</span> <span class="cn">FALSE</span>, <span class="at">lags =</span> <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1883"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1883-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1883-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(exposure_overall) </span></code></pre></div>
+<pre><code>##   1 2 3  4  5  6  7  8  9 10
+## 1 0 0 0  1  3  4  4  4  4  4
+## 2 0 0 0  0  0  1  1  1  1  2
+## 3 0 0 0  1  2  5  6  6  7  7
+## 4 1 2 3  4  7 10 11 11 11 12
+## 5 2 3 8 10 12 13 13 13 13 13
+## 6 0 0 1  3  5  8  8 10 10 10</code></pre>
+<p>The rows correspond to the nodes in the network. The columns correspond to time periods. The values show the number of friends in that period, for that node, who have already adopted the innovation, thus capturing the exposure of node i. We can see, for example, that node 1 had 0 friends adopt until period 4, where they had 1 friend adopt, then 3 friends had adopted by period 5 and so on. Now, we will take our results from the <code>exposure()</code> function and use it to estimate the underlying threshold for each node. We will begin by calculating the level of exposure prior to adoption, or lagged exposure. The function is <code>threshold()</code>. The main arguments are:</p>
+<ul>
+<li>obj = exposure matrix</li>
+<li>toa = vector showing time of adoption</li>
+<li>lags = time of exposure to consider; lags = 1 is T - 1; lags = 2 is T - 2 and so on.</li>
+</ul>
+<p>The basic idea is that each node adopts the period after their threshold is met (assuming the threshold model is appropriate in this case). If a node adopts in period T, then they must have reached their threshold in period T - 1. We also know that they did not adopt in period T - 1, meaning the threshold had not been met in period T - 2. We can thus calculate the range of possible thresholds by calculating the exposure at T - 2 and T - 1. We thus need to calculate exposure using lags = 2 and lags = 1. Let's first look at the level of exposure two periods prior to adoption.</p>
+<div class="sourceCode" id="cb1885"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1885-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1885-1" aria-hidden="true" tabindex="-1"></a>thresh_lag2 <span class="ot">&lt;-</span> <span class="fu">threshold</span>(<span class="at">obj =</span> exposure_overall, <span class="at">toa =</span> ah_diffnet<span class="sc">$</span>toa, </span>
+<span id="cb1885-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1885-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">lags =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1886"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1886-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1886-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(thresh_lag2)</span></code></pre></div>
+<pre><code>##   threshold
+## 1        NA
+## 2        NA
+## 3         5
+## 4         2
+## 5         3
+## 6         1</code></pre>
+<p>We can see that for node 3 (node 1 and node 2 did not adopt) that 5 of their friends had adopted the innovation 2 periods prior to their own adoption. Now, let's do the same thing looking at the period prior to adoption.</p>
+<div class="sourceCode" id="cb1888"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1888-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1888-1" aria-hidden="true" tabindex="-1"></a>thresh_lag1 <span class="ot">&lt;-</span> <span class="fu">threshold</span>(<span class="at">obj =</span> exposure_overall, </span>
+<span id="cb1888-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1888-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">toa =</span> ah_diffnet<span class="sc">$</span>toa, <span class="at">lags =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1889"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1889-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1889-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(thresh_lag1)</span></code></pre></div>
+<pre><code>##   threshold
+## 1        NA
+## 2        NA
+## 3         6
+## 4         3
+## 5         8
+## 6         3</code></pre>
+<p>Here we see that node 3 had 6 friends adopt prior to their own adoption. Let's put those two vector together in a data frame. The latent threshold level must be greater than the exposure at T - 2 (as they did not adopt in T - 1) and less than or equal to the exposure at T - 1 (as they did adopt in T).</p>
+<div class="sourceCode" id="cb1891"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1891-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1891-1" aria-hidden="true" tabindex="-1"></a>threshold_dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">lower_bound =</span> thresh_lag2[, <span class="dv">1</span>], </span>
+<span id="cb1891-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1891-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">upper_bound =</span> thresh_lag1[, <span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb1892"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1892-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1892-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(threshold_dat)</span></code></pre></div>
+<pre><code>##   lower_bound upper_bound
+## 1          NA          NA
+## 2          NA          NA
+## 3           5           6
+## 4           2           3
+## 5           3           8
+## 6           1           3</code></pre>
+<p>This would suggest that node 3 has a latent threshold that must be greater than 5 and less than or equal to 6, making the threshold equal to 6 in this case. Or, looking at node 5, we see the threshold must be greater than 3 and less than or equal to 8 (so between 4 and 8). We do not know where the threshold is in that range, only that 3 was too little to have them adopt and that 8 was enough. Whether it took all 8 friends to convince them or less would have done it, is unclear from the data.</p>
+<p>We can go one step further and actually estimate a diffusion regression model, estimating the effect of exposure on the probability of adopting. The outcome of interest is whether a node adopted the innovation (0 = no adoption; 1 = adoption) at a given time period. The units are thus node X time period. So, if node i adopted in period 3, they would have a 0, 0, 1 as the outcome of interest. If node j adopted in period 4, they would have a 0, 0, 0, 1 as the outcome. The main independent variable is the level of exposure for each node in the previous period (how many friends around node i has already adopted the innovation?). Here we can make use of the handy <code>diffreg()</code> function, which will take our diffnet object and put it in a form appropriate for a logistic regression (estimated using glm). As a researcher, you simply need to put in a formula with the diffnet object as the outcome. The main predictor is exposure, here set to the exposure in T - 1 (so the exposure prior to the period in question). We will also include controls for time period, as adoption might start off quick but slow down over time. This is accomplished by using factor(per) in the formula.</p>
+<div class="sourceCode" id="cb1894"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1894-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1894-1" aria-hidden="true" tabindex="-1"></a>diffnet_model1 <span class="ot">&lt;-</span> <span class="fu">diffreg</span>(ah_diffnet <span class="sc">~</span> <span class="fu">exposure</span>(<span class="at">normalized =</span> F, <span class="at">lags =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb1894-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1894-2" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">factor</span>(per), <span class="at">type =</span> <span class="st">&quot;logit&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1895"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1895-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1895-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(diffnet_model1)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = Adopt ~ exposure + factor(per), family = binomial(link = &quot;logit&quot;), 
+##     data = dat, subset = ifelse(is.na(toa), TRUE, toa &gt;= per))
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)   -3.85357    0.20086 -19.186  &lt; 2e-16 ***
+## exposure       1.16615    0.05139  22.691  &lt; 2e-16 ***
+## factor(per)3  -0.30245    0.26504  -1.141 0.253815    
+## factor(per)4  -0.45997    0.26052  -1.766 0.077474 .  
+## factor(per)5  -0.54952    0.26307  -2.089 0.036718 *  
+## factor(per)6  -0.58495    0.27179  -2.152 0.031382 *  
+## factor(per)7  -0.97272    0.29785  -3.266 0.001092 ** 
+## factor(per)8  -1.09052    0.32706  -3.334 0.000855 ***
+## factor(per)9  -2.00491    0.39573  -5.066 4.05e-07 ***
+## factor(per)10 -2.80214    0.50595  -5.538 3.05e-08 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 2900.5  on 3258  degrees of freedom
+## Residual deviance: 1700.3  on 3249  degrees of freedom
+##   (658 observations deleted due to missingness)
+## AIC: 1720.3
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<p>We can see that the exposure does seem to predict adoption in this case (a positive, significant coefficient on exposure), net of the baseline time trends in adoption. The odds of adopting the innovation increase by exp(1.16615) = 3.210 times for every additional friend who had adopted the innovation in the previous period.</p>
+<p>We can also include controls for individual characteristics, important if we are trying to isolate the effect of exposure from individual propensities to adopt. Here we will control for gender and grade. These attributes are immediately available to be included in the formula as they were part of the original diffnet object constructed above.</p>
+<div class="sourceCode" id="cb1897"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1897-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1897-1" aria-hidden="true" tabindex="-1"></a>diffnet_model2 <span class="ot">&lt;-</span> <span class="fu">diffreg</span>(ah_diffnet <span class="sc">~</span> <span class="fu">exposure</span>(<span class="at">normalized =</span> F, <span class="at">lags =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb1897-2"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1897-2" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">factor</span>(per) <span class="sc">+</span> <span class="fu">factor</span>(gender) <span class="sc">+</span> grade, <span class="at">type =</span> <span class="st">&quot;logit&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1898"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1898-1"><a href="ch14-Network-Diffusion-Social-Processes-R.html#cb1898-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(diffnet_model2)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = Adopt ~ exposure + factor(per) + factor(gender) + 
+##     grade, family = binomial(link = &quot;logit&quot;), data = dat, subset = ifelse(is.na(toa), 
+##     TRUE, toa &gt;= per))
+## 
+## Coefficients:
+##                    Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)        -4.15794    0.64658  -6.431 1.27e-10 ***
+## exposure            1.16647    0.05147  22.662  &lt; 2e-16 ***
+## factor(per)3       -0.30610    0.26589  -1.151  0.24963    
+## factor(per)4       -0.44895    0.26124  -1.719  0.08570 .  
+## factor(per)5       -0.53517    0.26393  -2.028  0.04259 *  
+## factor(per)6       -0.55529    0.27236  -2.039  0.04147 *  
+## factor(per)7       -0.94968    0.29917  -3.174  0.00150 ** 
+## factor(per)8       -1.02542    0.32808  -3.126  0.00177 ** 
+## factor(per)9       -1.94833    0.39604  -4.919 8.68e-07 ***
+## factor(per)10      -2.76384    0.50760  -5.445 5.18e-08 ***
+## factor(gender)male -0.38988    0.12814  -3.043  0.00235 ** 
+## grade               0.04644    0.05824   0.797  0.42525    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 2900.5  on 3258  degrees of freedom
+## Residual deviance: 1690.7  on 3247  degrees of freedom
+##   (658 observations deleted due to missingness)
+## AIC: 1714.7
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<p>The results suggest that exposure is still an important predictor of adoption, net of these individual-level controls. Note that the model assumes that there is no selection effect (so that individuals do not strongly form ties based on both having already adopted the innovation). If this assumption is badly violated, we would want to consider alternative modeling strategies, such as the models explored in <a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#ch15-coevolution-networks-behaviors-siena-saom-R">Chapter 15</a>.</p>
+<p>Overall, this tutorial has demonstrated the complex ways that network structure and adoption behavior come together to shape diffusion rates. For example, we saw that random networks tend to have fast diffusion, but not always, particularly when the item of interest is a risky one, requiring many people to adopt before actors will take up the innovation. We explored many different simulations but there are a number of ways that we could have extended our analysis. For example, we could have considered how homophily affects diffusion rates. It may be the case that individuals are influenced to a greater extent by those similar to them (here in terms of grade or gender). We could alter the adoption behavior model to put more weight on certain friends. We could then see how diffusion rates vary, given this homophily-based adoption model, in the random network (low homophily) and Add Health network (high homophily). Similarly, our analysis utilized a static network, but it is possible to incorporate a dynamic network, where the ties change over time. By incorporating a dynamic network, we can see how patterns of tie gain and loss affect the potential for diffusion in the network. We explore similar problems in <a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#ch15-coevolution-networks-behaviors-siena-saom-R">Chapter 15</a>, where we cover the coevolution of behaviors and networks using SIENA models (see also <a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#ch14-Network-Diffusion-Infectious-Diseases-R">Part 1</a> from this chapter).</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ch14-Network-Diffusion-Infectious-Diseases-R.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ch15-coevolution-networks-behaviors-siena-saom-R.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "serif",
+"size": 2.5
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"info": false
+});
+});
+</script>
+
+</body>
+
+</html>

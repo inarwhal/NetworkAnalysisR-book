@@ -1,0 +1,3 @@
+# Statistical Models for Networks {#ch13-Statistical-Models-Networks-R}
+
+Chapter 13 covers statistical network models in R. The first tutorial focuses on cross-sectional network models, focusing on exponential random graph models (ERGM), for both binary and valued networks. We consider dynamic extensions to the ERGM framework (STERGM) in the second tutorial for Chapter 13. We will cover models for two-mode networks in the third tutorial. The final tutorial for Chapter 13 will cover relational event models, appropriate for continuous-time network data.

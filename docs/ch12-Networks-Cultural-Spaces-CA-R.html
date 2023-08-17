@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>12, Part 2. Cultural Spaces | Network Analysis: Integrating Social Network Theory, Method, and Application with R</title>
+  <meta name="description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="12, Part 2. Cultural Spaces | Network Analysis: Integrating Social Network Theory, Method, and Application with R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="12, Part 2. Cultural Spaces | Network Analysis: Integrating Social Network Theory, Method, and Application with R" />
+  
+  <meta name="twitter:description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  
+
+<meta name="author" content="Craig Rawlings, Jeffrey A. Smith, James Moody, and Daniel McFarland" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ch12-Networks-Structure-Culture-text-R.html"/>
+<link rel="next" href="ch13-Statistical-Models-Networks-R.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/d3-4.5.0/d3.min.js"></script>
+<script src="libs/forceNetwork-binding-0.4/forceNetwork.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="https://inarwhal.github.io/NetworkAnalysisR-book/">
+Network Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#how-to-read-the-book"><i class="fa fa-check"></i><b>1.1</b> How to Read the Book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#citations-and-use"><i class="fa fa-check"></i><b>1.2</b> Citations and Use</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#updates-and-feedback"><i class="fa fa-check"></i><b>1.3</b> Updates and Feedback</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i><b>1.4</b> Acknowledgments</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#author-informtion"><i class="fa fa-check"></i><b>1.5</b> Author Informtion</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#session-information"><i class="fa fa-check"></i><b>1.6</b> Session Information</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html"><i class="fa fa-check"></i><b>2</b> Basic Introduction to R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html#preliminaries"><i class="fa fa-check"></i><b>2.1</b> Preliminaries</a></li>
+<li class="chapter" data-level="2.2" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html#packages"><i class="fa fa-check"></i><b>2.2</b> Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ch3-Network-Data-R.html"><a href="ch3-Network-Data-R.html"><i class="fa fa-check"></i><b>3</b> Network Data</a></li>
+<li class="chapter" data-level="" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html"><i class="fa fa-check"></i>3, Part 1. Cross-Sectional Network Data</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#reading-data-into-r"><i class="fa fa-check"></i><b>3.1</b> Reading Data into R</a></li>
+<li class="chapter" data-level="3.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#networks-in-igraph"><i class="fa fa-check"></i><b>3.2</b> Networks in igraph</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-a-matrix-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.1</b> Using a Matrix to Construct the Network</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-edgelist-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.2</b> Using an Edgelist to Construct the Network</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#extracting-information-from-igraph-objects"><i class="fa fa-check"></i><b>3.2.3</b> Extracting Information from igraph Objects</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-adjacency-list-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.4</b> Using an Adjacency List to Construct the Network</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-the-network-package"><i class="fa fa-check"></i><b>3.3</b> Using the network Package</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-a-matrix-to-construct-the-network-1"><i class="fa fa-check"></i><b>3.3.1</b> Using a Matrix to Construct the Network</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-edgelist-to-construct-the-network-1"><i class="fa fa-check"></i><b>3.3.2</b> Using an Edgelist to Construct the Network</a></li>
+<li class="chapter" data-level="3.3.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#putting-edge-attributes-onto-the-network"><i class="fa fa-check"></i><b>3.3.3</b> Putting Edge Attributes onto the Network</a></li>
+<li class="chapter" data-level="3.3.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#moving-between-igraph-and-network-objects"><i class="fa fa-check"></i><b>3.3.4</b> Moving between igraph and network Objects</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#some-key-network-measures"><i class="fa fa-check"></i><b>3.4</b> Some Key Network Measures</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#degree"><i class="fa fa-check"></i><b>3.4.1</b> Degree</a></li>
+<li class="chapter" data-level="3.4.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#density"><i class="fa fa-check"></i><b>3.4.2</b> Density</a></li>
+<li class="chapter" data-level="3.4.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#walks"><i class="fa fa-check"></i><b>3.4.3</b> Walks</a></li>
+<li class="chapter" data-level="3.4.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#paths-distance-and-closeness"><i class="fa fa-check"></i><b>3.4.4</b> Paths, Distance, and Closeness</a></li>
+<li class="chapter" data-level="3.4.5" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#reachability"><i class="fa fa-check"></i><b>3.4.5</b> Reachability</a></li>
+<li class="chapter" data-level="3.4.6" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#diameter"><i class="fa fa-check"></i><b>3.4.6</b> Diameter</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html"><i class="fa fa-check"></i>3, Part 2. Dynamic Network Data</a>
+<ul>
+<li class="chapter" data-level="3.5" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#discrete-longitudinal-networks"><i class="fa fa-check"></i><b>3.5</b> Discrete Longitudinal Networks</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#getting-the-data-ready"><i class="fa fa-check"></i><b>3.5.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="3.5.2" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#constructing-networkdynamic-objects"><i class="fa fa-check"></i><b>3.5.2</b> Constructing networkDynamic Objects</a></li>
+<li class="chapter" data-level="3.5.3" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#summary-statistics"><i class="fa fa-check"></i><b>3.5.3</b> Summary Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#continuous-time-networks"><i class="fa fa-check"></i><b>3.6</b> Continuous-Time Networks</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#getting-the-data-ready-1"><i class="fa fa-check"></i><b>3.6.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="3.6.2" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#constructing-networkdynamic-objects-1"><i class="fa fa-check"></i><b>3.6.2</b> Constructing networkDynamic Objects</a></li>
+<li class="chapter" data-level="3.6.3" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#summary-statistics-1"><i class="fa fa-check"></i><b>3.6.3</b> Summary Statistics</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html"><i class="fa fa-check"></i><b>4</b> Missing Network Data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#missing-data"><i class="fa fa-check"></i><b>4.1</b> Missing Data</a></li>
+<li class="chapter" data-level="4.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#listwise-deletion"><i class="fa fa-check"></i><b>4.2</b> Listwise Deletion</a></li>
+<li class="chapter" data-level="4.3" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-the-level-of-bias"><i class="fa fa-check"></i><b>4.3</b> Gauging the Level of Bias</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-bias-using-past-results"><i class="fa fa-check"></i><b>4.3.1</b> Gauging Bias Using Past Results</a></li>
+<li class="chapter" data-level="4.3.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-bias-using-predictive-models"><i class="fa fa-check"></i><b>4.3.2</b> Gauging Bias Using Predictive Models</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-options"><i class="fa fa-check"></i><b>4.4</b> Simple Imputation Options</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-asymmetric-option"><i class="fa fa-check"></i><b>4.4.1</b> Simple Imputation with Asymmetric Option</a></li>
+<li class="chapter" data-level="4.4.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-symmetric-option"><i class="fa fa-check"></i><b>4.4.2</b> Simple Imputation with Symmetric Option</a></li>
+<li class="chapter" data-level="4.4.3" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-probabilistic-option"><i class="fa fa-check"></i><b>4.4.3</b> Simple Imputation with Probabilistic Option</a></li>
+<li class="chapter" data-level="4.4.4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#comparing-estimates"><i class="fa fa-check"></i><b>4.4.4</b> Comparing Estimates</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html"><i class="fa fa-check"></i><b>5</b> Network Visualization</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#setting-up-the-session"><i class="fa fa-check"></i><b>5.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="5.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#network-plots-using-igraph"><i class="fa fa-check"></i><b>5.2</b> Network Plots using igraph</a></li>
+<li class="chapter" data-level="5.3" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#network-plots-based-on-ggplot"><i class="fa fa-check"></i><b>5.3</b> Network Plots based on ggplot</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#ggally-package"><i class="fa fa-check"></i><b>5.3.1</b> GGally package</a></li>
+<li class="chapter" data-level="5.3.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#ggnetwork-package"><i class="fa fa-check"></i><b>5.3.2</b> ggnetwork package</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#contour-plots"><i class="fa fa-check"></i><b>5.4</b> Contour Plots</a></li>
+<li class="chapter" data-level="5.5" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#interactive-plots"><i class="fa fa-check"></i><b>5.5</b> Interactive Plots</a></li>
+<li class="chapter" data-level="5.6" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#dynamic-network-visualizations"><i class="fa fa-check"></i><b>5.6</b> Dynamic Network Visualizations</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#getting-the-data-ready-2"><i class="fa fa-check"></i><b>5.6.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="5.6.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#time-flattened-visualizations"><i class="fa fa-check"></i><b>5.6.2</b> Time Flattened Visualizations</a></li>
+<li class="chapter" data-level="5.6.3" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#dynamic-network-movies"><i class="fa fa-check"></i><b>5.6.3</b> Dynamic Network Movies</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html"><i class="fa fa-check"></i><b>6</b> Ego Network Data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#working-with-ego-network-data"><i class="fa fa-check"></i><b>6.1</b> Working with Ego Network Data</a></li>
+<li class="chapter" data-level="6.2" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#plotting-networks"><i class="fa fa-check"></i><b>6.2</b> Plotting Networks</a></li>
+<li class="chapter" data-level="6.3" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#homophily-ego-alter-attributes"><i class="fa fa-check"></i><b>6.3</b> Homophily: Ego-Alter Attributes</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#proportion-of-alters-matching-ego"><i class="fa fa-check"></i><b>6.3.1</b> Proportion of Alters Matching Ego</a></li>
+<li class="chapter" data-level="6.3.2" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#analyzing-homophily-at-the-dyadic-level-ego-alter-pairs"><i class="fa fa-check"></i><b>6.3.2</b> Analyzing Homophily at the Dyadic Level: Ego-Alter Pairs</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#homophily-alter-attributes"><i class="fa fa-check"></i><b>6.4</b> Homophily: Alter Attributes</a></li>
+<li class="chapter" data-level="6.5" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#ego-networks-as-predictors"><i class="fa fa-check"></i><b>6.5</b> Ego Networks as Predictors</a></li>
+<li class="chapter" data-level="6.6" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#working-with-one-input-file"><i class="fa fa-check"></i><b>6.6</b> Working with One Input File</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html"><i class="fa fa-check"></i><b>7</b> Dyads and Triads</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#setting-up-the-session-1"><i class="fa fa-check"></i><b>7.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="7.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyadic-processes"><i class="fa fa-check"></i><b>7.2</b> Dyadic Processes</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyad-census-and-reciprocity"><i class="fa fa-check"></i><b>7.2.1</b> Dyad Census and Reciprocity</a></li>
+<li class="chapter" data-level="7.2.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#conditional-uniform-graph-tests"><i class="fa fa-check"></i><b>7.2.2</b> Conditional Uniform Graph Tests</a></li>
+<li class="chapter" data-level="7.2.3" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyad-census-by-attributes-of-nodes"><i class="fa fa-check"></i><b>7.2.3</b> Dyad Census by Attributes of Nodes</a></li>
+<li class="chapter" data-level="7.2.4" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#advice-and-friendship-together"><i class="fa fa-check"></i><b>7.2.4</b> Advice and Friendship Together</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#triadic-processes"><i class="fa fa-check"></i><b>7.3</b> Triadic Processes</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#triad-census"><i class="fa fa-check"></i><b>7.3.1</b> Triad Census</a></li>
+<li class="chapter" data-level="7.3.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#transitivity"><i class="fa fa-check"></i><b>7.3.2</b> Transitivity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html"><i class="fa fa-check"></i><b>8</b> Network Cohesion and Communities</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#first-example-network"><i class="fa fa-check"></i><b>8.1</b> First Example Network</a></li>
+<li class="chapter" data-level="8.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#cohesion"><i class="fa fa-check"></i><b>8.2</b> Cohesion</a></li>
+<li class="chapter" data-level="8.3" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#community-or-group-detection"><i class="fa fa-check"></i><b>8.3</b> Community (or Group) Detection</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#walktrap"><i class="fa fa-check"></i><b>8.3.1</b> Walktrap</a></li>
+<li class="chapter" data-level="8.3.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#edge-betweenness"><i class="fa fa-check"></i><b>8.3.2</b> Edge Betweenness</a></li>
+<li class="chapter" data-level="8.3.3" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#scree-plots"><i class="fa fa-check"></i><b>8.3.3</b> Scree Plots</a></li>
+<li class="chapter" data-level="8.3.4" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#multi-level-clustering"><i class="fa fa-check"></i><b>8.3.4</b> Multi-level Clustering</a></li>
+<li class="chapter" data-level="8.3.5" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#cohesive-blocking"><i class="fa fa-check"></i><b>8.3.5</b> Cohesive Blocking</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#demographic-characteristics"><i class="fa fa-check"></i><b>8.4</b> Demographic Characteristics</a></li>
+<li class="chapter" data-level="8.5" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#community-overlap"><i class="fa fa-check"></i><b>8.5</b> Community Overlap</a></li>
+<li class="chapter" data-level="8.6" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#big-data-example"><i class="fa fa-check"></i><b>8.6</b> Big Data Example</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#multi-level-clustering-1"><i class="fa fa-check"></i><b>8.6.1</b> Multi-level Clustering</a></li>
+<li class="chapter" data-level="8.6.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#looking-at-the-community-structure-within-the-initial-communities"><i class="fa fa-check"></i><b>8.6.2</b> Looking at the Community Structure within the Initial Communities</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html"><i class="fa fa-check"></i><b>9</b> Network Centrality and Hierarchy</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#setting-up-the-session-2"><i class="fa fa-check"></i><b>9.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="9.2" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality"><i class="fa fa-check"></i><b>9.2</b> Centrality</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality-measures-for-social-interactions"><i class="fa fa-check"></i><b>9.2.1</b> Centrality Measures for Social Interactions</a></li>
+<li class="chapter" data-level="9.2.2" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#correlations-between-centrality-measures"><i class="fa fa-check"></i><b>9.2.2</b> Correlations between Centrality Measures</a></li>
+<li class="chapter" data-level="9.2.3" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality-for-task-interactions"><i class="fa fa-check"></i><b>9.2.3</b> Centrality for Task Interactions</a></li>
+<li class="chapter" data-level="9.2.4" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#tasksocial-correlations"><i class="fa fa-check"></i><b>9.2.4</b> Task/Social Correlations</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centralization"><i class="fa fa-check"></i><b>9.3</b> Centralization</a></li>
+<li class="chapter" data-level="9.4" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#clustering-and-hierarchy"><i class="fa fa-check"></i><b>9.4</b> Clustering and Hierarchy</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html"><i class="fa fa-check"></i><b>10</b> Positions and Roles</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#classroom-network-data"><i class="fa fa-check"></i><b>10.1</b> Classroom Network Data</a></li>
+<li class="chapter" data-level="10.2" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#getting-the-data-ready-3"><i class="fa fa-check"></i><b>10.2</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="10.3" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#structural-equivalence"><i class="fa fa-check"></i><b>10.3</b> Structural Equivalence</a></li>
+<li class="chapter" data-level="10.4" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#defining-positions"><i class="fa fa-check"></i><b>10.4</b> Defining Positions</a></li>
+<li class="chapter" data-level="10.5" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#role-analysis"><i class="fa fa-check"></i><b>10.5</b> Role Analysis</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#permuting-the-matrix-by-position"><i class="fa fa-check"></i><b>10.5.1</b> Permuting the Matrix by Position</a></li>
+<li class="chapter" data-level="10.5.2" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#constructing-a-blockmodel"><i class="fa fa-check"></i><b>10.5.2</b> Constructing a Blockmodel</a></li>
+<li class="chapter" data-level="10.5.3" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#plotting-a-blockmodel"><i class="fa fa-check"></i><b>10.5.3</b> Plotting a Blockmodel</a></li>
+<li class="chapter" data-level="10.5.4" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#interpretation-of-blockmodel"><i class="fa fa-check"></i><b>10.5.4</b> Interpretation of Blockmodel</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#local-equivalence"><i class="fa fa-check"></i><b>10.6</b> Local Equivalence</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html"><i class="fa fa-check"></i><b>11</b> Two-mode Networks: Affilitations and Dualities</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#example-affiliation-data"><i class="fa fa-check"></i><b>11.1</b> Example Affiliation Data</a></li>
+<li class="chapter" data-level="11.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#plotting-the-network"><i class="fa fa-check"></i><b>11.2</b> Plotting the Network</a></li>
+<li class="chapter" data-level="11.3" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#single-mode-networks"><i class="fa fa-check"></i><b>11.3</b> Single Mode Networks</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#constructing-one-mode-projections"><i class="fa fa-check"></i><b>11.3.1</b> Constructing One-Mode Projections</a></li>
+<li class="chapter" data-level="11.3.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#plotting-one-mode-projections"><i class="fa fa-check"></i><b>11.3.2</b> Plotting One-Mode Projections</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#club-to-club-network"><i class="fa fa-check"></i><b>11.4</b> Club-to-Club Network</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#centrality-1"><i class="fa fa-check"></i><b>11.4.1</b> Centrality</a></li>
+<li class="chapter" data-level="11.4.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#groups"><i class="fa fa-check"></i><b>11.4.2</b> Groups</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#using-the-tnet-package"><i class="fa fa-check"></i><b>11.5</b> Using the tnet package</a></li>
+<li class="chapter" data-level="11.6" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#racial-segregation"><i class="fa fa-check"></i><b>11.6</b> Racial Segregation</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#proportion-of-co-membership-edges-where-students-match-on-race"><i class="fa fa-check"></i><b>11.6.1</b> Proportion of Co-membership Edges where Students Match on Race</a></li>
+<li class="chapter" data-level="11.6.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#do-students-match-racially-with-at-least-one-other-student"><i class="fa fa-check"></i><b>11.6.2</b> Do Students Match Racially with at Least One Other Student?</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#club-centrality-and-attributes"><i class="fa fa-check"></i><b>11.7</b> Club Centrality and Attributes</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="ch12-Networks-Culture-R.html"><a href="ch12-Networks-Culture-R.html"><i class="fa fa-check"></i><b>12</b> Networks and Culture</a></li>
+<li class="chapter" data-level="" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html"><i class="fa fa-check"></i>12, Part 1. Cultural Structures</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#getting-the-data-ready-4"><i class="fa fa-check"></i><b>12.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="12.2" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#topic-modeling"><i class="fa fa-check"></i><b>12.2</b> Topic Modeling</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#lda-initial-model"><i class="fa fa-check"></i><b>12.2.1</b> LDA: Initial Model</a></li>
+<li class="chapter" data-level="12.2.2" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#lda-picking-the-number-of-topics"><i class="fa fa-check"></i><b>12.2.2</b> LDA: Picking the Number of Topics</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#a-network-representation"><i class="fa fa-check"></i><b>12.3</b> A Network Representation</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html"><i class="fa fa-check"></i>12, Part 2. Cultural Spaces</a>
+<ul>
+<li class="chapter" data-level="12.4" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#correspondence-analysis"><i class="fa fa-check"></i><b>12.4</b> Correspondence Analysis</a></li>
+<li class="chapter" data-level="12.5" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#number-of-dimensions"><i class="fa fa-check"></i><b>12.5</b> Number of Dimensions</a></li>
+<li class="chapter" data-level="12.6" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#importance-of-rowscolumns"><i class="fa fa-check"></i><b>12.6</b> Importance of Rows/Columns</a></li>
+<li class="chapter" data-level="12.7" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#hierarchical-clustering"><i class="fa fa-check"></i><b>12.7</b> Hierarchical Clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="ch13-Statistical-Models-Networks-R.html"><a href="ch13-Statistical-Models-Networks-R.html"><i class="fa fa-check"></i><b>13</b> Statistical Models for Networks</a></li>
+<li class="chapter" data-level="" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><i class="fa fa-check"></i>13, Part 1. Cross-Sectional Network Models: ERGM</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#setting-up-the-session-3"><i class="fa fa-check"></i><b>13.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="13.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#descriptive-statistics"><i class="fa fa-check"></i><b>13.2</b> Descriptive Statistics</a></li>
+<li class="chapter" data-level="13.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#cug-tests"><i class="fa fa-check"></i><b>13.3</b> CUG Tests</a></li>
+<li class="chapter" data-level="13.4" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#fitting-an-ergm"><i class="fa fa-check"></i><b>13.4</b> Fitting an ERGM</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-only"><i class="fa fa-check"></i><b>13.4.1</b> Edges Only</a></li>
+<li class="chapter" data-level="13.4.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-and-homophily"><i class="fa fa-check"></i><b>13.4.2</b> Edges and Homophily</a></li>
+<li class="chapter" data-level="13.4.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-homophily-and-node-covariates"><i class="fa fa-check"></i><b>13.4.3</b> Edges, Homophily, and Node Covariates</a></li>
+<li class="chapter" data-level="13.4.4" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-homophily-node-covariates-and-reciprocity"><i class="fa fa-check"></i><b>13.4.4</b> Edges, Homophily, Node Covariates, and Reciprocity</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#checking-model-convergence"><i class="fa fa-check"></i><b>13.5</b> Checking Model Convergence</a></li>
+<li class="chapter" data-level="13.6" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#goodness-of-fit"><i class="fa fa-check"></i><b>13.6</b> Goodness of Fit</a></li>
+<li class="chapter" data-level="13.7" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#adding-gwesp-to-the-model"><i class="fa fa-check"></i><b>13.7</b> Adding GWESP to the Model</a></li>
+<li class="chapter" data-level="13.8" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#simulation"><i class="fa fa-check"></i><b>13.8</b> Simulation</a></li>
+<li class="chapter" data-level="13.9" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#example-on-a-large-network"><i class="fa fa-check"></i><b>13.9</b> Example on a Large Network</a></li>
+<li class="chapter" data-level="13.10" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#ergm-on-a-valued-network"><i class="fa fa-check"></i><b>13.10</b> ERGM on a Valued Network</a>
+<ul>
+<li class="chapter" data-level="13.10.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#baseline-ergm-on-valued-network"><i class="fa fa-check"></i><b>13.10.1</b> Baseline ERGM on Valued Network</a></li>
+<li class="chapter" data-level="13.10.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#adding-nodematch-and-nodefactor-terms"><i class="fa fa-check"></i><b>13.10.2</b> Adding Nodematch and Nodefactor Terms</a></li>
+<li class="chapter" data-level="13.10.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#transitivity-in-valued-networks"><i class="fa fa-check"></i><b>13.10.3</b> Transitivity in Valued Networks</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html"><i class="fa fa-check"></i>13, Part 2. Longitudinal Network Models: STERGM</a>
+<ul>
+<li class="chapter" data-level="13.11" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#getting-the-data-ready-5"><i class="fa fa-check"></i><b>13.11</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="13.12" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#stergms"><i class="fa fa-check"></i><b>13.12</b> STERGMs</a>
+<ul>
+<li class="chapter" data-level="13.12.1" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-1-just-edges"><i class="fa fa-check"></i><b>13.12.1</b> Model 1: Just Edges</a></li>
+<li class="chapter" data-level="13.12.2" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-2-edges-homophily-and-nodefactor"><i class="fa fa-check"></i><b>13.12.2</b> Model 2: Edges, Homophily and Nodefactor</a></li>
+<li class="chapter" data-level="13.12.3" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-3-edges-nodefactor-and-seating"><i class="fa fa-check"></i><b>13.12.3</b> Model 3: Edges, Nodefactor, and Seating</a></li>
+<li class="chapter" data-level="13.12.4" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-4-adding-gwesp-to-the-model"><i class="fa fa-check"></i><b>13.12.4</b> Model 4: Adding GWESP to the Model</a></li>
+</ul></li>
+<li class="chapter" data-level="13.13" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#checking-model-fit"><i class="fa fa-check"></i><b>13.13</b> Checking Model Fit</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><i class="fa fa-check"></i>13, Part 3. Two-mode Network Models</a>
+<ul>
+<li class="chapter" data-level="13.14" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#affiliation-data"><i class="fa fa-check"></i><b>13.14</b> Affiliation Data</a></li>
+<li class="chapter" data-level="13.15" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#ergm-on-a-two-mode-network"><i class="fa fa-check"></i><b>13.15</b> ERGM on a Two-mode Network</a>
+<ul>
+<li class="chapter" data-level="13.15.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#edges"><i class="fa fa-check"></i><b>13.15.1</b> Edges</a></li>
+<li class="chapter" data-level="13.15.2" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#adjusting-for-structural-issues-gender-and-grade-specific-clubs"><i class="fa fa-check"></i><b>13.15.2</b> Adjusting for Structural Issues: Gender and Grade Specific Clubs</a></li>
+</ul></li>
+<li class="chapter" data-level="13.16" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#second-mode-terms"><i class="fa fa-check"></i><b>13.16</b> Second Mode Terms</a>
+<ul>
+<li class="chapter" data-level="13.16.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#nodefactor"><i class="fa fa-check"></i><b>13.16.1</b> Nodefactor</a></li>
+<li class="chapter" data-level="13.16.2" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#homophily"><i class="fa fa-check"></i><b>13.16.2</b> Homophily</a></li>
+</ul></li>
+<li class="chapter" data-level="13.17" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#first-mode-terms"><i class="fa fa-check"></i><b>13.17</b> First Mode Terms</a></li>
+<li class="chapter" data-level="13.18" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#clustering"><i class="fa fa-check"></i><b>13.18</b> Clustering</a></li>
+<li class="chapter" data-level="13.19" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#two-mode-longitudinal-networks"><i class="fa fa-check"></i><b>13.19</b> Two-mode Longitudinal Networks</a>
+<ul>
+<li class="chapter" data-level="13.19.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#entry-and-exit-of-nodes"><i class="fa fa-check"></i><b>13.19.1</b> Entry and Exit of Nodes</a></li>
+</ul></li>
+<li class="chapter" data-level="13.20" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#stergm-on-a-two-mode-network"><i class="fa fa-check"></i><b>13.20</b> STERGM on a Two-mode Network</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html"><i class="fa fa-check"></i>13, Part 4. Relational Event Models</a>
+<ul>
+<li class="chapter" data-level="13.21" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#getting-the-data-ready-6"><i class="fa fa-check"></i><b>13.21</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="13.22" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#running-initial-models"><i class="fa fa-check"></i><b>13.22</b> Running Initial Models</a>
+<ul>
+<li class="chapter" data-level="13.22.1" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#intercept-only-model"><i class="fa fa-check"></i><b>13.22.1</b> Intercept Only Model</a></li>
+<li class="chapter" data-level="13.22.2" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#adding-sender-and-receiver-effects"><i class="fa fa-check"></i><b>13.22.2</b> Adding Sender and Receiver Effects</a></li>
+<li class="chapter" data-level="13.22.3" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#adding-covariate-event-terms"><i class="fa fa-check"></i><b>13.22.3</b> Adding Covariate Event Terms</a></li>
+</ul></li>
+<li class="chapter" data-level="13.23" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#micro-rules-of-interaction"><i class="fa fa-check"></i><b>13.23</b> Micro Rules of Interaction</a></li>
+<li class="chapter" data-level="13.24" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#assessing-model-fit"><i class="fa fa-check"></i><b>13.24</b> Assessing Model Fit</a></li>
+<li class="chapter" data-level="13.25" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#comparison-to-a-second-date"><i class="fa fa-check"></i><b>13.25</b> Comparison to a Second Date</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="ch14-Network-Diffusion-R.html"><a href="ch14-Network-Diffusion-R.html"><i class="fa fa-check"></i><b>14</b> Network Diffusion</a></li>
+<li class="chapter" data-level="" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html"><i class="fa fa-check"></i>14, Part 1. Network Diffusion: Infectious Diseases</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#reading-in-data"><i class="fa fa-check"></i><b>14.1</b> Reading in Data</a></li>
+<li class="chapter" data-level="14.2" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#specifying-the-network-model"><i class="fa fa-check"></i><b>14.2</b> Specifying the Network Model</a></li>
+<li class="chapter" data-level="14.3" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#estimating-the-network-model"><i class="fa fa-check"></i><b>14.3</b> Estimating the Network Model</a></li>
+<li class="chapter" data-level="14.4" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#specifying-the-epidemic-model"><i class="fa fa-check"></i><b>14.4</b> Specifying the Epidemic Model</a></li>
+<li class="chapter" data-level="14.5" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#running-simulations"><i class="fa fa-check"></i><b>14.5</b> Running Simulations</a>
+<ul>
+<li class="chapter" data-level="14.5.1" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#running-baseline-model"><i class="fa fa-check"></i><b>14.5.1</b> Running Baseline Model</a></li>
+<li class="chapter" data-level="14.5.2" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#varying-network-features"><i class="fa fa-check"></i><b>14.5.2</b> Varying Network Features</a></li>
+<li class="chapter" data-level="14.5.3" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#varying-epidemic-model"><i class="fa fa-check"></i><b>14.5.3</b> Varying Epidemic Model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html"><i class="fa fa-check"></i>14, Part 2. Social Diffusion Processes</a>
+<ul>
+<li class="chapter" data-level="14.6" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#setting-up-the-session-4"><i class="fa fa-check"></i><b>14.6</b> Setting up the Session</a></li>
+<li class="chapter" data-level="14.7" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simple-diffusion-models"><i class="fa fa-check"></i><b>14.7</b> Simple Diffusion Models</a></li>
+<li class="chapter" data-level="14.8" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#threshold-models-of-diffusion"><i class="fa fa-check"></i><b>14.8</b> Threshold Models of Diffusion</a>
+<ul>
+<li class="chapter" data-level="14.8.1" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simulating-diffusion-processes-using-the-netdiffuser-package"><i class="fa fa-check"></i><b>14.8.1</b> Simulating Diffusion Processes using the netdiffuseR Package</a></li>
+<li class="chapter" data-level="14.8.2" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#comparing-diffusion-under-different-network-and-adoption-behavior-conditions"><i class="fa fa-check"></i><b>14.8.2</b> Comparing Diffusion under Different Network and Adoption Behavior Conditions</a></li>
+<li class="chapter" data-level="14.8.3" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simulations-using-multiple-runs"><i class="fa fa-check"></i><b>14.8.3</b> Simulations using Multiple Runs</a></li>
+</ul></li>
+<li class="chapter" data-level="14.9" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#working-with-empirical-data"><i class="fa fa-check"></i><b>14.9</b> Working with Empirical Data</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html"><i class="fa fa-check"></i><b>15</b> Social Influence: Coevolution of Networks and Behaviors</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#reading-in-classroom-data"><i class="fa fa-check"></i><b>15.1</b> Reading in Classroom Data</a></li>
+<li class="chapter" data-level="15.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#siena-model-setup"><i class="fa fa-check"></i><b>15.2</b> SIENA Model Setup</a></li>
+<li class="chapter" data-level="15.3" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification"><i class="fa fa-check"></i><b>15.3</b> Model Specification</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-behavioral-model"><i class="fa fa-check"></i><b>15.3.1</b> Model Specification: Behavioral Model</a></li>
+<li class="chapter" data-level="15.3.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-network-model"><i class="fa fa-check"></i><b>15.3.2</b> Model Specification: Network Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-estimation"><i class="fa fa-check"></i><b>15.4</b> Model Estimation</a></li>
+<li class="chapter" data-level="15.5" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpretation"><i class="fa fa-check"></i><b>15.5</b> Interpretation</a>
+<ul>
+<li class="chapter" data-level="15.5.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpreting-network-model"><i class="fa fa-check"></i><b>15.5.1</b> Interpreting Network Model</a></li>
+<li class="chapter" data-level="15.5.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpreting-behavioral-model"><i class="fa fa-check"></i><b>15.5.2</b> Interpreting Behavioral Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.6" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#checking-model-fit-1"><i class="fa fa-check"></i><b>15.6</b> Checking Model Fit</a></li>
+<li class="chapter" data-level="15.7" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#example-with-3-time-periods"><i class="fa fa-check"></i><b>15.7</b> Example with 3 Time Periods</a>
+<ul>
+<li class="chapter" data-level="15.7.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-and-estimation"><i class="fa fa-check"></i><b>15.7.1</b> Model Specification and Estimation</a></li>
+<li class="chapter" data-level="15.7.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#time-heterogeneity"><i class="fa fa-check"></i><b>15.7.2</b> Time Heterogeneity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="how-to-cite.html"><a href="how-to-cite.html"><i class="fa fa-check"></i>How to Cite</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Network Analysis: Integrating Social Network Theory, Method, and Application with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ch12-Networks-Cultural-Spaces-CA-R" class="section level1 unnumbered hasAnchor">
+<h1>12, Part 2. Cultural Spaces<a href="ch12-Networks-Cultural-Spaces-CA-R.html#ch12-Networks-Cultural-Spaces-CA-R" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This is the second tutorial for Chapter 12, covering the application of network ideas to cultural data. In this tutorial we cover spatial approaches to analyzing cultural data, which offer a useful, 'birds-eye' view of the system in question. Methods like multi-dimensional scaling and correspondence analysis produce a map of the data, showing which objects cluster together and which do not. We will mostly cover correspondence analysis, which is a method for placing multiple types of objects into the same latent space. Correspondence analysis is thus ideally suited for two-mode data and for capturing ideas of duality. This tutorial thus builds directly on the material covered in <a href="ch11-Two-mode-Networks.html#ch11-Two-mode-Networks">Chapter 11</a>.</p>
+<p>Our substantive case is based on the dissertation topics of PhD students in sociology and related disciplines. See <a href="ch12-Networks-Structure-Culture-text-R.html#ch12-Networks-Structure-Culture-text-R">Chapter 12, Part 1</a> for an analysis of the abstracts themselves. Here, we have data on the topic and department of students who submitted a dissertation between 1990 and 2013 (limited to topics typically studied by sociologists). Our main question is how students in different departments fall into different topics and what structures this relationship. We also want to know which topics are 'close' to which other topics (where topics are close if they are covered by the same kinds of departments) and which departments are close to which other departments (where departments are close if they cover the same kinds of topics). We want to understand the department/topic structure in a holistic manner, capturing the department-department, topic-topic and department-topic relationships simultaneously. It is important to recognize that the data are not network data per se (just counts of people in departments and topics) but we will analyze such data from a relational, network perspective, applying ideas of duality, position, distance and the like.</p>
+<div id="correspondence-analysis" class="section level2 hasAnchor" number="12.4">
+<h2><span class="header-section-number">12.4</span> Correspondence Analysis<a href="ch12-Networks-Cultural-Spaces-CA-R.html#correspondence-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let's start by loading some useful packages.</p>
+<div class="sourceCode" id="cb1221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1221-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1221-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FactoMineR)</span>
+<span id="cb1221-2"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1221-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb1221-3"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1221-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CAinterprTools)</span>
+<span id="cb1221-4"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1221-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gplots)</span>
+<span id="cb1221-5"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1221-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plot3D)</span>
+<span id="cb1221-6"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1221-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NbClust)</span></code></pre></div>
+<p>Now we will read in the data.</p>
+<div class="sourceCode" id="cb1222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1222-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1222-1" aria-hidden="true" tabindex="-1"></a>url1 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/department_topic_data.txt&quot;</span></span>
+<span id="cb1222-2"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1222-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1222-3"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1222-3" aria-hidden="true" tabindex="-1"></a>department_topic <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> url1, <span class="at">header =</span> T)</span></code></pre></div>
+<p>Let's take a look at the data (here just for the first 4 rows and columns).</p>
+<div class="sourceCode" id="cb1223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1223-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1223-1" aria-hidden="true" tabindex="-1"></a>department_topic[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span></code></pre></div>
+<pre><code>##                                          LIFE_COURSE SOCIOLOGY_OF_DEVIANCE SOCIOLOGY_OF_RACE MEDICAL_SOCIOLOGY
+## SBS__Sociology                                   742                   715               445               525
+## H__Languages__Societies_and_Cultures              80                   103               136                51
+## SBS__Social_and_Developmental_Psychology          75                   165                63                33
+## H__History                                        49                     7                47                12</code></pre>
+<p>The rows correspond to the department of the student (with the prefix corresponding to department type: SBS is social behavioral sciences; H is humanities; Ed is the education school; B is business; HS is health sciences). The columns correspond to the main topic of the dissertation. The values are the number of people in that department and topic. So 742 students submitted a dissertation on the life course and were in a sociology department.</p>
+<div class="sourceCode" id="cb1225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1225-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1225-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(department_topic)</span></code></pre></div>
+<pre><code>## [1] 25 33</code></pre>
+<p>We have 25 departments and 33 topics. Let’s grab the department and topic names, as this will be useful later on.</p>
+<div class="sourceCode" id="cb1227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1227-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1227-1" aria-hidden="true" tabindex="-1"></a>department_names <span class="ot">&lt;-</span> <span class="fu">rownames</span>(department_topic)</span>
+<span id="cb1227-2"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1227-2" aria-hidden="true" tabindex="-1"></a>topic_names <span class="ot">&lt;-</span> <span class="fu">colnames</span>(department_topic)</span></code></pre></div>
+<p>We will start with a basic correspondence analysis (CA) to get a sense of what these analyses yield. For a quick primer on correspondence analysis, see <span class="citation">(Sourial et al. 2009)</span>.</p>
+<p>Correspondence analysis will place both the rows (departments) and the columns (topics) into the same space. Departments, for example, will be close together if students from those departments cover the same kinds of topics; i.e., they are structurally equivalent (see <a href="ch10-Positions-Roles-R.html#ch10-Positions-Roles-R">Chapter 10</a>). [More formally, correspondence analysis works by taking chi-square distances between rows/columns (i.e., a weighted distance between rows based on the probabilities of falling into each column) and decomposing them into a smaller number of dimensions to create a plot where the distances between points approximates those raw chi-square distances.] The main function is <code>CA()</code>. The main argument is X, which sets the data frame of interest (here <code>department_topic</code>). We also set graph to FALSE as we do not want to plot anything here.</p>
+<div class="sourceCode" id="cb1228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1228-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1228-1" aria-hidden="true" tabindex="-1"></a>ca_mod1 <span class="ot">&lt;-</span> <span class="fu">CA</span>(<span class="at">X =</span> department_topic, <span class="at">graph =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1229-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1229-1" aria-hidden="true" tabindex="-1"></a>ca_mod1</span></code></pre></div>
+<pre><code>## **Results of the Correspondence Analysis (CA)**
+## The row variable has  25  categories; the column variable has 33 categories
+## The chi square of independence between the two variables is equal to 20620.07 (p-value =  0 ).
+## *The results are available in the following objects:
+## 
+##    name              description                   
+## 1  &quot;$eig&quot;            &quot;eigenvalues&quot;                 
+## 2  &quot;$col&quot;            &quot;results for the columns&quot;     
+## 3  &quot;$col$coord&quot;      &quot;coord. for the columns&quot;      
+## 4  &quot;$col$cos2&quot;       &quot;cos2 for the columns&quot;        
+## 5  &quot;$col$contrib&quot;    &quot;contributions of the columns&quot;
+## 6  &quot;$row&quot;            &quot;results for the rows&quot;        
+## 7  &quot;$row$coord&quot;      &quot;coord. for the rows&quot;         
+## 8  &quot;$row$cos2&quot;       &quot;cos2 for the rows&quot;           
+## 9  &quot;$row$contrib&quot;    &quot;contributions of the rows&quot;   
+## 10 &quot;$call&quot;           &quot;summary called parameters&quot;   
+## 11 &quot;$call$marge.col&quot; &quot;weights of the columns&quot;      
+## 12 &quot;$call$marge.row&quot; &quot;weights of the rows&quot;</code></pre>
+<p>The output is a CA object containing the overall fit of the model (<code>eig</code>), the results for the columns (<code>col</code>) and the results for the rows (<code>row</code>). Note that by default up to 5 dimensions will be kept in the results. This can be changed using the ncp argument. Let's use a <code>summary()</code> function to take a look at the results. Here we will tell R to print 2 decimal places (using nb.dec), print the first five rows/columns (setting nbelements to 5) and print 3 dimensions (setting ncp to 3).</p>
+<div class="sourceCode" id="cb1231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1231-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1231-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ca_mod1, <span class="at">nb.dec =</span> <span class="dv">2</span>, <span class="at">nbelements =</span> <span class="dv">5</span>, <span class="at">ncp =</span> <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## CA(X = department_topic, graph = FALSE) 
+## 
+## The chi square of independence between the two variables is equal to 20620.07 (p-value =  0 ).
+## 
+## Eigenvalues
+##                       Dim.1  Dim.2  Dim.3  Dim.4  Dim.5  Dim.6  Dim.7  Dim.8  Dim.9 Dim.10 Dim.11 Dim.12 Dim.13 Dim.14 Dim.15 Dim.16 Dim.17 Dim.18 Dim.19 Dim.20 Dim.21 Dim.22 Dim.23 Dim.24
+## Variance               0.13   0.07   0.05   0.03   0.03   0.02   0.01   0.01   0.01   0.01   0.01   0.01   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00   0.00
+## % of var.             33.21  16.65  13.48   7.94   6.29   4.65   3.41   2.73   2.58   1.85   1.67   1.31   1.11   0.86   0.79   0.42   0.35   0.25   0.17   0.15   0.07   0.04   0.02   0.01
+## Cumulative % of var.  33.21  49.87  63.35  71.29  77.58  82.23  85.64  88.37  90.95  92.80  94.47  95.77  96.89  97.74  98.53  98.95  99.30  99.55  99.72  99.87  99.94  99.97  99.99 100.00
+## 
+## Rows (the 5 first)
+##                                                    Iner*1000   Dim.1   ctr  cos2   Dim.2   ctr  cos2   Dim.3   ctr  cos2  
+## SBS__Sociology                                   |      3.39 | -0.01  0.03  0.01 |  0.05  2.26  0.45 | -0.01  0.04  0.01 |
+## H__Languages__Societies_and_Cultures             |     12.86 |  0.09  0.43  0.04 | -0.17  2.85  0.15 |  0.14  2.43  0.10 |
+## SBS__Social_and_Developmental_Psychology         |     27.21 | -0.55 12.96  0.63 | -0.02  0.03  0.00 |  0.25  6.36  0.13 |
+## H__History                                       |     46.28 |  0.99 25.41  0.73 | -0.08  0.34  0.00 |  0.18  2.11  0.02 |
+## SBS__Clinical_Psychology                         |     28.00 | -0.74 12.66  0.60 |  0.09  0.35  0.01 |  0.40  9.07  0.18 |
+## 
+## Columns (the 5 first)
+##                                                    Iner*1000   Dim.1   ctr  cos2   Dim.2   ctr  cos2   Dim.3   ctr  cos2  
+## LIFE_COURSE                                      |      0.55 |  0.03  0.01  0.03 |  0.10  0.43  0.53 | -0.04  0.08  0.08 |
+## SOCIOLOGY_OF_DEVIANCE                            |     18.69 | -0.57  6.89  0.49 |  0.13  0.71  0.03 |  0.40  8.13  0.24 |
+## SOCIOLOGY_OF_RACE                                |      2.97 |  0.06  0.05  0.02 | -0.23  1.46  0.33 |  0.04  0.05  0.01 |
+## MEDICAL_SOCIOLOGY                                |     21.03 | -0.32  1.55  0.10 |  0.46  6.49  0.21 |  0.14  0.73  0.02 |
+## CHILD_DEVELOPMENT                                |     15.13 | -0.52  7.06  0.62 | -0.11  0.64  0.03 |  0.09  0.51  0.02 |</code></pre>
+<p>These results are a bit hard to interpret but there is lots of useful information here. For example, the eigenvalue output tells us how much of the variance in the data is explained by 1, 2, 3, etc. dimensions. If we use two dimensions (for example) we could explain about 50% of the total variance. We will return to this later on. The row and column output includes (amongst other things) the locations of each department and topic, showing which departments/topics are close together. This is easier to see in a plot. We can plot the results using <code>fviz_ca_biplot()</code>.</p>
+<div class="sourceCode" id="cb1233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1233-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1233-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_ca_biplot</span>(ca_mod1)</span></code></pre></div>
+<p><img src="Chapter12b_Integrated_Network_Science_Rtutorial_networks_culture_correspondence_analysis_files/figure-html/unnamed-chunk-9-1.png" width="1080" /></p>
+<p>We can change some of the inputs to make it easier to interpret, here changing the size and color of the labels. We make departments orange and topics blue.</p>
+<div class="sourceCode" id="cb1234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1234-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1234-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_ca_biplot</span>(ca_mod1, <span class="at">col.row =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">col.col =</span> <span class="st">&quot;steelblue&quot;</span>, </span>
+<span id="cb1234-2"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1234-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">labelsize =</span> <span class="dv">3</span>, <span class="at">repel =</span> T) <span class="sc">+</span> </span>
+<span id="cb1234-3"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1234-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="Chapter12b_Integrated_Network_Science_Rtutorial_networks_culture_correspondence_analysis_files/figure-html/unnamed-chunk-10-1.png" width="1080" /></p>
+<p>Note that the plot only includes the first two dimensions, and that both topics and departments are included, with different colors as a means of differentiating the type of object. Departments are close to topics when those departments have a high proportion of their students doing those topics. For example, students in public health, nursing and medicine tend to take on topics related to medical sociology.</p>
+<p>Substantively, what have we learned from the plot? First, we may be interested in the overall structure of the space, or the latent dimensions in our two dimensional plot. Looking at the x-axis, we see the far left is constituted by topics like child development and deviance and departments like clinical psychology. On the far right, we see topics like social movements and historical sociology and departments like political science and history. The left-right continuum thus runs from micro-level studies of adolescence to macro-level studies of politics and history. Looking at the y-axis, the bottom includes topics like culture and education and includes education and humanities departments. The top is constituted by topics like medical sociology and stratification and departments like economics and public policy. The y-axis thus runs (more or less) from culture to stratification/health. We thus have a two-dimensional space of micro to macro and culture to stratification.</p>
+<p>Second, we may be interested in which topics/departments tend to cluster together. For example, the top left quadrant includes medical sociology topics and public health departments. We see sociology of aging close by, as well as topics related to stratification. We also see that some departments are closer together than others. Public health is closer to nursing and public policy than it is to English or history. This means that the topics that public health students tend to take on are very different than those in the humanities. It is worth noting that the college that these departments are affiliated with only sometimes predicts which department are close together. For example, the departments in the social behavioral sciences (SBS) are pretty spread out, all the way from the far left (social and developmental psychology) to the far right (political science). Thus, political science has more in common, topic wise, with history (in the humanities) than fellow social sciences like clinical psychology.</p>
+<p>We can also clean the plot up a bit to focus on just the rows or just the columns. If we wanted to just have the rows on the plot we would use <code>fviz_ca_row()</code> (or <code>fviz_ca_col()</code> for just the columns):</p>
+<div class="sourceCode" id="cb1235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1235-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1235-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_ca_row</span>(ca_mod1, <span class="at">col.row =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">labelsize =</span> <span class="dv">3</span>, <span class="at">repel =</span> T) <span class="sc">+</span></span>
+<span id="cb1235-2"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1235-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="Chapter12b_Integrated_Network_Science_Rtutorial_networks_culture_correspondence_analysis_files/figure-html/unnamed-chunk-11-1.png" width="1080" /></p>
+</div>
+<div id="number-of-dimensions" class="section level2 hasAnchor" number="12.5">
+<h2><span class="header-section-number">12.5</span> Number of Dimensions<a href="ch12-Networks-Cultural-Spaces-CA-R.html#number-of-dimensions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We have so far run an initial correspondence analysis and interpreted the results. Here we want to take a closer look at the analysis, to make sure we have the proper set of results. There are a number of issues we need to consider. First, we need to decide how many dimensions are sufficient to represent the space. This means we need to decide on the appropriate number of dimensions to use when interpreting the results. We need to balance fit (more dimensions) with ease of interpretation and presentation (fewer dimensions). Remember that the eigenvalues tell us how much each dimension contributes to explaining the total variance in the data. So let's start by looking at the eigenvalues for each dimension more closely.</p>
+<div class="sourceCode" id="cb1236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1236-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1236-1" aria-hidden="true" tabindex="-1"></a>eig <span class="ot">&lt;-</span> <span class="fu">get_eigenvalue</span>(ca_mod1)</span></code></pre></div>
+<div class="sourceCode" id="cb1237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1237-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1237-1" aria-hidden="true" tabindex="-1"></a>eig</span></code></pre></div>
+<pre><code>##          eigenvalue variance.percent cumulative.variance.percent
+## Dim.1  1.332917e-01     33.212926405                    33.21293
+## Dim.2  6.683516e-02     16.653627519                    49.86655
+## Dim.3  5.410294e-02     13.481083156                    63.34764
+## Dim.4  3.185661e-02      7.937859321                    71.28550
+## Dim.5  2.524612e-02      6.290692990                    77.57619
+## Dim.6  1.867087e-02      4.652307510                    82.22850
+## Dim.7  1.368130e-02      3.409034054                    85.63753
+## Dim.8  1.095477e-02      2.729651666                    88.36718
+## Dim.9  1.036783e-02      2.583399490                    90.95058
+## Dim.10 7.408050e-03      1.845898466                    92.79648
+## Dim.11 6.710398e-03      1.672061276                    94.46854
+## Dim.12 5.237564e-03      1.305068324                    95.77361
+## Dim.13 4.471813e-03      1.114262479                    96.88787
+## Dim.14 3.433716e-03      0.855595118                    97.74347
+## Dim.15 3.153639e-03      0.785806937                    98.52927
+## Dim.16 1.680187e-03      0.418660133                    98.94793
+## Dim.17 1.422663e-03      0.354491571                    99.30243
+## Dim.18 9.880741e-04      0.246203022                    99.54863
+## Dim.19 6.808799e-04      0.169658023                    99.71829
+## Dim.20 6.083445e-04      0.151584047                    99.86987
+## Dim.21 2.616822e-04      0.065204580                    99.93508
+## Dim.22 1.465193e-04      0.036508898                    99.97158
+## Dim.23 8.747367e-05      0.021796222                    99.99338
+## Dim.24 2.656286e-05      0.006618791                   100.00000</code></pre>
+<p>By first inspection, the model would appear to perform okay with a small number of dimensions, although we may be concerned that the first 2 dimensions only explains about 50% of the variance (looking at column 3, <code>cumulative.variance.percent</code>). Let's produce a scree plot to make the comparisons clearer.</p>
+<div class="sourceCode" id="cb1239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1239-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1239-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_screeplot</span>(ca_mod1)</span></code></pre></div>
+<p><img src="Chapter12b_Integrated_Network_Science_Rtutorial_networks_culture_correspondence_analysis_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>The y-axis shows the percent of total variance explained as we add a dimension and the x-axis shows the number of dimensions. We can see that additional variance explained seems to drop off after the third dimension, so there would appear to be diminishing returns to adding a fourth, fifth, etc. dimension. We may opt for a 2 or 3 dimensional solution based on the plot.</p>
+<p>Another potentially useful approach is to apply the average rule heuristic, which chooses the number of dimensions by selecting all dimensions that explain more than the average dimension. The function is <code>aver.rule()</code> and the input is the raw data (not the CA object).</p>
+<div class="sourceCode" id="cb1240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1240-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1240-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aver.rule</span>(department_topic)</span></code></pre></div>
+<p><img src="Chapter12b_Integrated_Network_Science_Rtutorial_networks_culture_correspondence_analysis_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>The dashed line indicates the average variance explained and the bars show the percent variance explained for each dimension. The average rule would suggest a solution of 6 dimensions. But if we take a closer look we can see that dimensions 5 and 6 only add around 5% to the explained variance, a fairly low return on adding an entire dimension to the plot. So, we may think that the average rule tends to yield solutions with too many dimensions, at least in this case.</p>
+<p>How about Malinvaud's test? This sequential test checks the significance of the remaining dimensions once the first k ones have been selected. The function is <code>malinvaud()</code> and the input is the raw data.</p>
+<div class="sourceCode" id="cb1241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1241-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1241-1" aria-hidden="true" tabindex="-1"></a><span class="fu">malinvaud</span>(department_topic)</span></code></pre></div>
+<p><img src="Chapter12b_Integrated_Network_Science_Rtutorial_networks_culture_correspondence_analysis_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<pre><code>##     K Dimension   Eigenvalue   Chi-square  df       p-value   p-class
+## 1   0    dim. 1 1.332917e-01 20620.073926 768  0.000000e+00 p &lt; 0.001
+## 2   1    dim. 2 6.683516e-02 13771.543949 713  0.000000e+00 p &lt; 0.001
+## 3   2    dim. 3 5.410294e-02 10337.553643 660  0.000000e+00 p &lt; 0.001
+## 4   3    dim. 4 3.185661e-02  7557.744330 609  0.000000e+00 p &lt; 0.001
+## 5   4    dim. 5 2.524612e-02  5920.951870 560  0.000000e+00 p &lt; 0.001
+## 6   5    dim. 6 1.867087e-02  4623.806325 513  0.000000e+00 p &lt; 0.001
+## 7   6    dim. 7 1.368130e-02  3664.497077 468  0.000000e+00 p &lt; 0.001
+## 8   7    dim. 8 1.095477e-02  2961.551735 425  0.000000e+00 p &lt; 0.001
+## 9   8    dim. 9 1.036783e-02  2398.695543 384 1.039277e-287 p &lt; 0.001
+## 10  9   dim. 10 7.408050e-03  1865.996659 345 1.036095e-206 p &lt; 0.001
+## 11 10   dim. 11 6.710398e-03  1485.371030 308 3.065673e-153 p &lt; 0.001
+## 12 11   dim. 12 5.237564e-03  1140.590759 273 2.492875e-106 p &lt; 0.001
+## 13 12   dim. 13 4.471813e-03   871.484706 240  1.658228e-72 p &lt; 0.001
+## 14 13   dim. 14 3.433716e-03   641.722959 209  1.659357e-45 p &lt; 0.001
+## 15 14   dim. 15 3.153639e-03   465.298613 180  3.872782e-27 p &lt; 0.001
+## 16 15   dim. 16 1.680187e-03   303.264642 153  5.705095e-12 p &lt; 0.001
+## 17 16   dim. 17 1.422663e-03   216.936613 128  1.532274e-06 p &lt; 0.001
+## 18 17   dim. 18 9.880741e-04   143.840189 105  7.114028e-03  p &lt; 0.01
+## 19 18   dim. 19 6.808799e-04    93.072944  84  2.335258e-01  p &gt; 0.05
+## 20 19   dim. 20 6.083445e-04    58.089334  65  7.156535e-01  p &gt; 0.05
+## 21 20   dim. 21 2.616822e-04    26.832591  48  9.942444e-01  p &gt; 0.05
+## 22 21   dim. 22 1.465193e-04    13.387359  33  9.990331e-01  p &gt; 0.05
+## 23 22   dim. 23 8.747367e-05     5.859197  20  9.990747e-01  p &gt; 0.05
+## 24 23   dim. 24 2.656286e-05     1.364800   9  9.980310e-01  p &gt; 0.05</code></pre>
+<p>The last column of the table prints the significance level associated with that dimension. Lower p-values suggest the (scaled) eigenvalues are significantly different from 0, an indication that the dimension is worth including. The results don't appear to be that informative in this case, however, as all dimensions up to (but not including) 19 are significant (assuming a traditional .05 threshold).</p>
+<p>Given our results, how many dimensions should we use? In this case the scree plot probably offers the most useful information, where a 2 or 3 dimensional solution is the most appropriate. Let’s go ahead and take a look at that third dimension, to see what it adds to the story. Let's create a 3-d plot, focusing just on the departments. Let's first get the locations of our departments. We can find the locations under row and then coord of our CA object:</p>
+<div class="sourceCode" id="cb1243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1243-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1243-1" aria-hidden="true" tabindex="-1"></a>locs_department <span class="ot">&lt;-</span> ca_mod1<span class="sc">$</span>row<span class="sc">$</span>coord</span></code></pre></div>
+<p>Now, we will use a <code>text3D()</code> function to plot the departments in three dimensions. Note that there are a number of packages that will allow for 3d plotting, but here we utilize the functions in the plot3D package. The <code>text3D()</code> function has a number of possible arguments. The main arguments are x, y z, showing the locations of each label to be plotted. The labels argument shows what should be printed in each location. Here we set the locations based on the first three dimensions in our CA object and set the labels to the names of the departments, defined above. The rest of the arguments control the look and rotation of the plot.</p>
+<div class="sourceCode" id="cb1244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1244-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1244-1" aria-hidden="true" tabindex="-1"></a><span class="fu">text3D</span>(<span class="at">x =</span> locs_department[, <span class="st">&quot;Dim 1&quot;</span>], </span>
+<span id="cb1244-2"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1244-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> locs_department[, <span class="st">&quot;Dim 2&quot;</span>], </span>
+<span id="cb1244-3"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1244-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">z =</span> locs_department[, <span class="st">&quot;Dim 3&quot;</span>], </span>
+<span id="cb1244-4"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1244-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">labels =</span> department_names, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">theta =</span> <span class="dv">120</span>, <span class="at">phi =</span> <span class="dv">20</span>, </span>
+<span id="cb1244-5"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1244-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">&quot;dim1&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;dim2&quot;</span>, <span class="at">zlab =</span> <span class="st">&quot;dim3&quot;</span>, <span class="at">axes =</span> T, </span>
+<span id="cb1244-6"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1244-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">ticktype =</span> <span class="st">&quot;detailed&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Departments in 3 Dimensions&quot;</span>, </span>
+<span id="cb1244-7"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1244-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">cex =</span> <span class="fl">0.75</span>, <span class="at">bty =</span> <span class="st">&quot;g&quot;</span>, <span class="at">d =</span> <span class="dv">2</span>, <span class="at">adj =</span> <span class="dv">1</span>, <span class="at">font =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="Chapter12b_Integrated_Network_Science_Rtutorial_networks_culture_correspondence_analysis_files/figure-html/unnamed-chunk-18-1.png" width="816" /></p>
+<p>The plot is somewhat hard to read in three dimensions, but if we look at the third (z) dimension, we can see that on one extreme we have higher education and administration and on the other end we have English and performing arts. Thus, dimension 3 basically separates some of the departments that are close together on dimension 2 (English and higher education) but unless we really think that distinction is crucial we may be able to get away with the simpler 2-d plot, especially as those departments are already pretty different on dimension 1.</p>
+</div>
+<div id="importance-of-rowscolumns" class="section level2 hasAnchor" number="12.6">
+<h2><span class="header-section-number">12.6</span> Importance of Rows/Columns<a href="ch12-Networks-Cultural-Spaces-CA-R.html#importance-of-rowscolumns" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>So far we have been examining the quality of the whole model. It will also be useful to assess the specific objects (departments and topics) in terms of their contribution to the fit for each dimension. This can help us in interpreting the dimensions of the space, by showing which rows/columns are most important in fitting a given dimension. Higher values mean that the row is more important in defining that dimension (i.e. the locations of other departments are based on the extreme location of the given department). We can get a handy plot that will sort from high to low on each dimension. The function is <code>fviv_contrib()</code>. The arguments are X (the CA object), choice (either "row" or "column") and axes (dimension of interest). Here we plot the contribution of each row for the first dimension. We also change the size and angle of the axis labels to make them easier to read (using ggplot functions).</p>
+<div class="sourceCode" id="cb1245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1245-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1245-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_contrib</span>(ca_mod1, <span class="at">choice =</span> <span class="st">&quot;row&quot;</span>, <span class="at">axes =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb1245-2"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1245-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fl">8.0</span>, <span class="at">angle =</span> <span class="dv">75</span>))</span></code></pre></div>
+<p><img src="Chapter12b_Integrated_Network_Science_Rtutorial_networks_culture_correspondence_analysis_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>The red line represents the expected value if all rows contributed equally to the dimension. We can see that the first dimension is defined primarily by history, political science and the psychology departments. Rows that contribute a lot to the fit tend to be far from the center on the dimension of interest; in this case history and political science on the far right and psychology on the far left. This is consistent with our interpretation from above. Let's look at dimension 2:</p>
+<div class="sourceCode" id="cb1246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1246-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1246-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_contrib</span>(ca_mod1, <span class="at">choice =</span> <span class="st">&quot;row&quot;</span>, <span class="at">axes =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb1246-2"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1246-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fl">8.0</span>, <span class="at">angle =</span> <span class="dv">75</span>)) </span></code></pre></div>
+<p><img src="Chapter12b_Integrated_Network_Science_Rtutorial_networks_culture_correspondence_analysis_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>And the same thing for the columns:</p>
+<div class="sourceCode" id="cb1247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1247-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1247-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_contrib</span>(ca_mod1, <span class="at">choice =</span> <span class="st">&quot;col&quot;</span>, <span class="at">axes =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb1247-2"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1247-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fl">8.0</span>, <span class="at">angle =</span> <span class="dv">75</span>)) </span></code></pre></div>
+<p><img src="Chapter12b_Integrated_Network_Science_Rtutorial_networks_culture_correspondence_analysis_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1248-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1248-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_contrib</span>(ca_mod1, <span class="at">choice =</span> <span class="st">&quot;col&quot;</span>, <span class="at">axes =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb1248-2"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1248-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fl">8.0</span>, <span class="at">angle =</span> <span class="dv">75</span>)) </span></code></pre></div>
+<p><img src="Chapter12b_Integrated_Network_Science_Rtutorial_networks_culture_correspondence_analysis_files/figure-html/unnamed-chunk-21-2.png" width="672" /></p>
+<p>Let’s plot the 2-dimensional solution again, but shade the labels by the contribution to the overall fit (summed over the first two dimensions). This is accomplished by setting col.row and col.col to “contrib”. We also include a <code>scale_color_gradient2()</code> function to set how the color scale should look.</p>
+<div class="sourceCode" id="cb1249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1249-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1249-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_ca_biplot</span>(ca_mod1, <span class="at">col.row =</span> <span class="st">&quot;contrib&quot;</span>, <span class="at">col.col =</span><span class="st">&quot;contrib&quot;</span>, </span>
+<span id="cb1249-2"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1249-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">labelsize =</span> <span class="dv">3</span>, <span class="at">repel =</span> T) <span class="sc">+</span> </span>
+<span id="cb1249-3"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1249-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_gradient2</span>(<span class="at">low =</span> <span class="st">&quot;white&quot;</span>, <span class="at">mid =</span> <span class="st">&quot;steelblue&quot;</span>, </span>
+<span id="cb1249-4"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1249-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">high =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="at">midpoint =</span> <span class="dv">8</span>) <span class="sc">+</span> </span>
+<span id="cb1249-5"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1249-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="Chapter12b_Integrated_Network_Science_Rtutorial_networks_culture_correspondence_analysis_files/figure-html/unnamed-chunk-22-1.png" width="1080" /></p>
+<p>Looking at our figure, it is worth thinking about what it means to be in the center of the plot compared to the extremes on one of the dimensions. For example, sociology (department) and gender_sexuality (topic) are in the center, while political science and social movements are not. This would suggest that sociology PhDs tend to take on dissertations that span many of the topics in the field. Similarly, this means that individuals from a wide variety of disciplines study gender. On the other hand, social movements is not studied by a wide variety of departments while those in political science tend not to study a large number of (sociological) topics, focused mainly on social movements. We thus have distinctions between central, generalist departments/topics and those that occupy more peripheral, niche locations.</p>
+</div>
+<div id="hierarchical-clustering" class="section level2 hasAnchor" number="12.7">
+<h2><span class="header-section-number">12.7</span> Hierarchical Clustering<a href="ch12-Networks-Cultural-Spaces-CA-R.html#hierarchical-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To aid in interpretation, it may be useful to cluster the departments and topics into distinct, structurally equivalent sets, where departments (or topics) that are close together in the space are placed in the same cluster (they are structurally equivalent in the sense of having the same pattern of topics). This can make it easier to talk through the results, as we can start to identify particular regions of the space, and not just the dimensions making up the space. Here we will make use of hierarchical clustering (see also <a href="ch10-Positions-Roles-R.html#ch10-Positions-Roles-R">Chapter 10</a>). We begin by calculating the distance matrix between objects, both topics and departments, based on the locations from the two dimensional solution. Let's first put locations for the departments and topics together into one data frame. We already have the locations for the departments, so let’s just grab the locations for the topics:</p>
+<div class="sourceCode" id="cb1250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1250-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1250-1" aria-hidden="true" tabindex="-1"></a>locs_topic <span class="ot">&lt;-</span> ca_mod1<span class="sc">$</span>col<span class="sc">$</span>coord</span></code></pre></div>
+<p>And now we stack them with the locations of the departments using a <code>rbind()</code> function:</p>
+<div class="sourceCode" id="cb1251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1251-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1251-1" aria-hidden="true" tabindex="-1"></a>locs <span class="ot">&lt;-</span> <span class="fu">rbind</span>(locs_department, locs_topic)</span></code></pre></div>
+<p>We just want the locations for the first two dimensions, so let’s subset the data.</p>
+<div class="sourceCode" id="cb1252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1252-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1252-1" aria-hidden="true" tabindex="-1"></a>locs <span class="ot">&lt;-</span> locs[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span></code></pre></div>
+<p>And now we create the distance matrix using the <code>dist()</code> function, setting the method to Euclidean. We will then fit a hierarchical clustering model to the distance matrix using <code>hclust()</code>:</p>
+<div class="sourceCode" id="cb1253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1253-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1253-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">dist</span>(locs, <span class="at">method =</span> <span class="st">&quot;euclidean&quot;</span>) </span>
+<span id="cb1253-2"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1253-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">hclust</span>(d, <span class="at">method =</span> <span class="st">&quot;ward.D2&quot;</span>) </span></code></pre></div>
+<p>We need to pick an optimal number of clusters before we can interpret the results. As in <a href="ch10-Positions-Roles-R.html#ch10-Positions-Roles-R">Chapter 10</a>, we can make use of the functions in the <strong>NbClust</strong> package to help us make a choice. The function is <code>NbClust()</code>. In this case we just include the distance matrix as the main inputs (set using diss). We set distance to NULL and tell R to use the silhouette index as the criterion (there are a number of other choices we could have made).</p>
+<div class="sourceCode" id="cb1254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1254-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1254-1" aria-hidden="true" tabindex="-1"></a>clusters <span class="ot">&lt;-</span> <span class="fu">NbClust</span>(<span class="at">data =</span> <span class="cn">NULL</span>, <span class="at">diss =</span> d, <span class="at">distance =</span> <span class="cn">NULL</span>,</span>
+<span id="cb1254-2"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1254-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">method =</span> <span class="st">&quot;ward.D2&quot;</span>, <span class="at">index =</span> <span class="fu">c</span>(<span class="st">&quot;silhouette&quot;</span>))  </span></code></pre></div>
+<div class="sourceCode" id="cb1255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1255-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1255-1" aria-hidden="true" tabindex="-1"></a>clusters<span class="sc">$</span>Best.nc</span></code></pre></div>
+<pre><code>## Number_clusters     Value_Index 
+##          8.0000          0.4649</code></pre>
+<p>Under this criterion the optimal solution has 8 clusters. The specific clusters can be found under: <code>clusters$Best.partition</code>.</p>
+<p>Note that both the topics and the departments are included in the same cluster, so it is a simultaneous clustering of rows/columns. Let's name the clusters in a useful way for the plot. Here we add the word cluster before the cluster number using a <code>paste()</code> function.</p>
+<div class="sourceCode" id="cb1257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1257-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1257-1" aria-hidden="true" tabindex="-1"></a>cluster_names <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;cluster&quot;</span>, clusters<span class="sc">$</span>Best.partition, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>) </span></code></pre></div>
+<p>And let's also put the department/topic names on the vector of clusters so we know what each value corresponds to.</p>
+<div class="sourceCode" id="cb1258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1258-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1258-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(cluster_names) <span class="ot">&lt;-</span> <span class="fu">names</span>(clusters<span class="sc">$</span>Best.partition)</span></code></pre></div>
+<p>And finally, let's split those out by rows and columns.</p>
+<div class="sourceCode" id="cb1259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1259-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1259-1" aria-hidden="true" tabindex="-1"></a>row_clusters <span class="ot">&lt;-</span> cluster_names[department_names]</span>
+<span id="cb1259-2"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1259-2" aria-hidden="true" tabindex="-1"></a>col_clusters <span class="ot">&lt;-</span> cluster_names[topic_names]</span></code></pre></div>
+<p>Now, let's go back and redo our 2-d plot but color the departments and topics by cluster.</p>
+<div class="sourceCode" id="cb1260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1260-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1260-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_ca_biplot</span>(ca_mod1, <span class="at">col.row =</span> row_clusters, <span class="at">col.col =</span> col_clusters, </span>
+<span id="cb1260-2"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1260-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">labelsize =</span> <span class="dv">3</span>, <span class="at">repel =</span> T) <span class="sc">+</span></span>
+<span id="cb1260-3"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1260-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="Chapter12b_Integrated_Network_Science_Rtutorial_networks_culture_correspondence_analysis_files/figure-html/unnamed-chunk-32-1.png" width="1080" /></p>
+<p>Our first impression is that the clusters align pretty well with the spatial layout. There are a few exceptions, where the department or topic is hard to fit (e.g., social theory or special education) but, on the whole, the clusters capture distinct regions of the larger field. We see an education cluster, a health cluster, a culture cluster, a psychology cluster and so on. In this way, we have two main dimensions (micro to macro; culture to stratification) but distinct regions (or niches) carved out within the larger space. These niches are constituted by both topic and department, so that a health cluster (cluster 4) is not merely the topic studied, but institutionally, the departments that tend to study it. Most illuminating from the cluster analysis, perhaps, is that the center of the figure splits into 2 clusters, divided between sets of 'core' sociology topics: first, we have a cluster including topics like gender and race/ethnicity (cluster 1); and second, we have a cluster containing topics like stratification and organizations (cluster 5).</p>
+<p>Note that the clustering solution above is based on clustering objects in a joint space, both row and column objects. It might, however, be preferred to cluster the rows and columns separately (e.g., because we do not want to try and interpret the distance between row and column objects). Here we can rely on the functions from the <strong>FactoMineR</strong> package. We will start by rerunning the correspondence analysis but set ncp to 2 (indicating that only the first 2 dimensions will be retained in the output). We do this to be consistent with the hierarchical clustering analysis done above.</p>
+<div class="sourceCode" id="cb1261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1261-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1261-1" aria-hidden="true" tabindex="-1"></a>ca_mod2 <span class="ot">&lt;-</span> <span class="fu">CA</span>(department_topic, <span class="at">ncp =</span> <span class="dv">2</span>, <span class="at">graph =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>We will now use a <code>HCPC()</code> function to cluster the departments and topics. In this analysis we will do this separately. We include the CA object as the main input (set using res). The nb.clust argument sets the number of clusters. Here we will set it at 8 to match the analysis above. We could also allow R to find the optimal number of clusters (by setting nb.clust = -1). We also tell R not to plot the results (the default). We set cluster.CA to "rows" to do the rows only.</p>
+<div class="sourceCode" id="cb1262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1262-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1262-1" aria-hidden="true" tabindex="-1"></a>clust_rows <span class="ot">&lt;-</span> <span class="fu">HCPC</span>(<span class="at">res =</span> ca_mod2, <span class="at">nb.clust =</span> <span class="dv">8</span>,  <span class="at">graph =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb1262-2"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1262-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">cluster.CA =</span> <span class="st">&quot;rows&quot;</span>)</span></code></pre></div>
+<p>And now for the columns:</p>
+<div class="sourceCode" id="cb1263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1263-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1263-1" aria-hidden="true" tabindex="-1"></a>clust_cols <span class="ot">&lt;-</span> <span class="fu">HCPC</span>(<span class="at">res =</span> ca_mod2, <span class="at">nb.clust =</span> <span class="dv">8</span>,  <span class="at">graph =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb1263-2"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1263-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">cluster.CA =</span> <span class="st">&quot;columns&quot;</span>)</span></code></pre></div>
+<p>Now we plot the correspondence analysis and color the departments by the found cluster. We set choice to "map" to get the factor map (based on the correspondence analysis). We set draw.tree to FALSE as we do not want to plot the hierarchical tree structure.</p>
+<div class="sourceCode" id="cb1264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1264-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1264-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(clust_rows, <span class="at">choice =</span> <span class="st">&quot;map&quot;</span>, <span class="at">draw.tree =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="Chapter12b_Integrated_Network_Science_Rtutorial_networks_culture_correspondence_analysis_files/figure-html/unnamed-chunk-36-1.png" width="1080" /></p>
+<p>It looks pretty similar to what we had before. We can check this by doing a table on the clusters found above (<code>row_clusters</code>) and the clusters found here. We need to make sure that the departments are in the same order as above, so the table is meaningful. Here we grab the <code>clust</code> variable and sort by <code>department_names</code>, before calculating our table.</p>
+<div class="sourceCode" id="cb1265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1265-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1265-1" aria-hidden="true" tabindex="-1"></a>row_clusters2 <span class="ot">&lt;-</span> clust_rows<span class="sc">$</span>data[department_names, <span class="st">&quot;clust&quot;</span>] </span></code></pre></div>
+<div class="sourceCode" id="cb1266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1266-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1266-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(row_clusters, row_clusters2)</span></code></pre></div>
+<pre><code>##             row_clusters2
+## row_clusters 1 2 3 4 5 6 7 8
+##     cluster1 0 0 0 4 0 0 0 0
+##     cluster2 3 0 0 0 0 0 0 0
+##     cluster3 0 0 0 0 0 0 0 2
+##     cluster4 0 3 0 0 0 0 0 0
+##     cluster5 0 0 0 0 3 0 0 0
+##     cluster6 0 0 0 0 0 3 0 0
+##     cluster7 0 0 5 0 0 0 0 0
+##     cluster8 0 0 0 0 0 0 2 0</code></pre>
+<p>We can see that while the labels are different, the departments are placed together in the same way (e.g., cluster 1 is now cluster 4 but the departments are the same). Overall, the results are identical between the two clustering solutions, so we can be confident in our results. We can also plot the column results.</p>
+<div class="sourceCode" id="cb1268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1268-1"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#cb1268-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(clust_cols, <span class="at">choice =</span> <span class="st">&quot;map&quot;</span>, <span class="at">draw.tree =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="Chapter12b_Integrated_Network_Science_Rtutorial_networks_culture_correspondence_analysis_files/figure-html/unnamed-chunk-39-1.png" width="1080" /></p>
+<p>In the end, we have a holistic representation of an academic field, here based on topics and departments, that can serve as a useful way of analyzing non-network data in a way that is consistent with network ideas. These kinds of analyses push us beyond what we may traditionally think of as the purview of network analysis (actors and the relationships between them) but the ideas of duality, niches, and position are widely applicable, offering important alternatives to traditional regression frameworks.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ch12-Networks-Structure-Culture-text-R.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ch13-Statistical-Models-Networks-R.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "serif",
+"size": 2.5
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"info": false
+});
+});
+</script>
+
+</body>
+
+</html>

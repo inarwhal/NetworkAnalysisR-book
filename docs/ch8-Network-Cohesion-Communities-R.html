@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>8 Network Cohesion and Communities | Network Analysis: Integrating Social Network Theory, Method, and Application with R</title>
+  <meta name="description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="8 Network Cohesion and Communities | Network Analysis: Integrating Social Network Theory, Method, and Application with R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="8 Network Cohesion and Communities | Network Analysis: Integrating Social Network Theory, Method, and Application with R" />
+  
+  <meta name="twitter:description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  
+
+<meta name="author" content="Craig Rawlings, Jeffrey A. Smith, James Moody, and Daniel McFarland" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ch7-Dyads-Triads-R.html"/>
+<link rel="next" href="ch9-Network-Centrality-Hierarchy-R.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/d3-4.5.0/d3.min.js"></script>
+<script src="libs/forceNetwork-binding-0.4/forceNetwork.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="https://inarwhal.github.io/NetworkAnalysisR-book/">
+Network Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#how-to-read-the-book"><i class="fa fa-check"></i><b>1.1</b> How to Read the Book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#citations-and-use"><i class="fa fa-check"></i><b>1.2</b> Citations and Use</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#updates-and-feedback"><i class="fa fa-check"></i><b>1.3</b> Updates and Feedback</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i><b>1.4</b> Acknowledgments</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#author-informtion"><i class="fa fa-check"></i><b>1.5</b> Author Informtion</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#session-information"><i class="fa fa-check"></i><b>1.6</b> Session Information</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html"><i class="fa fa-check"></i><b>2</b> Basic Introduction to R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html#preliminaries"><i class="fa fa-check"></i><b>2.1</b> Preliminaries</a></li>
+<li class="chapter" data-level="2.2" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html#packages"><i class="fa fa-check"></i><b>2.2</b> Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ch3-Network-Data-R.html"><a href="ch3-Network-Data-R.html"><i class="fa fa-check"></i><b>3</b> Network Data</a></li>
+<li class="chapter" data-level="" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html"><i class="fa fa-check"></i>3, Part 1. Cross-Sectional Network Data</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#reading-data-into-r"><i class="fa fa-check"></i><b>3.1</b> Reading Data into R</a></li>
+<li class="chapter" data-level="3.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#networks-in-igraph"><i class="fa fa-check"></i><b>3.2</b> Networks in igraph</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-a-matrix-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.1</b> Using a Matrix to Construct the Network</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-edgelist-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.2</b> Using an Edgelist to Construct the Network</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#extracting-information-from-igraph-objects"><i class="fa fa-check"></i><b>3.2.3</b> Extracting Information from igraph Objects</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-adjacency-list-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.4</b> Using an Adjacency List to Construct the Network</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-the-network-package"><i class="fa fa-check"></i><b>3.3</b> Using the network Package</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-a-matrix-to-construct-the-network-1"><i class="fa fa-check"></i><b>3.3.1</b> Using a Matrix to Construct the Network</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-edgelist-to-construct-the-network-1"><i class="fa fa-check"></i><b>3.3.2</b> Using an Edgelist to Construct the Network</a></li>
+<li class="chapter" data-level="3.3.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#putting-edge-attributes-onto-the-network"><i class="fa fa-check"></i><b>3.3.3</b> Putting Edge Attributes onto the Network</a></li>
+<li class="chapter" data-level="3.3.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#moving-between-igraph-and-network-objects"><i class="fa fa-check"></i><b>3.3.4</b> Moving between igraph and network Objects</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#some-key-network-measures"><i class="fa fa-check"></i><b>3.4</b> Some Key Network Measures</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#degree"><i class="fa fa-check"></i><b>3.4.1</b> Degree</a></li>
+<li class="chapter" data-level="3.4.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#density"><i class="fa fa-check"></i><b>3.4.2</b> Density</a></li>
+<li class="chapter" data-level="3.4.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#walks"><i class="fa fa-check"></i><b>3.4.3</b> Walks</a></li>
+<li class="chapter" data-level="3.4.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#paths-distance-and-closeness"><i class="fa fa-check"></i><b>3.4.4</b> Paths, Distance, and Closeness</a></li>
+<li class="chapter" data-level="3.4.5" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#reachability"><i class="fa fa-check"></i><b>3.4.5</b> Reachability</a></li>
+<li class="chapter" data-level="3.4.6" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#diameter"><i class="fa fa-check"></i><b>3.4.6</b> Diameter</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html"><i class="fa fa-check"></i>3, Part 2. Dynamic Network Data</a>
+<ul>
+<li class="chapter" data-level="3.5" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#discrete-longitudinal-networks"><i class="fa fa-check"></i><b>3.5</b> Discrete Longitudinal Networks</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#getting-the-data-ready"><i class="fa fa-check"></i><b>3.5.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="3.5.2" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#constructing-networkdynamic-objects"><i class="fa fa-check"></i><b>3.5.2</b> Constructing networkDynamic Objects</a></li>
+<li class="chapter" data-level="3.5.3" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#summary-statistics"><i class="fa fa-check"></i><b>3.5.3</b> Summary Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#continuous-time-networks"><i class="fa fa-check"></i><b>3.6</b> Continuous-Time Networks</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#getting-the-data-ready-1"><i class="fa fa-check"></i><b>3.6.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="3.6.2" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#constructing-networkdynamic-objects-1"><i class="fa fa-check"></i><b>3.6.2</b> Constructing networkDynamic Objects</a></li>
+<li class="chapter" data-level="3.6.3" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#summary-statistics-1"><i class="fa fa-check"></i><b>3.6.3</b> Summary Statistics</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html"><i class="fa fa-check"></i><b>4</b> Missing Network Data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#missing-data"><i class="fa fa-check"></i><b>4.1</b> Missing Data</a></li>
+<li class="chapter" data-level="4.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#listwise-deletion"><i class="fa fa-check"></i><b>4.2</b> Listwise Deletion</a></li>
+<li class="chapter" data-level="4.3" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-the-level-of-bias"><i class="fa fa-check"></i><b>4.3</b> Gauging the Level of Bias</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-bias-using-past-results"><i class="fa fa-check"></i><b>4.3.1</b> Gauging Bias Using Past Results</a></li>
+<li class="chapter" data-level="4.3.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-bias-using-predictive-models"><i class="fa fa-check"></i><b>4.3.2</b> Gauging Bias Using Predictive Models</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-options"><i class="fa fa-check"></i><b>4.4</b> Simple Imputation Options</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-asymmetric-option"><i class="fa fa-check"></i><b>4.4.1</b> Simple Imputation with Asymmetric Option</a></li>
+<li class="chapter" data-level="4.4.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-symmetric-option"><i class="fa fa-check"></i><b>4.4.2</b> Simple Imputation with Symmetric Option</a></li>
+<li class="chapter" data-level="4.4.3" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-probabilistic-option"><i class="fa fa-check"></i><b>4.4.3</b> Simple Imputation with Probabilistic Option</a></li>
+<li class="chapter" data-level="4.4.4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#comparing-estimates"><i class="fa fa-check"></i><b>4.4.4</b> Comparing Estimates</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html"><i class="fa fa-check"></i><b>5</b> Network Visualization</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#setting-up-the-session"><i class="fa fa-check"></i><b>5.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="5.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#network-plots-using-igraph"><i class="fa fa-check"></i><b>5.2</b> Network Plots using igraph</a></li>
+<li class="chapter" data-level="5.3" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#network-plots-based-on-ggplot"><i class="fa fa-check"></i><b>5.3</b> Network Plots based on ggplot</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#ggally-package"><i class="fa fa-check"></i><b>5.3.1</b> GGally package</a></li>
+<li class="chapter" data-level="5.3.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#ggnetwork-package"><i class="fa fa-check"></i><b>5.3.2</b> ggnetwork package</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#contour-plots"><i class="fa fa-check"></i><b>5.4</b> Contour Plots</a></li>
+<li class="chapter" data-level="5.5" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#interactive-plots"><i class="fa fa-check"></i><b>5.5</b> Interactive Plots</a></li>
+<li class="chapter" data-level="5.6" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#dynamic-network-visualizations"><i class="fa fa-check"></i><b>5.6</b> Dynamic Network Visualizations</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#getting-the-data-ready-2"><i class="fa fa-check"></i><b>5.6.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="5.6.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#time-flattened-visualizations"><i class="fa fa-check"></i><b>5.6.2</b> Time Flattened Visualizations</a></li>
+<li class="chapter" data-level="5.6.3" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#dynamic-network-movies"><i class="fa fa-check"></i><b>5.6.3</b> Dynamic Network Movies</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html"><i class="fa fa-check"></i><b>6</b> Ego Network Data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#working-with-ego-network-data"><i class="fa fa-check"></i><b>6.1</b> Working with Ego Network Data</a></li>
+<li class="chapter" data-level="6.2" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#plotting-networks"><i class="fa fa-check"></i><b>6.2</b> Plotting Networks</a></li>
+<li class="chapter" data-level="6.3" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#homophily-ego-alter-attributes"><i class="fa fa-check"></i><b>6.3</b> Homophily: Ego-Alter Attributes</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#proportion-of-alters-matching-ego"><i class="fa fa-check"></i><b>6.3.1</b> Proportion of Alters Matching Ego</a></li>
+<li class="chapter" data-level="6.3.2" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#analyzing-homophily-at-the-dyadic-level-ego-alter-pairs"><i class="fa fa-check"></i><b>6.3.2</b> Analyzing Homophily at the Dyadic Level: Ego-Alter Pairs</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#homophily-alter-attributes"><i class="fa fa-check"></i><b>6.4</b> Homophily: Alter Attributes</a></li>
+<li class="chapter" data-level="6.5" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#ego-networks-as-predictors"><i class="fa fa-check"></i><b>6.5</b> Ego Networks as Predictors</a></li>
+<li class="chapter" data-level="6.6" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#working-with-one-input-file"><i class="fa fa-check"></i><b>6.6</b> Working with One Input File</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html"><i class="fa fa-check"></i><b>7</b> Dyads and Triads</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#setting-up-the-session-1"><i class="fa fa-check"></i><b>7.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="7.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyadic-processes"><i class="fa fa-check"></i><b>7.2</b> Dyadic Processes</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyad-census-and-reciprocity"><i class="fa fa-check"></i><b>7.2.1</b> Dyad Census and Reciprocity</a></li>
+<li class="chapter" data-level="7.2.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#conditional-uniform-graph-tests"><i class="fa fa-check"></i><b>7.2.2</b> Conditional Uniform Graph Tests</a></li>
+<li class="chapter" data-level="7.2.3" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyad-census-by-attributes-of-nodes"><i class="fa fa-check"></i><b>7.2.3</b> Dyad Census by Attributes of Nodes</a></li>
+<li class="chapter" data-level="7.2.4" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#advice-and-friendship-together"><i class="fa fa-check"></i><b>7.2.4</b> Advice and Friendship Together</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#triadic-processes"><i class="fa fa-check"></i><b>7.3</b> Triadic Processes</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#triad-census"><i class="fa fa-check"></i><b>7.3.1</b> Triad Census</a></li>
+<li class="chapter" data-level="7.3.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#transitivity"><i class="fa fa-check"></i><b>7.3.2</b> Transitivity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html"><i class="fa fa-check"></i><b>8</b> Network Cohesion and Communities</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#first-example-network"><i class="fa fa-check"></i><b>8.1</b> First Example Network</a></li>
+<li class="chapter" data-level="8.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#cohesion"><i class="fa fa-check"></i><b>8.2</b> Cohesion</a></li>
+<li class="chapter" data-level="8.3" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#community-or-group-detection"><i class="fa fa-check"></i><b>8.3</b> Community (or Group) Detection</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#walktrap"><i class="fa fa-check"></i><b>8.3.1</b> Walktrap</a></li>
+<li class="chapter" data-level="8.3.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#edge-betweenness"><i class="fa fa-check"></i><b>8.3.2</b> Edge Betweenness</a></li>
+<li class="chapter" data-level="8.3.3" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#scree-plots"><i class="fa fa-check"></i><b>8.3.3</b> Scree Plots</a></li>
+<li class="chapter" data-level="8.3.4" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#multi-level-clustering"><i class="fa fa-check"></i><b>8.3.4</b> Multi-level Clustering</a></li>
+<li class="chapter" data-level="8.3.5" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#cohesive-blocking"><i class="fa fa-check"></i><b>8.3.5</b> Cohesive Blocking</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#demographic-characteristics"><i class="fa fa-check"></i><b>8.4</b> Demographic Characteristics</a></li>
+<li class="chapter" data-level="8.5" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#community-overlap"><i class="fa fa-check"></i><b>8.5</b> Community Overlap</a></li>
+<li class="chapter" data-level="8.6" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#big-data-example"><i class="fa fa-check"></i><b>8.6</b> Big Data Example</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#multi-level-clustering-1"><i class="fa fa-check"></i><b>8.6.1</b> Multi-level Clustering</a></li>
+<li class="chapter" data-level="8.6.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#looking-at-the-community-structure-within-the-initial-communities"><i class="fa fa-check"></i><b>8.6.2</b> Looking at the Community Structure within the Initial Communities</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html"><i class="fa fa-check"></i><b>9</b> Network Centrality and Hierarchy</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#setting-up-the-session-2"><i class="fa fa-check"></i><b>9.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="9.2" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality"><i class="fa fa-check"></i><b>9.2</b> Centrality</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality-measures-for-social-interactions"><i class="fa fa-check"></i><b>9.2.1</b> Centrality Measures for Social Interactions</a></li>
+<li class="chapter" data-level="9.2.2" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#correlations-between-centrality-measures"><i class="fa fa-check"></i><b>9.2.2</b> Correlations between Centrality Measures</a></li>
+<li class="chapter" data-level="9.2.3" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality-for-task-interactions"><i class="fa fa-check"></i><b>9.2.3</b> Centrality for Task Interactions</a></li>
+<li class="chapter" data-level="9.2.4" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#tasksocial-correlations"><i class="fa fa-check"></i><b>9.2.4</b> Task/Social Correlations</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centralization"><i class="fa fa-check"></i><b>9.3</b> Centralization</a></li>
+<li class="chapter" data-level="9.4" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#clustering-and-hierarchy"><i class="fa fa-check"></i><b>9.4</b> Clustering and Hierarchy</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html"><i class="fa fa-check"></i><b>10</b> Positions and Roles</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#classroom-network-data"><i class="fa fa-check"></i><b>10.1</b> Classroom Network Data</a></li>
+<li class="chapter" data-level="10.2" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#getting-the-data-ready-3"><i class="fa fa-check"></i><b>10.2</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="10.3" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#structural-equivalence"><i class="fa fa-check"></i><b>10.3</b> Structural Equivalence</a></li>
+<li class="chapter" data-level="10.4" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#defining-positions"><i class="fa fa-check"></i><b>10.4</b> Defining Positions</a></li>
+<li class="chapter" data-level="10.5" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#role-analysis"><i class="fa fa-check"></i><b>10.5</b> Role Analysis</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#permuting-the-matrix-by-position"><i class="fa fa-check"></i><b>10.5.1</b> Permuting the Matrix by Position</a></li>
+<li class="chapter" data-level="10.5.2" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#constructing-a-blockmodel"><i class="fa fa-check"></i><b>10.5.2</b> Constructing a Blockmodel</a></li>
+<li class="chapter" data-level="10.5.3" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#plotting-a-blockmodel"><i class="fa fa-check"></i><b>10.5.3</b> Plotting a Blockmodel</a></li>
+<li class="chapter" data-level="10.5.4" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#interpretation-of-blockmodel"><i class="fa fa-check"></i><b>10.5.4</b> Interpretation of Blockmodel</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#local-equivalence"><i class="fa fa-check"></i><b>10.6</b> Local Equivalence</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html"><i class="fa fa-check"></i><b>11</b> Two-mode Networks: Affilitations and Dualities</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#example-affiliation-data"><i class="fa fa-check"></i><b>11.1</b> Example Affiliation Data</a></li>
+<li class="chapter" data-level="11.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#plotting-the-network"><i class="fa fa-check"></i><b>11.2</b> Plotting the Network</a></li>
+<li class="chapter" data-level="11.3" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#single-mode-networks"><i class="fa fa-check"></i><b>11.3</b> Single Mode Networks</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#constructing-one-mode-projections"><i class="fa fa-check"></i><b>11.3.1</b> Constructing One-Mode Projections</a></li>
+<li class="chapter" data-level="11.3.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#plotting-one-mode-projections"><i class="fa fa-check"></i><b>11.3.2</b> Plotting One-Mode Projections</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#club-to-club-network"><i class="fa fa-check"></i><b>11.4</b> Club-to-Club Network</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#centrality-1"><i class="fa fa-check"></i><b>11.4.1</b> Centrality</a></li>
+<li class="chapter" data-level="11.4.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#groups"><i class="fa fa-check"></i><b>11.4.2</b> Groups</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#using-the-tnet-package"><i class="fa fa-check"></i><b>11.5</b> Using the tnet package</a></li>
+<li class="chapter" data-level="11.6" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#racial-segregation"><i class="fa fa-check"></i><b>11.6</b> Racial Segregation</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#proportion-of-co-membership-edges-where-students-match-on-race"><i class="fa fa-check"></i><b>11.6.1</b> Proportion of Co-membership Edges where Students Match on Race</a></li>
+<li class="chapter" data-level="11.6.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#do-students-match-racially-with-at-least-one-other-student"><i class="fa fa-check"></i><b>11.6.2</b> Do Students Match Racially with at Least One Other Student?</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#club-centrality-and-attributes"><i class="fa fa-check"></i><b>11.7</b> Club Centrality and Attributes</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="ch12-Networks-Culture-R.html"><a href="ch12-Networks-Culture-R.html"><i class="fa fa-check"></i><b>12</b> Networks and Culture</a></li>
+<li class="chapter" data-level="" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html"><i class="fa fa-check"></i>12, Part 1. Cultural Structures</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#getting-the-data-ready-4"><i class="fa fa-check"></i><b>12.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="12.2" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#topic-modeling"><i class="fa fa-check"></i><b>12.2</b> Topic Modeling</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#lda-initial-model"><i class="fa fa-check"></i><b>12.2.1</b> LDA: Initial Model</a></li>
+<li class="chapter" data-level="12.2.2" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#lda-picking-the-number-of-topics"><i class="fa fa-check"></i><b>12.2.2</b> LDA: Picking the Number of Topics</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#a-network-representation"><i class="fa fa-check"></i><b>12.3</b> A Network Representation</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html"><i class="fa fa-check"></i>12, Part 2. Cultural Spaces</a>
+<ul>
+<li class="chapter" data-level="12.4" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#correspondence-analysis"><i class="fa fa-check"></i><b>12.4</b> Correspondence Analysis</a></li>
+<li class="chapter" data-level="12.5" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#number-of-dimensions"><i class="fa fa-check"></i><b>12.5</b> Number of Dimensions</a></li>
+<li class="chapter" data-level="12.6" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#importance-of-rowscolumns"><i class="fa fa-check"></i><b>12.6</b> Importance of Rows/Columns</a></li>
+<li class="chapter" data-level="12.7" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#hierarchical-clustering"><i class="fa fa-check"></i><b>12.7</b> Hierarchical Clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="ch13-Statistical-Models-Networks-R.html"><a href="ch13-Statistical-Models-Networks-R.html"><i class="fa fa-check"></i><b>13</b> Statistical Models for Networks</a></li>
+<li class="chapter" data-level="" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><i class="fa fa-check"></i>13, Part 1. Cross-Sectional Network Models: ERGM</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#setting-up-the-session-3"><i class="fa fa-check"></i><b>13.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="13.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#descriptive-statistics"><i class="fa fa-check"></i><b>13.2</b> Descriptive Statistics</a></li>
+<li class="chapter" data-level="13.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#cug-tests"><i class="fa fa-check"></i><b>13.3</b> CUG Tests</a></li>
+<li class="chapter" data-level="13.4" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#fitting-an-ergm"><i class="fa fa-check"></i><b>13.4</b> Fitting an ERGM</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-only"><i class="fa fa-check"></i><b>13.4.1</b> Edges Only</a></li>
+<li class="chapter" data-level="13.4.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-and-homophily"><i class="fa fa-check"></i><b>13.4.2</b> Edges and Homophily</a></li>
+<li class="chapter" data-level="13.4.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-homophily-and-node-covariates"><i class="fa fa-check"></i><b>13.4.3</b> Edges, Homophily, and Node Covariates</a></li>
+<li class="chapter" data-level="13.4.4" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-homophily-node-covariates-and-reciprocity"><i class="fa fa-check"></i><b>13.4.4</b> Edges, Homophily, Node Covariates, and Reciprocity</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#checking-model-convergence"><i class="fa fa-check"></i><b>13.5</b> Checking Model Convergence</a></li>
+<li class="chapter" data-level="13.6" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#goodness-of-fit"><i class="fa fa-check"></i><b>13.6</b> Goodness of Fit</a></li>
+<li class="chapter" data-level="13.7" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#adding-gwesp-to-the-model"><i class="fa fa-check"></i><b>13.7</b> Adding GWESP to the Model</a></li>
+<li class="chapter" data-level="13.8" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#simulation"><i class="fa fa-check"></i><b>13.8</b> Simulation</a></li>
+<li class="chapter" data-level="13.9" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#example-on-a-large-network"><i class="fa fa-check"></i><b>13.9</b> Example on a Large Network</a></li>
+<li class="chapter" data-level="13.10" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#ergm-on-a-valued-network"><i class="fa fa-check"></i><b>13.10</b> ERGM on a Valued Network</a>
+<ul>
+<li class="chapter" data-level="13.10.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#baseline-ergm-on-valued-network"><i class="fa fa-check"></i><b>13.10.1</b> Baseline ERGM on Valued Network</a></li>
+<li class="chapter" data-level="13.10.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#adding-nodematch-and-nodefactor-terms"><i class="fa fa-check"></i><b>13.10.2</b> Adding Nodematch and Nodefactor Terms</a></li>
+<li class="chapter" data-level="13.10.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#transitivity-in-valued-networks"><i class="fa fa-check"></i><b>13.10.3</b> Transitivity in Valued Networks</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html"><i class="fa fa-check"></i>13, Part 2. Longitudinal Network Models: STERGM</a>
+<ul>
+<li class="chapter" data-level="13.11" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#getting-the-data-ready-5"><i class="fa fa-check"></i><b>13.11</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="13.12" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#stergms"><i class="fa fa-check"></i><b>13.12</b> STERGMs</a>
+<ul>
+<li class="chapter" data-level="13.12.1" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-1-just-edges"><i class="fa fa-check"></i><b>13.12.1</b> Model 1: Just Edges</a></li>
+<li class="chapter" data-level="13.12.2" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-2-edges-homophily-and-nodefactor"><i class="fa fa-check"></i><b>13.12.2</b> Model 2: Edges, Homophily and Nodefactor</a></li>
+<li class="chapter" data-level="13.12.3" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-3-edges-nodefactor-and-seating"><i class="fa fa-check"></i><b>13.12.3</b> Model 3: Edges, Nodefactor, and Seating</a></li>
+<li class="chapter" data-level="13.12.4" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-4-adding-gwesp-to-the-model"><i class="fa fa-check"></i><b>13.12.4</b> Model 4: Adding GWESP to the Model</a></li>
+</ul></li>
+<li class="chapter" data-level="13.13" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#checking-model-fit"><i class="fa fa-check"></i><b>13.13</b> Checking Model Fit</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><i class="fa fa-check"></i>13, Part 3. Two-mode Network Models</a>
+<ul>
+<li class="chapter" data-level="13.14" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#affiliation-data"><i class="fa fa-check"></i><b>13.14</b> Affiliation Data</a></li>
+<li class="chapter" data-level="13.15" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#ergm-on-a-two-mode-network"><i class="fa fa-check"></i><b>13.15</b> ERGM on a Two-mode Network</a>
+<ul>
+<li class="chapter" data-level="13.15.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#edges"><i class="fa fa-check"></i><b>13.15.1</b> Edges</a></li>
+<li class="chapter" data-level="13.15.2" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#adjusting-for-structural-issues-gender-and-grade-specific-clubs"><i class="fa fa-check"></i><b>13.15.2</b> Adjusting for Structural Issues: Gender and Grade Specific Clubs</a></li>
+</ul></li>
+<li class="chapter" data-level="13.16" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#second-mode-terms"><i class="fa fa-check"></i><b>13.16</b> Second Mode Terms</a>
+<ul>
+<li class="chapter" data-level="13.16.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#nodefactor"><i class="fa fa-check"></i><b>13.16.1</b> Nodefactor</a></li>
+<li class="chapter" data-level="13.16.2" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#homophily"><i class="fa fa-check"></i><b>13.16.2</b> Homophily</a></li>
+</ul></li>
+<li class="chapter" data-level="13.17" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#first-mode-terms"><i class="fa fa-check"></i><b>13.17</b> First Mode Terms</a></li>
+<li class="chapter" data-level="13.18" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#clustering"><i class="fa fa-check"></i><b>13.18</b> Clustering</a></li>
+<li class="chapter" data-level="13.19" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#two-mode-longitudinal-networks"><i class="fa fa-check"></i><b>13.19</b> Two-mode Longitudinal Networks</a>
+<ul>
+<li class="chapter" data-level="13.19.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#entry-and-exit-of-nodes"><i class="fa fa-check"></i><b>13.19.1</b> Entry and Exit of Nodes</a></li>
+</ul></li>
+<li class="chapter" data-level="13.20" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#stergm-on-a-two-mode-network"><i class="fa fa-check"></i><b>13.20</b> STERGM on a Two-mode Network</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html"><i class="fa fa-check"></i>13, Part 4. Relational Event Models</a>
+<ul>
+<li class="chapter" data-level="13.21" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#getting-the-data-ready-6"><i class="fa fa-check"></i><b>13.21</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="13.22" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#running-initial-models"><i class="fa fa-check"></i><b>13.22</b> Running Initial Models</a>
+<ul>
+<li class="chapter" data-level="13.22.1" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#intercept-only-model"><i class="fa fa-check"></i><b>13.22.1</b> Intercept Only Model</a></li>
+<li class="chapter" data-level="13.22.2" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#adding-sender-and-receiver-effects"><i class="fa fa-check"></i><b>13.22.2</b> Adding Sender and Receiver Effects</a></li>
+<li class="chapter" data-level="13.22.3" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#adding-covariate-event-terms"><i class="fa fa-check"></i><b>13.22.3</b> Adding Covariate Event Terms</a></li>
+</ul></li>
+<li class="chapter" data-level="13.23" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#micro-rules-of-interaction"><i class="fa fa-check"></i><b>13.23</b> Micro Rules of Interaction</a></li>
+<li class="chapter" data-level="13.24" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#assessing-model-fit"><i class="fa fa-check"></i><b>13.24</b> Assessing Model Fit</a></li>
+<li class="chapter" data-level="13.25" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#comparison-to-a-second-date"><i class="fa fa-check"></i><b>13.25</b> Comparison to a Second Date</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="ch14-Network-Diffusion-R.html"><a href="ch14-Network-Diffusion-R.html"><i class="fa fa-check"></i><b>14</b> Network Diffusion</a></li>
+<li class="chapter" data-level="" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html"><i class="fa fa-check"></i>14, Part 1. Network Diffusion: Infectious Diseases</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#reading-in-data"><i class="fa fa-check"></i><b>14.1</b> Reading in Data</a></li>
+<li class="chapter" data-level="14.2" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#specifying-the-network-model"><i class="fa fa-check"></i><b>14.2</b> Specifying the Network Model</a></li>
+<li class="chapter" data-level="14.3" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#estimating-the-network-model"><i class="fa fa-check"></i><b>14.3</b> Estimating the Network Model</a></li>
+<li class="chapter" data-level="14.4" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#specifying-the-epidemic-model"><i class="fa fa-check"></i><b>14.4</b> Specifying the Epidemic Model</a></li>
+<li class="chapter" data-level="14.5" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#running-simulations"><i class="fa fa-check"></i><b>14.5</b> Running Simulations</a>
+<ul>
+<li class="chapter" data-level="14.5.1" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#running-baseline-model"><i class="fa fa-check"></i><b>14.5.1</b> Running Baseline Model</a></li>
+<li class="chapter" data-level="14.5.2" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#varying-network-features"><i class="fa fa-check"></i><b>14.5.2</b> Varying Network Features</a></li>
+<li class="chapter" data-level="14.5.3" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#varying-epidemic-model"><i class="fa fa-check"></i><b>14.5.3</b> Varying Epidemic Model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html"><i class="fa fa-check"></i>14, Part 2. Social Diffusion Processes</a>
+<ul>
+<li class="chapter" data-level="14.6" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#setting-up-the-session-4"><i class="fa fa-check"></i><b>14.6</b> Setting up the Session</a></li>
+<li class="chapter" data-level="14.7" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simple-diffusion-models"><i class="fa fa-check"></i><b>14.7</b> Simple Diffusion Models</a></li>
+<li class="chapter" data-level="14.8" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#threshold-models-of-diffusion"><i class="fa fa-check"></i><b>14.8</b> Threshold Models of Diffusion</a>
+<ul>
+<li class="chapter" data-level="14.8.1" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simulating-diffusion-processes-using-the-netdiffuser-package"><i class="fa fa-check"></i><b>14.8.1</b> Simulating Diffusion Processes using the netdiffuseR Package</a></li>
+<li class="chapter" data-level="14.8.2" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#comparing-diffusion-under-different-network-and-adoption-behavior-conditions"><i class="fa fa-check"></i><b>14.8.2</b> Comparing Diffusion under Different Network and Adoption Behavior Conditions</a></li>
+<li class="chapter" data-level="14.8.3" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simulations-using-multiple-runs"><i class="fa fa-check"></i><b>14.8.3</b> Simulations using Multiple Runs</a></li>
+</ul></li>
+<li class="chapter" data-level="14.9" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#working-with-empirical-data"><i class="fa fa-check"></i><b>14.9</b> Working with Empirical Data</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html"><i class="fa fa-check"></i><b>15</b> Social Influence: Coevolution of Networks and Behaviors</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#reading-in-classroom-data"><i class="fa fa-check"></i><b>15.1</b> Reading in Classroom Data</a></li>
+<li class="chapter" data-level="15.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#siena-model-setup"><i class="fa fa-check"></i><b>15.2</b> SIENA Model Setup</a></li>
+<li class="chapter" data-level="15.3" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification"><i class="fa fa-check"></i><b>15.3</b> Model Specification</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-behavioral-model"><i class="fa fa-check"></i><b>15.3.1</b> Model Specification: Behavioral Model</a></li>
+<li class="chapter" data-level="15.3.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-network-model"><i class="fa fa-check"></i><b>15.3.2</b> Model Specification: Network Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-estimation"><i class="fa fa-check"></i><b>15.4</b> Model Estimation</a></li>
+<li class="chapter" data-level="15.5" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpretation"><i class="fa fa-check"></i><b>15.5</b> Interpretation</a>
+<ul>
+<li class="chapter" data-level="15.5.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpreting-network-model"><i class="fa fa-check"></i><b>15.5.1</b> Interpreting Network Model</a></li>
+<li class="chapter" data-level="15.5.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpreting-behavioral-model"><i class="fa fa-check"></i><b>15.5.2</b> Interpreting Behavioral Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.6" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#checking-model-fit-1"><i class="fa fa-check"></i><b>15.6</b> Checking Model Fit</a></li>
+<li class="chapter" data-level="15.7" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#example-with-3-time-periods"><i class="fa fa-check"></i><b>15.7</b> Example with 3 Time Periods</a>
+<ul>
+<li class="chapter" data-level="15.7.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-and-estimation"><i class="fa fa-check"></i><b>15.7.1</b> Model Specification and Estimation</a></li>
+<li class="chapter" data-level="15.7.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#time-heterogeneity"><i class="fa fa-check"></i><b>15.7.2</b> Time Heterogeneity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="how-to-cite.html"><a href="how-to-cite.html"><i class="fa fa-check"></i>How to Cite</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Network Analysis: Integrating Social Network Theory, Method, and Application with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ch8-Network-Cohesion-Communities-R" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">8</span> Network Cohesion and Communities<a href="ch8-Network-Cohesion-Communities-R.html#ch8-Network-Cohesion-Communities-R" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In this tutorial we will offer an extended example in R on cohesion and communities (or groups). We will first examine cohesion, capturing how robust the network is to being fragmented. We will then cover community structure, capturing which sets of actors form a group (in the sense that they have high rates of interaction, are close in the network, etc.). The tutorial will build on material from previous chapters, most directly from the tutorial on basic network measurement. We will utilize two example networks in our analysis. The first example comes from adolescent data collected by Daniel McFarland on the different kinds of interactions occurring in one classroom. This network is small, with only 16 actors. The second example will take up the problem of analyzing a much larger network, here an email network of over 200,000 nodes. This second example is included as a means of demonstrating some of the added complications of dealing with 'big' data, as well as to offer some suggestion on best practices when analyzing such networks.</p>
+<p>The classroom example is motivated by two main substantive questions. First, is the classroom network cohesive, or the does the network strongly split into local communities (or groups), with few ties between communities? This a crucial question if, for example, we are interested in the maintenance of norms in the classroom. Do we find two divided communities that are unlikely to agree on things? Or is there the possibility of general consensus, given the connections between communities? Our second question focuses on the composition of the communities themselves, focusing specifically on racial identity. Do we find distinct communities that correspond to racial identity (a ‘white’ group and a ‘black’ group) or are things more complicated? Putting these questions together, we want to know something about the potential for consensus and solidarity in the classroom and we want to know if the threats to consensus are tied to racial divides.</p>
+<div id="first-example-network" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> First Example Network<a href="ch8-Network-Cohesion-Communities-R.html#first-example-network" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For this session we will work primarily with the <strong>igraph</strong> package. We will also load <strong>ggplot2</strong>.</p>
+<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb588-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb588-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb588-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<p>Let's first read in the classroom network data (from a URL) and take a look at the first six rows:</p>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb589-1" aria-hidden="true" tabindex="-1"></a>url1 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/class182_networkdata.csv&quot;</span></span>
+<span id="cb589-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb589-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb589-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb589-3" aria-hidden="true" tabindex="-1"></a>class182_networkdata <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> url1)</span></code></pre></div>
+<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb590-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(class182_networkdata) </span></code></pre></div>
+<pre><code>##   ego alter friend_tie social_tie task_tie
+## 1   1     1          0        0.0      0.0
+## 2   1     2          0        0.0      0.0
+## 3   1     3          0        0.0      0.0
+## 4   1     4          0        0.0      0.0
+## 5   1     5          0        1.2      0.3
+## 6   1     6          0        0.0      0.0</code></pre>
+<p>The data frame holds information for each dyad in the classroom showing information for three relations: friendship, social interactions and task interactions. The first column is the ego, the second column is the alter, and the third, fourth and fifth columns are values, greater than or equal to zero, showing the strength of the association for the two nodes. Friendship is measured as: 2 = best friend, 1 = friend, 0 = not friend. Social interaction is measured as social interactions per hour. Task interaction is measured as task interactions per hour. Here we will utilize the friendship data. Let's also read in the attribute file.</p>
+<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb592-1" aria-hidden="true" tabindex="-1"></a>url2 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/class182_attributedata.csv&quot;</span></span>
+<span id="cb592-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb592-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb592-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb592-3" aria-hidden="true" tabindex="-1"></a>class182_attributes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> url2)</span></code></pre></div>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb593-1" aria-hidden="true" tabindex="-1"></a>class182_attributes</span></code></pre></div>
+<pre><code>##    ids  race grade gender
+## 1    1 white    10   male
+## 2    2 black    10 female
+## 3    3 white    10 female
+## 4    4 white    11 female
+## 5    5 white    10   male
+## 6    6 white    10 female
+## 7    7 black    10 female
+## 8    8 black    10 female
+## 9    9 white    10 female
+## 10  10 black    11   male
+## 11  11 white    10   male
+## 12  12 black    11 female
+## 13  13 white    10 female
+## 14  14 black    10 female
+## 15  15 black    10 female
+## 16  16 black    13   male</code></pre>
+<p>We have information on race, grade and gender for each student in the classroom. Let's create an edgelist based on the friendship relation. Here we will define an edge as any case where the friendship value is greater than 0.</p>
+<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb595-1" aria-hidden="true" tabindex="-1"></a>edge_value <span class="ot">&lt;-</span> class182_networkdata<span class="sc">$</span>friend_tie</span>
+<span id="cb595-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb595-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb595-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb595-3" aria-hidden="true" tabindex="-1"></a>edgelist_friendship <span class="ot">&lt;-</span> class182_networkdata[edge_value <span class="sc">&gt;</span> <span class="dv">0</span>, </span>
+<span id="cb595-4"><a href="ch8-Network-Cohesion-Communities-R.html#cb595-4" aria-hidden="true" tabindex="-1"></a>                                            <span class="fu">c</span>(<span class="st">&quot;ego&quot;</span>, <span class="st">&quot;alter&quot;</span>, <span class="st">&quot;friend_tie&quot;</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb596-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(edgelist_friendship)</span></code></pre></div>
+<pre><code>##    ego alter friend_tie
+## 17   2     1          1
+## 23   2     7          1
+## 24   2     8          1
+## 29   2    13          2
+## 30   2    14          1
+## 37   3     5          1</code></pre>
+<p>And now we can go ahead and create our igraph object using the edgelist and attribute data frames.</p>
+<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb598-1" aria-hidden="true" tabindex="-1"></a>net182_friend <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> edgelist_friendship, <span class="at">directed =</span> T, </span>
+<span id="cb598-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb598-2" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">vertices =</span> class182_attributes) </span></code></pre></div>
+<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb599-1" aria-hidden="true" tabindex="-1"></a>net182_friend </span></code></pre></div>
+<pre><code>## IGRAPH c32a7c6 DN-- 16 62 -- 
+## + attr: name (v/c), race (v/c), grade (v/n), gender (v/c), friend_tie (e/n)
+## + edges from c32a7c6 (vertex names):
+##  [1] 2 -&gt;1  2 -&gt;7  2 -&gt;8  2 -&gt;13 2 -&gt;14 3 -&gt;5  3 -&gt;6  3 -&gt;11 3 -&gt;14 3 -&gt;15 5 -&gt;1  5 -&gt;3  5 -&gt;6  5 -&gt;8  5 -&gt;10 5 -&gt;11 6 -&gt;1  6 -&gt;3  6 -&gt;5  6 -&gt;7  6 -&gt;10 6 -&gt;11 6 -&gt;12 7 -&gt;2  7 -&gt;8  7 -&gt;13 7 -&gt;14 8 -&gt;2  8 -&gt;5  8 -&gt;7  8 -&gt;13 8 -&gt;14 8 -&gt;15 9 -&gt;1  9 -&gt;3  9 -&gt;10 9 -&gt;12 9 -&gt;15 10-&gt;1  10-&gt;9  10-&gt;12 10-&gt;15 11-&gt;1  11-&gt;3  11-&gt;5  11-&gt;6  11-&gt;10 12-&gt;1  12-&gt;9  12-&gt;15 13-&gt;2  13-&gt;7  13-&gt;8  13-&gt;14 14-&gt;2  14-&gt;3  14-&gt;8  14-&gt;12 15-&gt;1  15-&gt;7  15-&gt;9  15-&gt;12</code></pre>
+<p>Note that the network is directed and has an edge attribute, <code>friend_tie</code>, showing the strength of the relationship.</p>
+</div>
+<div id="cohesion" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Cohesion<a href="ch8-Network-Cohesion-Communities-R.html#cohesion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We start by looking at the overall cohesion of the network. We will begin by doing a quick plot of the friendship network. This will give us a useful, intuitive picture of the network structure.</p>
+<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb601-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(net182_friend, <span class="at">vertex.label =</span> <span class="cn">NA</span>, <span class="at">vertex.size =</span> <span class="dv">10</span>,</span>
+<span id="cb601-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb601-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.arrow.size =</span> .<span class="dv">25</span>, <span class="at">edge.arrow.width =</span> <span class="dv">1</span>, </span>
+<span id="cb601-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb601-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.color =</span> <span class="st">&quot;light gray&quot;</span>, <span class="at">vertex.frame.color =</span> <span class="cn">NA</span>)</span></code></pre></div>
+<p><img src="Chapter8_Integrated_Network_Science_Rtutorial_network_cohesion_communities_files/figure-html/unnamed-chunk-10-1.png" width="528" /></p>
+<p>We can see that the classroom network is fairly cohesive (ignoring the two isolates), although it does appear to roughly split into two groups. Let’s more formally explore some of the properties of the network, starting with density.</p>
+<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb602-1" aria-hidden="true" tabindex="-1"></a><span class="fu">edge_density</span>(net182_friend)</span></code></pre></div>
+<pre><code>## [1] 0.2583333</code></pre>
+<p>We can see here that .258 of all possible ties exist in the network. We might take that as an indication of high levels of cohesion, as many observed networks have much lower values for density. It is important to remember, however, that density only captures something about the volume of ties, not the pattern of ties (it is also worth remembering that density is typically higher in smaller networks, and we are working with a small network). A network with many ties may still be fragile, in the sense that the ties are arranged in a way that some parts of the network are disconnected (or only very loosely connected) to other parts. It is thus useful to consider other measures that more directly capture cohesion. For example, let's examine component size. The main component is the largest set of nodes such that all ij pairs can reach one another. This in itself is a relatively low bar for cohesion, as it only says that i can reach j, not how interconnected i and j actually are (e.g., are i and j connected through multiple short paths or one long path?).</p>
+<p>The function here is called <code>components()</code>. The main arguments are graph (network of interest, as an igraph object) and mode. The mode = "strong" option defines a component as a set where i can reach j and j can reach i. The mode = "weak" option would give us the other version, where i and j are in the same component as long as i can reach j or j can reach i. Here we use the weak option. Note that the mode argument is ignored in the case of undirected networks.</p>
+<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb604-1" aria-hidden="true" tabindex="-1"></a>components_friendship <span class="ot">&lt;-</span> <span class="fu">components</span>(<span class="at">graph =</span> net182_friend, <span class="at">mode =</span> <span class="st">&quot;weak&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb605-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb605-1" aria-hidden="true" tabindex="-1"></a>components_friendship</span></code></pre></div>
+<pre><code>## $membership
+##  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 
+##  1  1  1  2  1  1  1  1  1  1  1  1  1  1  1  3 
+## 
+## $csize
+## [1] 14  1  1
+## 
+## $no
+## [1] 3</code></pre>
+<p>The output is a list with three elements: <code>membership</code> (the component each node belongs to); <code>csize</code> (the size of each component); and <code>no</code> (the number of components). Let’s calculate the proportion of nodes in each component.</p>
+<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb607-1" aria-hidden="true" tabindex="-1"></a>components_friendship<span class="sc">$</span>csize <span class="sc">/</span> <span class="fu">sum</span>(components_friendship<span class="sc">$</span>csize) </span></code></pre></div>
+<pre><code>## [1] 0.8750 0.0625 0.0625</code></pre>
+<p>We can see that 87.5% of the nodes fall in the largest component. Our two isolates are each in their own component, while all other nodes (with ties) are in one large component. This substantively suggests that most students, while perhaps also falling into more local peer groups, do appear to be part of a larger social grouping (which is at least minimally connected), defined at the level of the classroom itself.</p>
+<p>Past work has also often used bicomponent size to measure social cohesion <span class="citation">(Moody and White 2003)</span>. Bicomponent size is an extension of component size, showing sets of nodes that are connected by at least two independent paths, so that removing a single nodes leaves the entire set connected. Bicomponent size is an ideal measure of cohesion as it captures if the network can withstand the loss (or removal) of key nodes. A cohesive network is thus robust to disconnection, existing as a larger unit beyond the presence of particular nodes.</p>
+<p>The function to calculate bicomponent size is <code>biconnected_components()</code>. Note that the function will automatically treat the network as undirected, equivalent to the ‘weak’ option above for component size.</p>
+<div class="sourceCode" id="cb609"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb609-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb609-1" aria-hidden="true" tabindex="-1"></a>bicomponents_friendship <span class="ot">&lt;-</span> <span class="fu">biconnected_components</span>(<span class="at">graph =</span> net182_friend)</span></code></pre></div>
+<p>The output is a list. The main item of interest is the nodes that are in each bicomponent. This can be found in the components part of the list.</p>
+<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb610-1" aria-hidden="true" tabindex="-1"></a>bicomponents_friendship<span class="sc">$</span>components</span></code></pre></div>
+<pre><code>## [[1]]
+## + 14/16 vertices, named, from c32a7c6:
+##  [1] 10 15 11 9  12 14 13 8  5  3  6  7  2  1</code></pre>
+<p>In this case 14 out of 16 nodes are in a single bicomponent, connected by at least two independent paths. Again, the only nodes who are not in this main bicomponent are our two isolates. This would suggest that the network has high cohesion, as all nodes (save for two isolates) are connected to each other in multiple ways.</p>
+<p>Building on the ideas of bicomponent size and component size, we can also explore the connectivity of specific pairs of nodes in the network, or vertex connectivity. Here we utilize the <code>vertex_disjoint_paths()</code> function. The arguments are graph, source (starting node) and target (end node). The output is the number of nodes that would need to be removed so that i can no longer reach j (excluding any direct tie from i to j).</p>
+<p>To be consistent with the component and bicomponent calculations above, let’s create an undirected network to look at vertex connectivity. We set mode to the "collapse" option, which uses a 'weak' rule, so if i is tied to j or j is tied to i, there is a tie between i and j.</p>
+<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb612-1" aria-hidden="true" tabindex="-1"></a>net182_friend_und <span class="ot">&lt;-</span> <span class="fu">as.undirected</span>(net182_friend, <span class="at">mode =</span> <span class="st">&quot;collapse&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb613-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb613-1" aria-hidden="true" tabindex="-1"></a>net182_friend_und</span></code></pre></div>
+<pre><code>## IGRAPH 661f23b UN-- 16 42 -- 
+## + attr: name (v/c), race (v/c), grade (v/n), gender (v/c)
+## + edges from 661f23b (vertex names):
+##  [1] 1 --2  1 --5  3 --5  1 --6  3 --6  5 --6  2 --7  6 --7  2 --8  5 --8  7 --8  1 --9  3 --9  1 --10 5 --10 6 --10 9 --10 1 --11 3 --11 5 --11 6 --11 10--11 1 --12 6 --12 9 --12 10--12 2 --13 7 --13 8 --13 2 --14 3 --14 7 --14 8 --14 12--14 13--14 1 --15 3 --15 7 --15 8 --15 9 --15 10--15 12--15</code></pre>
+<p>Here we will calculate vertex connectivity for two example nodes, 1 and 9:</p>
+<div class="sourceCode" id="cb615"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb615-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb615-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vertex_disjoint_paths</span>(<span class="at">graph =</span> net182_friend_und, <span class="at">source =</span> <span class="dv">1</span>, <span class="at">target =</span> <span class="dv">9</span>)</span></code></pre></div>
+<pre><code>## [1] 5</code></pre>
+<p>We can see that to disconnect node 1 and node 9 in the friendship network, one would need to remove 5 other nodes, a very high number. Node 1 and node 9 are thus highly interconnected, and likely part of the same social group. We can extend this kind of calculation to all dyads, summarizing over the distribution of vertex connectivity to create a summary measure of cohesion that complements, but extends, bicomponent size. Bicomponent size only captures being connected by a minimal threshold of two independent paths; it does not tell us the actual number of paths that connect our nodes. Note, however, that calculating the vertex connectivity over all dyads can be expensive (time-wise) and it may be useful/necessary to sample dyads to use in the calculation.</p>
+<p>We can also use the <code>vertex_connectivity()</code> function to get the connectivity for the entire network, the minimum number of nodes that would need to be removed to disconnect the network (so that all i could not reach all j).</p>
+<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb617-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb617-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vertex_connectivity</span>(<span class="at">graph =</span> net182_friend_und)</span></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<p>We see here that vertex connectivity is 0. This is the case because of the two isolates in the network. One would not need to remove any nodes to disconnect the network. Let’s recalculate vertex connectivity, this time removing the two isolates from the network. We first identify the isolates. We then create a new network without the isolates and recalculate vertex connectivity.</p>
+<div class="sourceCode" id="cb619"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb619-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb619-1" aria-hidden="true" tabindex="-1"></a>isolates <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">degree</span>(net182_friend_und) <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb619-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb619-2" aria-hidden="true" tabindex="-1"></a>net182_noisolates <span class="ot">&lt;-</span> <span class="fu">delete_vertices</span>(net182_friend_und, isolates)</span>
+<span id="cb619-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb619-3" aria-hidden="true" tabindex="-1"></a><span class="fu">vertex_connectivity</span>(<span class="at">graph =</span> net182_noisolates)</span></code></pre></div>
+<pre><code>## [1] 4</code></pre>
+<p>Ignoring the isolates, one would have to remove 4 nodes in order to disconnect the network. Overall, we see that this classroom setting has a high level of cohesion, outside of the two isolates. All non-isolates are part of one large bicomponent, connected by at least two independent paths. Going a little further, all non-isolates are actually connected by a minimum of 4 independent paths, making it very robust to disconnection.</p>
+</div>
+<div id="community-or-group-detection" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Community (or Group) Detection<a href="ch8-Network-Cohesion-Communities-R.html#community-or-group-detection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>So far we have established that the friendship network in this classroom is cohesive. We now want to zoom in, asking about the communities (or groups) within the larger cohesive set. The goal is to identify sets of nodes that have high internal density and few ties to outside members. Thus, even in a cohesive network, there may be important communities (or dense regions) within the larger network. We have three main questions. The first question is about the communities that are present in the network. Does the network divide into a number of small communities? Or does the network basically split in half, with one strong dividing line? The second question is about the composition of these communities. Does race map strongly onto the found communities? The third question is about the level of contact between communities. How do the communities (and the ties between) contribute or detract from the overall cohesion of the network?</p>
+<p>We utilize community detection to address these questions. There are many different ways to detect communities. In this tutorial, we will use four: walktrap, edge-betweenness, hierarchical clustering, and cohesive blocking. As we walk through them, it is important to consider how they portray communities and consider which one(s) afford a sensible view of the social world as cohesively organized. Note that igraph uses the language of communities, rather than groups, but they are interchangeable. For consistency and simplicity, we'll use the undirected network in our analysis.</p>
+<div id="walktrap" class="section level3 hasAnchor" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> Walktrap<a href="ch8-Network-Cohesion-Communities-R.html#walktrap" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This algorithm detects communities through a series of short random walks, with the idea that the nodes encountered on any given random walk are more likely to be within a community than not. The algorithm initially treats all nodes as communities of their own, then merges them into larger communities, and these into still larger communities, and so on. The walktrap algorithm calls upon the user to specify the length of the random walks. Past work suggests using walks of length 4 or 5 but there is no guarantee that this will yield the 'best' partition; for example, the one that maximizes modularity <span class="citation">(Pons and Latapy 2005)</span>. Modularity (discussed in greater detail in the main text, Chapter 8) measures the quality of the partition, comparing the number of edges going within communities (based on the given partition) compared to that expected under a null model.</p>
+<p>The function is <code>cluster_walktrap()</code>. The main arguments are graph (network of interest, as an igraph object), steps (number of steps in random walk) and membership (T/F, should membership be calculated based on highest modularity score? T by default). Let's begin by going 4 steps out.</p>
+<div class="sourceCode" id="cb621"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb621-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb621-1" aria-hidden="true" tabindex="-1"></a>friend_comm_wt4 <span class="ot">&lt;-</span> <span class="fu">cluster_walktrap</span>(<span class="at">graph =</span> net182_friend_und, <span class="at">steps =</span> <span class="dv">4</span>, </span>
+<span id="cb621-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb621-2" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">membership =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb622-1" aria-hidden="true" tabindex="-1"></a>friend_comm_wt4</span></code></pre></div>
+<pre><code>## IGRAPH clustering walktrap, groups: 4, mod: 0.27
+## + groups:
+##   $`1`
+##   [1] &quot;2&quot;  &quot;7&quot;  &quot;8&quot;  &quot;13&quot; &quot;14&quot;
+##   
+##   $`2`
+##   [1] &quot;1&quot;  &quot;3&quot;  &quot;5&quot;  &quot;6&quot;  &quot;9&quot;  &quot;10&quot; &quot;11&quot; &quot;12&quot; &quot;15&quot;
+##   
+##   $`3`
+##   [1] &quot;4&quot;
+##   
+##   $`4`
+##   + ... omitted several groups/vertices</code></pre>
+<p>Now let's get the membership of each node as well the modularity score based on 4 our step solution.</p>
+<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb624-1" aria-hidden="true" tabindex="-1"></a>mems_wt_4step <span class="ot">&lt;-</span> <span class="fu">membership</span>(friend_comm_wt4)</span></code></pre></div>
+<div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb625-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb625-1" aria-hidden="true" tabindex="-1"></a>mems_wt_4step</span></code></pre></div>
+<pre><code>##  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 
+##  2  1  2  3  2  2  1  1  2  2  2  2  1  1  2  4</code></pre>
+<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb627-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb627-1" aria-hidden="true" tabindex="-1"></a>mod_wt_4step <span class="ot">&lt;-</span> <span class="fu">modularity</span>(friend_comm_wt4)</span></code></pre></div>
+<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb628-1" aria-hidden="true" tabindex="-1"></a>mod_wt_4step</span></code></pre></div>
+<pre><code>## [1] 0.2695578</code></pre>
+<p>What would happen if we used 3 steps?</p>
+<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb630-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb630-1" aria-hidden="true" tabindex="-1"></a>friend_comm_wt3 <span class="ot">&lt;-</span> <span class="fu">cluster_walktrap</span>(<span class="at">graph =</span> net182_friend_und, </span>
+<span id="cb630-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb630-2" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">steps =</span> <span class="dv">3</span>, <span class="at">membership =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb631-1" aria-hidden="true" tabindex="-1"></a>mems_wt_3step <span class="ot">&lt;-</span> <span class="fu">membership</span>(friend_comm_wt3)</span></code></pre></div>
+<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb632-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb632-1" aria-hidden="true" tabindex="-1"></a>mems_wt_3step</span></code></pre></div>
+<pre><code>##  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 
+##  2  1  3  4  3  3  1  1  2  2  3  2  1  1  2  5</code></pre>
+<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb634-1" aria-hidden="true" tabindex="-1"></a>mod_wt_3step <span class="ot">&lt;-</span> <span class="fu">modularity</span>(friend_comm_wt3)</span></code></pre></div>
+<div class="sourceCode" id="cb635"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb635-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb635-1" aria-hidden="true" tabindex="-1"></a>mod_wt_3step</span></code></pre></div>
+<pre><code>## [1] 0.2797619</code></pre>
+<p>We can see that the modularity is slightly higher when we use 3 steps. We can compare the two partitions using the <code>table</code> function:</p>
+<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb637-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb637-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(mems_wt_4step, mems_wt_3step)</span></code></pre></div>
+<pre><code>##              mems_wt_3step
+## mems_wt_4step 1 2 3 4 5
+##             1 5 0 0 0 0
+##             2 0 5 4 0 0
+##             3 0 0 0 1 0
+##             4 0 0 0 0 1</code></pre>
+<p>We can see that the big difference is that using 3 steps seems to split one of the communities (based on 4 steps) into 2. And let's also plot the network based on the found communities, comparing the two partitions. We will plot the network as before, but color the nodes based on the communities found using the walktrap algorithm. We first define the layout to use in both plots. This ensures that the network is placed and rotated in the same way, making it easier to compare partitions.</p>
+<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb639-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb639-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb639-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb639-2" aria-hidden="true" tabindex="-1"></a>layout <span class="ot">&lt;-</span> <span class="fu">layout.fruchterman.reingold</span>(net182_friend) </span>
+<span id="cb639-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb639-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb639-4"><a href="ch8-Network-Cohesion-Communities-R.html#cb639-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(net182_friend_und, <span class="at">layout =</span> layout, <span class="co">#note the use of layout</span></span>
+<span id="cb639-5"><a href="ch8-Network-Cohesion-Communities-R.html#cb639-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.color =</span> mems_wt_4step, <span class="at">edge.color =</span> <span class="st">&quot;light gray&quot;</span>, </span>
+<span id="cb639-6"><a href="ch8-Network-Cohesion-Communities-R.html#cb639-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">20</span>, <span class="at">main =</span> <span class="st">&quot;Walktrap: 4 Steps&quot;</span>)</span>
+<span id="cb639-7"><a href="ch8-Network-Cohesion-Communities-R.html#cb639-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb639-8"><a href="ch8-Network-Cohesion-Communities-R.html#cb639-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(net182_friend_und, <span class="at">layout =</span> layout, <span class="co">#note the use of layout</span></span>
+<span id="cb639-9"><a href="ch8-Network-Cohesion-Communities-R.html#cb639-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.color =</span> mems_wt_3step, <span class="at">edge.color =</span> <span class="st">&quot;light gray&quot;</span>, </span>
+<span id="cb639-10"><a href="ch8-Network-Cohesion-Communities-R.html#cb639-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">20</span>, <span class="at">main =</span> <span class="st">&quot;Walktrap: 3 Steps&quot;</span>)</span></code></pre></div>
+<p><img src="Chapter8_Integrated_Network_Science_Rtutorial_network_cohesion_communities_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p>The results suggest, so far, that there are 2 basic communities (2, 7, 8, 13, 14 and 1, 3, 5, 6, 9, 10, 11, 12, 15) (ignoring the isolates) with one of those communities having their own internal division. We see with the 3 step solution that the larger community is split in two: (3, 5, 6, 11) and (1, 9, 10, 12, 15). Note that is it possible to include a weights argument on the edges so that larger values correspond to stronger ties (the default is to use the edges weights on the igraph object).</p>
+</div>
+<div id="edge-betweenness" class="section level3 hasAnchor" number="8.3.2">
+<h3><span class="header-section-number">8.3.2</span> Edge Betweenness<a href="ch8-Network-Cohesion-Communities-R.html#edge-betweenness" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The idea of the edge-betweenness algorithm is that it is likely that edges connecting separate communities have high edge-betweenness, as all the shortest paths from one community to another must traverse through them. So, if we iteratively remove the edge with the highest edge-betweenness score we will get a hierarchical map of the communities in the graph. See <span class="citation">Newman and Girvan (2004)</span> for more details. The function is <code>cluster_edge_betweenness()</code>.</p>
+<div class="sourceCode" id="cb640"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb640-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb640-1" aria-hidden="true" tabindex="-1"></a>friend_comm_eb <span class="ot">&lt;-</span> <span class="fu">cluster_edge_betweenness</span>(<span class="at">graph =</span> net182_friend_und)</span></code></pre></div>
+<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb641-1" aria-hidden="true" tabindex="-1"></a>friend_comm_eb</span></code></pre></div>
+<pre><code>## IGRAPH clustering edge betweenness, groups: 5, mod: 0.28
+## + groups:
+##   $`1`
+##   [1] &quot;1&quot;  &quot;9&quot;  &quot;10&quot; &quot;12&quot; &quot;15&quot;
+##   
+##   $`2`
+##   [1] &quot;2&quot;  &quot;7&quot;  &quot;8&quot;  &quot;13&quot; &quot;14&quot;
+##   
+##   $`3`
+##   [1] &quot;3&quot;  &quot;5&quot;  &quot;6&quot;  &quot;11&quot;
+##   
+##   $`4`
+##   + ... omitted several groups/vertices</code></pre>
+<p>The default is to select the communities that will maximize modularity. Let's grab the membership and compare the partition to the 3 step walktrap solution above.</p>
+<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb643-1" aria-hidden="true" tabindex="-1"></a>mems_eb <span class="ot">&lt;-</span> <span class="fu">membership</span>(friend_comm_eb)</span></code></pre></div>
+<div class="sourceCode" id="cb644"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb644-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb644-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(mems_wt_3step, mems_eb) </span></code></pre></div>
+<pre><code>##              mems_eb
+## mems_wt_3step 1 2 3 4 5
+##             1 0 5 0 0 0
+##             2 5 0 0 0 0
+##             3 0 0 4 0 0
+##             4 0 0 0 1 0
+##             5 0 0 0 0 1</code></pre>
+<p>In this case the found communities are the same across the algorithms (even though the labeling of the communities may be different). Note that while the default is to select the membership based on the highest modularity value, it is also possible to examine the full hierarchical splitting of nodes into communities.</p>
+<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb646-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb646-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">as.dendrogram</span>(friend_comm_eb))</span></code></pre></div>
+<p><img src="Chapter8_Integrated_Network_Science_Rtutorial_network_cohesion_communities_files/figure-html/unnamed-chunk-39-1.png" width="528" /></p>
+<p>This is a dendrogram plot for the edge betweenness results. The y-axis captures the order that the communities are split, with higher values indicating that nodes (in separate branches) are split out early in the process of edge removal (and are thus less likely to be placed in a community). The dendrogram is hierarchical, showing the composition of the communities at different levels of disaggregation. For example, 4 and 16 are split out first, followed by splitting (11, 6, 5, 3, 15, 12, 10, 9, 1) and (14, 13, 8, 7, 2). The next level splits (11, 6, 5, 3) and (15, 12, 10, 9, 1). We can use the dendrogram to visually examine the communities at different levels of disaggregation. As we move down the dendrogram, we look at more disaggregated solutions, with a higher number of communities.</p>
+</div>
+<div id="scree-plots" class="section level3 hasAnchor" number="8.3.3">
+<h3><span class="header-section-number">8.3.3</span> Scree Plots<a href="ch8-Network-Cohesion-Communities-R.html#scree-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We will often want to go beyond visual inspection and more formally examine the clustering solutions at different levels of dissaggregation. This amounts to asking how the fit changes as the number of communities increases. The goal is to produce a figure where the modularity scores are plotted against the number of communities. We can use these scree plots as a means of deciding what range of solutions are worth looking at in more detail. In this way, we can do a little better than automatically using the solution with the highest modularity score. This is especially important for larger networks, as there are many possible partitions, and many solutions will offer similar modularity scores.</p>
+<p>We will begin by writing a function to extract the number of communities and modularity scores over all levels of disaggregation. The arguments are communities (the communities object) and graph (the igraph network of interest). The function assumes that the community detection algorithm has a hierarchical structure (as with walktrap or edge betweenness).</p>
+<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb647-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-1" aria-hidden="true" tabindex="-1"></a>extract_modularity_data <span class="ot">&lt;-</span> <span class="cf">function</span>(communities, graph){</span>
+<span id="cb647-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb647-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Arguments:</span></span>
+<span id="cb647-4"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># communities: igraph communities object</span></span>
+<span id="cb647-5"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># graph: igraph object</span></span>
+<span id="cb647-6"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb647-7"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-7" aria-hidden="true" tabindex="-1"></a>  mems_list <span class="ot">&lt;-</span> <span class="fu">list</span>() <span class="co"># list where membership information will be saved</span></span>
+<span id="cb647-8"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-8" aria-hidden="true" tabindex="-1"></a>  num_communities <span class="ot">&lt;-</span> <span class="cn">NA</span> <span class="co"># vector where number of communities will be saved</span></span>
+<span id="cb647-9"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-9" aria-hidden="true" tabindex="-1"></a>  modularities <span class="ot">&lt;-</span> <span class="cn">NA</span> <span class="co"># avector to store modularity scores</span></span>
+<span id="cb647-10"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb647-11"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extracting levels of aggregation, or steps,</span></span>
+<span id="cb647-12"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># in the hierarchical merge data.</span></span>
+<span id="cb647-13"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-13" aria-hidden="true" tabindex="-1"></a>  num_merges <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span><span class="fu">nrow</span>(communities<span class="sc">$</span>merges)</span>
+<span id="cb647-14"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb647-15"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Note that we start from 0 as the first level</span></span>
+<span id="cb647-16"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># corresponds to all nodes in their own community,</span></span>
+<span id="cb647-17"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># and that does not have a row in the  merge data frame.</span></span>
+<span id="cb647-18"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb647-19"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Looping through each level of aggregation</span></span>
+<span id="cb647-20"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (x <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(num_merges)){</span>
+<span id="cb647-21"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># We first extract the membership </span></span>
+<span id="cb647-22"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># information at the given merge level using a </span></span>
+<span id="cb647-23"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># cut_at function. The inputs are the community</span></span>
+<span id="cb647-24"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># object and the merge step of interest. </span></span>
+<span id="cb647-25"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb647-26"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-26" aria-hidden="true" tabindex="-1"></a>    mems_list[[x]] <span class="ot">&lt;-</span> <span class="fu">cut_at</span>(communities, <span class="at">steps =</span> num_merges[x])</span>
+<span id="cb647-27"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-27" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb647-28"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Now we calculate the number of communities associated</span></span>
+<span id="cb647-29"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># with the given clustering solution: </span></span>
+<span id="cb647-30"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-30" aria-hidden="true" tabindex="-1"></a>    num_communities[x] <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">unique</span>(mems_list[[x]]))</span>
+<span id="cb647-31"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-31" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb647-32"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Let&#39;s also calculate the modularity score, just to make sure</span></span>
+<span id="cb647-33"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># we get the right value for that set of community memberships:</span></span>
+<span id="cb647-34"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-34" aria-hidden="true" tabindex="-1"></a>    modularities[x] <span class="ot">&lt;-</span> <span class="fu">modularity</span>(graph, mems_list[[x]])</span>
+<span id="cb647-35"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-35" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb647-36"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb647-37"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-37" aria-hidden="true" tabindex="-1"></a>  <span class="co"># We will now put together our extracted </span></span>
+<span id="cb647-38"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-38" aria-hidden="true" tabindex="-1"></a>  <span class="co"># information in a data frame. </span></span>
+<span id="cb647-39"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-39" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb647-40"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-40" aria-hidden="true" tabindex="-1"></a>  plot_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">modularity =</span> modularities, </span>
+<span id="cb647-41"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-41" aria-hidden="true" tabindex="-1"></a>                          <span class="at">num_communities =</span> num_communities)</span>
+<span id="cb647-42"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb647-43"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-43" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Let&#39;s reorder to go from low number of communities to high:</span></span>
+<span id="cb647-44"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-44" aria-hidden="true" tabindex="-1"></a>  mems_list <span class="ot">&lt;-</span> mems_list[<span class="fu">order</span>(plot_data<span class="sc">$</span>num_communities)]</span>
+<span id="cb647-45"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-45" aria-hidden="true" tabindex="-1"></a>  plot_data <span class="ot">&lt;-</span> plot_data[<span class="fu">order</span>(plot_data<span class="sc">$</span>num_communities), ] </span>
+<span id="cb647-46"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames</span>(plot_data) <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(plot_data)</span>
+<span id="cb647-47"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb647-48"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-48" aria-hidden="true" tabindex="-1"></a>  <span class="co"># outputting results in a list:</span></span>
+<span id="cb647-49"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">summary_data =</span> plot_data, </span>
+<span id="cb647-50"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-50" aria-hidden="true" tabindex="-1"></a>       <span class="at">membership_list =</span> mems_list))</span>
+<span id="cb647-51"><a href="ch8-Network-Cohesion-Communities-R.html#cb647-51" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Let's go ahead and run our function, <code>extract_modularity_data()</code>, using our edge betweenness results as input.</p>
+<div class="sourceCode" id="cb648"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb648-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb648-1" aria-hidden="true" tabindex="-1"></a>modularity_data <span class="ot">&lt;-</span> <span class="fu">extract_modularity_data</span>(<span class="at">communities =</span> friend_comm_eb, </span>
+<span id="cb648-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb648-2" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">graph =</span> net182_friend_und)</span></code></pre></div>
+<p>The output is a list with two elements. The first is a summary data frame, showing the modularity scores as the number of communities increases. The second is a list, showing the community memberships under each clustering solution (one for each row in the summary data frame). Let's extract the summary data frame and take a look:</p>
+<div class="sourceCode" id="cb649"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb649-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb649-1" aria-hidden="true" tabindex="-1"></a>summary_data <span class="ot">&lt;-</span> modularity_data[[<span class="dv">1</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb650"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb650-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb650-1" aria-hidden="true" tabindex="-1"></a>summary_data</span></code></pre></div>
+<pre><code>##      modularity num_communities
+## 1   0.000000000               3
+## 2   0.269557823               4
+## 3   0.279761905               5
+## 4   0.238945578               6
+## 5   0.211734694               7
+## 6   0.147675737               8
+## 7   0.103458050               9
+## 8   0.064909297              10
+## 9   0.021825397              11
+## 10  0.007936508              12
+## 11 -0.013888889              13
+## 12 -0.044501134              14
+## 13 -0.061507937              15
+## 14 -0.073412698              16</code></pre>
+<p>The first column reports the modularity score for each clustering solution. The second column is the number of communities associated with that modularity score.</p>
+<p>We are now in a position to plot the results. We will use <code>ggplot()</code> to create a scree plot with number of communities on the x-axis and modularity score on the y-axis. We will include a line and bar plot. Note that we could subset our input data frame (<code>summary_data</code>) if we only wanted to plot some of the modularity scores; this can be useful in large networks where the number of values to plot can be quite large.</p>
+<div class="sourceCode" id="cb652"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb652-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb652-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(summary_data, <span class="fu">aes</span>(num_communities, modularity)) <span class="sc">+</span></span>
+<span id="cb652-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb652-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;grey&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb652-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb652-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;solid&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb652-4"><a href="ch8-Network-Cohesion-Communities-R.html#cb652-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">19</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb652-5"><a href="ch8-Network-Cohesion-Communities-R.html#cb652-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Modularity by Number of Communities&quot;</span>,</span>
+<span id="cb652-6"><a href="ch8-Network-Cohesion-Communities-R.html#cb652-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Number of Communities&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Modularity&quot;</span>)</span></code></pre></div>
+<p><img src="Chapter8_Integrated_Network_Science_Rtutorial_network_cohesion_communities_files/figure-html/unnamed-chunk-44-1.png" width="528" /></p>
+<p>Such plots are useful in trying to decide what is the optimal number of communities. In general, we want solutions with high modularity, but we may not necessarily choose the one with the highest modularity, especially if adding more communities only marginally improves the fit and the simpler solution offers a more intuitive, substantively clearer story. Additionally, many solutions may offer similar modularity scores, and scree plots can help us determine which solutions to look at in more detail. Looking at our plot, it is clear that the two best solutions are with 4 or 5 communities, after which the modularity scores start to decrease. We would want to examine these two solutions more carefully.</p>
+<p>In fact, we have already examined the 5 community solution, as this is the solution with the highest modularity, automatically included in the original edge betweenness results. The 4 community results are not as easily accessed. We first need to extract the membership list from <code>modularity_data</code> (the outputted object from our function), showing the community memberships for each solution represented in the summary plot above. The membership list is the second element in <code>modularity_data</code>.</p>
+<div class="sourceCode" id="cb653"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb653-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb653-1" aria-hidden="true" tabindex="-1"></a>mems_list <span class="ot">&lt;-</span> modularity_data[[<span class="dv">2</span>]]</span></code></pre></div>
+<p>We will now determine what part of the membership list to grab. We want the membership ids associated with 4 communities.</p>
+<div class="sourceCode" id="cb654"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb654-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb654-1" aria-hidden="true" tabindex="-1"></a>mems_ids <span class="ot">&lt;-</span> <span class="fu">which</span>(summary_data<span class="sc">$</span>num_communities <span class="sc">==</span> <span class="dv">4</span>) </span></code></pre></div>
+<p>We now extract the memberships for the 4 community solution.</p>
+<div class="sourceCode" id="cb655"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb655-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb655-1" aria-hidden="true" tabindex="-1"></a>mems_eb4 <span class="ot">&lt;-</span> mems_list[[mems_ids]]</span></code></pre></div>
+<div class="sourceCode" id="cb656"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb656-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb656-1" aria-hidden="true" tabindex="-1"></a>mems_eb4</span></code></pre></div>
+<pre><code>##  [1] 1 2 1 3 1 1 2 2 1 1 1 1 2 2 1 4</code></pre>
+<p>As it turns out, this is the same set of communities using the walktrap algorithm, using 4 steps.</p>
+</div>
+<div id="multi-level-clustering" class="section level3 hasAnchor" number="8.3.4">
+<h3><span class="header-section-number">8.3.4</span> Multi-level Clustering<a href="ch8-Network-Cohesion-Communities-R.html#multi-level-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Another commonly used approach is multi-level clustering, or multi-level modularity optimization. The basic idea is to begin with each node in its own community. Each vertex is then moved to a community to increase modularity the most (or, for each node i, the algorithm selects the move that will increase modularity the most). If no gain is positive it stays in its own community. This phase continues until a local maxima of modularity is reached. The process then begins again based on the newly merged communities, where the new nodes are the communities found in the previous phase. See <span class="citation">Blondel et al. (2008)</span>. The function in igraph is <code>cluster_louvain()</code>.</p>
+<p>We can set a resolution argument, which determines the resolution that the algorithm will use when looking for communities; higher values will yield a larger number of smaller communities, while lower values will yield a smaller number of larger communities. Here we will set it at 1, the default, but we might also want to run this over multiple values and explore the results under fewer/greater numbers of communities (similar to the analysis above). We will also set a seed to help replicate the results.</p>
+<div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb658-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb658-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
+<span id="cb658-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb658-2" aria-hidden="true" tabindex="-1"></a>friend_comm_multi <span class="ot">&lt;-</span> <span class="fu">cluster_louvain</span>(<span class="at">graph =</span> net182_friend_und, </span>
+<span id="cb658-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb658-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">resolution =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p>Let's look at the multi-level community structure.</p>
+<div class="sourceCode" id="cb659"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb659-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb659-1" aria-hidden="true" tabindex="-1"></a>friend_comm_multi<span class="sc">$</span>memberships </span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14] [,15] [,16]
+## [1,]    1    2    3    4    1    1    2    2    3     1     1     3     2     2     3     5
+## [2,]    1    2    1    3    1    1    2    2    1     1     1     1     2     2     1     4</code></pre>
+<p>We can see that there are two rows, or levels. We can think of this as looking at the community/group structure at two different levels of granularity. The output is organized from least aggregated (row 1) to most aggregated (row 2). Let's do a quick table to see how individuals at one level are nested at the second level.</p>
+<div class="sourceCode" id="cb661"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb661-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb661-1" aria-hidden="true" tabindex="-1"></a>mems_mult_level1 <span class="ot">&lt;-</span> friend_comm_multi<span class="sc">$</span>memberships[<span class="dv">1</span>, ]</span>
+<span id="cb661-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb661-2" aria-hidden="true" tabindex="-1"></a>mems_mult_level2 <span class="ot">&lt;-</span> friend_comm_multi<span class="sc">$</span>memberships[<span class="dv">2</span>, ]</span>
+<span id="cb661-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb661-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(mems_mult_level1, mems_mult_level2) </span></code></pre></div>
+<pre><code>##                 mems_mult_level2
+## mems_mult_level1 1 2 3 4
+##                1 5 0 0 0
+##                2 0 5 0 0
+##                3 4 0 0 0
+##                4 0 0 1 0
+##                5 0 0 0 1</code></pre>
+<p>We can see that everyone in community 1 at the second level is split into two communities at the first level. We can also look at the modularity associated with each solution:</p>
+<div class="sourceCode" id="cb663"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb663-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb663-1" aria-hidden="true" tabindex="-1"></a>friend_comm_multi<span class="sc">$</span>modularity</span></code></pre></div>
+<pre><code>## [1] 0.2559524 0.2695578</code></pre>
+<p>And now we plot the two solutions.</p>
+<div class="sourceCode" id="cb665"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb665-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb665-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb665-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb665-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb665-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb665-3" aria-hidden="true" tabindex="-1"></a><span class="co">#4 communities</span></span>
+<span id="cb665-4"><a href="ch8-Network-Cohesion-Communities-R.html#cb665-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(net182_friend_und, <span class="at">layout =</span> layout, <span class="at">vertex.color =</span> mems_mult_level2, </span>
+<span id="cb665-5"><a href="ch8-Network-Cohesion-Communities-R.html#cb665-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.color =</span> <span class="st">&quot;light gray&quot;</span>, <span class="at">vertex.size =</span> <span class="dv">20</span>,</span>
+<span id="cb665-6"><a href="ch8-Network-Cohesion-Communities-R.html#cb665-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Level 2 Community Membership&quot;</span>)</span>
+<span id="cb665-7"><a href="ch8-Network-Cohesion-Communities-R.html#cb665-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb665-8"><a href="ch8-Network-Cohesion-Communities-R.html#cb665-8" aria-hidden="true" tabindex="-1"></a><span class="co">#5 communities</span></span>
+<span id="cb665-9"><a href="ch8-Network-Cohesion-Communities-R.html#cb665-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(net182_friend_und, <span class="at">layout =</span> layout, <span class="at">vertex.color =</span> mems_mult_level1, </span>
+<span id="cb665-10"><a href="ch8-Network-Cohesion-Communities-R.html#cb665-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.color =</span> <span class="st">&quot;light gray&quot;</span>, <span class="at">vertex.size =</span> <span class="dv">20</span>,</span>
+<span id="cb665-11"><a href="ch8-Network-Cohesion-Communities-R.html#cb665-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Level 1 Community Membership&quot;</span>)</span></code></pre></div>
+<p><img src="Chapter8_Integrated_Network_Science_Rtutorial_network_cohesion_communities_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<p>This is similar to what we saw with the edge betweenness at different levels of aggregation, although the 5 community solution here is a little different (and offers a somewhat lower modularity score). More generally, the edge betweenness and multilevel algorithms agree on the basic divides in the network (when there are 4 communities), but not on how to divide the network further (looking within the larger communities).</p>
+<p>Note that other algorithms, like fast and greedy and label propagation offer similar results, although that will not always be the case. See other options: <code>?cluster_fast_greedy</code> <code>?cluster_label_prop</code> <code>?cluster_spinglass</code></p>
+</div>
+<div id="cohesive-blocking" class="section level3 hasAnchor" number="8.3.5">
+<h3><span class="header-section-number">8.3.5</span> Cohesive Blocking<a href="ch8-Network-Cohesion-Communities-R.html#cohesive-blocking" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As a fourth example, we consider the cohesive blocking scheme of Moody and White to look at cohesive groups in the friendship network <span class="citation">(Moody and White 2003)</span>. The idea is to hierarchically subset the network into groups based on vertex connectivity. A set of nodes are k-connected if it would take the removal of k nodes before all members could no longer reach other. The algorithm works by successively finding sets of nodes with higher levels of connectivity. This builds on the kinds of ideas we explored above in the cohesion section. For example, in the earlier calculation of vertex connectivity, we saw that all non-isolates were 4-connected. The function to run the cohesive blocking scheme of Moody and White is <code>cohesive_blocks()</code>.</p>
+<div class="sourceCode" id="cb666"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb666-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb666-1" aria-hidden="true" tabindex="-1"></a>friend_comm_cohesive <span class="ot">&lt;-</span> <span class="fu">cohesive_blocks</span>(<span class="at">graph =</span> net182_friend_und)</span></code></pre></div>
+<div class="sourceCode" id="cb667"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb667-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb667-1" aria-hidden="true" tabindex="-1"></a>friend_comm_cohesive</span></code></pre></div>
+<pre><code>## Cohesive block structure:
+## B-1      c 0, n 16
+## &#39;- B-2   c 4, n 14   ooo.oooooo ooooo.</code></pre>
+<p>The output consists of block membership and cohesion (for each block). It looks like there are two blocks, one with vertex connectivity 0 and the second with vertex connectivity 4. We can also plot the results.</p>
+<div class="sourceCode" id="cb669"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb669-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb669-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(friend_comm_cohesive, net182_friend_und) </span></code></pre></div>
+<p><img src="Chapter8_Integrated_Network_Science_Rtutorial_network_cohesion_communities_files/figure-html/unnamed-chunk-56-1.png" width="528" /></p>
+<p>Clearly the blocking scheme first separates the isolates from the main component. Everyone in the main component is connected at cohesion level 4 so that it takes the removal of 4 people to disconnect the set. This mirrors the results we saw above.</p>
+<p>So far, we have walked through different algorithms to determine the communities in the friendship network. The results suggest that that there are likely 5 well-defined communities (including the two isolates). The cohesive blocking scheme would suggest that the main component, while potentially splitting into 3 subgroups, is itself still fairly cohesive (as all members are connected by 4 independent paths).</p>
+<p>We can take the results of the community analysis and do further analysis to tease out the substantive implications of the found communities. We could ask about behavioral norms across communities (e.g., deviant behaviors), the identities mapped onto each community, the relationships between communities (i.e., do members of one group dislike another?), and so on. Here we will look at how demographic characteristics do (or do not) map onto the communities. We will then look at the relationships between communities.</p>
+</div>
+</div>
+<div id="demographic-characteristics" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> Demographic Characteristics<a href="ch8-Network-Cohesion-Communities-R.html#demographic-characteristics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For the sake of simplicity, we will use the communities based on the edge betweenness algorithm and focus on a single characteristic, racial identification. The question is how salient is race in this classroom. Does race map strongly onto the communities? Or are the communities organized around something else? We will begin by plotting the network again, but this time we want to color the nodes by race. We first set the color for the nodes based on race: blue if black and white if white.</p>
+<div class="sourceCode" id="cb670"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb670-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb670-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb670-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb670-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb670-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb670-3" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">&lt;-</span> <span class="fu">recode</span>(class182_attributes<span class="sc">$</span>race, </span>
+<span id="cb670-4"><a href="ch8-Network-Cohesion-Communities-R.html#cb670-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">as.factor =</span> F, <span class="st">&quot;&#39;black&#39; = &#39;blue&#39;; NA = NA; else = &#39;white&#39;&quot;</span>)</span></code></pre></div>
+<p>Let's check to make sure it worked.</p>
+<div class="sourceCode" id="cb671"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb671-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb671-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(class182_attributes<span class="sc">$</span>race, cols) </span></code></pre></div>
+<pre><code>##        cols
+##         blue white
+##   black    8     0
+##   white    0     8</code></pre>
+<p>Looks good. Now, let's produce a plot where we color the nodes by race and put polygons around the found communities (based on the edge_betweenness partitioning above).</p>
+<div class="sourceCode" id="cb673"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb673-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb673-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(friend_comm_eb, net182_friend_und, </span>
+<span id="cb673-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb673-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> cols, <span class="at">layout =</span> layout, </span>
+<span id="cb673-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb673-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Race Mapped onto Communities&quot;</span>)</span></code></pre></div>
+<p><img src="Chapter8_Integrated_Network_Science_Rtutorial_network_cohesion_communities_files/figure-html/unnamed-chunk-59-1.png" width="528" /></p>
+<p>We can see that this classroom divides into three communities based on racial composition: a predominately black community, a predominately white community and one community that is split evenly. This suggests that social communities can, but need not, correspond to a priori social categories, like white/black. As a network analyst, the task is to ask what social communities emerge rather than assume they map onto pre-determined labels. Similarly, we can see that the large community that is subdivided is divided within itself along racial lines (white (3, 6, 5, 11) versus more integrated (1, 9, 10, 12 15)).</p>
+<p>We can also calculate the proportion white/black in each community and compare that to what we would expect by chance. Let's write a little function to calculate the racial distribution for each community.</p>
+<div class="sourceCode" id="cb674"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb674-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb674-1" aria-hidden="true" tabindex="-1"></a>proportion_function <span class="ot">&lt;-</span> <span class="cf">function</span>(communities, attribute){ </span>
+<span id="cb674-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb674-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb674-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb674-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Arguments:</span></span>
+<span id="cb674-4"><a href="ch8-Network-Cohesion-Communities-R.html#cb674-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># communities: vector of community membership</span></span>
+<span id="cb674-5"><a href="ch8-Network-Cohesion-Communities-R.html#cb674-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># attribute: attribute vector</span></span>
+<span id="cb674-6"><a href="ch8-Network-Cohesion-Communities-R.html#cb674-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb674-7"><a href="ch8-Network-Cohesion-Communities-R.html#cb674-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Here we calculate the proportion that fall into each category </span></span>
+<span id="cb674-8"><a href="ch8-Network-Cohesion-Communities-R.html#cb674-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># found in attribute. We first do a table and then find the proportion </span></span>
+<span id="cb674-9"><a href="ch8-Network-Cohesion-Communities-R.html#cb674-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># in each category. This is done for each community (using tapply </span></span>
+<span id="cb674-10"><a href="ch8-Network-Cohesion-Communities-R.html#cb674-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># over the communities).</span></span>
+<span id="cb674-11"><a href="ch8-Network-Cohesion-Communities-R.html#cb674-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb674-12"><a href="ch8-Network-Cohesion-Communities-R.html#cb674-12" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> <span class="fu">tapply</span>(<span class="fu">factor</span>(attribute), communities, </span>
+<span id="cb674-13"><a href="ch8-Network-Cohesion-Communities-R.html#cb674-13" aria-hidden="true" tabindex="-1"></a>             <span class="cf">function</span>(x) {y <span class="ot">&lt;-</span>  <span class="fu">table</span>(x); y <span class="sc">/</span> <span class="fu">sum</span>(y)})</span>
+<span id="cb674-14"><a href="ch8-Network-Cohesion-Communities-R.html#cb674-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb674-15"><a href="ch8-Network-Cohesion-Communities-R.html#cb674-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># We then output it as a matrix using do.call</span></span>
+<span id="cb674-16"><a href="ch8-Network-Cohesion-Communities-R.html#cb674-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">do.call</span>(rbind, dat))</span>
+<span id="cb674-17"><a href="ch8-Network-Cohesion-Communities-R.html#cb674-17" aria-hidden="true" tabindex="-1"></a>} </span></code></pre></div>
+<p>Let's use our function with the edge_betweenness membership to define the communities and the race vector to define the attributes.</p>
+<div class="sourceCode" id="cb675"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb675-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb675-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proportion_function</span>(<span class="at">communities =</span> mems_eb, <span class="at">attribute =</span> class182_attributes<span class="sc">$</span>race)</span></code></pre></div>
+<pre><code>##   black white
+## 1   0.6   0.4
+## 2   0.8   0.2
+## 3   0.0   1.0
+## 4   0.0   1.0
+## 5   1.0   0.0</code></pre>
+<p>We see that in community 1, .6 are black and .4 are white. In community 2, .8 are black and .2 and white, and so on. Note that the above bit of code, which utilized a function, could be accomplished in a number of ways. For example:</p>
+<div class="sourceCode" id="cb677"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb677-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb677-1" aria-hidden="true" tabindex="-1"></a>table_list <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb677-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb677-2" aria-hidden="true" tabindex="-1"></a>race_factor <span class="ot">&lt;-</span> <span class="fu">factor</span>(class182_attributes<span class="sc">$</span>race)</span>
+<span id="cb677-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb677-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb677-4"><a href="ch8-Network-Cohesion-Communities-R.html#cb677-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">max</span>(mems_eb)){</span>
+<span id="cb677-5"><a href="ch8-Network-Cohesion-Communities-R.html#cb677-5" aria-hidden="true" tabindex="-1"></a>  tab <span class="ot">&lt;-</span> <span class="fu">table</span>(race_factor[mems_eb <span class="sc">==</span> i])</span>
+<span id="cb677-6"><a href="ch8-Network-Cohesion-Communities-R.html#cb677-6" aria-hidden="true" tabindex="-1"></a>  table_list[[i]] <span class="ot">&lt;-</span> tab <span class="sc">/</span> <span class="fu">sum</span>(tab)</span>
+<span id="cb677-7"><a href="ch8-Network-Cohesion-Communities-R.html#cb677-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb677-8"><a href="ch8-Network-Cohesion-Communities-R.html#cb677-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb677-9"><a href="ch8-Network-Cohesion-Communities-R.html#cb677-9" aria-hidden="true" tabindex="-1"></a><span class="fu">do.call</span>(rbind, table_list)</span></code></pre></div>
+<pre><code>##      black white
+## [1,]   0.6   0.4
+## [2,]   0.8   0.2
+## [3,]   0.0   1.0
+## [4,]   0.0   1.0
+## [5,]   1.0   0.0</code></pre>
+<p>We can also compare the proportions in each community to what we would expect under random expectations (a similar problem to what we saw in the ego network tutorial). For example, we could hold the network and the community membership fixed but randomly assign characteristics to the members, showing what the distribution of race would like if students were randomly distributed across the communities. In this case, we will do this a bit informally and start with a simple table of race in the classroom.</p>
+<div class="sourceCode" id="cb679"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb679-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb679-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(class182_attributes<span class="sc">$</span>race)</span></code></pre></div>
+<pre><code>## 
+## black white 
+##     8     8</code></pre>
+<p>In this case, with 8 people identifying as black and 8 as white we would expect .50 of each community to be black and .50 to be white. Clearly, the actual results deviate from this random baseline, particularly in community 2 and 3, which are predominately black and white respectively. Community 1, the 'mixed' community, is right at what we would expect if individuals were randomly forming communities, with no sorting based on race. Communities 4 and 5 are both isolated nodes and thus no variation is possible. We could, of course, also use simulation to generate the null hypothesis; where through a series of draws, we randomly assign individuals to communities, calculate the proportion white/black in each community and compare those values to the observed values (on the actual network).</p>
+</div>
+<div id="community-overlap" class="section level2 hasAnchor" number="8.5">
+<h2><span class="header-section-number">8.5</span> Community Overlap<a href="ch8-Network-Cohesion-Communities-R.html#community-overlap" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Here we examine the level of contact between our communities. How many friendships are within (or across) communities? This will tell us about the interconnections (or lack thereof) between the found communities. This combines aspects of community detection with more general questions about cohesion; as the connections between communities largely structure how cohesive the network is as a whole. We will begin by creating a table of within and between community friendship ties (and non-ties). This necessitates having two pieces of information for each dyad: first, if i-j are friends; and second, if i-j are in the same community. Let's first grab the dyad data frame from above.</p>
+<div class="sourceCode" id="cb681"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb681-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb681-1" aria-hidden="true" tabindex="-1"></a>class182_dyads <span class="ot">&lt;-</span> class182_networkdata[, <span class="fu">c</span>(<span class="st">&quot;ego&quot;</span>, <span class="st">&quot;alter&quot;</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb682"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb682-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb682-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(class182_dyads)</span></code></pre></div>
+<pre><code>##   ego alter
+## 1   1     1
+## 2   1     2
+## 3   1     3
+## 4   1     4
+## 5   1     5
+## 6   1     6</code></pre>
+<p>Now, let's get a vector showing if ego and alter are tied together. First, we grab the matrix. We then put a NA on the diagonal as we don't want to consider ties to oneself. We then take the take the matrix and string it out into a vector, using a transpose to make sure the order is correct, running from rows to columns: 1-2; 1-3...</p>
+<div class="sourceCode" id="cb684"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb684-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb684-1" aria-hidden="true" tabindex="-1"></a>mat182_friend <span class="ot">&lt;-</span> <span class="fu">as_adjacency_matrix</span>(net182_friend_und, <span class="at">sparse =</span> F)</span>
+<span id="cb684-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb684-2" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(mat182_friend) <span class="ot">&lt;-</span> <span class="cn">NA</span> </span>
+<span id="cb684-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb684-3" aria-hidden="true" tabindex="-1"></a>friend <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">t</span>(mat182_friend))  </span></code></pre></div>
+<div class="sourceCode" id="cb685"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb685-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb685-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(friend) </span></code></pre></div>
+<pre><code>## [1] NA  1  0  0  1  1</code></pre>
+<p>A 1 means that i and j are friends and 0 means that i and j are not friends. Now, we make a vector showing if each dyad is in the same community or not. For this example, we will use the membership based on the multilevel solution with 4 communities, <code>mems_mult_level2</code>. The following bit of code takes the membership based on the multilevel solution, subsets it by ego (<code>class_182_dyads$ego</code>), subsets it by alter (<code>class_182_dyads$alter</code>), and then asks if ego and alter are in the same community or not.</p>
+<div class="sourceCode" id="cb687"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb687-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb687-1" aria-hidden="true" tabindex="-1"></a>ego_community <span class="ot">&lt;-</span> mems_mult_level2[class182_dyads<span class="sc">$</span>ego]</span>
+<span id="cb687-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb687-2" aria-hidden="true" tabindex="-1"></a>alter_community <span class="ot">&lt;-</span> mems_mult_level2[class182_dyads<span class="sc">$</span>alter]</span>
+<span id="cb687-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb687-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb687-4"><a href="ch8-Network-Cohesion-Communities-R.html#cb687-4" aria-hidden="true" tabindex="-1"></a>same_comm <span class="ot">&lt;-</span> ego_community <span class="sc">==</span> alter_community</span></code></pre></div>
+<p>Putting this together, we are now in a position to create a table of community status (are i and j in the same community?) by friendship (are i and j friends?). We divide by 2 as the ij information is the same as the ji information and there is no reason to double count.</p>
+<div class="sourceCode" id="cb688"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb688-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb688-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(same_comm, friend) <span class="sc">/</span> <span class="dv">2</span></span></code></pre></div>
+<pre><code>##          friend
+## same_comm  0  1
+##     FALSE 67  7
+##     TRUE  11 35</code></pre>
+<p>The table suggests that 67 dyads are not friends and are not in the same community; 11 are not friends but are in the same community; 7 are friends but are in different communities; and 35 are friends and in the same community. Given this kind of table, we can calculate various statistics of interest. Here we will calculate an odds ratio, showing the odds of two people in the same community choosing each other as friends (compared to the odds of two people in different communities choosing each other as friends).</p>
+<div class="sourceCode" id="cb690"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb690-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb690-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">35</span> <span class="sc">*</span> <span class="dv">67</span>) <span class="sc">/</span> (<span class="dv">7</span> <span class="sc">*</span> <span class="dv">11</span>)</span></code></pre></div>
+<pre><code>## [1] 30.45455</code></pre>
+<p>Clearly there are many more ties within groups than between groups. But, as we have seen throughout the analysis, there are enough cross-group ties (coupled with the small size of the network) to make the overall network quite cohesive. Similarly, we see that race does, by and large, map onto the groups. Such mapping of demographics onto social groups does not really pose a strong threat to the overall solidarity of the classroom, however, as the groups themselves are interconnected.</p>
+</div>
+<div id="big-data-example" class="section level2 hasAnchor" number="8.6">
+<h2><span class="header-section-number">8.6</span> Big Data Example<a href="ch8-Network-Cohesion-Communities-R.html#big-data-example" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We now turn to a second, completely different example using the email patterns of individuals working at a large European research institute. The goal is to work through a community analysis on a much larger network than the classroom data used above. The email network has 265,214 nodes and over 400,000 edges. The data are freely available at: <a href="https://snap.stanford.edu/data/email-EuAll.html" class="uri">https://snap.stanford.edu/data/email-EuAll.html</a></p>
+<p>Let's first read in the data and construct a network.</p>
+<div class="sourceCode" id="cb692"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb692-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb692-1" aria-hidden="true" tabindex="-1"></a>url3 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/email-EuAll.txt&quot;</span></span>
+<span id="cb692-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb692-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb692-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb692-3" aria-hidden="true" tabindex="-1"></a>email_edges <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> url3)</span></code></pre></div>
+<div class="sourceCode" id="cb693"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb693-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb693-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(email_edges)</span></code></pre></div>
+<pre><code>## [1] 420045      2</code></pre>
+<div class="sourceCode" id="cb695"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb695-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb695-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(email_edges) </span></code></pre></div>
+<pre><code>##   V1 V2
+## 1  0  1
+## 2  0  4
+## 3  0  5
+## 4  0  8
+## 5  0 11
+## 6  0 20</code></pre>
+<p>The edges capture if person i sent at least one email to person j. We need to clean this up a bit before we can create our network. First, let's put some useful column names on the data.</p>
+<div class="sourceCode" id="cb697"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb697-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb697-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(email_edges) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;ego&quot;</span>, <span class="st">&quot;alter&quot;</span>)</span></code></pre></div>
+<p>Second, we need to add 1 to all of the ids, as the raw file was indexed by 0, but we want to start with 1.</p>
+<div class="sourceCode" id="cb698"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb698-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb698-1" aria-hidden="true" tabindex="-1"></a>email_edges <span class="ot">&lt;-</span> email_edges <span class="sc">+</span> <span class="dv">1</span></span></code></pre></div>
+<p>There are also a couple of cases where i sent an email to i, and let's take those out.</p>
+<div class="sourceCode" id="cb699"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb699-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb699-1" aria-hidden="true" tabindex="-1"></a>email_edges <span class="ot">&lt;-</span> email_edges[email_edges[, <span class="dv">1</span>] <span class="sc">!=</span> email_edges[, <span class="dv">2</span>], ]</span></code></pre></div>
+<p>Now, let's create our igraph object. We make sure to capture any isolates by setting the vertices argument, denoting the ids of all nodes in the network.</p>
+<div class="sourceCode" id="cb700"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb700-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb700-1" aria-hidden="true" tabindex="-1"></a>email_network <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> email_edges, <span class="at">directed =</span> T, </span>
+<span id="cb700-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb700-2" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">vertices =</span> (<span class="at">id =</span> <span class="fu">as.numeric</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">265214</span>)))</span></code></pre></div>
+<p>Let's treat the network as undirected.</p>
+<div class="sourceCode" id="cb701"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb701-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb701-1" aria-hidden="true" tabindex="-1"></a>email_network <span class="ot">&lt;-</span> <span class="fu">as.undirected</span>(email_network, <span class="at">mode =</span> <span class="st">&quot;collapse&quot;</span>)</span></code></pre></div>
+<p>Given the number of nodes in the network, strategies that were effective with the classroom network have to be tweaked or even abandoned with a network of this size. Our interpretation of the output will also have to shift somewhat. In particular, some of the algorithms are likely to yield solutions with a small number of large communities (as such solutions may optimize modularity when looking at a very coarse resolution). This may tell us that a few large divides exist, but will not be so useful in giving us more detailed communities that make up these larger divisions. It may then be important to look at the communities that exist at different levels of the network, or different granularity. Let's take a look at one strategy for dealing with larger networks.</p>
+<div id="multi-level-clustering-1" class="section level3 hasAnchor" number="8.6.1">
+<h3><span class="header-section-number">8.6.1</span> Multi-level Clustering<a href="ch8-Network-Cohesion-Communities-R.html#multi-level-clustering-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Past work has shown that some algorithms scale much better than others as network size increases. In particular, some algorithms will have quite long run times and utilize large amounts of memory on large networks. This doesn't mean one couldn't use these algorithms, but it is important to understand the potential costs of such a strategy. For example, <span class="citation">Yang, Algesheimer, and Tessone (2016)</span> show that the multilevel clustering approach works well on large networks, compared to other approaches, like edge betweenness or spin glass. Here we will utilize a multi-level approach on a network with over 200000 nodes.</p>
+<div class="sourceCode" id="cb702"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb702-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb702-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb702-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb702-2" aria-hidden="true" tabindex="-1"></a>email_comm_multi <span class="ot">&lt;-</span> <span class="fu">cluster_louvain</span>(<span class="at">graph =</span> email_network,</span>
+<span id="cb702-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb702-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">resolution =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p>This can take much longer with other algorithms. For example: <code>email_comm_wt &lt;- cluster_walktrap(graph = email_network, steps = 4, membership = T)</code></p>
+<p>We now take a look at the community/group structure at different levels of aggregation.</p>
+<div class="sourceCode" id="cb703"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb703-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb703-1" aria-hidden="true" tabindex="-1"></a>email_mems <span class="ot">&lt;-</span> email_comm_multi<span class="sc">$</span>memberships</span></code></pre></div>
+<div class="sourceCode" id="cb704"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb704-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb704-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(email_mems) </span></code></pre></div>
+<pre><code>## [1] 3</code></pre>
+<p>It looks like there are 3 different levels. Let's see how many communities exist at each level of aggregation. Here, we write a little function to calculate the number of people in each community.</p>
+<div class="sourceCode" id="cb706"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb706-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb706-1" aria-hidden="true" tabindex="-1"></a>length_func <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {<span class="fu">length</span>(<span class="fu">unique</span>(x))} </span></code></pre></div>
+<p>And now we apply it over the rows of the membership matrix.</p>
+<div class="sourceCode" id="cb707"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb707-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb707-1" aria-hidden="true" tabindex="-1"></a>num_comms <span class="ot">&lt;-</span> <span class="fu">apply</span>(email_mems, <span class="dv">1</span>, length_func) </span></code></pre></div>
+<div class="sourceCode" id="cb708"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb708-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb708-1" aria-hidden="true" tabindex="-1"></a>num_comms </span></code></pre></div>
+<pre><code>## [1] 18351 16022 15920</code></pre>
+<p>We can see that the least aggregated solution has 18351 communities and the most aggregated has 15920 communities. Let's also look at the modularity of each solution.</p>
+<div class="sourceCode" id="cb710"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb710-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb710-1" aria-hidden="true" tabindex="-1"></a>email_comm_multi<span class="sc">$</span>modularity</span></code></pre></div>
+<pre><code>## [1] 0.6897286 0.7852888 0.7906157</code></pre>
+<p>We will focus on the most aggregated solution (level 3) and see what the results look like. As a first step to assessing the found communities, let's see how big the communities are based on this solution. We will calculate a table on the membership vector and a summary on that table, to see what the size distribution of communities looks like.</p>
+<div class="sourceCode" id="cb712"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb712-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb712-1" aria-hidden="true" tabindex="-1"></a>mems_email <span class="ot">&lt;-</span> email_comm_multi<span class="sc">$</span>memberships[<span class="dv">3</span>, ]</span>
+<span id="cb712-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb712-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">as.numeric</span>(<span class="fu">table</span>(mems_email))) </span></code></pre></div>
+<pre><code>##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+##     1.00     2.00     2.00    16.66     2.00 16233.00</code></pre>
+<p>As we can see, the median (and 75 percentile) is size 2, while the max is 16233, suggesting that most of the groups are small but that a few large groups exist. Some of these larger communities are over 1000, even 10000 nodes. It is likely that a community of 10000 nodes is too large to be directly interpretable, even if does constitute a set of people with relatively high in-group density. Thus, one strategy would be to take the initial communities as the new starting point, rather than the whole network, and do community detection within each community. This would break the initially found communities into yet smaller communities, yielding a nested structure of communities within communities. This means we would be able to look at the community structure at increasingly high levels of granularity, while maintaining the overall (low resolution) picture seen with the initial results.</p>
+</div>
+<div id="looking-at-the-community-structure-within-the-initial-communities" class="section level3 hasAnchor" number="8.6.2">
+<h3><span class="header-section-number">8.6.2</span> Looking at the Community Structure within the Initial Communities<a href="ch8-Network-Cohesion-Communities-R.html#looking-at-the-community-structure-within-the-initial-communities" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Here, we demonstrate how to perform community detection within the set of communities already detected. We will utilize a different algorithm to perform the community detection, as having smaller networks makes it more plausible to use other options. For each desired community that we want to divide further, we need to form a network of just those members and then perform community detection on that subgraph. Let's write a little function to do this task:</p>
+<div class="sourceCode" id="cb714"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb714-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-1" aria-hidden="true" tabindex="-1"></a>create_subcommunity <span class="ot">&lt;-</span> <span class="cf">function</span>(graph, initial_communities, community_number){</span>
+<span id="cb714-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb714-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Arguments:</span></span>
+<span id="cb714-4"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># graph: igraph object</span></span>
+<span id="cb714-5"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># initial_communities: the original community memberships</span></span>
+<span id="cb714-6"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># community_number: the community number of interest (i.e., the</span></span>
+<span id="cb714-7"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># community that you want to divide further).</span></span>
+<span id="cb714-8"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb714-9"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># here we will create a subgraph of just the community of interest</span></span>
+<span id="cb714-10"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-10" aria-hidden="true" tabindex="-1"></a>  in_community <span class="ot">&lt;-</span> <span class="fu">which</span>(initial_communities <span class="sc">==</span> community_number)</span>
+<span id="cb714-11"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-11" aria-hidden="true" tabindex="-1"></a>  subgraph1 <span class="ot">&lt;-</span> <span class="fu">induced_subgraph</span>(<span class="at">graph =</span> graph,</span>
+<span id="cb714-12"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-12" aria-hidden="true" tabindex="-1"></a>                                <span class="at">vids =</span> in_community) </span>
+<span id="cb714-13"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb714-14"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># We now perform a community detection algorithm (using fast and greedy) </span></span>
+<span id="cb714-15"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># on the subgraph</span></span>
+<span id="cb714-16"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-16" aria-hidden="true" tabindex="-1"></a>  comm1 <span class="ot">&lt;-</span> <span class="fu">cluster_fast_greedy</span>(<span class="at">graph =</span> subgraph1) </span>
+<span id="cb714-17"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb714-18"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># grabbing the community membership of each </span></span>
+<span id="cb714-19"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># person in the subgraph</span></span>
+<span id="cb714-20"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-20" aria-hidden="true" tabindex="-1"></a>  mems_subgraph1 <span class="ot">&lt;-</span> <span class="fu">membership</span>(comm1) </span>
+<span id="cb714-21"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb714-22"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Now we grab the ids of those in the subgraph, so we can map them back </span></span>
+<span id="cb714-23"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># onto the original, full network </span></span>
+<span id="cb714-24"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-24" aria-hidden="true" tabindex="-1"></a>  ids_map <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">vertex_attr</span>(subgraph1, <span class="st">&quot;name&quot;</span>)) </span>
+<span id="cb714-25"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb714-26"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-26" aria-hidden="true" tabindex="-1"></a>  mems_new <span class="ot">&lt;-</span> initial_communities <span class="co"># just copying the original communities</span></span>
+<span id="cb714-27"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb714-28"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Here, we begin to relabel the communities so we can put </span></span>
+<span id="cb714-29"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># them back onto the original set of communities on </span></span>
+<span id="cb714-30"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># the full network. We want to make sure that </span></span>
+<span id="cb714-31"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-31" aria-hidden="true" tabindex="-1"></a>  <span class="co"># these new community ids are unique, so we take the max</span></span>
+<span id="cb714-32"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># original community number and add that to the community</span></span>
+<span id="cb714-33"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-33" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ids on the subgraph.</span></span>
+<span id="cb714-34"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb714-35"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-35" aria-hidden="true" tabindex="-1"></a>  mems_subgraph1_relabel <span class="ot">&lt;-</span> mems_subgraph1 <span class="sc">+</span> <span class="fu">max</span>(initial_communities) </span>
+<span id="cb714-36"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb714-37"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-37" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Here we put the new communities onto a vector of community </span></span>
+<span id="cb714-38"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-38" aria-hidden="true" tabindex="-1"></a>  <span class="co"># membership corresponding to the whole network. </span></span>
+<span id="cb714-39"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-39" aria-hidden="true" tabindex="-1"></a>  mems_new[ids_map] <span class="ot">&lt;-</span> mems_subgraph1_relabel </span>
+<span id="cb714-40"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb714-41"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-41" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Note we just change those in the subgraph of interest.</span></span>
+<span id="cb714-42"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb714-43"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-43" aria-hidden="true" tabindex="-1"></a>  <span class="co"># We can then relabel all communities, if desired, to take out the old </span></span>
+<span id="cb714-44"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-44" aria-hidden="true" tabindex="-1"></a>  <span class="co"># community number and put in order from low to high:</span></span>
+<span id="cb714-45"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-45" aria-hidden="true" tabindex="-1"></a>  num_comms_new <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">unique</span>(mems_new))</span>
+<span id="cb714-46"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-46" aria-hidden="true" tabindex="-1"></a>  mems_updated <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(<span class="fu">factor</span>(mems_new, </span>
+<span id="cb714-47"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-47" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">labels =</span> <span class="dv">1</span><span class="sc">:</span>num_comms_new)))</span>
+<span id="cb714-48"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb714-49"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-49" aria-hidden="true" tabindex="-1"></a>  <span class="co"># here we output the subgraph, the membership and the updated</span></span>
+<span id="cb714-50"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-50" aria-hidden="true" tabindex="-1"></a>  <span class="co"># vector of community membership:</span></span>
+<span id="cb714-51"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">subgraph =</span> subgraph1, </span>
+<span id="cb714-52"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-52" aria-hidden="true" tabindex="-1"></a>              <span class="at">mems_subgraph =</span> mems_subgraph1, </span>
+<span id="cb714-53"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-53" aria-hidden="true" tabindex="-1"></a>              <span class="at">membership_updated =</span> mems_updated))</span>
+<span id="cb714-54"><a href="ch8-Network-Cohesion-Communities-R.html#cb714-54" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Now, let's run it on an example community, here community number 33, which has over 3000 nodes. The inputs are the email network (set using the graph argument), the original set of communities (set using initial_communities) and the community of interest to look within (set using community_number).</p>
+<div class="sourceCode" id="cb715"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb715-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb715-1" aria-hidden="true" tabindex="-1"></a>subcommunity_dat <span class="ot">&lt;-</span> <span class="fu">create_subcommunity</span>(<span class="at">graph =</span> email_network, </span>
+<span id="cb715-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb715-2" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">initial_communities =</span> mems_email,</span>
+<span id="cb715-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb715-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">community_number =</span> <span class="dv">33</span>) </span></code></pre></div>
+<p>Let's grab the subgraph, the membership within that subgraph and the updated membership vector on the entire graph.</p>
+<div class="sourceCode" id="cb716"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb716-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb716-1" aria-hidden="true" tabindex="-1"></a>subnet <span class="ot">&lt;-</span> subcommunity_dat<span class="sc">$</span>subgraph</span>
+<span id="cb716-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb716-2" aria-hidden="true" tabindex="-1"></a>mems_subnet <span class="ot">&lt;-</span> subcommunity_dat<span class="sc">$</span>mems_subgraph</span>
+<span id="cb716-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb716-3" aria-hidden="true" tabindex="-1"></a>mems_updated <span class="ot">&lt;-</span> subcommunity_dat<span class="sc">$</span>membership_updated</span></code></pre></div>
+<p>Now, let's plot the subgraph with the nodes colored by community membership, based on this more disaggregated analysis.</p>
+<div class="sourceCode" id="cb717"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb717-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb717-1" aria-hidden="true" tabindex="-1"></a>layout_email <span class="ot">&lt;-</span> <span class="fu">layout.fruchterman.reingold</span>(subnet)</span>
+<span id="cb717-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb717-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb717-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb717-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(subnet, <span class="at">vertex.label =</span> <span class="cn">NA</span>, <span class="at">vertex.size =</span> .<span class="dv">6</span>,</span>
+<span id="cb717-4"><a href="ch8-Network-Cohesion-Communities-R.html#cb717-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">layout =</span> layout_email, <span class="at">edge.color =</span> <span class="st">&quot;light gray&quot;</span>, </span>
+<span id="cb717-5"><a href="ch8-Network-Cohesion-Communities-R.html#cb717-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.curved =</span> .<span class="dv">2</span>, <span class="at">vertex.frame.color =</span> <span class="cn">NA</span>, </span>
+<span id="cb717-6"><a href="ch8-Network-Cohesion-Communities-R.html#cb717-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.color =</span> mems_subnet)</span></code></pre></div>
+<p><img src="Chapter8_Integrated_Network_Science_Rtutorial_network_cohesion_communities_files/figure-html/unnamed-chunk-90-1.png" width="528" /></p>
+<p>We can see that there is a set of subcommunities that emerge within community 33 but were missed originally (where everyone in this plot is placed in the same community in the original analysis).</p>
+<p>It is also useful to check the membership of the focal community in the new community vector (<code>mems_updated</code>). Here we do a table on <code>mems_updated</code>, only looking at those nodes who were originally in community 33 (defined in <code>mems_email</code>).</p>
+<div class="sourceCode" id="cb718"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb718-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb718-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(mems_updated[mems_email <span class="sc">==</span> <span class="dv">33</span>])</span></code></pre></div>
+<pre><code>## 
+## 15920 15921 15922 15923 15924 15925 15926 15927 15928 15929 15930 15931 15932 15933 15934 15935 15936 15937 
+##   682   178   180   846   952   104   167    43    72    47    17    16    14     6     5     3     3     5</code></pre>
+<p>We can see that everyone who used to be in community 33 is now split between 18 communities. The labels of these communities have also been set to unique values in the overall vector of communities. We can also check the modularity score with this new set of community memberships:</p>
+<div class="sourceCode" id="cb720"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb720-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb720-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modularity</span>(email_network, mems_updated)</span></code></pre></div>
+<pre><code>## [1] 0.7901395</code></pre>
+<p>Note that subdividing community 33 did not actually yield a higher modularity score. Nonetheless, it still may be of substantive interest to see what the subcommunities (within the larger groupings) look like across the network. Given our function, we could extend this kind of analysis to any community of interest. We could loop over (or use <code>lapply()</code>) to do this over any set of communities. For example, we could further subdivide all communities larger than a certain size threshold. This would yield a set of communities analyzed at different levels of resolution. For example, here we look at community 2, the largest community:</p>
+<div class="sourceCode" id="cb722"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb722-1"><a href="ch8-Network-Cohesion-Communities-R.html#cb722-1" aria-hidden="true" tabindex="-1"></a>subcommunity_dat <span class="ot">&lt;-</span> <span class="fu">create_subcommunity</span>(<span class="at">graph =</span> email_network, </span>
+<span id="cb722-2"><a href="ch8-Network-Cohesion-Communities-R.html#cb722-2" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">initial_communities =</span> mems_updated,</span>
+<span id="cb722-3"><a href="ch8-Network-Cohesion-Communities-R.html#cb722-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">community_number =</span> <span class="dv">2</span>)  </span></code></pre></div>
+<p>Two things to note. First, we must remember that the initial_communities input would have to be updated with the new membership list each time we update that vector (here we used <code>mems_updated</code>). Remember that we defined <code>mems_updated</code> as:
+<code>mems_updated &lt;- subcommunity_dat$membership_updated</code>. And second, note that the community of interest may change number as we update the community membership vector and would need to be updated accordingly as the process continues iteratively.</p>
+<p>Overall, this tutorial has offered a number of analyses related to cohesion and community structure. These topics are important in their own right and also serve as building blocks for other analyses, such as work on hierarchy, two-mode networks, culture and diffusion (see <a href="ch9-Network-Centrality-Hierarchy-R.html#ch9-Network-Centrality-Hierarchy-R">Chapters 9</a>, <a href="ch11-Two-mode-Networks.html#ch11-Two-mode-Networks">11</a>, <a href="ch12-Networks-Culture-R.html#ch12-Networks-Culture-R">12</a> and <a href="ch14-Network-Diffusion-R.html#ch14-Network-Diffusion-R">14</a>).</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ch7-Dyads-Triads-R.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ch9-Network-Centrality-Hierarchy-R.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "serif",
+"size": 2.5
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"info": false
+});
+});
+</script>
+
+</body>
+
+</html>

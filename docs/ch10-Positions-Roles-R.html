@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>10 Positions and Roles | Network Analysis: Integrating Social Network Theory, Method, and Application with R</title>
+  <meta name="description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="10 Positions and Roles | Network Analysis: Integrating Social Network Theory, Method, and Application with R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="10 Positions and Roles | Network Analysis: Integrating Social Network Theory, Method, and Application with R" />
+  
+  <meta name="twitter:description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  
+
+<meta name="author" content="Craig Rawlings, Jeffrey A. Smith, James Moody, and Daniel McFarland" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ch9-Network-Centrality-Hierarchy-R.html"/>
+<link rel="next" href="ch11-Two-mode-Networks.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/d3-4.5.0/d3.min.js"></script>
+<script src="libs/forceNetwork-binding-0.4/forceNetwork.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="https://inarwhal.github.io/NetworkAnalysisR-book/">
+Network Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#how-to-read-the-book"><i class="fa fa-check"></i><b>1.1</b> How to Read the Book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#citations-and-use"><i class="fa fa-check"></i><b>1.2</b> Citations and Use</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#updates-and-feedback"><i class="fa fa-check"></i><b>1.3</b> Updates and Feedback</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i><b>1.4</b> Acknowledgments</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#author-informtion"><i class="fa fa-check"></i><b>1.5</b> Author Informtion</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#session-information"><i class="fa fa-check"></i><b>1.6</b> Session Information</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html"><i class="fa fa-check"></i><b>2</b> Basic Introduction to R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html#preliminaries"><i class="fa fa-check"></i><b>2.1</b> Preliminaries</a></li>
+<li class="chapter" data-level="2.2" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html#packages"><i class="fa fa-check"></i><b>2.2</b> Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ch3-Network-Data-R.html"><a href="ch3-Network-Data-R.html"><i class="fa fa-check"></i><b>3</b> Network Data</a></li>
+<li class="chapter" data-level="" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html"><i class="fa fa-check"></i>3, Part 1. Cross-Sectional Network Data</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#reading-data-into-r"><i class="fa fa-check"></i><b>3.1</b> Reading Data into R</a></li>
+<li class="chapter" data-level="3.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#networks-in-igraph"><i class="fa fa-check"></i><b>3.2</b> Networks in igraph</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-a-matrix-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.1</b> Using a Matrix to Construct the Network</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-edgelist-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.2</b> Using an Edgelist to Construct the Network</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#extracting-information-from-igraph-objects"><i class="fa fa-check"></i><b>3.2.3</b> Extracting Information from igraph Objects</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-adjacency-list-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.4</b> Using an Adjacency List to Construct the Network</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-the-network-package"><i class="fa fa-check"></i><b>3.3</b> Using the network Package</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-a-matrix-to-construct-the-network-1"><i class="fa fa-check"></i><b>3.3.1</b> Using a Matrix to Construct the Network</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-edgelist-to-construct-the-network-1"><i class="fa fa-check"></i><b>3.3.2</b> Using an Edgelist to Construct the Network</a></li>
+<li class="chapter" data-level="3.3.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#putting-edge-attributes-onto-the-network"><i class="fa fa-check"></i><b>3.3.3</b> Putting Edge Attributes onto the Network</a></li>
+<li class="chapter" data-level="3.3.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#moving-between-igraph-and-network-objects"><i class="fa fa-check"></i><b>3.3.4</b> Moving between igraph and network Objects</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#some-key-network-measures"><i class="fa fa-check"></i><b>3.4</b> Some Key Network Measures</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#degree"><i class="fa fa-check"></i><b>3.4.1</b> Degree</a></li>
+<li class="chapter" data-level="3.4.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#density"><i class="fa fa-check"></i><b>3.4.2</b> Density</a></li>
+<li class="chapter" data-level="3.4.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#walks"><i class="fa fa-check"></i><b>3.4.3</b> Walks</a></li>
+<li class="chapter" data-level="3.4.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#paths-distance-and-closeness"><i class="fa fa-check"></i><b>3.4.4</b> Paths, Distance, and Closeness</a></li>
+<li class="chapter" data-level="3.4.5" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#reachability"><i class="fa fa-check"></i><b>3.4.5</b> Reachability</a></li>
+<li class="chapter" data-level="3.4.6" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#diameter"><i class="fa fa-check"></i><b>3.4.6</b> Diameter</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html"><i class="fa fa-check"></i>3, Part 2. Dynamic Network Data</a>
+<ul>
+<li class="chapter" data-level="3.5" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#discrete-longitudinal-networks"><i class="fa fa-check"></i><b>3.5</b> Discrete Longitudinal Networks</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#getting-the-data-ready"><i class="fa fa-check"></i><b>3.5.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="3.5.2" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#constructing-networkdynamic-objects"><i class="fa fa-check"></i><b>3.5.2</b> Constructing networkDynamic Objects</a></li>
+<li class="chapter" data-level="3.5.3" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#summary-statistics"><i class="fa fa-check"></i><b>3.5.3</b> Summary Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#continuous-time-networks"><i class="fa fa-check"></i><b>3.6</b> Continuous-Time Networks</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#getting-the-data-ready-1"><i class="fa fa-check"></i><b>3.6.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="3.6.2" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#constructing-networkdynamic-objects-1"><i class="fa fa-check"></i><b>3.6.2</b> Constructing networkDynamic Objects</a></li>
+<li class="chapter" data-level="3.6.3" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#summary-statistics-1"><i class="fa fa-check"></i><b>3.6.3</b> Summary Statistics</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html"><i class="fa fa-check"></i><b>4</b> Missing Network Data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#missing-data"><i class="fa fa-check"></i><b>4.1</b> Missing Data</a></li>
+<li class="chapter" data-level="4.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#listwise-deletion"><i class="fa fa-check"></i><b>4.2</b> Listwise Deletion</a></li>
+<li class="chapter" data-level="4.3" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-the-level-of-bias"><i class="fa fa-check"></i><b>4.3</b> Gauging the Level of Bias</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-bias-using-past-results"><i class="fa fa-check"></i><b>4.3.1</b> Gauging Bias Using Past Results</a></li>
+<li class="chapter" data-level="4.3.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-bias-using-predictive-models"><i class="fa fa-check"></i><b>4.3.2</b> Gauging Bias Using Predictive Models</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-options"><i class="fa fa-check"></i><b>4.4</b> Simple Imputation Options</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-asymmetric-option"><i class="fa fa-check"></i><b>4.4.1</b> Simple Imputation with Asymmetric Option</a></li>
+<li class="chapter" data-level="4.4.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-symmetric-option"><i class="fa fa-check"></i><b>4.4.2</b> Simple Imputation with Symmetric Option</a></li>
+<li class="chapter" data-level="4.4.3" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-probabilistic-option"><i class="fa fa-check"></i><b>4.4.3</b> Simple Imputation with Probabilistic Option</a></li>
+<li class="chapter" data-level="4.4.4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#comparing-estimates"><i class="fa fa-check"></i><b>4.4.4</b> Comparing Estimates</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html"><i class="fa fa-check"></i><b>5</b> Network Visualization</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#setting-up-the-session"><i class="fa fa-check"></i><b>5.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="5.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#network-plots-using-igraph"><i class="fa fa-check"></i><b>5.2</b> Network Plots using igraph</a></li>
+<li class="chapter" data-level="5.3" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#network-plots-based-on-ggplot"><i class="fa fa-check"></i><b>5.3</b> Network Plots based on ggplot</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#ggally-package"><i class="fa fa-check"></i><b>5.3.1</b> GGally package</a></li>
+<li class="chapter" data-level="5.3.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#ggnetwork-package"><i class="fa fa-check"></i><b>5.3.2</b> ggnetwork package</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#contour-plots"><i class="fa fa-check"></i><b>5.4</b> Contour Plots</a></li>
+<li class="chapter" data-level="5.5" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#interactive-plots"><i class="fa fa-check"></i><b>5.5</b> Interactive Plots</a></li>
+<li class="chapter" data-level="5.6" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#dynamic-network-visualizations"><i class="fa fa-check"></i><b>5.6</b> Dynamic Network Visualizations</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#getting-the-data-ready-2"><i class="fa fa-check"></i><b>5.6.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="5.6.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#time-flattened-visualizations"><i class="fa fa-check"></i><b>5.6.2</b> Time Flattened Visualizations</a></li>
+<li class="chapter" data-level="5.6.3" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#dynamic-network-movies"><i class="fa fa-check"></i><b>5.6.3</b> Dynamic Network Movies</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html"><i class="fa fa-check"></i><b>6</b> Ego Network Data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#working-with-ego-network-data"><i class="fa fa-check"></i><b>6.1</b> Working with Ego Network Data</a></li>
+<li class="chapter" data-level="6.2" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#plotting-networks"><i class="fa fa-check"></i><b>6.2</b> Plotting Networks</a></li>
+<li class="chapter" data-level="6.3" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#homophily-ego-alter-attributes"><i class="fa fa-check"></i><b>6.3</b> Homophily: Ego-Alter Attributes</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#proportion-of-alters-matching-ego"><i class="fa fa-check"></i><b>6.3.1</b> Proportion of Alters Matching Ego</a></li>
+<li class="chapter" data-level="6.3.2" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#analyzing-homophily-at-the-dyadic-level-ego-alter-pairs"><i class="fa fa-check"></i><b>6.3.2</b> Analyzing Homophily at the Dyadic Level: Ego-Alter Pairs</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#homophily-alter-attributes"><i class="fa fa-check"></i><b>6.4</b> Homophily: Alter Attributes</a></li>
+<li class="chapter" data-level="6.5" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#ego-networks-as-predictors"><i class="fa fa-check"></i><b>6.5</b> Ego Networks as Predictors</a></li>
+<li class="chapter" data-level="6.6" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#working-with-one-input-file"><i class="fa fa-check"></i><b>6.6</b> Working with One Input File</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html"><i class="fa fa-check"></i><b>7</b> Dyads and Triads</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#setting-up-the-session-1"><i class="fa fa-check"></i><b>7.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="7.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyadic-processes"><i class="fa fa-check"></i><b>7.2</b> Dyadic Processes</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyad-census-and-reciprocity"><i class="fa fa-check"></i><b>7.2.1</b> Dyad Census and Reciprocity</a></li>
+<li class="chapter" data-level="7.2.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#conditional-uniform-graph-tests"><i class="fa fa-check"></i><b>7.2.2</b> Conditional Uniform Graph Tests</a></li>
+<li class="chapter" data-level="7.2.3" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyad-census-by-attributes-of-nodes"><i class="fa fa-check"></i><b>7.2.3</b> Dyad Census by Attributes of Nodes</a></li>
+<li class="chapter" data-level="7.2.4" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#advice-and-friendship-together"><i class="fa fa-check"></i><b>7.2.4</b> Advice and Friendship Together</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#triadic-processes"><i class="fa fa-check"></i><b>7.3</b> Triadic Processes</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#triad-census"><i class="fa fa-check"></i><b>7.3.1</b> Triad Census</a></li>
+<li class="chapter" data-level="7.3.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#transitivity"><i class="fa fa-check"></i><b>7.3.2</b> Transitivity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html"><i class="fa fa-check"></i><b>8</b> Network Cohesion and Communities</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#first-example-network"><i class="fa fa-check"></i><b>8.1</b> First Example Network</a></li>
+<li class="chapter" data-level="8.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#cohesion"><i class="fa fa-check"></i><b>8.2</b> Cohesion</a></li>
+<li class="chapter" data-level="8.3" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#community-or-group-detection"><i class="fa fa-check"></i><b>8.3</b> Community (or Group) Detection</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#walktrap"><i class="fa fa-check"></i><b>8.3.1</b> Walktrap</a></li>
+<li class="chapter" data-level="8.3.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#edge-betweenness"><i class="fa fa-check"></i><b>8.3.2</b> Edge Betweenness</a></li>
+<li class="chapter" data-level="8.3.3" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#scree-plots"><i class="fa fa-check"></i><b>8.3.3</b> Scree Plots</a></li>
+<li class="chapter" data-level="8.3.4" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#multi-level-clustering"><i class="fa fa-check"></i><b>8.3.4</b> Multi-level Clustering</a></li>
+<li class="chapter" data-level="8.3.5" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#cohesive-blocking"><i class="fa fa-check"></i><b>8.3.5</b> Cohesive Blocking</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#demographic-characteristics"><i class="fa fa-check"></i><b>8.4</b> Demographic Characteristics</a></li>
+<li class="chapter" data-level="8.5" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#community-overlap"><i class="fa fa-check"></i><b>8.5</b> Community Overlap</a></li>
+<li class="chapter" data-level="8.6" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#big-data-example"><i class="fa fa-check"></i><b>8.6</b> Big Data Example</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#multi-level-clustering-1"><i class="fa fa-check"></i><b>8.6.1</b> Multi-level Clustering</a></li>
+<li class="chapter" data-level="8.6.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#looking-at-the-community-structure-within-the-initial-communities"><i class="fa fa-check"></i><b>8.6.2</b> Looking at the Community Structure within the Initial Communities</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html"><i class="fa fa-check"></i><b>9</b> Network Centrality and Hierarchy</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#setting-up-the-session-2"><i class="fa fa-check"></i><b>9.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="9.2" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality"><i class="fa fa-check"></i><b>9.2</b> Centrality</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality-measures-for-social-interactions"><i class="fa fa-check"></i><b>9.2.1</b> Centrality Measures for Social Interactions</a></li>
+<li class="chapter" data-level="9.2.2" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#correlations-between-centrality-measures"><i class="fa fa-check"></i><b>9.2.2</b> Correlations between Centrality Measures</a></li>
+<li class="chapter" data-level="9.2.3" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality-for-task-interactions"><i class="fa fa-check"></i><b>9.2.3</b> Centrality for Task Interactions</a></li>
+<li class="chapter" data-level="9.2.4" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#tasksocial-correlations"><i class="fa fa-check"></i><b>9.2.4</b> Task/Social Correlations</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centralization"><i class="fa fa-check"></i><b>9.3</b> Centralization</a></li>
+<li class="chapter" data-level="9.4" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#clustering-and-hierarchy"><i class="fa fa-check"></i><b>9.4</b> Clustering and Hierarchy</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html"><i class="fa fa-check"></i><b>10</b> Positions and Roles</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#classroom-network-data"><i class="fa fa-check"></i><b>10.1</b> Classroom Network Data</a></li>
+<li class="chapter" data-level="10.2" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#getting-the-data-ready-3"><i class="fa fa-check"></i><b>10.2</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="10.3" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#structural-equivalence"><i class="fa fa-check"></i><b>10.3</b> Structural Equivalence</a></li>
+<li class="chapter" data-level="10.4" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#defining-positions"><i class="fa fa-check"></i><b>10.4</b> Defining Positions</a></li>
+<li class="chapter" data-level="10.5" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#role-analysis"><i class="fa fa-check"></i><b>10.5</b> Role Analysis</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#permuting-the-matrix-by-position"><i class="fa fa-check"></i><b>10.5.1</b> Permuting the Matrix by Position</a></li>
+<li class="chapter" data-level="10.5.2" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#constructing-a-blockmodel"><i class="fa fa-check"></i><b>10.5.2</b> Constructing a Blockmodel</a></li>
+<li class="chapter" data-level="10.5.3" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#plotting-a-blockmodel"><i class="fa fa-check"></i><b>10.5.3</b> Plotting a Blockmodel</a></li>
+<li class="chapter" data-level="10.5.4" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#interpretation-of-blockmodel"><i class="fa fa-check"></i><b>10.5.4</b> Interpretation of Blockmodel</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#local-equivalence"><i class="fa fa-check"></i><b>10.6</b> Local Equivalence</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html"><i class="fa fa-check"></i><b>11</b> Two-mode Networks: Affilitations and Dualities</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#example-affiliation-data"><i class="fa fa-check"></i><b>11.1</b> Example Affiliation Data</a></li>
+<li class="chapter" data-level="11.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#plotting-the-network"><i class="fa fa-check"></i><b>11.2</b> Plotting the Network</a></li>
+<li class="chapter" data-level="11.3" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#single-mode-networks"><i class="fa fa-check"></i><b>11.3</b> Single Mode Networks</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#constructing-one-mode-projections"><i class="fa fa-check"></i><b>11.3.1</b> Constructing One-Mode Projections</a></li>
+<li class="chapter" data-level="11.3.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#plotting-one-mode-projections"><i class="fa fa-check"></i><b>11.3.2</b> Plotting One-Mode Projections</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#club-to-club-network"><i class="fa fa-check"></i><b>11.4</b> Club-to-Club Network</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#centrality-1"><i class="fa fa-check"></i><b>11.4.1</b> Centrality</a></li>
+<li class="chapter" data-level="11.4.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#groups"><i class="fa fa-check"></i><b>11.4.2</b> Groups</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#using-the-tnet-package"><i class="fa fa-check"></i><b>11.5</b> Using the tnet package</a></li>
+<li class="chapter" data-level="11.6" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#racial-segregation"><i class="fa fa-check"></i><b>11.6</b> Racial Segregation</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#proportion-of-co-membership-edges-where-students-match-on-race"><i class="fa fa-check"></i><b>11.6.1</b> Proportion of Co-membership Edges where Students Match on Race</a></li>
+<li class="chapter" data-level="11.6.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#do-students-match-racially-with-at-least-one-other-student"><i class="fa fa-check"></i><b>11.6.2</b> Do Students Match Racially with at Least One Other Student?</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#club-centrality-and-attributes"><i class="fa fa-check"></i><b>11.7</b> Club Centrality and Attributes</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="ch12-Networks-Culture-R.html"><a href="ch12-Networks-Culture-R.html"><i class="fa fa-check"></i><b>12</b> Networks and Culture</a></li>
+<li class="chapter" data-level="" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html"><i class="fa fa-check"></i>12, Part 1. Cultural Structures</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#getting-the-data-ready-4"><i class="fa fa-check"></i><b>12.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="12.2" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#topic-modeling"><i class="fa fa-check"></i><b>12.2</b> Topic Modeling</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#lda-initial-model"><i class="fa fa-check"></i><b>12.2.1</b> LDA: Initial Model</a></li>
+<li class="chapter" data-level="12.2.2" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#lda-picking-the-number-of-topics"><i class="fa fa-check"></i><b>12.2.2</b> LDA: Picking the Number of Topics</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#a-network-representation"><i class="fa fa-check"></i><b>12.3</b> A Network Representation</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html"><i class="fa fa-check"></i>12, Part 2. Cultural Spaces</a>
+<ul>
+<li class="chapter" data-level="12.4" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#correspondence-analysis"><i class="fa fa-check"></i><b>12.4</b> Correspondence Analysis</a></li>
+<li class="chapter" data-level="12.5" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#number-of-dimensions"><i class="fa fa-check"></i><b>12.5</b> Number of Dimensions</a></li>
+<li class="chapter" data-level="12.6" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#importance-of-rowscolumns"><i class="fa fa-check"></i><b>12.6</b> Importance of Rows/Columns</a></li>
+<li class="chapter" data-level="12.7" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#hierarchical-clustering"><i class="fa fa-check"></i><b>12.7</b> Hierarchical Clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="ch13-Statistical-Models-Networks-R.html"><a href="ch13-Statistical-Models-Networks-R.html"><i class="fa fa-check"></i><b>13</b> Statistical Models for Networks</a></li>
+<li class="chapter" data-level="" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><i class="fa fa-check"></i>13, Part 1. Cross-Sectional Network Models: ERGM</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#setting-up-the-session-3"><i class="fa fa-check"></i><b>13.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="13.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#descriptive-statistics"><i class="fa fa-check"></i><b>13.2</b> Descriptive Statistics</a></li>
+<li class="chapter" data-level="13.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#cug-tests"><i class="fa fa-check"></i><b>13.3</b> CUG Tests</a></li>
+<li class="chapter" data-level="13.4" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#fitting-an-ergm"><i class="fa fa-check"></i><b>13.4</b> Fitting an ERGM</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-only"><i class="fa fa-check"></i><b>13.4.1</b> Edges Only</a></li>
+<li class="chapter" data-level="13.4.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-and-homophily"><i class="fa fa-check"></i><b>13.4.2</b> Edges and Homophily</a></li>
+<li class="chapter" data-level="13.4.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-homophily-and-node-covariates"><i class="fa fa-check"></i><b>13.4.3</b> Edges, Homophily, and Node Covariates</a></li>
+<li class="chapter" data-level="13.4.4" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-homophily-node-covariates-and-reciprocity"><i class="fa fa-check"></i><b>13.4.4</b> Edges, Homophily, Node Covariates, and Reciprocity</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#checking-model-convergence"><i class="fa fa-check"></i><b>13.5</b> Checking Model Convergence</a></li>
+<li class="chapter" data-level="13.6" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#goodness-of-fit"><i class="fa fa-check"></i><b>13.6</b> Goodness of Fit</a></li>
+<li class="chapter" data-level="13.7" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#adding-gwesp-to-the-model"><i class="fa fa-check"></i><b>13.7</b> Adding GWESP to the Model</a></li>
+<li class="chapter" data-level="13.8" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#simulation"><i class="fa fa-check"></i><b>13.8</b> Simulation</a></li>
+<li class="chapter" data-level="13.9" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#example-on-a-large-network"><i class="fa fa-check"></i><b>13.9</b> Example on a Large Network</a></li>
+<li class="chapter" data-level="13.10" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#ergm-on-a-valued-network"><i class="fa fa-check"></i><b>13.10</b> ERGM on a Valued Network</a>
+<ul>
+<li class="chapter" data-level="13.10.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#baseline-ergm-on-valued-network"><i class="fa fa-check"></i><b>13.10.1</b> Baseline ERGM on Valued Network</a></li>
+<li class="chapter" data-level="13.10.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#adding-nodematch-and-nodefactor-terms"><i class="fa fa-check"></i><b>13.10.2</b> Adding Nodematch and Nodefactor Terms</a></li>
+<li class="chapter" data-level="13.10.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#transitivity-in-valued-networks"><i class="fa fa-check"></i><b>13.10.3</b> Transitivity in Valued Networks</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html"><i class="fa fa-check"></i>13, Part 2. Longitudinal Network Models: STERGM</a>
+<ul>
+<li class="chapter" data-level="13.11" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#getting-the-data-ready-5"><i class="fa fa-check"></i><b>13.11</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="13.12" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#stergms"><i class="fa fa-check"></i><b>13.12</b> STERGMs</a>
+<ul>
+<li class="chapter" data-level="13.12.1" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-1-just-edges"><i class="fa fa-check"></i><b>13.12.1</b> Model 1: Just Edges</a></li>
+<li class="chapter" data-level="13.12.2" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-2-edges-homophily-and-nodefactor"><i class="fa fa-check"></i><b>13.12.2</b> Model 2: Edges, Homophily and Nodefactor</a></li>
+<li class="chapter" data-level="13.12.3" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-3-edges-nodefactor-and-seating"><i class="fa fa-check"></i><b>13.12.3</b> Model 3: Edges, Nodefactor, and Seating</a></li>
+<li class="chapter" data-level="13.12.4" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-4-adding-gwesp-to-the-model"><i class="fa fa-check"></i><b>13.12.4</b> Model 4: Adding GWESP to the Model</a></li>
+</ul></li>
+<li class="chapter" data-level="13.13" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#checking-model-fit"><i class="fa fa-check"></i><b>13.13</b> Checking Model Fit</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><i class="fa fa-check"></i>13, Part 3. Two-mode Network Models</a>
+<ul>
+<li class="chapter" data-level="13.14" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#affiliation-data"><i class="fa fa-check"></i><b>13.14</b> Affiliation Data</a></li>
+<li class="chapter" data-level="13.15" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#ergm-on-a-two-mode-network"><i class="fa fa-check"></i><b>13.15</b> ERGM on a Two-mode Network</a>
+<ul>
+<li class="chapter" data-level="13.15.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#edges"><i class="fa fa-check"></i><b>13.15.1</b> Edges</a></li>
+<li class="chapter" data-level="13.15.2" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#adjusting-for-structural-issues-gender-and-grade-specific-clubs"><i class="fa fa-check"></i><b>13.15.2</b> Adjusting for Structural Issues: Gender and Grade Specific Clubs</a></li>
+</ul></li>
+<li class="chapter" data-level="13.16" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#second-mode-terms"><i class="fa fa-check"></i><b>13.16</b> Second Mode Terms</a>
+<ul>
+<li class="chapter" data-level="13.16.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#nodefactor"><i class="fa fa-check"></i><b>13.16.1</b> Nodefactor</a></li>
+<li class="chapter" data-level="13.16.2" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#homophily"><i class="fa fa-check"></i><b>13.16.2</b> Homophily</a></li>
+</ul></li>
+<li class="chapter" data-level="13.17" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#first-mode-terms"><i class="fa fa-check"></i><b>13.17</b> First Mode Terms</a></li>
+<li class="chapter" data-level="13.18" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#clustering"><i class="fa fa-check"></i><b>13.18</b> Clustering</a></li>
+<li class="chapter" data-level="13.19" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#two-mode-longitudinal-networks"><i class="fa fa-check"></i><b>13.19</b> Two-mode Longitudinal Networks</a>
+<ul>
+<li class="chapter" data-level="13.19.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#entry-and-exit-of-nodes"><i class="fa fa-check"></i><b>13.19.1</b> Entry and Exit of Nodes</a></li>
+</ul></li>
+<li class="chapter" data-level="13.20" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#stergm-on-a-two-mode-network"><i class="fa fa-check"></i><b>13.20</b> STERGM on a Two-mode Network</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html"><i class="fa fa-check"></i>13, Part 4. Relational Event Models</a>
+<ul>
+<li class="chapter" data-level="13.21" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#getting-the-data-ready-6"><i class="fa fa-check"></i><b>13.21</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="13.22" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#running-initial-models"><i class="fa fa-check"></i><b>13.22</b> Running Initial Models</a>
+<ul>
+<li class="chapter" data-level="13.22.1" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#intercept-only-model"><i class="fa fa-check"></i><b>13.22.1</b> Intercept Only Model</a></li>
+<li class="chapter" data-level="13.22.2" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#adding-sender-and-receiver-effects"><i class="fa fa-check"></i><b>13.22.2</b> Adding Sender and Receiver Effects</a></li>
+<li class="chapter" data-level="13.22.3" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#adding-covariate-event-terms"><i class="fa fa-check"></i><b>13.22.3</b> Adding Covariate Event Terms</a></li>
+</ul></li>
+<li class="chapter" data-level="13.23" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#micro-rules-of-interaction"><i class="fa fa-check"></i><b>13.23</b> Micro Rules of Interaction</a></li>
+<li class="chapter" data-level="13.24" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#assessing-model-fit"><i class="fa fa-check"></i><b>13.24</b> Assessing Model Fit</a></li>
+<li class="chapter" data-level="13.25" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#comparison-to-a-second-date"><i class="fa fa-check"></i><b>13.25</b> Comparison to a Second Date</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="ch14-Network-Diffusion-R.html"><a href="ch14-Network-Diffusion-R.html"><i class="fa fa-check"></i><b>14</b> Network Diffusion</a></li>
+<li class="chapter" data-level="" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html"><i class="fa fa-check"></i>14, Part 1. Network Diffusion: Infectious Diseases</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#reading-in-data"><i class="fa fa-check"></i><b>14.1</b> Reading in Data</a></li>
+<li class="chapter" data-level="14.2" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#specifying-the-network-model"><i class="fa fa-check"></i><b>14.2</b> Specifying the Network Model</a></li>
+<li class="chapter" data-level="14.3" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#estimating-the-network-model"><i class="fa fa-check"></i><b>14.3</b> Estimating the Network Model</a></li>
+<li class="chapter" data-level="14.4" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#specifying-the-epidemic-model"><i class="fa fa-check"></i><b>14.4</b> Specifying the Epidemic Model</a></li>
+<li class="chapter" data-level="14.5" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#running-simulations"><i class="fa fa-check"></i><b>14.5</b> Running Simulations</a>
+<ul>
+<li class="chapter" data-level="14.5.1" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#running-baseline-model"><i class="fa fa-check"></i><b>14.5.1</b> Running Baseline Model</a></li>
+<li class="chapter" data-level="14.5.2" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#varying-network-features"><i class="fa fa-check"></i><b>14.5.2</b> Varying Network Features</a></li>
+<li class="chapter" data-level="14.5.3" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#varying-epidemic-model"><i class="fa fa-check"></i><b>14.5.3</b> Varying Epidemic Model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html"><i class="fa fa-check"></i>14, Part 2. Social Diffusion Processes</a>
+<ul>
+<li class="chapter" data-level="14.6" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#setting-up-the-session-4"><i class="fa fa-check"></i><b>14.6</b> Setting up the Session</a></li>
+<li class="chapter" data-level="14.7" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simple-diffusion-models"><i class="fa fa-check"></i><b>14.7</b> Simple Diffusion Models</a></li>
+<li class="chapter" data-level="14.8" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#threshold-models-of-diffusion"><i class="fa fa-check"></i><b>14.8</b> Threshold Models of Diffusion</a>
+<ul>
+<li class="chapter" data-level="14.8.1" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simulating-diffusion-processes-using-the-netdiffuser-package"><i class="fa fa-check"></i><b>14.8.1</b> Simulating Diffusion Processes using the netdiffuseR Package</a></li>
+<li class="chapter" data-level="14.8.2" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#comparing-diffusion-under-different-network-and-adoption-behavior-conditions"><i class="fa fa-check"></i><b>14.8.2</b> Comparing Diffusion under Different Network and Adoption Behavior Conditions</a></li>
+<li class="chapter" data-level="14.8.3" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simulations-using-multiple-runs"><i class="fa fa-check"></i><b>14.8.3</b> Simulations using Multiple Runs</a></li>
+</ul></li>
+<li class="chapter" data-level="14.9" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#working-with-empirical-data"><i class="fa fa-check"></i><b>14.9</b> Working with Empirical Data</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html"><i class="fa fa-check"></i><b>15</b> Social Influence: Coevolution of Networks and Behaviors</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#reading-in-classroom-data"><i class="fa fa-check"></i><b>15.1</b> Reading in Classroom Data</a></li>
+<li class="chapter" data-level="15.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#siena-model-setup"><i class="fa fa-check"></i><b>15.2</b> SIENA Model Setup</a></li>
+<li class="chapter" data-level="15.3" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification"><i class="fa fa-check"></i><b>15.3</b> Model Specification</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-behavioral-model"><i class="fa fa-check"></i><b>15.3.1</b> Model Specification: Behavioral Model</a></li>
+<li class="chapter" data-level="15.3.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-network-model"><i class="fa fa-check"></i><b>15.3.2</b> Model Specification: Network Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-estimation"><i class="fa fa-check"></i><b>15.4</b> Model Estimation</a></li>
+<li class="chapter" data-level="15.5" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpretation"><i class="fa fa-check"></i><b>15.5</b> Interpretation</a>
+<ul>
+<li class="chapter" data-level="15.5.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpreting-network-model"><i class="fa fa-check"></i><b>15.5.1</b> Interpreting Network Model</a></li>
+<li class="chapter" data-level="15.5.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpreting-behavioral-model"><i class="fa fa-check"></i><b>15.5.2</b> Interpreting Behavioral Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.6" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#checking-model-fit-1"><i class="fa fa-check"></i><b>15.6</b> Checking Model Fit</a></li>
+<li class="chapter" data-level="15.7" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#example-with-3-time-periods"><i class="fa fa-check"></i><b>15.7</b> Example with 3 Time Periods</a>
+<ul>
+<li class="chapter" data-level="15.7.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-and-estimation"><i class="fa fa-check"></i><b>15.7.1</b> Model Specification and Estimation</a></li>
+<li class="chapter" data-level="15.7.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#time-heterogeneity"><i class="fa fa-check"></i><b>15.7.2</b> Time Heterogeneity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="how-to-cite.html"><a href="how-to-cite.html"><i class="fa fa-check"></i>How to Cite</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Network Analysis: Integrating Social Network Theory, Method, and Application with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ch10-Positions-Roles-R" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">10</span> Positions and Roles<a href="ch10-Positions-Roles-R.html#ch10-Positions-Roles-R" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This tutorial offers an analysis in R focused on defining positions and roles in a network. The goal of a role analysis is to: a) place nodes into positions based on their pattern of ties to others; and b) describe the pattern of ties that exist between positions, or the roles, that emerge in the network of interest. We will walk through a simple analysis step-by-step, to see the logic of how to do a role analysis. See also the blockmodeling package for an extended set of functions to perform different types of blockmodels. We will utilize the same network used in <a href="ch8-Network-Cohesion-Communities-R.html#ch8-Network-Cohesion-Communities-R">Chapter 8</a> (on groups) for this tutorial. The data are based on different interactions occurring between students (and teachers) in a classroom. The data were collected by Daniel McFarland and contain information on three different kinds of relations: friendship (measured as 2 = best friend, 1 = friend, 0 = not friend); social (measured as social interactions per hour); and task (measured as task interactions per hour).</p>
+<p>Our main substantive goal is to describe the role structure that exists in this classroom. How do different sets of nodes relate to one another within the larger functioning of the classroom? What are the rights and responsibilities of one set relative to another? As this is a classroom, the rights and responsibilities pertain to expectations of social interaction (do nodes in one set have positive social interactions with nodes in another?) as well as task interactions. For example, is this is a system where students tend to break off into separate friendship groups that also map onto task interactions? Or perhaps there are certain alliances, where certain friendship groups come together to complete work in the classroom. Or maybe there is a single, important node (like the teacher) that is crucial in holding the classroom together.</p>
+<div id="classroom-network-data" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> Classroom Network Data<a href="ch10-Positions-Roles-R.html#classroom-network-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For this session we will start with the <strong>igraph</strong> package.</p>
+<div class="sourceCode" id="cb838"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb838-1"><a href="ch10-Positions-Roles-R.html#cb838-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span></code></pre></div>
+<p>Let's first read in the classroom network data.</p>
+<div class="sourceCode" id="cb839"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb839-1"><a href="ch10-Positions-Roles-R.html#cb839-1" aria-hidden="true" tabindex="-1"></a>url1 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/class182_networkdata.csv&quot;</span></span>
+<span id="cb839-2"><a href="ch10-Positions-Roles-R.html#cb839-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb839-3"><a href="ch10-Positions-Roles-R.html#cb839-3" aria-hidden="true" tabindex="-1"></a>class182_networkdata <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> url1)</span></code></pre></div>
+<p>And let's take a look at the first six rows:</p>
+<div class="sourceCode" id="cb840"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb840-1"><a href="ch10-Positions-Roles-R.html#cb840-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(class182_networkdata)</span></code></pre></div>
+<pre><code>##   ego alter friend_tie social_tie task_tie
+## 1   1     1          0        0.0      0.0
+## 2   1     2          0        0.0      0.0
+## 3   1     3          0        0.0      0.0
+## 4   1     4          0        0.0      0.0
+## 5   1     5          0        1.2      0.3
+## 6   1     6          0        0.0      0.0</code></pre>
+<p>The data frame holds information for each dyad in the classroom showing information for three relations: friendship, social interactions and task interactions. Let's also read in an attribute file to attach to our network.</p>
+<div class="sourceCode" id="cb842"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb842-1"><a href="ch10-Positions-Roles-R.html#cb842-1" aria-hidden="true" tabindex="-1"></a>url2 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/class182_attributedata.csv&quot;</span></span>
+<span id="cb842-2"><a href="ch10-Positions-Roles-R.html#cb842-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb842-3"><a href="ch10-Positions-Roles-R.html#cb842-3" aria-hidden="true" tabindex="-1"></a>class182_attributes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> url2)</span></code></pre></div>
+<div class="sourceCode" id="cb843"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb843-1"><a href="ch10-Positions-Roles-R.html#cb843-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(class182_attributes)</span></code></pre></div>
+<pre><code>##   ids  race grade gender
+## 1   1 white    10   male
+## 2   2 black    10 female
+## 3   3 white    10 female
+## 4   4 white    11 female
+## 5   5 white    10   male
+## 6   6 white    10 female</code></pre>
+<p>We have information on race, grade and gender. Note that grade '13' is coded to denote the teacher in this classroom.</p>
+<p>Let's go ahead and create separate networks based on each relation. We start with friendship, defining a (weighted) edge where the friendship value is greater than 0.</p>
+<div class="sourceCode" id="cb845"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb845-1"><a href="ch10-Positions-Roles-R.html#cb845-1" aria-hidden="true" tabindex="-1"></a>edgelist_friendship <span class="ot">&lt;-</span> class182_networkdata[class182_networkdata<span class="sc">$</span>friend_tie <span class="sc">&gt;</span> <span class="dv">0</span>, </span>
+<span id="cb845-2"><a href="ch10-Positions-Roles-R.html#cb845-2" aria-hidden="true" tabindex="-1"></a>                                            <span class="fu">c</span>(<span class="st">&quot;ego&quot;</span>, <span class="st">&quot;alter&quot;</span>, <span class="st">&quot;friend_tie&quot;</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb846"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb846-1"><a href="ch10-Positions-Roles-R.html#cb846-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(edgelist_friendship)</span></code></pre></div>
+<pre><code>##    ego alter friend_tie
+## 17   2     1          1
+## 23   2     7          1
+## 24   2     8          1
+## 29   2    13          2
+## 30   2    14          1
+## 37   3     5          1</code></pre>
+<p>And here we create the friendship network. We create a directed network as it possible for i to nominate j as a friend even if j did not nominate i.</p>
+<div class="sourceCode" id="cb848"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb848-1"><a href="ch10-Positions-Roles-R.html#cb848-1" aria-hidden="true" tabindex="-1"></a>net182_friend <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> edgelist_friendship, <span class="at">directed =</span> T, </span>
+<span id="cb848-2"><a href="ch10-Positions-Roles-R.html#cb848-2" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">vertices =</span> class182_attributes) </span></code></pre></div>
+<div class="sourceCode" id="cb849"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb849-1"><a href="ch10-Positions-Roles-R.html#cb849-1" aria-hidden="true" tabindex="-1"></a>net182_friend</span></code></pre></div>
+<pre><code>## IGRAPH 51e058c DN-- 16 62 -- 
+## + attr: name (v/c), race (v/c), grade (v/n), gender (v/c), friend_tie (e/n)
+## + edges from 51e058c (vertex names):
+##  [1] 2 -&gt;1  2 -&gt;7  2 -&gt;8  2 -&gt;13 2 -&gt;14 3 -&gt;5  3 -&gt;6  3 -&gt;11 3 -&gt;14 3 -&gt;15 5 -&gt;1  5 -&gt;3  5 -&gt;6  5 -&gt;8  5 -&gt;10 5 -&gt;11 6 -&gt;1  6 -&gt;3  6 -&gt;5  6 -&gt;7  6 -&gt;10 6 -&gt;11 6 -&gt;12 7 -&gt;2  7 -&gt;8  7 -&gt;13 7 -&gt;14 8 -&gt;2  8 -&gt;5  8 -&gt;7  8 -&gt;13 8 -&gt;14 8 -&gt;15 9 -&gt;1  9 -&gt;3  9 -&gt;10 9 -&gt;12 9 -&gt;15 10-&gt;1  10-&gt;9  10-&gt;12 10-&gt;15 11-&gt;1  11-&gt;3  11-&gt;5  11-&gt;6  11-&gt;10 12-&gt;1  12-&gt;9  12-&gt;15 13-&gt;2  13-&gt;7  13-&gt;8  13-&gt;14 14-&gt;2  14-&gt;3  14-&gt;8  14-&gt;12 15-&gt;1  15-&gt;7  15-&gt;9  15-&gt;12</code></pre>
+<p>We can see that the friendship network has been created, with <code>friend_tie</code> defining the edge weights. And now we create the task interaction network. We create the edgelist from dyads where the task interaction value is &gt; 0.</p>
+<div class="sourceCode" id="cb851"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb851-1"><a href="ch10-Positions-Roles-R.html#cb851-1" aria-hidden="true" tabindex="-1"></a>edgelist_task <span class="ot">&lt;-</span> class182_networkdata[class182_networkdata<span class="sc">$</span>task_tie <span class="sc">&gt;</span> <span class="dv">0</span>,</span>
+<span id="cb851-2"><a href="ch10-Positions-Roles-R.html#cb851-2" aria-hidden="true" tabindex="-1"></a>                                        <span class="fu">c</span>(<span class="st">&quot;ego&quot;</span>, <span class="st">&quot;alter&quot;</span>, <span class="st">&quot;task_tie&quot;</span>)]</span></code></pre></div>
+<p>We will treat the task and social interaction networks as undirected. In our case, if i does a task with j, j is jointly doing the task with i (also true of social interaction in this classroom). Here, we will first create a directed network, and then convert that object to an undirected network, setting mode to "collapse" and edge.attr.comb to "mean". With the "collapse" option, if i-&gt;j exists or j-&gt;i exists then the i-j edge will be present in the network, which is what we want. The edge.attr.comb argument tells igraph how to combine edge attributes when collapsing i-&gt;j and j-&gt;i into a single edge. We will use the mean reported task interactions in this case (i.e., take the weight for i-&gt;j and j-&gt;i and calculate the mean, setting that as the weight for i-j).</p>
+<div class="sourceCode" id="cb852"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb852-1"><a href="ch10-Positions-Roles-R.html#cb852-1" aria-hidden="true" tabindex="-1"></a>net182_task <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> edgelist_task, <span class="at">directed =</span> T,</span>
+<span id="cb852-2"><a href="ch10-Positions-Roles-R.html#cb852-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">vertices =</span> class182_attributes) </span>
+<span id="cb852-3"><a href="ch10-Positions-Roles-R.html#cb852-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb852-4"><a href="ch10-Positions-Roles-R.html#cb852-4" aria-hidden="true" tabindex="-1"></a>net182_task <span class="ot">&lt;-</span> <span class="fu">as.undirected</span>(net182_task, <span class="at">mode=</span><span class="st">&quot;collapse&quot;</span>, </span>
+<span id="cb852-5"><a href="ch10-Positions-Roles-R.html#cb852-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">edge.attr.comb =</span> <span class="st">&quot;mean&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb853"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb853-1"><a href="ch10-Positions-Roles-R.html#cb853-1" aria-hidden="true" tabindex="-1"></a>net182_task</span></code></pre></div>
+<pre><code>## IGRAPH bd6dc77 UN-- 16 47 -- 
+## + attr: name (v/c), race (v/c), grade (v/n), gender (v/c), task_tie (e/n)
+## + edges from bd6dc77 (vertex names):
+##  [1] 1 --5  3 --5  3 --6  5 --6  2 --7  2 --8  7 --8  1 --9  1 --10 4 --10 6 --10 9 --10 3 --11 5 --11 6 --11 1 --12 9 --12 10--12 2 --13 5 --13 7 --13 8 --13 2 --14 5 --14 6 --14 7 --14 8 --14 1 --15 2 --15 9 --15 10--15 12--15 1 --16 2 --16 3 --16 4 --16 5 --16 6 --16 7 --16 8 --16 9 --16 10--16 11--16 12--16 13--16 14--16 15--16</code></pre>
+<p>And now we do the same thing for the social interaction network.</p>
+<div class="sourceCode" id="cb855"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb855-1"><a href="ch10-Positions-Roles-R.html#cb855-1" aria-hidden="true" tabindex="-1"></a>edgelist_social <span class="ot">&lt;-</span> class182_networkdata[class182_networkdata<span class="sc">$</span>social_tie <span class="sc">&gt;</span> <span class="dv">0</span>, </span>
+<span id="cb855-2"><a href="ch10-Positions-Roles-R.html#cb855-2" aria-hidden="true" tabindex="-1"></a>                                      <span class="fu">c</span>(<span class="st">&quot;ego&quot;</span>, <span class="st">&quot;alter&quot;</span>, <span class="st">&quot;social_tie&quot;</span>)]</span>
+<span id="cb855-3"><a href="ch10-Positions-Roles-R.html#cb855-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb855-4"><a href="ch10-Positions-Roles-R.html#cb855-4" aria-hidden="true" tabindex="-1"></a>net182_social <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> edgelist_social, <span class="at">directed =</span> T, </span>
+<span id="cb855-5"><a href="ch10-Positions-Roles-R.html#cb855-5" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">vertices =</span> class182_attributes) </span>
+<span id="cb855-6"><a href="ch10-Positions-Roles-R.html#cb855-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb855-7"><a href="ch10-Positions-Roles-R.html#cb855-7" aria-hidden="true" tabindex="-1"></a>net182_social <span class="ot">&lt;-</span> <span class="fu">as.undirected</span>(net182_social, <span class="at">mode=</span><span class="st">&quot;collapse&quot;</span>, </span>
+<span id="cb855-8"><a href="ch10-Positions-Roles-R.html#cb855-8" aria-hidden="true" tabindex="-1"></a>                               <span class="at">edge.attr.comb =</span> <span class="st">&quot;mean&quot;</span>)</span></code></pre></div>
+</div>
+<div id="getting-the-data-ready-3" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> Getting the Data Ready<a href="ch10-Positions-Roles-R.html#getting-the-data-ready-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Here we will use the classroom data read in above. We incorporate all three relations into the analysis. Role analysis is built to incorporate multiple relations and we make use of the friendship, task and social interaction data. The first step in doing a role/position analysis is to place nodes into equivalent positions. Here, we define equivalence based on the idea of structural equivalence. With structural equivalence, nodes who are tied to similar nodes are placed in the same position. In order to do that we must know how similar/dissimilar each node is compared to the other nodes. Formally, this means calculating the distance between rows (where the rows show who i is friends with, does tasks with etc.) Nodes who are friends with the same people (even if they are not themselves friends), do tasks with the same people, etc. should be in the same position.</p>
+<p>One complication in doing this kind of analysis is that we want to make use of multiple relations (here friendship, social and task). We need to put together nodes with the same interaction patterns across all relations at once. The relations of interest must then be taken together as a single input. Given this requirement, let's first get the matrices for each relation and put them together in one matrix. Here we get the matrices for each relation: friendship, task and social.</p>
+<div class="sourceCode" id="cb856"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb856-1"><a href="ch10-Positions-Roles-R.html#cb856-1" aria-hidden="true" tabindex="-1"></a>friend_mat <span class="ot">&lt;-</span> <span class="fu">as_adjacency_matrix</span>(net182_friend, <span class="at">attr =</span> <span class="st">&quot;friend_tie&quot;</span>, <span class="at">sparse =</span> F) </span>
+<span id="cb856-2"><a href="ch10-Positions-Roles-R.html#cb856-2" aria-hidden="true" tabindex="-1"></a>task_mat <span class="ot">&lt;-</span> <span class="fu">as_adjacency_matrix</span>(net182_task, <span class="at">attr =</span> <span class="st">&quot;task_tie&quot;</span>, <span class="at">sparse =</span> F)</span>
+<span id="cb856-3"><a href="ch10-Positions-Roles-R.html#cb856-3" aria-hidden="true" tabindex="-1"></a>social_mat <span class="ot">&lt;-</span> <span class="fu">as_adjacency_matrix</span>(net182_social, <span class="at">attr =</span> <span class="st">&quot;social_tie&quot;</span>, <span class="at">sparse =</span> F)</span></code></pre></div>
+<p>Note that for each one the input network changes. We include an attr argument to get the values on each edge. Let's look at the friendship matrix.</p>
+<div class="sourceCode" id="cb857"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb857-1"><a href="ch10-Positions-Roles-R.html#cb857-1" aria-hidden="true" tabindex="-1"></a>friend_mat</span></code></pre></div>
+<pre><code>##    1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+## 1  0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0
+## 2  1 0 0 0 0 0 1 1 0  0  0  0  2  1  0  0
+## 3  0 0 0 0 1 1 0 0 0  0  1  0  0  1  1  0
+## 4  0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0
+## 5  1 0 1 0 0 1 0 1 0  1  2  0  0  0  0  0
+## 6  1 0 2 0 1 0 1 0 0  1  1  1  0  0  0  0
+## 7  0 1 0 0 0 0 0 1 0  0  0  0  1  1  0  0
+## 8  0 1 0 0 1 0 1 0 0  0  0  0  1  1  1  0
+## 9  2 0 1 0 0 0 0 0 0  2  0  2  0  0  2  0
+## 10 1 0 0 0 0 0 0 0 1  0  0  1  0  0  1  0
+## 11 1 0 1 0 1 1 0 0 0  1  0  0  0  0  0  0
+## 12 1 0 0 0 0 0 0 0 1  0  0  0  0  0  1  0
+## 13 0 2 0 0 0 0 1 1 0  0  0  0  0  1  0  0
+## 14 0 1 1 0 0 0 0 1 0  0  0  1  0  0  0  0
+## 15 1 0 0 0 0 0 1 0 1  0  0  1  0  0  0  0
+## 16 0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0</code></pre>
+<p>The values correspond to the strength of relationship, friend or best friend, from i to j. We also need to create a matrix showing the ties coming in to each node, from j to i. This is simply the transpose of <code>friend_mat</code>.</p>
+<div class="sourceCode" id="cb859"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb859-1"><a href="ch10-Positions-Roles-R.html#cb859-1" aria-hidden="true" tabindex="-1"></a>friend_mat_in <span class="ot">&lt;-</span> <span class="fu">t</span>(friend_mat)</span></code></pre></div>
+<p>The task and social matrices are also valued, showing the task/social interactions per hour. We do not need to transpose them as the relations are treated as undirected. Now, let's stack our matrices together. Here we will combine them column-wise, using a <code>cbind()</code> function. Before we stack our matrices, let's standardize our columns so they are comparable. This entails dividing each column by the standard deviation associated with that type of relation. We will also mean-center the columns. Thus, for all friendship columns we will subtract the mean of the <code>friend_mat</code> matrix and divide by the standard deviation of <code>friend_mat</code>.</p>
+<div class="sourceCode" id="cb860"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb860-1"><a href="ch10-Positions-Roles-R.html#cb860-1" aria-hidden="true" tabindex="-1"></a>friend_mat_std <span class="ot">&lt;-</span> (friend_mat <span class="sc">-</span> <span class="fu">mean</span>(friend_mat)) <span class="sc">/</span> <span class="fu">sd</span>(friend_mat)</span>
+<span id="cb860-2"><a href="ch10-Positions-Roles-R.html#cb860-2" aria-hidden="true" tabindex="-1"></a>friend_mat_in_std <span class="ot">&lt;-</span> <span class="fu">t</span>(friend_mat_std) <span class="co"># for the incoming friendship ties</span></span>
+<span id="cb860-3"><a href="ch10-Positions-Roles-R.html#cb860-3" aria-hidden="true" tabindex="-1"></a>task_mat_std <span class="ot">&lt;-</span> (task_mat <span class="sc">-</span> <span class="fu">mean</span>(task_mat)) <span class="sc">/</span> <span class="fu">sd</span>(task_mat)</span>
+<span id="cb860-4"><a href="ch10-Positions-Roles-R.html#cb860-4" aria-hidden="true" tabindex="-1"></a>social_mat_std <span class="ot">&lt;-</span> (social_mat <span class="sc">-</span> <span class="fu">mean</span>(social_mat)) <span class="sc">/</span> <span class="fu">sd</span>(social_mat)</span></code></pre></div>
+<p>And now we can combine all of the standardized matrices into one matrix.</p>
+<div class="sourceCode" id="cb861"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb861-1"><a href="ch10-Positions-Roles-R.html#cb861-1" aria-hidden="true" tabindex="-1"></a>friends_task_social_std <span class="ot">&lt;-</span> <span class="fu">cbind</span>(friend_mat_std, friend_mat_in_std, </span>
+<span id="cb861-2"><a href="ch10-Positions-Roles-R.html#cb861-2" aria-hidden="true" tabindex="-1"></a>                                 task_mat_std, social_mat_std) </span></code></pre></div>
+<div class="sourceCode" id="cb862"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb862-1"><a href="ch10-Positions-Roles-R.html#cb862-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(friends_task_social_std) </span></code></pre></div>
+<pre><code>## [1] 16 64</code></pre>
+<p>This matrix contains the friend ties going out from i, the friend ties going in to i, the task ties and the social ties. Note that we included the transpose of the friendship matrix only because the friendship relation was asymmetric. We could also do the same thing using the non-standardized matrices:</p>
+<div class="sourceCode" id="cb864"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb864-1"><a href="ch10-Positions-Roles-R.html#cb864-1" aria-hidden="true" tabindex="-1"></a>friends_task_social <span class="ot">&lt;-</span> <span class="fu">cbind</span>(friend_mat, friend_mat_in, task_mat, social_mat) </span></code></pre></div>
+</div>
+<div id="structural-equivalence" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">10.3</span> Structural Equivalence<a href="ch10-Positions-Roles-R.html#structural-equivalence" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now we have a single n x 4n matrix that represents friendship, social and task interactions. From this, we can generate an n x n distance matrix that shows the degree of structural equivalence of each node in the network. The calculation shows how different/similar each row, or node, is to every other row. Nodes with similar patterns of network ties (along the 4 types of ties) will have low distance between them. The function is <code>dist()</code>. The arguments are: x = data to calculate distance on; method = method to calculate distance between rows. There are a number of options to calculate the distance between rows, including euclidean distance, defined as: sqrt(sum((x_i - y_i)^2)). We use the euclidean option here.</p>
+<div class="sourceCode" id="cb865"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb865-1"><a href="ch10-Positions-Roles-R.html#cb865-1" aria-hidden="true" tabindex="-1"></a>euclid_dist <span class="ot">&lt;-</span> <span class="fu">dist</span>(<span class="at">x =</span> friends_task_social_std, <span class="at">method =</span> <span class="st">&quot;euclidean&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb866"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb866-1"><a href="ch10-Positions-Roles-R.html#cb866-1" aria-hidden="true" tabindex="-1"></a>euclid_dist</span></code></pre></div>
+<pre><code>##            1         2         3         4         5         6         7         8         9        10        11        12        13        14        15
+## 2  12.277092                                                                                                                                            
+## 3   9.337925 12.666789                                                                                                                                  
+## 4   8.125464 10.447252  8.035579                                                                                                                        
+## 5  11.104733 12.728916  9.647258  9.121137                                                                                                              
+## 6  10.678168 12.565643  9.919998  8.088631  8.720639                                                                                                    
+## 7   8.890135  7.850717  9.402618  6.784490 10.162484 10.479959                                                                                          
+## 8  10.349860  7.464200  9.522193  8.039333 12.013896 10.297088  6.933562                                                                                
+## 9  11.124331 13.784948 12.511439 10.298732 12.110515 10.470634 11.854747 12.346245                                                                      
+## 10  7.052583 11.970673  8.885192  8.234908 10.597375 10.001802  9.733430 10.388199  9.711395                                                            
+## 11 10.406593 13.215125  9.147026  8.618923 10.459737  8.211965 10.579496 10.744884 11.878246 10.115245                                                  
+## 12  6.916288 12.388970 10.242419  9.154222 11.949265 11.860957 10.175290 11.115321 11.186167  7.327656 11.847435                                        
+## 13 11.915949 11.955712 12.930734 10.482529 13.132799 12.897925  8.143778  9.159214 14.384530 12.409627 13.472127 13.132353                              
+## 14  9.548177  8.919780 10.645521  7.001845  9.814018  9.120023  6.009304  7.686441 11.092270  9.562528 10.321041 10.841942  7.631703                    
+## 15  7.685769 11.528159 11.324092  8.700158 11.173555 10.468069 10.074406 11.100016  9.998283  6.135059 11.502730  7.631501 12.001112  9.012054          
+## 16 14.160821 15.140840 14.241848 11.869697 14.696566 14.161035 13.150494 13.698101 14.748241 14.138346 14.396936 14.307963 15.152258 13.497085 14.495992</code></pre>
+<p>This suggests, for example, that node 1 has similar ties as node 12 and really different ties as node 13. It is also possible to use correlation as a means of defining the similarity/dissimilarity between rows. Now, let's visualize the distances using MDS, based on the euclidean distance calculation. The <code>cmdscale()</code> function performs classical multidimensional scaling, putting each case into a position in a space, such that the distance between positions is (approximately) equal to the distance between those rows in the data. The basic arguments are d, the distance matrix and k, the number of dimensions. Here we want a two-dimensional solution to make it easier to visualize.</p>
+<div class="sourceCode" id="cb868"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb868-1"><a href="ch10-Positions-Roles-R.html#cb868-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">cmdscale</span>(<span class="at">d =</span> euclid_dist, <span class="at">k =</span> <span class="dv">2</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb869"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb869-1"><a href="ch10-Positions-Roles-R.html#cb869-1" aria-hidden="true" tabindex="-1"></a>fit</span></code></pre></div>
+<pre><code>##          [,1]         [,2]
+## 1  -2.5431871   2.33755953
+## 2   5.7005695   1.87699422
+## 3  -1.8507975  -0.50197997
+## 4  -0.0366485  -1.02843116
+## 5  -1.8352173  -1.13971634
+## 6  -2.1619387  -1.56660835
+## 7   3.8528068   0.78880650
+## 8   4.4621270   0.64166041
+## 9  -4.2143640   0.06072452
+## 10 -3.5627373   2.25952299
+## 11 -2.4962320  -1.73655609
+## 12 -3.2688649   2.64899489
+## 13  6.4090625   1.56371687
+## 14  3.2557391   0.89872185
+## 15 -2.6232119   3.09255591
+## 16  0.9128942 -10.19596578</code></pre>
+<p>Let’s grab the x, y coordinates and then plot the solution.</p>
+<div class="sourceCode" id="cb871"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb871-1"><a href="ch10-Positions-Roles-R.html#cb871-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> fit[, <span class="dv">1</span>]</span>
+<span id="cb871-2"><a href="ch10-Positions-Roles-R.html#cb871-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> fit[, <span class="dv">2</span>]</span></code></pre></div>
+<p>First, we will set up the plot with title, axes, etc. but no points. And then we will put in the labels using the <code>text()</code> function. The first two arguments to text are the x, y coordinates. The labels argument tells R what to print and cex controls the size of the labels.</p>
+<div class="sourceCode" id="cb872"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb872-1"><a href="ch10-Positions-Roles-R.html#cb872-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">xlab =</span> <span class="st">&quot;Coordinate 1&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Coordinate 2&quot;</span>, </span>
+<span id="cb872-2"><a href="ch10-Positions-Roles-R.html#cb872-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;2 Dimensional MDS Solution&quot;</span>, <span class="at">type =</span> <span class="st">&quot;n&quot;</span>) </span>
+<span id="cb872-3"><a href="ch10-Positions-Roles-R.html#cb872-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb872-4"><a href="ch10-Positions-Roles-R.html#cb872-4" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(x, y, <span class="at">labels =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x), <span class="at">cex =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="Chapter10_Integrated_Network_Science_Rtutorial_positions_roles_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p>Looking at the figure, our first impression is that there are clearly defined positions in the network. We can see, for example, that node 16 is quite distinct from everyone else, while nodes 1, 10, 12 and 15 cluster together, meaning they have similar patterns of friendship, social and task interactions. We will, however, want to use a more formal analysis to make an informed decision on how many positions gives us a reasonable approximation of the underlying structure of the network.</p>
+</div>
+<div id="defining-positions" class="section level2 hasAnchor" number="10.4">
+<h2><span class="header-section-number">10.4</span> Defining Positions<a href="ch10-Positions-Roles-R.html#defining-positions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Here, we cluster our nodes into structurally equivalent positions. We will take our distance matrix and try to cluster our nodes so that nodes who are close, or have the same pattern of ties, are placed into the same position. Note that this is conceptually different than finding groups (or communities, see <a href="ch8-Network-Cohesion-Communities-R.html#ch8-Network-Cohesion-Communities-R">Chapter 8</a>). Nodes are placed into positions based on having the same pattern of ties to other nodes. It is thus possible for nodes to be placed together in a position even if they have few ties to each other, as long as they have the same set of ties to all other nodes. Thus, it is possible to have a position with low internal density.</p>
+<p>There are many different approaches to clustering data. We will focus on a simple approach, hierarchical clustering, but discuss other options below. Note that these approaches are general solutions to the problem of clustering data and are not particular to network data.</p>
+<p>The <code>hclust()</code> function performs a hierarchical agglomerative operation based on the values in the input distance matrix. Each node starts in their own cluster; at each stage the two closest clusters are joined until all nodes are in a single cluster. The standard visualization is a dendrogram. By default, <code>hclust()</code> agglomerates clusters via a "complete linkage" algorithm, determining cluster proximity by looking at the distance of the two points across clusters that are farthest away from one another. The input to <code>hclust()</code> is the distance matrix, calculated above.</p>
+<div class="sourceCode" id="cb873"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb873-1"><a href="ch10-Positions-Roles-R.html#cb873-1" aria-hidden="true" tabindex="-1"></a>hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(euclid_dist)</span></code></pre></div>
+<p>Let's plot the resulting dendrogram.</p>
+<div class="sourceCode" id="cb874"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb874-1"><a href="ch10-Positions-Roles-R.html#cb874-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hc)</span></code></pre></div>
+<p><img src="Chapter10_Integrated_Network_Science_Rtutorial_positions_roles_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p>The y-axis captures the distance (based on euclidean distance) between actors on that part of the tree (e.g., the maximum distance between 10, 15, 1 and 12 is a bit below 8). Let's visualize different possible clusters. We will use a <code>rect.hclust()</code> function to tell R at what point to cut the tree, or to stop aggregating. The inputs are an hclust object and the height at which you want to cut the tree (set using h). Here we will set h to 12, looking at clusters with distance less than 12.</p>
+<div class="sourceCode" id="cb875"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb875-1"><a href="ch10-Positions-Roles-R.html#cb875-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hc)</span>
+<span id="cb875-2"><a href="ch10-Positions-Roles-R.html#cb875-2" aria-hidden="true" tabindex="-1"></a>plot_clusters <span class="ot">&lt;-</span> <span class="fu">rect.hclust</span>(hc, <span class="at">h =</span> <span class="dv">12</span>)</span></code></pre></div>
+<p><img src="Chapter10_Integrated_Network_Science_Rtutorial_positions_roles_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<p>And now let's look at a more disaggregated solution, setting h to 8.</p>
+<div class="sourceCode" id="cb876"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb876-1"><a href="ch10-Positions-Roles-R.html#cb876-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hc)</span>
+<span id="cb876-2"><a href="ch10-Positions-Roles-R.html#cb876-2" aria-hidden="true" tabindex="-1"></a>plot_clusters <span class="ot">&lt;-</span>  <span class="fu">rect.hclust</span>(hc, <span class="at">h =</span> <span class="dv">8</span>)</span></code></pre></div>
+<p><img src="Chapter10_Integrated_Network_Science_Rtutorial_positions_roles_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<p>We can see that the number of clusters increases as we lower the distance threshold. More generally, it is useful to be able to set a clear distance cutoff, especially when the analysis involves multiple networks; as we can define clusters (in different networks) at similar levels of granularity.</p>
+<p>Let’s extract the position memberships for height equal to 12. The function is <code>cuttree()</code> and the inputs are the hclust object and the height (or distance) at which you want to define the clusters.</p>
+<div class="sourceCode" id="cb877"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb877-1"><a href="ch10-Positions-Roles-R.html#cb877-1" aria-hidden="true" tabindex="-1"></a>hc_ids <span class="ot">&lt;-</span> <span class="fu">cutree</span>(hc, <span class="at">h =</span> <span class="dv">12</span>)  </span></code></pre></div>
+<div class="sourceCode" id="cb878"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb878-1"><a href="ch10-Positions-Roles-R.html#cb878-1" aria-hidden="true" tabindex="-1"></a>hc_ids</span></code></pre></div>
+<pre><code>##  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 
+##  1  2  3  2  3  3  2  2  1  1  3  1  2  2  1  4</code></pre>
+<p>This vector holds the position of each node in the network based on the cluster solution. There are 4 positions defined at this level of aggregation. For example, we can see that nodes 1, 9, 10, 12 and 15 are grouped together. A hierarchical clustering approach makes it easy to look at the positions that emerge at different levels of aggregation, from very broadly defined positions (with more heterogeneity within) to more narrowly defined sets where the cases are very similar. For example, we could have set h to a lower value, capturing more narrowly defined positions.</p>
+<p>It is also possible to use various criteria to determine the 'optimal' number of clusters of a hierarchical algorithm. This will be particularly crucial when the researcher only wants to examine a single solution. Here we can make use of the <strong>NbClust</strong> package <span class="citation">(Charrad et al. 2014)</span>.</p>
+<div class="sourceCode" id="cb880"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb880-1"><a href="ch10-Positions-Roles-R.html#cb880-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NbClust)</span></code></pre></div>
+<p>The key function is <code>NbClust()</code>. The arguments are data (the data of interest), distance, (the distance metric to use), method (which method to use in the hierarchical algorithm), and index (what criterion to use to choose the optimal number of clusters). Here we use the "ch" criterion of <span class="citation">Caliński and Harabasz (1974)</span> but there are many options. For example, we could imagine using a graphical approach, similar to that used in <a href="ch8-Network-Cohesion-Communities-R.html#ch8-Network-Cohesion-Communities-R">Chapter 8</a>, where the fit is plotted against the number of clusters.</p>
+<div class="sourceCode" id="cb881"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb881-1"><a href="ch10-Positions-Roles-R.html#cb881-1" aria-hidden="true" tabindex="-1"></a>clusters <span class="ot">&lt;-</span> <span class="fu">NbClust</span>(<span class="at">data =</span> friends_task_social_std, <span class="at">distance =</span> <span class="st">&quot;euclidean&quot;</span>,</span>
+<span id="cb881-2"><a href="ch10-Positions-Roles-R.html#cb881-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">method =</span> <span class="st">&quot;complete&quot;</span>, <span class="at">index =</span> <span class="fu">c</span>(<span class="st">&quot;ch&quot;</span>))  </span></code></pre></div>
+<div class="sourceCode" id="cb882"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb882-1"><a href="ch10-Positions-Roles-R.html#cb882-1" aria-hidden="true" tabindex="-1"></a>clusters </span></code></pre></div>
+<pre><code>## $All.index
+##      2      3      4      5      6      7      8      9     10     11     12     13     14     15 
+## 2.6184 3.3756 3.7565 3.3300 3.4032 3.3052 3.3233 3.4194 3.3500 3.4037 3.3901 3.4203 3.5698 3.4593 
+## 
+## $Best.nc
+## Number_clusters     Value_Index 
+##          4.0000          3.7565 
+## 
+## $Best.partition
+##  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 
+##  1  2  3  2  3  3  2  2  1  1  3  1  2  2  1  4</code></pre>
+<p>Under this criterion the optimal solution has 4 clusters, matching the clustering solution above where height was set to 12. Note that the inputs, in terms of distance and method, match that used above. Note also that there are many other means of finding clusters, including k-means, Partitioning Around Medoids, and more model-based approaches. These approaches attempt to find the best fit, including the best number of clusters. Different approaches utilize different heuristics and may yield slightly different results. <code>?kmeans</code> <code>?pamk</code> <code>?Mclust</code>.</p>
+<p>In general, it is a good idea to compare the results across different approaches, including using different criterion to judge model fit. Additionally, a strictly statistical answer to defining positions may not always be desirable, as the researcher, with a deep understanding of the substantive case, may have good reason to examine one set of positions rather than another (for example, when choosing between levels of aggregation). It is important to balance concerns over fit with concerns over interpretation. Assuming we are happy with our clustering solution, we can now use the found positions in the second part of the analysis, focusing on roles.</p>
+</div>
+<div id="role-analysis" class="section level2 hasAnchor" number="10.5">
+<h2><span class="header-section-number">10.5</span> Role Analysis<a href="ch10-Positions-Roles-R.html#role-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The goal of a role analysis is to create a reduced version of the network, where the positions become the nodes of interest, and we analyze the pattern of ties between positions. In this way, we move beyond particular actors and their attributes, and analyze the network at a higher level of abstraction, studying the roles that are being played in the classroom. For example, perhaps a 'teacher' role has certain rights and responsibilities relative to actors playing the 'student' role.</p>
+<div id="permuting-the-matrix-by-position" class="section level3 hasAnchor" number="10.5.1">
+<h3><span class="header-section-number">10.5.1</span> Permuting the Matrix by Position<a href="ch10-Positions-Roles-R.html#permuting-the-matrix-by-position" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We will begin with a plot of the data, with the goal of offering some intuition for role analysis. We will produce a heatmap, organized by the positions found above. The idea is to take the matrix of friendship, social or task ties and create a plot where the values are colored by whether a tie exists between i and j. The key is reordering the rows/columns of the matrix to correspond to the positions from the clustering analysis. In this way, nodes in the same position will be clumped together in the figure. This makes it possible to see how nodes in different positions relate to one another; moving us closer to capturing roles in the classroom.</p>
+<p>Let's begin by creating a data frame with two columns, one for the ids of the nodes and one for the positions of the nodes. We will utilize our 4 cluster solution from above to define the positions (saved in <code>hc_ids</code>). We will also sort the data to run from low to high, in terms of the positions.</p>
+<div class="sourceCode" id="cb884"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb884-1"><a href="ch10-Positions-Roles-R.html#cb884-1" aria-hidden="true" tabindex="-1"></a>id_dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ids =</span> class182_attributes<span class="sc">$</span>ids, <span class="at">position =</span> hc_ids)</span>
+<span id="cb884-2"><a href="ch10-Positions-Roles-R.html#cb884-2" aria-hidden="true" tabindex="-1"></a>id_dat <span class="ot">&lt;-</span> id_dat[<span class="fu">order</span>(id_dat<span class="sc">$</span>position), ]</span></code></pre></div>
+<div class="sourceCode" id="cb885"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb885-1"><a href="ch10-Positions-Roles-R.html#cb885-1" aria-hidden="true" tabindex="-1"></a>id_dat</span></code></pre></div>
+<pre><code>##    ids position
+## 1    1        1
+## 9    9        1
+## 10  10        1
+## 12  12        1
+## 15  15        1
+## 2    2        2
+## 4    4        2
+## 7    7        2
+## 8    8        2
+## 13  13        2
+## 14  14        2
+## 3    3        3
+## 5    5        3
+## 6    6        3
+## 11  11        3
+## 16  16        4</code></pre>
+<p>We can now take the matrices used above, for friendship, social or task, and reorder the rows/columns based on the positions of each node. Here, we will focus on the social interaction matrix. We simply take the original matrix and sort based on the (reordered) ids in our <code>id_dat</code> data frame.</p>
+<div class="sourceCode" id="cb887"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb887-1"><a href="ch10-Positions-Roles-R.html#cb887-1" aria-hidden="true" tabindex="-1"></a>social_mat_rearrange <span class="ot">&lt;-</span> social_mat[id_dat<span class="sc">$</span>ids, id_dat<span class="sc">$</span>ids]</span></code></pre></div>
+<p>Now, we can create a figure based on the permuted matrix. We will use the <code>heatmap()</code> function, as well as functions from the <strong>RColorBrewer</strong> package.</p>
+<div class="sourceCode" id="cb888"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb888-1"><a href="ch10-Positions-Roles-R.html#cb888-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
+<span id="cb888-2"><a href="ch10-Positions-Roles-R.html#cb888-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb888-3"><a href="ch10-Positions-Roles-R.html#cb888-3" aria-hidden="true" tabindex="-1"></a>column_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb888-4"><a href="ch10-Positions-Roles-R.html#cb888-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb888-5"><a href="ch10-Positions-Roles-R.html#cb888-5" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap</span>(social_mat_rearrange, <span class="at">Rowv =</span> <span class="cn">NA</span>, <span class="at">Colv =</span> <span class="cn">NA</span>, <span class="at">revC =</span> T,</span>
+<span id="cb888-6"><a href="ch10-Positions-Roles-R.html#cb888-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">colorRampPalette</span>(<span class="fu">brewer.pal</span>(<span class="dv">6</span>, <span class="st">&quot;Blues&quot;</span>))(<span class="dv">25</span>),</span>
+<span id="cb888-7"><a href="ch10-Positions-Roles-R.html#cb888-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">ColSideColors =</span> column_cols[id_dat<span class="sc">$</span>position],</span>
+<span id="cb888-8"><a href="ch10-Positions-Roles-R.html#cb888-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">RowSideColors =</span> column_cols[id_dat<span class="sc">$</span>position], <span class="at">symm =</span> T)</span></code></pre></div>
+<p><img src="Chapter10_Integrated_Network_Science_Rtutorial_positions_roles_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p>We can see that the rows and columns are ordered based on position (e.g., 1, 9, 10, 12 and 15 are in the first position). The colors in the heatmap run from light blue to darker blue, with darker values indicating stronger relationships (here more social interactions). This was set in the col argument in the function. Finally, we've also set the row and column colors (red, green, black and blue) to denote the position of each node. Red corresponds to nodes in position 1; green corresponds to nodes in position 2; black corresponds to nodes in position 3; and blue corresponds to nodes in position 4.</p>
+<p>Substantively, we can see that most social interactions happen within positions. For example, actors in position 1 (red) tend to socially interact with others in position 1. There is, however, a fair amount of social interaction between actors in position 1 (red) and position 4 (blue), as well as between actors in position 2 (green) and position 4 (blue). There is also some social interaction between those in position 1 (red) and position 3 (black), although the rates are much lower than with interactions happening within positions.</p>
+</div>
+<div id="constructing-a-blockmodel" class="section level3 hasAnchor" number="10.5.2">
+<h3><span class="header-section-number">10.5.2</span> Constructing a Blockmodel<a href="ch10-Positions-Roles-R.html#constructing-a-blockmodel" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We are now ready to do a more formal blockmodel analysis. We will utilize the sna package for this part of the tutorial.</p>
+<div class="sourceCode" id="cb889"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb889-1"><a href="ch10-Positions-Roles-R.html#cb889-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sna)</span></code></pre></div>
+<p>We begin by forming a blockmodel, a matrix where the positions themselves are the nodes, or blocks, of interest. In this way, the previously found positions are the rows/columns of the newly constructed matrix. For example, all actors in the 'red' position (1, 9, 10, 12 and 15 in the figure above) get collapsed into a single node, or block, labeled, "Block 1"; all nodes in the green position get collapsed into "Block 2", and so on. We will then analyze the resulting blockmodel in terms of the pattern of ties between blocks.</p>
+<p>Here will use the <code>blockmodel()</code> function in <strong>sna</strong>. We will do this 3 times, once each for the three relations we have. The arguments are dat (the network of interest) and ec, the equivalence classes, a vector showing what class each node is in. In this case, ec is defined by the position of each node, as defined by our hierarchical clustering results above.</p>
+<div class="sourceCode" id="cb890"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb890-1"><a href="ch10-Positions-Roles-R.html#cb890-1" aria-hidden="true" tabindex="-1"></a>blockmod_friend <span class="ot">&lt;-</span> <span class="fu">blockmodel</span>(friend_mat, <span class="at">ec =</span> hc_ids)</span></code></pre></div>
+<p>The default is to calculate the density of ties between blocks (defined as the mean value, taken over the rows/columns in the input matrix associated with those blocks). In this case the values are weighted but we could do the same exercise with binary (0/1) data.</p>
+<div class="sourceCode" id="cb891"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb891-1"><a href="ch10-Positions-Roles-R.html#cb891-1" aria-hidden="true" tabindex="-1"></a>blockmod_friend</span></code></pre></div>
+<pre><code>## 
+## Network Blockmodel:
+## 
+## Block membership:
+## 
+##  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 
+##  1  2  3  2  3  3  2  2  1  1  3  1  2  2  1  4 
+## 
+## Reduced form blockmodel:
+## 
+##   1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 
+##         Block 1    Block 2    Block 3 Block 4
+## Block 1     0.9 0.03333333 0.05000000       0
+## Block 2     0.1 0.66666667 0.08333333       0
+## Block 3     0.4 0.12500000 1.16666667       0
+## Block 4     0.0 0.00000000 0.00000000     NaN</code></pre>
+<p>The blockmodel shows us the (weighted) density of within and between block ties. Here, we can see that block 1 sends most friendship ties to itself, and some to block 2 and 3. We also begin to see the possibility of asymmetries between the blocks; for example, block 3 sends more friendship ties to block 1 than block 1 sends to 3. An NA on the diagonal means there is only one node associated with that block. And now for the task and social interaction networks:</p>
+<div class="sourceCode" id="cb893"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb893-1"><a href="ch10-Positions-Roles-R.html#cb893-1" aria-hidden="true" tabindex="-1"></a>blockmod_task <span class="ot">&lt;-</span> <span class="fu">blockmodel</span>(task_mat, <span class="at">ec =</span> hc_ids)</span>
+<span id="cb893-2"><a href="ch10-Positions-Roles-R.html#cb893-2" aria-hidden="true" tabindex="-1"></a>blockmod_social <span class="ot">&lt;-</span> <span class="fu">blockmodel</span>(social_mat, <span class="at">ec =</span> hc_ids)</span></code></pre></div>
+</div>
+<div id="plotting-a-blockmodel" class="section level3 hasAnchor" number="10.5.3">
+<h3><span class="header-section-number">10.5.3</span> Plotting a Blockmodel<a href="ch10-Positions-Roles-R.html#plotting-a-blockmodel" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We now want to interpret these three blockmodels, in terms of the pattern of social, friendship and task ties between blocks. To facilitate interpretation, we will produce a plot, where we have one node for each block, and the edges correspond to the level of social, friendship and task ties between blocks. This is the information found in <code>blockmod_friend</code>, <code>blockmod_social</code> and <code>blockmod_task</code>. Note that the plotted network will have weighted edges and loops (edges from and to the same node).</p>
+<p>It will also be useful for the plot to have a simpler, uniform weighting scheme across the relations. We will create a weighting scheme based on the following logic: where the edge weight is equal to 0 if the value is less then the mean weight; equal to 1 if it is greater than the mean but less than 1 standard deviation above the mean; and equal to 2 if the value is greater than 1 standard deviation above the mean. Let's write a little function to output the blockmodel as an edgelist, with the recoded edge weights:</p>
+<div class="sourceCode" id="cb894"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb894-1"><a href="ch10-Positions-Roles-R.html#cb894-1" aria-hidden="true" tabindex="-1"></a>block_model_edgelist <span class="ot">&lt;-</span> <span class="cf">function</span>(block_model, relation_label, <span class="at">directed =</span> T){</span>
+<span id="cb894-2"><a href="ch10-Positions-Roles-R.html#cb894-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Arguments: </span></span>
+<span id="cb894-3"><a href="ch10-Positions-Roles-R.html#cb894-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># block_model: blockmodel object </span></span>
+<span id="cb894-4"><a href="ch10-Positions-Roles-R.html#cb894-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># relation_label: label for type of tie, </span></span>
+<span id="cb894-5"><a href="ch10-Positions-Roles-R.html#cb894-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># directed: is blockmodel based on directed network?</span></span>
+<span id="cb894-6"><a href="ch10-Positions-Roles-R.html#cb894-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb894-7"><a href="ch10-Positions-Roles-R.html#cb894-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># First we grab the actual matrix from the blockmodel:</span></span>
+<span id="cb894-8"><a href="ch10-Positions-Roles-R.html#cb894-8" aria-hidden="true" tabindex="-1"></a>  block_mat <span class="ot">&lt;-</span> block_model<span class="sc">$</span>block.model</span>
+<span id="cb894-9"><a href="ch10-Positions-Roles-R.html#cb894-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb894-10"><a href="ch10-Positions-Roles-R.html#cb894-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Here we set any NA to 0.</span></span>
+<span id="cb894-11"><a href="ch10-Positions-Roles-R.html#cb894-11" aria-hidden="true" tabindex="-1"></a>  block_mat[<span class="fu">is.na</span>(block_mat)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb894-12"><a href="ch10-Positions-Roles-R.html#cb894-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb894-13"><a href="ch10-Positions-Roles-R.html#cb894-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Now we create a little network based on the matrix.</span></span>
+<span id="cb894-14"><a href="ch10-Positions-Roles-R.html#cb894-14" aria-hidden="true" tabindex="-1"></a>  net_block <span class="ot">&lt;-</span> <span class="fu">network</span>(block_mat, <span class="at">loops =</span> T, </span>
+<span id="cb894-15"><a href="ch10-Positions-Roles-R.html#cb894-15" aria-hidden="true" tabindex="-1"></a>                       <span class="at">directed =</span> directed)</span>
+<span id="cb894-16"><a href="ch10-Positions-Roles-R.html#cb894-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb894-17"><a href="ch10-Positions-Roles-R.html#cb894-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Here we extract the edgelist:</span></span>
+<span id="cb894-18"><a href="ch10-Positions-Roles-R.html#cb894-18" aria-hidden="true" tabindex="-1"></a>  edges_netblock <span class="ot">&lt;-</span> <span class="fu">as.edgelist</span>(net_block)</span>
+<span id="cb894-19"><a href="ch10-Positions-Roles-R.html#cb894-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb894-20"><a href="ch10-Positions-Roles-R.html#cb894-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Now we get the edge weights, stringing out the matrix</span></span>
+<span id="cb894-21"><a href="ch10-Positions-Roles-R.html#cb894-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># into a vector. We only extract those weights corresponding</span></span>
+<span id="cb894-22"><a href="ch10-Positions-Roles-R.html#cb894-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># to where an edge exists, defined by the edgelist </span></span>
+<span id="cb894-23"><a href="ch10-Positions-Roles-R.html#cb894-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># extracted above.</span></span>
+<span id="cb894-24"><a href="ch10-Positions-Roles-R.html#cb894-24" aria-hidden="true" tabindex="-1"></a>  weight_edge <span class="ot">&lt;-</span> <span class="fu">c</span>(block_mat[edges_netblock])</span>
+<span id="cb894-25"><a href="ch10-Positions-Roles-R.html#cb894-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb894-26"><a href="ch10-Positions-Roles-R.html#cb894-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Now we create a little data frame putting the information together.</span></span>
+<span id="cb894-27"><a href="ch10-Positions-Roles-R.html#cb894-27" aria-hidden="true" tabindex="-1"></a>  block_edgelist <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(edges_netblock, <span class="at">weight =</span> weight_edge, </span>
+<span id="cb894-28"><a href="ch10-Positions-Roles-R.html#cb894-28" aria-hidden="true" tabindex="-1"></a>                               <span class="at">Tie =</span> relation_label)</span>
+<span id="cb894-29"><a href="ch10-Positions-Roles-R.html#cb894-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb894-30"><a href="ch10-Positions-Roles-R.html#cb894-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Here we create the additional weighting scheme,</span></span>
+<span id="cb894-31"><a href="ch10-Positions-Roles-R.html#cb894-31" aria-hidden="true" tabindex="-1"></a>  <span class="co"># where weight is equal to 0, 1, or 2, depending if it is</span></span>
+<span id="cb894-32"><a href="ch10-Positions-Roles-R.html#cb894-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># less than the mean, greater than the mean (but less than 1 sd above mean)</span></span>
+<span id="cb894-33"><a href="ch10-Positions-Roles-R.html#cb894-33" aria-hidden="true" tabindex="-1"></a>  <span class="co"># or greater than 1 sd above the mean. </span></span>
+<span id="cb894-34"><a href="ch10-Positions-Roles-R.html#cb894-34" aria-hidden="true" tabindex="-1"></a>  edge_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(block_mat)</span>
+<span id="cb894-35"><a href="ch10-Positions-Roles-R.html#cb894-35" aria-hidden="true" tabindex="-1"></a>  edge_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(block_mat)</span>
+<span id="cb894-36"><a href="ch10-Positions-Roles-R.html#cb894-36" aria-hidden="true" tabindex="-1"></a>  edge_max <span class="ot">&lt;-</span> <span class="fu">max</span>(block_mat)</span>
+<span id="cb894-37"><a href="ch10-Positions-Roles-R.html#cb894-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb894-38"><a href="ch10-Positions-Roles-R.html#cb894-38" aria-hidden="true" tabindex="-1"></a>  block_edgelist<span class="sc">$</span>WeightRecode <span class="ot">&lt;-</span> <span class="fu">cut</span>(block_edgelist<span class="sc">$</span>weight, </span>
+<span id="cb894-39"><a href="ch10-Positions-Roles-R.html#cb894-39" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, edge_mean, </span>
+<span id="cb894-40"><a href="ch10-Positions-Roles-R.html#cb894-40" aria-hidden="true" tabindex="-1"></a>                                                edge_mean <span class="sc">+</span> edge_sd, </span>
+<span id="cb894-41"><a href="ch10-Positions-Roles-R.html#cb894-41" aria-hidden="true" tabindex="-1"></a>                                                edge_max),</span>
+<span id="cb894-42"><a href="ch10-Positions-Roles-R.html#cb894-42" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">include.lowest =</span> T, </span>
+<span id="cb894-43"><a href="ch10-Positions-Roles-R.html#cb894-43" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">right =</span> F, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;0&quot;</span>, <span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>)) </span>
+<span id="cb894-44"><a href="ch10-Positions-Roles-R.html#cb894-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb894-45"><a href="ch10-Positions-Roles-R.html#cb894-45" aria-hidden="true" tabindex="-1"></a>  block_edgelist<span class="sc">$</span>WeightRecode <span class="ot">&lt;-</span> <span class="fu">as.character</span>(block_edgelist<span class="sc">$</span>WeightRecode)</span>
+<span id="cb894-46"><a href="ch10-Positions-Roles-R.html#cb894-46" aria-hidden="true" tabindex="-1"></a>  block_edgelist<span class="sc">$</span>WeightRecode <span class="ot">&lt;-</span><span class="fu">as.numeric</span>(block_edgelist<span class="sc">$</span>WeightRecode)</span>
+<span id="cb894-47"><a href="ch10-Positions-Roles-R.html#cb894-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb894-48"><a href="ch10-Positions-Roles-R.html#cb894-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(block_edgelist)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;sender&quot;</span>, <span class="st">&quot;receiver&quot;</span>)</span>
+<span id="cb894-49"><a href="ch10-Positions-Roles-R.html#cb894-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb894-50"><a href="ch10-Positions-Roles-R.html#cb894-50" aria-hidden="true" tabindex="-1"></a>  block_edgelist</span>
+<span id="cb894-51"><a href="ch10-Positions-Roles-R.html#cb894-51" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>And now we create the edgelist for the friendship relation:</p>
+<div class="sourceCode" id="cb895"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb895-1"><a href="ch10-Positions-Roles-R.html#cb895-1" aria-hidden="true" tabindex="-1"></a>blockedges_friend <span class="ot">&lt;-</span> <span class="fu">block_model_edgelist</span>(<span class="at">block_model =</span> blockmod_friend, </span>
+<span id="cb895-2"><a href="ch10-Positions-Roles-R.html#cb895-2" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">relation_label =</span> <span class="st">&quot;friendship&quot;</span>,</span>
+<span id="cb895-3"><a href="ch10-Positions-Roles-R.html#cb895-3" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">directed =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb896"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb896-1"><a href="ch10-Positions-Roles-R.html#cb896-1" aria-hidden="true" tabindex="-1"></a>blockedges_friend</span></code></pre></div>
+<pre><code>##   sender receiver     weight        Tie WeightRecode
+## 1      1        1 0.90000000 friendship            2
+## 2      1        2 0.03333333 friendship            0
+## 3      1        3 0.05000000 friendship            0
+## 4      2        1 0.10000000 friendship            0
+## 5      2        2 0.66666667 friendship            2
+## 6      2        3 0.08333333 friendship            0
+## 7      3        1 0.40000000 friendship            1
+## 8      3        2 0.12500000 friendship            0
+## 9      3        3 1.16666667 friendship            2</code></pre>
+<p>We now have an edgelist where the rows correspond to the edges from block i to block j. We have information on the weight from the raw data (<code>weight</code>), as well as a recoded version (<code>WeightRecode</code>).</p>
+<p>And now for the task and social blockmodels.</p>
+<div class="sourceCode" id="cb898"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb898-1"><a href="ch10-Positions-Roles-R.html#cb898-1" aria-hidden="true" tabindex="-1"></a>blockedges_task <span class="ot">&lt;-</span> <span class="fu">block_model_edgelist</span>(<span class="at">block_model =</span> blockmod_task,</span>
+<span id="cb898-2"><a href="ch10-Positions-Roles-R.html#cb898-2" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">relation_label =</span> <span class="st">&quot;task&quot;</span>, </span>
+<span id="cb898-3"><a href="ch10-Positions-Roles-R.html#cb898-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">directed =</span> F)</span>
+<span id="cb898-4"><a href="ch10-Positions-Roles-R.html#cb898-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb898-5"><a href="ch10-Positions-Roles-R.html#cb898-5" aria-hidden="true" tabindex="-1"></a>blockedges_social <span class="ot">&lt;-</span> <span class="fu">block_model_edgelist</span>(<span class="at">block_model =</span> blockmod_social,</span>
+<span id="cb898-6"><a href="ch10-Positions-Roles-R.html#cb898-6" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">relation_label =</span> <span class="st">&quot;social&quot;</span>, </span>
+<span id="cb898-7"><a href="ch10-Positions-Roles-R.html#cb898-7" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">directed =</span> F)</span></code></pre></div>
+<p>And now we put together the three edgelists, stacking them using an <code>rbind()</code> function.</p>
+<div class="sourceCode" id="cb899"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb899-1"><a href="ch10-Positions-Roles-R.html#cb899-1" aria-hidden="true" tabindex="-1"></a>block_dat <span class="ot">&lt;-</span> <span class="fu">rbind</span>(blockedges_friend, blockedges_task, blockedges_social)</span></code></pre></div>
+<p>To simplify the plot, we will only include edges that have weights above the mean, so values of 1 or 2 in our recoded weighting scheme.</p>
+<div class="sourceCode" id="cb900"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb900-1"><a href="ch10-Positions-Roles-R.html#cb900-1" aria-hidden="true" tabindex="-1"></a>block_dat <span class="ot">&lt;-</span> block_dat[block_dat<span class="sc">$</span>WeightRecode <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>), ]</span></code></pre></div>
+<div class="sourceCode" id="cb901"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb901-1"><a href="ch10-Positions-Roles-R.html#cb901-1" aria-hidden="true" tabindex="-1"></a>block_dat</span></code></pre></div>
+<pre><code>##    sender receiver    weight        Tie WeightRecode
+## 1       1        1 0.9000000 friendship            2
+## 5       2        2 0.6666667 friendship            2
+## 7       3        1 0.4000000 friendship            1
+## 9       3        3 1.1666667 friendship            2
+## 13      1        4 4.7700000       task            2
+## 16      2        4 3.0500000       task            2
+## 19      1        1 4.2225000     social            2
+## 22      1        4 1.2750000     social            1
+## 23      2        2 3.5250000     social            2
+## 25      2        4 1.3500000     social            1
+## 26      3        3 4.5750000     social            2</code></pre>
+<p>We will use the <strong>igraph</strong> package to produce the plot, as <strong>igraph</strong> naturally handles plots with multiple types of edges. We will first create an igraph object based on our reduced edgelist. Note that this constructed igraph object will be based on a network with multiple relations, friendship, task and social. We will use the first two columns from <code>block_dat</code> (showing the sender and receiver of each edge) as the input to <code>graph_from_edgelist()</code>, which must be in matrix form. We treat the network as directed.</p>
+<div class="sourceCode" id="cb903"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb903-1"><a href="ch10-Positions-Roles-R.html#cb903-1" aria-hidden="true" tabindex="-1"></a>blockmod_edges <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(block_dat[, <span class="fu">c</span>(<span class="st">&quot;sender&quot;</span>, <span class="st">&quot;receiver&quot;</span>)])</span>
+<span id="cb903-2"><a href="ch10-Positions-Roles-R.html#cb903-2" aria-hidden="true" tabindex="-1"></a>blockmod_igraph <span class="ot">&lt;-</span> <span class="fu">graph_from_edgelist</span>(blockmod_edges, <span class="at">directed =</span> T)</span></code></pre></div>
+<p>It will be useful to add some information about the edges to our igraph object. We will add information about the type of edge, stored as <code>Tie</code> on <code>block_dat</code>.</p>
+<div class="sourceCode" id="cb904"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb904-1"><a href="ch10-Positions-Roles-R.html#cb904-1" aria-hidden="true" tabindex="-1"></a><span class="fu">E</span>(blockmod_igraph)<span class="sc">$</span>type <span class="ot">&lt;-</span> block_dat[, <span class="st">&quot;Tie&quot;</span>]</span></code></pre></div>
+<p>Let's go ahead and decide what color each edge should be. Let's make friendship red, task blue and social green. We will use the <code>recode()</code> function in the <strong>car</strong> package.</p>
+<div class="sourceCode" id="cb905"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb905-1"><a href="ch10-Positions-Roles-R.html#cb905-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb905-2"><a href="ch10-Positions-Roles-R.html#cb905-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb905-3"><a href="ch10-Positions-Roles-R.html#cb905-3" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">&lt;-</span> <span class="fu">recode</span>(block_dat[, <span class="st">&quot;Tie&quot;</span>], </span>
+<span id="cb905-4"><a href="ch10-Positions-Roles-R.html#cb905-4" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot;&#39;friendship&#39; = &#39;red&#39;; &#39;task&#39;=&#39;blue&#39;; &#39;social&#39; = &#39;green&#39;&quot;</span>)</span>
+<span id="cb905-5"><a href="ch10-Positions-Roles-R.html#cb905-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb905-6"><a href="ch10-Positions-Roles-R.html#cb905-6" aria-hidden="true" tabindex="-1"></a><span class="fu">E</span>(blockmod_igraph)<span class="sc">$</span>color <span class="ot">&lt;-</span> cols</span></code></pre></div>
+<p>And let's also set the width of the edges to be equal to the weights, stored as <code>WeightRecode</code> on <code>block_dat</code>:</p>
+<div class="sourceCode" id="cb906"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb906-1"><a href="ch10-Positions-Roles-R.html#cb906-1" aria-hidden="true" tabindex="-1"></a><span class="fu">E</span>(blockmod_igraph)<span class="sc">$</span>width <span class="ot">&lt;-</span> block_dat[, <span class="st">&quot;WeightRecode&quot;</span>]</span></code></pre></div>
+<p>And now we can go ahead and create a plot. Let's see what the default plot options yield us:</p>
+<div class="sourceCode" id="cb907"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb907-1"><a href="ch10-Positions-Roles-R.html#cb907-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(blockmod_igraph, <span class="at">margins =</span> .<span class="dv">20</span>)</span></code></pre></div>
+<p><img src="Chapter10_Integrated_Network_Science_Rtutorial_positions_roles_files/figure-html/unnamed-chunk-55-1.png" width="720" /></p>
+<p>It looks like we have the color and edge widths we want but there are some clear problems with the plot. The current plot has two key issues we need to fix. First, the edges for task and social should be undirected, with no arrows. Second, the loops, showing the edges going within blocks, are currently on top of each other, making it difficult to interpret the figure.</p>
+<p>Let's begin by fixing the undirected edges for task and social. The basic idea is to edit the figure so that the friendship edges are treated as directed (with arrows), while the social and task edges are not. We also do not want the self loops to have arrows. We will thus have directed and undirected edges in the same figure. This can be a bit difficult to accomplish using the default specifications, but is possible if we 'manually' set the arrow mode for each edge (using edge.arrow.mode in the plot command). We determine which edges should be directed/undirected using an <code>ifelse()</code> function. In the syntax below, we first grab the edge type from the igraph object and ask if it is a friendship edge. We then determine if the edge is a self loop or not. We can determine which edges are self loops using an <code>is.loop()</code> function. We will designate those edges that are friendship and not self loops as directed edges: "&gt;". For all other edges (self loops or social/task) we will make them undirected edges, with no arrows: "-".</p>
+<div class="sourceCode" id="cb908"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb908-1"><a href="ch10-Positions-Roles-R.html#cb908-1" aria-hidden="true" tabindex="-1"></a>friend_edge <span class="ot">&lt;-</span> <span class="fu">E</span>(blockmod_igraph)<span class="sc">$</span>type <span class="sc">%in%</span> <span class="st">&quot;friendship&quot;</span></span>
+<span id="cb908-2"><a href="ch10-Positions-Roles-R.html#cb908-2" aria-hidden="true" tabindex="-1"></a>self_loop <span class="ot">&lt;-</span> <span class="fu">is.loop</span>(blockmod_igraph)</span>
+<span id="cb908-3"><a href="ch10-Positions-Roles-R.html#cb908-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb908-4"><a href="ch10-Positions-Roles-R.html#cb908-4" aria-hidden="true" tabindex="-1"></a>arrow_mode <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(friend_edge <span class="sc">&amp;</span> <span class="sc">!</span>self_loop, <span class="at">yes =</span> <span class="st">&quot;&gt;&quot;</span>, <span class="at">no =</span> <span class="st">&quot;-&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb909"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb909-1"><a href="ch10-Positions-Roles-R.html#cb909-1" aria-hidden="true" tabindex="-1"></a>arrow_mode</span></code></pre></div>
+<pre><code>##  [1] &quot;-&quot; &quot;-&quot; &quot;&gt;&quot; &quot;-&quot; &quot;-&quot; &quot;-&quot; &quot;-&quot; &quot;-&quot; &quot;-&quot; &quot;-&quot; &quot;-&quot;</code></pre>
+<p>We also need to tweak the plotting of the loops, so that the loops are not right on top of each other. This can be accomplished by changing the angle in which each loop is plotted (edge.loop.angle in the plot command). To accomplish this, we need to set the angle for every edge in the network, even those edges that are not self loops.</p>
+<p>We will set the angles such that all non-self loops have an angle of 0, all friendship self loops have an angle of <code>4 * pi / 3</code> and all social self loops have an angle of <code>3 * pi / 3</code> (there are no task self loops). This will ensure that the friendship and social self loops are not drawn on top of each other.</p>
+<div class="sourceCode" id="cb911"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb911-1"><a href="ch10-Positions-Roles-R.html#cb911-1" aria-hidden="true" tabindex="-1"></a>edge_loop_angles <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">nrow</span>(block_dat))</span></code></pre></div>
+<div class="sourceCode" id="cb912"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb912-1"><a href="ch10-Positions-Roles-R.html#cb912-1" aria-hidden="true" tabindex="-1"></a>edge_loop_angles[self_loop <span class="sc">&amp;</span> friend_edge] <span class="ot">&lt;-</span> <span class="dv">4</span> <span class="sc">*</span> pi <span class="sc">/</span> <span class="dv">3</span></span></code></pre></div>
+<div class="sourceCode" id="cb913"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb913-1"><a href="ch10-Positions-Roles-R.html#cb913-1" aria-hidden="true" tabindex="-1"></a>social_edge <span class="ot">&lt;-</span> <span class="fu">E</span>(blockmod_igraph)<span class="sc">$</span>type <span class="sc">%in%</span> <span class="st">&quot;social&quot;</span></span>
+<span id="cb913-2"><a href="ch10-Positions-Roles-R.html#cb913-2" aria-hidden="true" tabindex="-1"></a>edge_loop_angles[self_loop <span class="sc">&amp;</span> social_edge] <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">*</span> pi <span class="sc">/</span> <span class="dv">3</span></span></code></pre></div>
+<p>We are now ready to plot the block model again. The key is setting edge.arrow.mode to our vector of arrow types set above (<code>arrow_mode</code>) and setting edge.loop.angle to our vector of angle loops (<code>edge_loop_angles</code>). We include a simple legend to make the figure easier to interpret. We also include better labels on the nodes (using vertex.label.dist and vertex.label.degree to set the placement of the labels), as well as a few arguments to control the look of the arrows.</p>
+<div class="sourceCode" id="cb914"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb914-1"><a href="ch10-Positions-Roles-R.html#cb914-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(blockmod_igraph, <span class="at">edge.arrow.mode =</span> arrow_mode,</span>
+<span id="cb914-2"><a href="ch10-Positions-Roles-R.html#cb914-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.arrow.size =</span> .<span class="dv">65</span>, <span class="at">edge.arrow.width =</span> .<span class="dv">75</span>,</span>
+<span id="cb914-3"><a href="ch10-Positions-Roles-R.html#cb914-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="fu">c</span>(<span class="st">&quot;block 1&quot;</span>, <span class="st">&quot;block 2&quot;</span>, <span class="st">&quot;block 3&quot;</span>, <span class="st">&quot;block 4&quot;</span>),</span>
+<span id="cb914-4"><a href="ch10-Positions-Roles-R.html#cb914-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.dist =</span> <span class="fl">4.5</span>, <span class="at">vertex.label.degree =</span> <span class="dv">0</span>,</span>
+<span id="cb914-5"><a href="ch10-Positions-Roles-R.html#cb914-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.loop.angle =</span> edge_loop_angles, <span class="at">margin =</span> .<span class="dv">20</span>)</span>
+<span id="cb914-6"><a href="ch10-Positions-Roles-R.html#cb914-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb914-7"><a href="ch10-Positions-Roles-R.html#cb914-7" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;left&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;friendship&quot;</span>, <span class="st">&quot;task&quot;</span>, <span class="st">&quot;social&quot;</span>),</span>
+<span id="cb914-8"><a href="ch10-Positions-Roles-R.html#cb914-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;green&quot;</span>),</span>
+<span id="cb914-9"><a href="ch10-Positions-Roles-R.html#cb914-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">cex =</span> .<span class="dv">8</span>)</span></code></pre></div>
+<p><img src="Chapter10_Integrated_Network_Science_Rtutorial_positions_roles_files/figure-html/unnamed-chunk-61-1.png" width="528" /></p>
+<p>Looks like we have all the elements we want in the figure.</p>
+</div>
+<div id="interpretation-of-blockmodel" class="section level3 hasAnchor" number="10.5.4">
+<h3><span class="header-section-number">10.5.4</span> Interpretation of Blockmodel<a href="ch10-Positions-Roles-R.html#interpretation-of-blockmodel" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Now, let's take the plotted blockmodel and interpret the roles that emerge in this network, in terms of the pattern of ties that exist between blocks. The question here is what rules of behavior, or behavioral expectations, map onto each block, and then look at how these cohere into a larger social system.</p>
+<p>Let's begin by looking at block 4, as the pattern of friendship, social and task ties are so distinct here. Remember that block 4 consists only of node 16. Looking at the blockmodel figure, this node sends no friendship ties, socializes with block 1 and block 2 and has heavy task interactions with block 1 and block 2. They also do quite a bit more tasks than others in the classroom. We can see this by looking at the total level of task interactions for each block:</p>
+<div class="sourceCode" id="cb915"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb915-1"><a href="ch10-Positions-Roles-R.html#cb915-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rowSums</span>(blockmod_task<span class="sc">$</span>block.model, <span class="at">na.rm =</span> T)</span></code></pre></div>
+<pre><code>## Block 1 Block 2 Block 3 Block 4 
+## 5.33875 3.35375 1.90750 9.02000</code></pre>
+<p>In short, this is an individual playing the role of teacher in the classroom, who does tasks with other nodes in the network but will not form friendships with them. In fact, it is the teacher in this case, but we arrived at the behavioral role without knowing that, and it was possible that another actor could have played that role. We now turn to the more complicated blocks, starting with block 3.</p>
+<p>Block 3 consists of nodes who are mostly friends and socialize with others in block 3 and send unreciprocated friendship ties to those in block 1. Most distinctly, they have much lower levels of social interaction and task interactions with block 4, the teacher (compared to the level of contact between block 4 and block 1 and 2). For example, looking at task interactions with block 4:</p>
+<div class="sourceCode" id="cb917"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb917-1"><a href="ch10-Positions-Roles-R.html#cb917-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(blockmod_task<span class="sc">$</span>block.model[, <span class="dv">4</span>], <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>## Block 1 Block 2 Block 3 Block 4 
+##    4.77    3.05    1.20     NaN</code></pre>
+<p>So, this is a role based on internal friendship, lack of engagement with the person playing the teacher role, and unreciprocated friendships. We can think of this as a low integration, lower status role in the classroom.</p>
+<p>Block 1 is constituted by high internal rates of social and friendship ties with others in block 1. Block 1 also has high rates of social and task interactions with the teacher. Block 1 also receives friendship ties from block 3, but does not send ties back, suggestive of an asymmetric relationship between those in block 3 (a low engagement block) and block 1 (a high engagement block).</p>
+<p>Finally, block 2 has high internal interaction (friendship and social) and high task engagement with the teacher role. Students in block 2 are almost entirely friends with other students in block 2, and have few social or task connections to block 1 or 3. Block 2 also has high social and task engagement with the teacher, block 4. In this way, the main substantive difference between block 1 and 2 (both high engagement with the teacher but not with each other) is the relation to block 3, the low integration block; with block 1, but not block 2, being the source of desired, but not returned, friendship ties.</p>
+<p>At the level of the social system, we have a classroom where different actors play different roles, constituted by:
+a 'teacher' role [block 4], a 'low engagement student' role [block 3], a 'high engagement, socially desirable' role [block 1], a 'high engagement, less socially desirable' role [block 2].</p>
+<p>Overall, we see that the classroom is divided socially into pretty clear-cut social groups (in terms of friendship), while much of the activity of the classroom is centered around the task and social activities of the teacher, with different blocks having different expectations of their interactions with that focal person. We also see that most of the tasks happen with the teacher. Thus, there is little task-based cooperation between friendship groups. The classroom is thus organized by a set of social groups that cluster together on their expectation of task interactions with the teacher. The patterning on rights and responsibilities between student groups is less clear-cut, although there is some differentiation in terms of which blocks are positioned to receive unreciprocated friendships: with those playing the 'high engagement, socially desirable' role [block 1] being sought after by those in block 3.</p>
+<p>Given this kind of analysis, a researcher could use these revealed roles to predict other outcomes, such as the emergence of alliances in a moment of disagreement/argument, school outcomes, etc. We can also ask who ends up playing different roles in the classroom. For example, we may be interested in knowing something about the gender, racial, etc. makeup of the various roles. In this way, we define the roles first and then ask who is likely to end up playing those roles and the consequences for such mapping (demographics onto roles). Here, let’s do a very quick analysis where we examine the gender and racial makeup of some the key roles that emerged out of our analysis.</p>
+<p>For example, let’s look at the racial and gender distribution for block 1. Block 1 corresponds to a high engagement role; they have high social interactions with each other but also have very high levels of task engagement with the teacher. Let’s look at the gender distribution for block 1.</p>
+<div class="sourceCode" id="cb919"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb919-1"><a href="ch10-Positions-Roles-R.html#cb919-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(class182_attributes<span class="sc">$</span>gender[hc_ids <span class="sc">==</span> <span class="dv">1</span>])</span></code></pre></div>
+<pre><code>## 
+## female   male 
+##      3      2</code></pre>
+<div class="sourceCode" id="cb921"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb921-1"><a href="ch10-Positions-Roles-R.html#cb921-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(class182_attributes<span class="sc">$</span>race[hc_ids <span class="sc">==</span> <span class="dv">1</span>])</span></code></pre></div>
+<pre><code>## 
+## black white 
+##     3     2</code></pre>
+<p>We can see that this high engagement role is played by a very diverse set of actors. In terms of both gender and race, the role splits nearly in half between female/male and black/white. It is not the case that the high engagement role is played by actors who are all female, white, and so on. Now, let’s compare this to the low engagement role, associated with block 3. Block 3 is defined by high internal social interaction and low task engagement with the teacher. This is a friendship set that is less engaged in the activity of the class as a whole, with its only ties to other blocks in the form of unreciprocated friendship ties. Looking at gender and race distribution for block 3:</p>
+<div class="sourceCode" id="cb923"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb923-1"><a href="ch10-Positions-Roles-R.html#cb923-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(class182_attributes<span class="sc">$</span>gender[hc_ids <span class="sc">==</span> <span class="dv">3</span>])</span></code></pre></div>
+<pre><code>## 
+## female   male 
+##      2      2</code></pre>
+<div class="sourceCode" id="cb925"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb925-1"><a href="ch10-Positions-Roles-R.html#cb925-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(class182_attributes<span class="sc">$</span>race[hc_ids <span class="sc">==</span> <span class="dv">3</span>])</span></code></pre></div>
+<pre><code>## 
+## white 
+##     4</code></pre>
+<p>We can see here that gender is again quite diverse but that everyone identifies as white. Thus, the actors playing the low engagement role can be male or female but, in this case, are all white.</p>
+<p>It is important to see that the roles themselves are defined completely separately from the attributes of those playing the role. Thus, it becomes an empirical question as to who ends up playing a given role in the classroom. In this case, the low engagement role is not being played by demographic groups who are traditionally disadvantaged in the classroom (e.g., black and male). A more systematic analysis could extend the results to a large number of classrooms, seeing how different students play different roles in different settings.</p>
+</div>
+</div>
+<div id="local-equivalence" class="section level2 hasAnchor" number="10.6">
+<h2><span class="header-section-number">10.6</span> Local Equivalence<a href="ch10-Positions-Roles-R.html#local-equivalence" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this last section of the tutorial, we turn our attention to local equivalence. We have so far focused on structural equivalence, where we clustered actors based on being tied to the same other people. With local equivalence, actors are clustered together if they have the same interactional tendencies, or signatures, based on how they interact in their own local 'neighborhood'. Thus, actors are placed in the same position not because they interact with the same people, but because they interact in the same manner.</p>
+<p>We will explore local equivalence by looking at triads. We will first characterize each actor based on the pattern of triads they are part of. We will then calculate the correlation between actors, based on their triad types. We will then use the correlations between triad-type memberships (across actors) to identify positions in the role analysis. Actors with similar triad-type distributions will be put in the same position, regardless of the specific people with whom they interact.</p>
+<p>We will keep our analysis simple and focus on a single relation, here using the task network to walk through the analysis. The first step is to calculate the individual triad census. As of the writing of this tutorial, there is no package in R that will calculate the individual triad census. There is, however, a stand alone script made available by Hummel and Sodeur that provides the same results. We begin by reading in their function:</p>
+<div class="sourceCode" id="cb927"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb927-1"><a href="ch10-Positions-Roles-R.html#cb927-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/R/f.rc.r&quot;</span>)</span></code></pre></div>
+<p>The function is <code>f.rc()</code>, which takes a binary matrix as input and outputs the triads that each node is involved in. We will thus binarize the network.</p>
+<div class="sourceCode" id="cb928"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb928-1"><a href="ch10-Positions-Roles-R.html#cb928-1" aria-hidden="true" tabindex="-1"></a>task_mat_binary <span class="ot">&lt;-</span> task_mat</span>
+<span id="cb928-2"><a href="ch10-Positions-Roles-R.html#cb928-2" aria-hidden="true" tabindex="-1"></a>task_mat_binary[task_mat_binary <span class="sc">&gt;</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span></code></pre></div>
+<p>We can now apply the function over the binarized matrix.</p>
+<div class="sourceCode" id="cb929"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb929-1"><a href="ch10-Positions-Roles-R.html#cb929-1" aria-hidden="true" tabindex="-1"></a>task_triads_ego <span class="ot">&lt;-</span> <span class="fu">f.rc</span>(task_mat_binary)</span></code></pre></div>
+<p>Let's look at the dimensions of the outputted matrix.</p>
+<div class="sourceCode" id="cb930"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb930-1"><a href="ch10-Positions-Roles-R.html#cb930-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(task_triads_ego)</span></code></pre></div>
+<pre><code>## [1] 16 36</code></pre>
+<p>We can see that the matrix has 16 rows and 36 columns. The rows correspond to the nodes in the network and the columns correspond to the triad type, differentiated by the position that ego holds in that triad. In defining the triad types, the three nodes are labeled as: ego, A1, and A2. For example, column 7 corresponds to triads defined by: ego&lt;-&gt;A1, ego&lt;-&gt;A2. Column 16 captures the same basic structure but ego occupies a different position in it: ego&lt;-&gt;A1, A1&lt;-&gt;A2. The function does not return labels, but we list them here for reference (based on <a href="http://www.uni-duisburg-essen.de/hummell/pdf/RoleCensus.pdf" class="uri">http://www.uni-duisburg-essen.de/hummell/pdf/RoleCensus.pdf</a>)</p>
+<ul>
+<li>1 Ego, A1, A2</li>
+<li>2 Ego-&gt;A1, A2</li>
+<li>3 Ego-&gt;A1, Ego-&gt;A2<br />
+</li>
+<li>4 Ego&lt;-A1</li>
+<li>5 Ego&lt;-A1, Ego&lt;-A2<br />
+</li>
+<li>6 Ego&lt;-&gt;A1</li>
+<li>7 Ego&lt;-&gt;A1, Ego&lt;-&gt;A2</li>
+<li>8 Ego&lt;-A1, Ego-&gt;A2</li>
+<li>9 Ego&lt;-&gt;A1, Ego-&gt;A2</li>
+<li>10 Ego&lt;-&gt;A1, Ego&lt;-A2</li>
+<li>11 A1&lt;-&gt;A2</li>
+<li>12 Ego-&gt;A1, A1&lt;-&gt;A2</li>
+<li>13 Ego-&gt;A1, Ego-&gt;A2, A1&lt;-&gt;A2</li>
+<li>14 Ego&lt;-A1, A1&lt;-&gt;A2</li>
+<li>15 Ego&lt;-A1, Ego&lt;-A2, A1&lt;-&gt;A2</li>
+<li>16 Ego&lt;-&gt;A1, A1&lt;-&gt;A2</li>
+<li>17 Ego&lt;-&gt;A1, Ego&lt;-&gt;A2, A1&lt;-&gt;A2</li>
+<li>18 Ego&lt;-A1, Ego-&gt;A2, A1&lt;-&gt;A2</li>
+<li>19 Ego&lt;-&gt;A1, Ego-&gt;A2, A1&lt;-&gt;A2</li>
+<li>20 Ego&lt;-&gt;A1, Ego&lt;-A2, A1&lt;-&gt;A2</li>
+<li>21 A1-&gt;A2 (or A1&lt;-A2)</li>
+<li>22 Ego-&gt;A1, A1-&gt;A2</li>
+<li>23 Ego-&gt;A1, Ego-&gt;A2, A1-&gt;A2 (or A1&lt;-A2 )</li>
+<li>24 Ego&lt;-A1, A1-&gt;A2</li>
+<li>25 Ego&lt;-A1, Ego&lt;-A2, A1-&gt;A2 (or A1&lt;-A2 )</li>
+<li>26 Ego&lt;-&gt;A1, A1-&gt;A2</li>
+<li>27 Ego&lt;-&gt;A1, Ego&lt;-&gt;A2, A1-&gt;A2 (or A1&lt;-A2 )</li>
+<li>28 Ego&lt;-A1, Ego-&gt;A2, A1-&gt;A2</li>
+<li>29 Ego&lt;-&gt;A1, Ego-&gt;A2, A1-&gt;A2</li>
+<li>30 Ego&lt;-&gt;A1, Ego&lt;-A2, A1-&gt;A2</li>
+<li>31 Ego-&gt;A1, A1&lt;-A2</li>
+<li>32 Ego&lt;-A1, A1&lt;-A2</li>
+<li>33 Ego&lt;-&gt;A1, A1&lt;-A2</li>
+<li>34 Ego&lt;-A1, Ego-&gt;A2, A1&lt;-A2</li>
+<li>35 Ego&lt;-&gt;A1, Ego-&gt;A2, A1&lt;-A2</li>
+<li>36 Ego&lt;-&gt;A1, Ego&lt;-A2, A1&lt;-A2</li>
+</ul>
+<p>And now let's look at the first ten rows and columns.</p>
+<div class="sourceCode" id="cb932"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb932-1"><a href="ch10-Positions-Roles-R.html#cb932-1" aria-hidden="true" tabindex="-1"></a>task_triads_ego[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code></pre></div>
+<pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+##  [1,]   23    0    0    0    0   37    4    0    0     0
+##  [2,]   21    0    0    0    0   38    5    0    0     0
+##  [3,]   34    0    0    0    0   28    0    0    0     0
+##  [4,]   52    0    0    0    0    8    0    0    0     0
+##  [5,]   17    0    0    0    0   37   11    0    0     0
+##  [6,]   23    0    0    0    0   35    6    0    0     0
+##  [7,]   26    0    0    0    0   36    1    0    0     0
+##  [8,]   26    0    0    0    0   36    1    0    0     0
+##  [9,]   27    0    0    0    0   36    0    0    0     0
+## [10,]   14    0    0    0    0   42    9    0    0     0</code></pre>
+<p>We can see, for example, that node 1 is in 23 null triads (column 1) and 37 triads with a mutual pair (column 6). Note that column 6 corresponds to the triad where ego is mutually tied to one alter but not the second (and the alters are not tied together): Ego&lt;-&gt;A1.</p>
+<p>We will now use the triad census matrix to see which nodes have similar patterns of task interactions. Here, we will employ concor (convergence of iterated correlations), an algorithm that clusters nodes into positions based on the correlations between rows. Nodes with similar rows (i.e., triad counts) will be placed together. Note that we could have used concor above, in the original analysis, just as we could use hierarchical clustering in this analysis. We begin by reading in some useful functions to do concor in R.</p>
+<div class="sourceCode" id="cb934"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb934-1"><a href="ch10-Positions-Roles-R.html#cb934-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/R/concor_functions.R&quot;</span>)</span>
+<span id="cb934-2"><a href="ch10-Positions-Roles-R.html#cb934-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/R/clustConfigurations_concor.R&quot;</span>)</span></code></pre></div>
+<p>The main function is <code>concor()</code> and the arguments are mat, the matrix of interest, and depth, controlling how deeply into the network we want to partition the nodes (higher values yielding more disaggregated solutions). In this case, the matrix of interest is the matrix of triad counts. We first need to transpose the matrix, as we want to take the correlations between the rows (and R will take the correlations column-wise by default). We will set depth to 6.</p>
+<div class="sourceCode" id="cb935"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb935-1"><a href="ch10-Positions-Roles-R.html#cb935-1" aria-hidden="true" tabindex="-1"></a>task_triads_ego_transpose <span class="ot">&lt;-</span> <span class="fu">t</span>(task_triads_ego)</span>
+<span id="cb935-2"><a href="ch10-Positions-Roles-R.html#cb935-2" aria-hidden="true" tabindex="-1"></a>concor_results <span class="ot">&lt;-</span> <span class="fu">concor</span>(<span class="at">mat =</span> task_triads_ego_transpose, <span class="at">depth =</span> <span class="dv">6</span>)</span></code></pre></div>
+<p>Let's take a look at the results.</p>
+<div class="sourceCode" id="cb936"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb936-1"><a href="ch10-Positions-Roles-R.html#cb936-1" aria-hidden="true" tabindex="-1"></a>concor_results</span></code></pre></div>
+<pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+##  [1,]    1    1    1    1    1    1    1
+##  [2,]    1    1    1    1    1    1    2
+##  [3,]    1    1    2    3    3    3    3
+##  [4,]    1    1    2    4    4    4    4
+##  [5,]    1    1    1    1    2    5    5
+##  [6,]    1    1    1    1    1    2    6
+##  [7,]    1    1    1    2    5    7    8
+##  [8,]    1    1    1    2    5    7    8
+##  [9,]    1    1    1    2    5    8    9
+## [10,]    1    1    1    1    2    6   10
+## [11,]    1    1    2    3    3    3    3
+## [12,]    1    1    1    2    5    8    9
+## [13,]    1    1    1    2    6    9   11
+## [14,]    1    1    1    1    1    2    7
+## [15,]    1    1    1    1    1    1    2
+## [16,]    1    2    3    5    7   10   12</code></pre>
+<p>The rows correspond to the nodes in the network. There are 7 columns, with the first column set to the solution with all nodes in 1 cluster. The values correspond to the clusters under different solutions, with more disaggregated solutions as we move from left to right. For example, in the second column, there are 2 positions, with node 16 split off from everyone else. In the third column, there are 3 positions; in the fourth column there are 5, and so on.</p>
+<p>Now, we need to figure out how many clusters best describes the underlying data. To do this, we will examine how each solution (or columns from <code>concor_results</code>) fits the data. The function to plot the fit statistics is <code>clustConfigurations_concor()</code>. The basic idea is to examine the within- and between-cluster correlations for each solution. We first take the observed correlation matrix, and calculate the mean correlations by cluster (mean value within the cluster and mean values to other clusters). We then take this matrix of means and correlate it with the observed correlation matrix to see how well the solution approximates the true data. Higher values suggest better fits.</p>
+<p>The arguments to <code>clustConfigurations_concor()</code> are the outputted concor results (from above) and the observed correlation matrix. Let's first calculate the observed correlation matrix and then produce the plot of fit statistics. We put an NA on the diagonal of the observed correlation matrix as those values are by definition 1, and we don't want those values as part of the calculation.</p>
+<div class="sourceCode" id="cb938"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb938-1"><a href="ch10-Positions-Roles-R.html#cb938-1" aria-hidden="true" tabindex="-1"></a>observed_correlation <span class="ot">&lt;-</span> <span class="fu">cor</span>(task_triads_ego_transpose)</span>
+<span id="cb938-2"><a href="ch10-Positions-Roles-R.html#cb938-2" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(observed_correlation) <span class="ot">&lt;-</span> <span class="cn">NA</span></span></code></pre></div>
+<div class="sourceCode" id="cb939"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb939-1"><a href="ch10-Positions-Roles-R.html#cb939-1" aria-hidden="true" tabindex="-1"></a>concor_fit <span class="ot">&lt;-</span> <span class="fu">clustConfigurations_concor</span>(concor_results, observed_correlation) </span></code></pre></div>
+<p><img src="Chapter10_Integrated_Network_Science_Rtutorial_positions_roles_files/figure-html/unnamed-chunk-75-1.png" width="672" /></p>
+<p>The plot shows the fit as the network is divided into increasingly finer clusters. We are looking for solutions where the increase in the correlation is large as depth increases, followed by a plateau (so dividing further does not help as much). This amounts to looking for a sharp increase in the plot. For this network, we will use the solution with depth set to 4. Note that the 1-cluster solution does not appear on the plot because its correlation with the observed correlation matrix is undefined. Let's grab the memberships based on the depth = 4 solution.</p>
+<div class="sourceCode" id="cb940"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb940-1"><a href="ch10-Positions-Roles-R.html#cb940-1" aria-hidden="true" tabindex="-1"></a>positions_triads <span class="ot">&lt;-</span> concor_results[, <span class="dv">4</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb941"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb941-1"><a href="ch10-Positions-Roles-R.html#cb941-1" aria-hidden="true" tabindex="-1"></a>positions_triads</span></code></pre></div>
+<pre><code>##  [1] 1 1 3 4 1 1 2 2 2 1 3 2 2 1 1 5</code></pre>
+<p>We see that there are five positions, with actors 4 and 16 in distinct positions, and the rest split between positions 1, 2 and 3.</p>
+<p>Given this initial result, a useful next step is to explore the types of triads associated with each position (i.e., to offer substantive insight into the uncovered positions). We will create a summary matrix, where the cells correspond to the average number of times that actors in a position are in a given triad type. The matrix is m x n, where m is the number of positions and n is the 36 possible triad types. We will use the <code>aggregate()</code> function to calculate the means over the columns in our triad matrix (<code>task_triads_ego</code>), setting by to the positions of each actor and FUN to mean.</p>
+<div class="sourceCode" id="cb943"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb943-1"><a href="ch10-Positions-Roles-R.html#cb943-1" aria-hidden="true" tabindex="-1"></a>position_triad_mat <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(task_triads_ego, </span>
+<span id="cb943-2"><a href="ch10-Positions-Roles-R.html#cb943-2" aria-hidden="true" tabindex="-1"></a>                                <span class="at">by =</span> <span class="fu">list</span>(<span class="at">cluster =</span> positions_triads), </span>
+<span id="cb943-3"><a href="ch10-Positions-Roles-R.html#cb943-3" aria-hidden="true" tabindex="-1"></a>                                <span class="at">FUN =</span> mean)</span></code></pre></div>
+<p>Let's look at a couple of key columns:</p>
+<div class="sourceCode" id="cb944"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb944-1"><a href="ch10-Positions-Roles-R.html#cb944-1" aria-hidden="true" tabindex="-1"></a>position_triad_mat[, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">17</span>, <span class="dv">18</span>)]</span></code></pre></div>
+<pre><code>##   cluster       V1       V6        V7      V16      V17
+## 1       1 20.57143 37.28571  6.428571 17.28571 10.28571
+## 2       2 27.00000 35.00000  1.000000 15.00000  9.00000
+## 3       3 34.00000 28.00000  0.000000 16.00000  6.00000
+## 4       4 52.00000  8.00000  0.000000 18.00000  1.00000
+## 5       5  0.00000  0.00000 73.000000  0.00000 32.00000</code></pre>
+<p>We can see, for example, that position 5 (node 16, the teacher), is constituted by having a high number of type 7 triads (Ego&lt;-&gt;A1, Ego&lt;-&gt;A2) and type 17 triads (Ego&lt;-&gt;A1, Ego&lt;-&gt;A2, A1&lt;-&gt;A2). They have 0 type 16 triads (Ego&lt;-&gt;A1, A1&lt;-&gt;A2). This means that the 'teacher' position does tasks with both alters in a given triad. We are unlikely to find a case where the teacher does tasks with one student (A1) who does tasks with another student (A2) but the teacher ignores the second student. The teacher can, however, do tasks with two students who do not do tasks with each other (Ego&lt;-&gt;A1, Ego&lt;-&gt;A2). Compare this to the triads for position 4 (node 4) who is almost never in triad 17 (Ego&lt;-&gt;A1, Ego&lt;-&gt;A2, A1&lt;-&gt;A2), and is much more likely to be in triad 1 (the null triad). This is suggestive of a position that does not engage heavily in task interactions.</p>
+<p>Position 2, on the other hand, is constituted by a higher number of type 6 triads (Ego&lt;-&gt;A1) and fewer null triads (type 1) than position 4. Thus, students in this position are more involved in task interactions than those in position 4. Position 2 is also very different than position 5 (the teacher), most clearly in the lower number of type 7 triads (Ego&lt;-&gt;A1, Ego&lt;-&gt;A2). Those in position 2 are unlikely to do task interactions with A1 and A2, when A1 and A2 are not tied together. Thus, we do not see students playing the ego role in Ego&lt;-&gt;A1, Ego&lt;-&gt;A2, as this kind of interaction is reserved for the teacher. All of this points to a system where task interactions are centered around the teacher (who connects unconnected students), with some students more engaged than others.</p>
+<p>Finally, as before, we can use our results to run a blockmodel analysis. The steps are the same as before and we leave it to the interested reader to explore this in more depth. Overall, this tutorial has offered an overview of doing positional and role analysis in R. We will take up many of these themes again in later tutorials, such as in <a href="ch12-Networks-Culture-R.html#ch12-Networks-Culture-R">Chapter 12</a> (networks and culture).</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ch9-Network-Centrality-Hierarchy-R.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ch11-Two-mode-Networks.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "serif",
+"size": 2.5
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"info": false
+});
+});
+</script>
+
+</body>
+
+</html>

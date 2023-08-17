@@ -1,0 +1,454 @@
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(width=300)
+```
+
+# 12, Part 1. Cultural Structures {.unnumbered #ch12-Networks-Structure-Culture-text-R}
+
+This is the first tutorial for Chapter 12, covering the application of network ideas to the analysis of cultural data. This tutorial will build directly on the material from Chapter 11, on two-mode data. In [Chapter 11](#ch11-Two-mode-Networks), we analyzed typical affiliation data, where the rows were actors and the columns organizations. In this tutorial, we will be working with textual data, applying the ideas of duality to a very different kind of data source, one based on words in documents. We will walk through the basics of topic modeling in R. Topic modeling is a natural language processing technique that uncovers the latent topics that structure the words used in a set of documents.  We will cover the following: basic data management of textual data; modeling textual data using LDA (latent Dirichlet allocation); and representing textual data as a network.
+
+For our empirical case, we analyze textual data based on a set of sociology abstracts (drawn from recent dissertations). We are interested in discovering the latent topics that exist in the data, where each topic is defined by having a distinct pattern of words associated with it. We are also interested in seeing which abstracts get placed together and why. In this way we are trying to uncover the underlying structure of the field of sociology (as represented in abstracts), where certain words and researchers are associated with a topic and certain topics are closer to each other than others. We thus see the intuition of a network approach played out using textual data. As this is a textbook on network analysis, we will not focus on the technical details of topic modeling; instead, we will focus on the substantive application of network ideas to textual data. For those interested in more technical details on topic models, see the **topicmodels** [documentation](https://cran.r-project.org/web/packages/topicmodels/vignettes/topicmodels.pdf). And for information on text mining and textual analysis in general, see @Feinerer2008.
+
+## Getting the Data Ready
+We will need a number of packages to analyze our textual data, here dissertation abstracts in sociology. We will need: **NLP** (basic processing of natural language), **tm** (text mining package), **SnowballC** (word stemming package), **topicmodels** (package for modeling the topics), and **ldatuning** (package for evaluating the models). Let's go ahead and load them all.
+
+```{r message=F, warning=F}
+library(NLP)
+library(tm)
+library(SnowballC)
+library(topicmodels) 
+library(ldatuning) 
+```
+
+Note that topic modeling is computationally heavy and can require a long run time. The data we will use for this lab is only a very small (random) sample of the original corpus of dissertations. If this was an analysis for an actual paper, we would want to use the whole set of data, or at least a much larger sample.  Let's read in the data, treating our text strings as strings rather than as categories:
+
+```{r}
+url1 <- "https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/sociologysample.csv"
+
+abstracts <- read.csv(file = url1, stringsAsFactors = FALSE)
+```
+
+We can use the `str()` function to take a look at the data.
+
+```{r}
+str(abstracts) 
+```
+
+We see there are two columns (`obs` and `text`), the first for the observation and the second for the actual text of the abstract. There are 199 abstracts in the data. For example, let’s look at the text of the first abstract. 
+
+```{r}
+abstracts[1, "text"] 
+```
+
+We can see that this is literally the text of the dissertation abstract, word for word. This is the data that we want to analyze. Before we can analyze the data, we need to create a corpus based on the words used in the abstracts. We basically need to transform the raw text data into a set of words (for each abstract) that are directly comparable across abstracts. We want to know which words are used together frequently and which abstracts are using which words. We thus need to have the data in a format where such comparisons are possible. By creating a Corpus object from our abstracts, we will be able to use various functions in R that are designed to standardize text data.
+
+Here we will use a `Corpus()` function. Note that the `Corpus()` function will not take text data directly as input. We thus need to use a `VectorSource()` function within the main function, with the input as the text of interest (`abstracts$text`).
+
+```{r message=F, warning=F}
+abstracts_corp <- Corpus(VectorSource(abstracts$text))
+```
+
+```{r}
+length(abstracts_corp)
+```
+
+The length is 199, one for each of the abstracts in our original data. It will be useful to clean the corpus a bit before we actually try to analyze it. Textual data can be messy. We need to make the inputs (abstracts in this case) as uniform as possible, to facilitate comparison. We will go through a series of steps on how to streamline the textual data, making the abstracts consistent and informative. For example, let's change everything to lower case. If one dissertation uses the word "network" and another uses "Network", we don’t want to treat them as having used different words. We will make use of the `tm_map()` function to clean up the corpus. The inputs are the corpus and the function we want to use (telling R how to change the text). Here we will set the function to tolower.
+
+```{r message=F, warning=F}
+abstracts_corp <- tm_map(abstracts_corp, tolower)
+```
+
+Let's take a look at the first abstract:
+
+```{r}
+abstracts_corp[[1]]$content
+```
+
+We can see all the words are now lower case. We also need to deal with some odd mistakes in the data. We can see from the first abstract that the raw textual data sometimes has multiple words stuck together. For example, in the first abstract current and depression are put together as current_depression. That does not yield a meaningful word, so we need to split those words up into separate words, whenever that happens. In this case, we need to write our own little function (called `split_words()`) to perform this task. This function will make use of `content_transformer()`, which is a function used to create text transformations that are not already built into R. Here, we will write a little function within `content_transformer()` that will find all the _ and replace them with a space. This is accomplished using the `gsub()` function. The main arguments to `gsub()` are pattern (the pattern to look for) and replacement (the replacement text for the specified pattern). x is the text of interest.  
+
+```{r}
+gsub_function <- function(x, pattern) gsub(pattern, replacement = " ", x)
+split_words <- content_transformer(gsub_function)
+```
+
+And here we apply our function to the corpus using `tm_map()`.
+
+```{r message=F, warning=F}
+abstracts_corp <- tm_map(abstracts_corp, split_words, pattern = "_")
+
+```
+
+Let’s check to make sure it worked, looking at the first abstract:
+
+```{r}
+abstracts_corp[[1]]$content 
+```
+
+It looks right. We can see that current and depression are now separate words, rather than current_depression. Let’s do a similar splitting based on words put together with a /.
+
+```{r message=F, warning=F}
+abstracts_corp <- tm_map(abstracts_corp, split_words, pattern = "/")
+```
+
+Let's also remove punctuation as this is not substantively useful. The function here is `removePunctation()`. This will take out commas, periods, apostrophes and so on.  In this case we do not need to use a content_transformer function as `removePunctuation()` is a built-in transformation in the **tm** package. 
+
+```{r message=F, warning=F}
+abstracts_corp <- tm_map(abstracts_corp, removePunctuation)
+```
+
+Let's also remove all of the numbers from the corpus.
+
+```{r message=F, warning=F}
+abstracts_corp <- tm_map(abstracts_corp, removeNumbers)
+```
+
+Now let's designate a set of words to remove. For example, we may want to remove commonly used words that don't add much to differentiate word use in the abstracts. For example, if everyone uses "is" it may make sense to remove it from all abstracts. Here we can use the `stopwords()` function (set to english) to get commonly used words. 
+
+```{r}
+stopwords("english")
+```
+
+Here we remove any word in that list from each abstract using the `removeWords()` function.
+
+```{r message=F, warning=F}
+abstracts_corp <- tm_map(abstracts_corp, removeWords, stopwords("english"))
+```
+
+Now, let's add a few more words to our stopword list. Again, we want to remove words that are not differentiating for the corpus at hand (here abstracts from sociology dissertations). We will add the following words that were not in the default stop list. 
+
+```{r}
+myStopwords <- c("dissertation", "chapter", "chapters", "research", 
+                 "researcher" ,"researchers" ,"study", "studies", 
+                 "studied", "studys", "studying", "one", "two", "three")
+```
+
+We tried to include words that are not informative for this corpus, as they are generic and widely used. For example, many abstracts may mention a "chapter one" but that does not make it substantively important that chapter and one are used together frequently.  We could, of course, imagine a slightly different list, and we must be aware that are our results will differ if we exclude different words. We now go ahead and remove those words from the corpus. 
+
+```{r message=F, warning=F}
+abstracts_corp <- tm_map(abstracts_corp, removeWords, myStopwords)
+```
+
+Now, let's take out any redundant whitespace between words using the `stripWhitespace()` function. 
+
+```{r message=F, warning=F}
+abstracts_corp <- tm_map(abstracts_corp, stripWhitespace)
+```
+
+Finally, we will stem the document using a `stemDocument()` function. This reduces similar words to a single stem word. For example, test and testing would be reduced to test. The idea is that they convey the same basic meaning and should be treated as the same. 
+
+```{r message=F, warning=F}
+abstracts_corp <- tm_map(abstracts_corp, stemDocument)
+```
+
+Let's again take a look at the first abstract: 
+
+```{r}
+abstracts_corp[[1]]$content
+```
+
+After all of this you end up with a string of word stems with many common words removed. This is done for each input (here abstract) in the corpus. Note that the cleaning process is fraught with difficulties. For example, stemming is far from perfect and can lead to some unexpected results. For example, experiment and experience have the same stem (experi) while child and children do not. This could be what you want, but it may not. More generally, synonyms will not be treated as the same word (i.e., stemming will not capture the idea that kid and child are often used to capture similar ideas). Similarly, we have to be careful about the choice of words to include in the stop list. We want to remove words that are not differentiating, but how long of a list we should construct and which words should be included are difficult (context-specific) questions. 
+
+Assuming we are satisfied with the cleaning process, we are now in a position to create a document-term matrix. We need to create a document-term matrix as this will serve as input to our LDA model, where the words and abstracts are placed into latent topics. The document-term matrix is a complex object, capturing how many times each document (the rows) used a particular term (the columns). We will use a `DocumentTermMatrix()` function, with the corpus as input.  
+
+```{r}
+abstracts_dtm <- DocumentTermMatrix(abstracts_corp)
+```
+
+```{r}
+abstracts_dtm
+```
+
+We can see that there are 199 documents and 4298 unique terms in our document-term matrix. The values in the matrix correspond to the number of times each document (i.e., abstract) used a given term (i.e., word). 20228 of the values in the matrix are non-sparse, or greater than 1, and 835074 are sparse, equal to 0; where a 0 means that the document did not use the term.  Thus, about 98% of the possible 'ties' between documents and terms do not actually exist (`835074 / (20228 + 835074)`), suggesting that many words are not used widely across abstracts. We also see that the longest word in the corpus is length 25 (i.e., 25 letters).
+
+We can use the `inspect()` function to take a look at particular documents or terms. Here we look at the first abstract:
+
+```{r}
+inspect(abstracts_dtm[1, ]) 
+```
+
+By default, inspect will print the top ten terms used. We can see here that the first document used the word 'abus' 14 times, 'child' 5 times, and so on.  We can also use inspect to look at the columns. Here we look at the top ten documents that use the term risk:
+
+```{r}
+inspect(abstracts_dtm[, "risk"]) 
+```
+
+We can see that the term 'risk' is used 9 times in the first document, 1 time in the 116th document and so on. 
+
+We can also use the `Terms()` function to get all of the terms (i.e., words) used and the `Docs()` function to get all of the document ids (here abstracts). Here we look at the first 6 terms.
+
+```{r}
+head(Terms(abstracts_dtm))
+```
+
+Finally, it may be of use to extract the actual matrix from the document-term matrix. Here we apply `as.matrix()` on the document-term matrix:
+
+```{r}
+mat_abstract_words <- as.matrix(abstracts_dtm)
+```
+
+```{r}
+dim(mat_abstract_words)
+```
+
+We can see there are 199 rows (documents) and 4298 columns (terms).  And let's take a look at the first five rows and columns:
+
+```{r}
+mat_abstract_words[1:5, 1:5]
+```
+
+We can see, for example, that the first document used 'abus' 14 times (same as we saw above). We can take this matrix and calculate summary measures. For example, we can calculate how many different terms the first document used (by asking how many times the first row of the matrix is greater than 0):
+
+```{r}
+sum(mat_abstract_words[1, ] > 0)
+```
+
+Note that the document-term matrix is analogous to the affiliation matrices we saw in the previous tutorial, where students were on the rows and clubs were on the columns. Here, with textual data, we have documents on the rows and terms on the columns.
+
+## Topic Modeling 
+Now, we want to analyze our document-term matrix, applying topic models to the text-based data. We will utilize LDA, latent Dirichlet allocation. LDA attempts to uncover the underlying, or latent, topics in the corpus of interest. Different (latent) topics create different word use and we can use the co-occurrence of words in a document to uncover which words hang together under a given topic. A topic will have a high probability of yielding a set of words when those words are used together at high rates. In a similar way, we can ask which abstracts are likely to fall into which topic, based on their distribution of word choice. In many ways, this is conceptually similar to the positional analysis from [Chapter 10](#ch10-Positions-Roles-R), where nodes were placed in the same position if they had the same pattern of ties to other nodes. Here, two abstracts are likely to be in the same topic if they use the same set of words. 
+
+### LDA: Initial Model
+We need to set a few parameters before we can run the model. LDA utilizes Gibbs sampling, a randomized algorithm for obtaining a sequence of observations from a multivariate probability distribution. This sequence will be used to approximate the joint distribution of topics and words. Here we set the key inputs to the algorithm: 
+
+```{r}
+burnin <- 200 # number of omitted Gibbs iterations at beginning
+iter <- 3000 # number of iterations
+thin <- 2000 # number of omitted iterations between each kept iteration 
+seed <- list(2003, 5,63, 100001, 765) #seeds to enable reproducibility
+nstart <- 5 # number of repeated random starts
+best <- TRUE # only continue model on the best model
+```
+
+The model also requires that a researcher set the number of topics prior to estimation (similar to setting the number of clusters in [Chapter 10](#ch10-Positions-Roles-R)). Here we will set the number at 5, noting that this is a pretty arbitrary choice. We will consider more principled ways of setting the number of topics below. 
+
+```{r}
+k <- 5
+```
+
+Now we are ready to run LDA using Gibbs sampling. The function is `LDA()`. The main arguments are:
+
+- x = document term matrix
+- k = number of topics
+- method = either VEM or Gibbs
+- control = list of control input 
+
+```{r}
+ldaOut <- LDA(x = abstracts_dtm, k = k, method = "Gibbs", 
+              control=list(nstart = nstart, seed = seed, best = best,
+                           burnin = burnin, iter = iter, thin = thin))
+```
+
+Now let's explore the results. First, we can use a `topics()` function to extract the most likely topic for each abstract. 
+
+```{r}
+ldaOut_topics <- topics(ldaOut)
+```
+
+```{r}
+head(ldaOut_topics)
+```
+
+This suggests that the first abstract is most likely to fall into topic 1, the second is likely to fall into topic 2 and so on. We can also extract more nuanced information, looking at the probabilities of each abstract going into each latent topic. Thus, rather than just looking at the most likely topic, we can see the relative probability of a given abstract belonging to a given topic. The probabilities can be extracted using `@gamma` on the model object:
+
+```{r}
+topicProbabilities <- ldaOut@gamma
+```
+
+```{r}
+head(topicProbabilities)
+```
+
+We can see that the first abstract has a `r round(topicProbabilities[1, 1], 3) ` probability of being in topic 1 and much lower probabilities for the other topics. Of course, at this point we do not know anything about what the latent topics correspond to. So, let's go ahead and take a look at the topics. Here we will look at the most likely words associated with each latent topic. This amounts to finding the probability that a given topic will yield a given word and selecting those words with the highest probability. We use the `terms()` function with the lda object as input, as well as the number of terms to consider (here set to 10). 
+
+```{r}
+ldaOut_terms <- terms(ldaOut, 10)
+```
+
+```{r}
+ldaOut_terms
+```
+
+We can see that topic 4 (for example) yields words like women, student and education, while topic 1 yields words like parent, family, and children. Note that we can get the actual probabilities for the terms using the `posterior()` function. More generally, it is important to see that the topics are simultaneously constituted by the set of words that are used together and the abstracts that tend to use those words, analogous to the ideas explored in the tutorial on two-mode, affiliation networks.  
+
+### LDA: Picking the Number of Topics
+Our initial analysis set the number of latent topics to 5. But we could just as easily have used a different number, yielding a different set of results. The issue of how to determine the appropriate numbers of topics is a difficult one, in part, because there is no single, universally accepted way of doing this. One approach is to redo the analysis using different numbers of topics, interpreting the latent topics at different scales, or resolutions. A quick overview of a corpus may require 10 topics, while something more refined may require 25. We may need 100 topics for a really detailed topical inspection. This strategy is fairly robust (as one does not have to pick a single number of topics) but is also somewhat unsatisfying. It would be nice to have a simple set of results that we can point to as our best estimate of what the true latent topics are. For this, we need a systematic way of finding the optimal number of topics for the corpus. Here we can make use of the functions in the ldatuning package. The basic idea is to rerun the model using increasingly higher number of topics. As k increases, we calculate different fit statistics as a means of comparison, eventually picking the one with the best fit. There are a number of possible fit statistics we could use. Here we utilize two, one suggested by @Arun2010 and the other by @Juan2009. For example, @Arun2010 suggest selecting the model (i.e., number of latent topics) that minimizes the cosine distance between topics. The main function is `FindTopicNumber()`. The main arguments are:
+
+- dtm = document-term matrix
+- topics = vector of number of topics to consider
+- metrics = which metrics to use to evaluate different topic numbers
+- method = estimation routine, same as with LDA
+- control = list of controls, same as with LDA
+- mc.cores = number of cores to utilize
+
+Here, we rerun the model, varying the number of topics from 4 to 40 (doing it every other number to save time). We set the metrics to "CaoJuan2009" and "Arun2010". Note that this can take a bit to run. 
+
+```{r message=F, results='hide', warning=F}
+fitmodel <- FindTopicsNumber(dtm = abstracts_dtm, 
+                             topics = seq(from = 4, to = 40, by = 2), 
+                             metrics = c("CaoJuan2009", "Arun2010"), 
+                             method = "Gibbs", 
+                             control = list(nstart = 1, seed = c(30), 
+                                            best = best, burnin = burnin, 
+                                            iter = iter, thin = thin), 
+                             mc.cores = 2,  verbose = TRUE)
+```
+
+```{r message=F}
+fitmodel
+```
+
+Once we fit the model under different numbers of topics, we can go ahead and plot the fit statistics. The function is `FindTopicsNumber_plot()`.
+
+```{r message=F, warning=F}
+FindTopicsNumber_plot(fitmodel) 
+```
+
+Based on our two fit statistics of interest, we might choose a number of topics around 30. The Arun statistic is technically minimized at 40, but given that the CaoJaun fit statistic gets worse after 30 (and the Arun statistic has basically plateaued at this point), we may be in better shape using k at 30. If we were interested in examining a less disaggregated solution, setting k to 10 or 16 would be appropriate. We will now go ahead and rerun the same model as before (with the original control parameters) but set k to 30.
+
+```{r}
+k <- 30
+
+ldaOut2 <- LDA(x = abstracts_dtm, k = k, method = "Gibbs", 
+              control = list(nstart = nstart, seed = seed, best = best,
+                             burnin = burnin, iter = iter, thin = thin))
+```
+
+And now let's look at the results. We will focus on the terms, showing the most likely terms for each topic (i.e., the terms that each topic is most likely to yield). 
+
+```{r}
+ldaOut_terms2 <- terms(ldaOut2, 10)
+```
+
+Let's look at a few example columns (out of the 30 total): 
+
+```{r}
+ldaOut_terms2[, c(2, 14, 20, 23, 24)]
+```
+
+What can we conclude substantively from our analysis? First, we can see that some of these topics are easier to interpret than others. Topic 2, for example, clearly centers on school outcomes (school, education, involve, parent). Other topics are a bit harder to parse, and may be an indication that we need to take another look at our model (or text cleaning decisions). For example, Topic 24 is defined by pretty broad, general terms (program, use, data, effect) and is not easy to label. In such cases, it may be useful to examine the abstracts directly to understand why they had been put together. Second, we can see that many of the topics do seem to center on recognizable research areas in the discipline. Topic 23, for example, is about women, gender and sexuality, while Topic 20 focuses on the family. Other topics cover more narrowly defined areas, like Topic 14 that is centered on Japan and investment firms. As a researcher, we would want to walk through the latent topics, interpreting each one and drawing out the larger implications for the substantive case in question. Given these kinds of results, a researcher could also try to predict which researchers fall into which latent topic; for example, based on type of university they attended, gender, etc. Similarly, we could ask how being in a given topic is associated with later career success (i.e., finding a job after graduation).
+
+## A Network Representation
+A researcher may also be interested in producing a network representation of the textual data. This makes it possible to apply network measures, models and visualizations to the corpus. So far we have cleaned the data, modeled the data using LDA but we have not explicitly constructed a network object. Here we go ahead and do that, creating a two-mode network of abstracts by words. Let’s load the **igraph** package. 
+
+```{r message=F, warning=F}
+library(igraph)
+```
+
+We will make use of the abstracts by words matrix extracted earlier. Let’s take a look at the first five rows and columns. The values in the matrix show the number of times that abstract used that word. 
+
+```{r}
+mat_abstract_words[1:5, 1:5] 
+```
+
+In this case, let’s focus on just a subset of the full matrix. We will look at the network of abstracts and words associated with topic 20 ("family") and topic 23 ("gender").  Thus, we are using the LDA results above (specifically the latent topics) to inform our analysis here. Let’s grab the vector showing which topic each abstract is most likely to be in. 
+
+```{r}
+ldaOut_topics2 <- topics(ldaOut2)
+```
+
+Now we subset the full abstract-word matrix to just include those abstracts that are most likely to be in topic in 20 or 23. 
+```{r}
+in_20_23 <- ldaOut_topics2 %in% c(20, 23)
+mat_abstract_words_subset <- mat_abstract_words[in_20_23, ]
+```
+
+Let’s also reduce the words a bit as well. We will only consider words that are used frequently in topics 20 and 23. This will simplify the picture, eliminating words that are not so relevant for these two topics. Here we calculate the number of times each word was used.
+
+```{r}
+worduse <- colSums(mat_abstract_words_subset)
+```
+
+Let’s only keep those words that were used more than 5 times.
+
+```{r}
+mat_abstract_words_subset <- mat_abstract_words_subset [, worduse > 5]
+```
+
+```{r}
+dim(mat_abstract_words_subset)
+```
+
+We have now reduced our matrix to 24 abstracts and 159 words. We are now in a position to construct the abstract-word network. We will construct a two-mode network, where there are two types of nodes (abstracts and words) and abstracts are connected to words (and vice versa) but there are no direct ties between nodes of the same type. An edge exists if abstract i used word j. We will use the `graph_from_incidence()` function, setting mode to all (creating mutual connections between abstract and words) and keeping the weights (based on the number of times that abstract i used word j). 
+
+```{r}
+abstract_word_net <- graph_from_incidence_matrix(mat_abstract_words_subset,
+                                                 mode = "all", weighted = T)
+
+```
+
+We will now grab the vertex attribute `type` from the two-mode graph object:
+
+```{r}
+type <- vertex_attr(abstract_word_net, "type") 
+```
+
+```{r}
+table(type)  
+```
+
+We see that there are 24 abstracts (FALSE) and 159 words (TRUE). Now, let’s go ahead and plot the network, to see what we can learn from turning the textual data into a network. We first set some plotting parameters. Let’s first set the words green: 
+
+```{r}
+V(abstract_word_net)$color[type == TRUE] <- rgb(red = 0, green = 1, 
+                                                blue = 0, alpha = .2) 
+```
+
+Note that we just change the color for those nodes where `type` is equal to TRUE (the words). Now let’s set the color for the abstracts. Here we want to differentiate the two topics. Let’s color topic 20 (family) blue and topic 23 (gender) red. In order to do this we need to identify which of the abstracts are in topic 20 and which are in topic 23. We must also remember that many of the nodes are words (`type` equal to TRUE). First, let’s get the names of the abstracts in each topic:
+
+```{r}
+in20 <- names(which(ldaOut_topics2 == 20))
+in23 <- names(which(ldaOut_topics2 == 23))
+```
+
+Now we set all those in topic 20 to blue:
+
+```{r}
+which_topic20 <- V(abstract_word_net)$name %in% in20
+V(abstract_word_net)$color[which_topic20] <- rgb(red = 0, green = 0, 
+                                                 blue = 1, alpha = .2)
+```
+
+Note that we grabbed the vertex names from the network and then asked which matched those in topic 20. And here we do the same thing with topic 23, setting it to red. 
+
+```{r}
+which_topic23 <- V(abstract_word_net)$name %in% in23
+V(abstract_word_net)$color[which_topic23] <- rgb(red = 1, green = 0, 
+                                                blue = 0, alpha = .2)
+```
+
+ Now we'll set some other plotting arguments.
+ 
+```{r}
+V(abstract_word_net)$label <- V(abstract_word_net)$name
+V(abstract_word_net)$label.color <- rgb(0, 0, .2, .85)
+V(abstract_word_net)$label.cex <- .75
+V(abstract_word_net)$size <- 3
+V(abstract_word_net)$frame.color <- V(abstract_word_net)$color
+```
+
+Here we set the color of the edges.
+
+```{r}
+E(abstract_word_net)$color <- rgb(.5, .5, .5, .04)
+```
+
+And now we plot the network. 
+
+```{r fig.height=9.5, fig.width=9.5}
+set.seed(106)
+plot(abstract_word_net, layout = layout_with_fr)
+```
+
+What can we learn from the graph? First, we can see that the blue nodes (topic 20) tend to cluster together and the red nodes (topic 23) tend to cluster together. This suggests that the topics found in the LDA do appear to capture meaningful distinctions amongst the abstracts. 
+
+Second, we can see that there is a set of core words associated with each topic. We see words like family, children, relationship, parent, and mother cluster together close to the blue nodes, those in topic 20.  We see words like women, gender, and sexuality cluster together close to the red nodes, those in topic 23. This is in line with our previous analysis but here we get the results arranged in a spatial layout. 
+
+Third, we see that some the abstracts are on the periphery of the network. For example, abstract 109 (in topic 23) does not use the words at the core of the network very heavily. Instead, abstract 109 uses words like legal and speech that are rarely used by any of the abstracts in the gender (or family) topic. 
+
+Fourth, the plot makes clear that there is at least some overlap in usage of words across these topics. Most of the blue nodes (the abstracts in topic 20) and the red nodes (abstracts in topic 23) are reasonably close together in the plot and the plot as a whole is quite dense. This suggests that while the usage of the core words is different across topics, there is much in common as well. A family paper is likely to mention gender (or women) even if its main concern is about family, children and the like. On the other hand, the periphery words (i.e. those words that are rarely used) are unlikely to be shared between the two topics. In this way, a topic (or subfield) carves out a niche by emphasizing certain key words that are of general interest, while also employing topic specific language that is unlikely to be shared more widely. 
+
+Given this kind of initial picture, a researcher could go on to do additional analyses on the network, asking about things like centrality, group structure and the like. For example, we may be interested in examining which words serve to bridge our two topics. 
+
+Overall, this tutorial has offered an initial glimpse of how to analyze textual data in R, while offering an example of how duality could be applied to a very different type of data source. We will draw on many of these ideas in the next tutorial for [Chapter 12](#ch12-Networks-Cultural-Spaces-CA-R), where we cover cultural spaces (using correspondence analysis).
+

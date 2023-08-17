@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>13, Part 2. Longitudinal Network Models: STERGM | Network Analysis: Integrating Social Network Theory, Method, and Application with R</title>
+  <meta name="description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="13, Part 2. Longitudinal Network Models: STERGM | Network Analysis: Integrating Social Network Theory, Method, and Application with R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="13, Part 2. Longitudinal Network Models: STERGM | Network Analysis: Integrating Social Network Theory, Method, and Application with R" />
+  
+  <meta name="twitter:description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  
+
+<meta name="author" content="Craig Rawlings, Jeffrey A. Smith, James Moody, and Daniel McFarland" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ch13-Cross-Sectional-Network-Models-ERGM-R.html"/>
+<link rel="next" href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/d3-4.5.0/d3.min.js"></script>
+<script src="libs/forceNetwork-binding-0.4/forceNetwork.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="https://inarwhal.github.io/NetworkAnalysisR-book/">
+Network Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#how-to-read-the-book"><i class="fa fa-check"></i><b>1.1</b> How to Read the Book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#citations-and-use"><i class="fa fa-check"></i><b>1.2</b> Citations and Use</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#updates-and-feedback"><i class="fa fa-check"></i><b>1.3</b> Updates and Feedback</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i><b>1.4</b> Acknowledgments</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#author-informtion"><i class="fa fa-check"></i><b>1.5</b> Author Informtion</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#session-information"><i class="fa fa-check"></i><b>1.6</b> Session Information</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html"><i class="fa fa-check"></i><b>2</b> Basic Introduction to R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html#preliminaries"><i class="fa fa-check"></i><b>2.1</b> Preliminaries</a></li>
+<li class="chapter" data-level="2.2" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html#packages"><i class="fa fa-check"></i><b>2.2</b> Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ch3-Network-Data-R.html"><a href="ch3-Network-Data-R.html"><i class="fa fa-check"></i><b>3</b> Network Data</a></li>
+<li class="chapter" data-level="" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html"><i class="fa fa-check"></i>3, Part 1. Cross-Sectional Network Data</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#reading-data-into-r"><i class="fa fa-check"></i><b>3.1</b> Reading Data into R</a></li>
+<li class="chapter" data-level="3.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#networks-in-igraph"><i class="fa fa-check"></i><b>3.2</b> Networks in igraph</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-a-matrix-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.1</b> Using a Matrix to Construct the Network</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-edgelist-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.2</b> Using an Edgelist to Construct the Network</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#extracting-information-from-igraph-objects"><i class="fa fa-check"></i><b>3.2.3</b> Extracting Information from igraph Objects</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-adjacency-list-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.4</b> Using an Adjacency List to Construct the Network</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-the-network-package"><i class="fa fa-check"></i><b>3.3</b> Using the network Package</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-a-matrix-to-construct-the-network-1"><i class="fa fa-check"></i><b>3.3.1</b> Using a Matrix to Construct the Network</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-edgelist-to-construct-the-network-1"><i class="fa fa-check"></i><b>3.3.2</b> Using an Edgelist to Construct the Network</a></li>
+<li class="chapter" data-level="3.3.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#putting-edge-attributes-onto-the-network"><i class="fa fa-check"></i><b>3.3.3</b> Putting Edge Attributes onto the Network</a></li>
+<li class="chapter" data-level="3.3.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#moving-between-igraph-and-network-objects"><i class="fa fa-check"></i><b>3.3.4</b> Moving between igraph and network Objects</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#some-key-network-measures"><i class="fa fa-check"></i><b>3.4</b> Some Key Network Measures</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#degree"><i class="fa fa-check"></i><b>3.4.1</b> Degree</a></li>
+<li class="chapter" data-level="3.4.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#density"><i class="fa fa-check"></i><b>3.4.2</b> Density</a></li>
+<li class="chapter" data-level="3.4.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#walks"><i class="fa fa-check"></i><b>3.4.3</b> Walks</a></li>
+<li class="chapter" data-level="3.4.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#paths-distance-and-closeness"><i class="fa fa-check"></i><b>3.4.4</b> Paths, Distance, and Closeness</a></li>
+<li class="chapter" data-level="3.4.5" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#reachability"><i class="fa fa-check"></i><b>3.4.5</b> Reachability</a></li>
+<li class="chapter" data-level="3.4.6" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#diameter"><i class="fa fa-check"></i><b>3.4.6</b> Diameter</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html"><i class="fa fa-check"></i>3, Part 2. Dynamic Network Data</a>
+<ul>
+<li class="chapter" data-level="3.5" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#discrete-longitudinal-networks"><i class="fa fa-check"></i><b>3.5</b> Discrete Longitudinal Networks</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#getting-the-data-ready"><i class="fa fa-check"></i><b>3.5.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="3.5.2" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#constructing-networkdynamic-objects"><i class="fa fa-check"></i><b>3.5.2</b> Constructing networkDynamic Objects</a></li>
+<li class="chapter" data-level="3.5.3" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#summary-statistics"><i class="fa fa-check"></i><b>3.5.3</b> Summary Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#continuous-time-networks"><i class="fa fa-check"></i><b>3.6</b> Continuous-Time Networks</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#getting-the-data-ready-1"><i class="fa fa-check"></i><b>3.6.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="3.6.2" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#constructing-networkdynamic-objects-1"><i class="fa fa-check"></i><b>3.6.2</b> Constructing networkDynamic Objects</a></li>
+<li class="chapter" data-level="3.6.3" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#summary-statistics-1"><i class="fa fa-check"></i><b>3.6.3</b> Summary Statistics</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html"><i class="fa fa-check"></i><b>4</b> Missing Network Data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#missing-data"><i class="fa fa-check"></i><b>4.1</b> Missing Data</a></li>
+<li class="chapter" data-level="4.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#listwise-deletion"><i class="fa fa-check"></i><b>4.2</b> Listwise Deletion</a></li>
+<li class="chapter" data-level="4.3" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-the-level-of-bias"><i class="fa fa-check"></i><b>4.3</b> Gauging the Level of Bias</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-bias-using-past-results"><i class="fa fa-check"></i><b>4.3.1</b> Gauging Bias Using Past Results</a></li>
+<li class="chapter" data-level="4.3.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-bias-using-predictive-models"><i class="fa fa-check"></i><b>4.3.2</b> Gauging Bias Using Predictive Models</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-options"><i class="fa fa-check"></i><b>4.4</b> Simple Imputation Options</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-asymmetric-option"><i class="fa fa-check"></i><b>4.4.1</b> Simple Imputation with Asymmetric Option</a></li>
+<li class="chapter" data-level="4.4.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-symmetric-option"><i class="fa fa-check"></i><b>4.4.2</b> Simple Imputation with Symmetric Option</a></li>
+<li class="chapter" data-level="4.4.3" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-probabilistic-option"><i class="fa fa-check"></i><b>4.4.3</b> Simple Imputation with Probabilistic Option</a></li>
+<li class="chapter" data-level="4.4.4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#comparing-estimates"><i class="fa fa-check"></i><b>4.4.4</b> Comparing Estimates</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html"><i class="fa fa-check"></i><b>5</b> Network Visualization</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#setting-up-the-session"><i class="fa fa-check"></i><b>5.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="5.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#network-plots-using-igraph"><i class="fa fa-check"></i><b>5.2</b> Network Plots using igraph</a></li>
+<li class="chapter" data-level="5.3" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#network-plots-based-on-ggplot"><i class="fa fa-check"></i><b>5.3</b> Network Plots based on ggplot</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#ggally-package"><i class="fa fa-check"></i><b>5.3.1</b> GGally package</a></li>
+<li class="chapter" data-level="5.3.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#ggnetwork-package"><i class="fa fa-check"></i><b>5.3.2</b> ggnetwork package</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#contour-plots"><i class="fa fa-check"></i><b>5.4</b> Contour Plots</a></li>
+<li class="chapter" data-level="5.5" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#interactive-plots"><i class="fa fa-check"></i><b>5.5</b> Interactive Plots</a></li>
+<li class="chapter" data-level="5.6" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#dynamic-network-visualizations"><i class="fa fa-check"></i><b>5.6</b> Dynamic Network Visualizations</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#getting-the-data-ready-2"><i class="fa fa-check"></i><b>5.6.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="5.6.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#time-flattened-visualizations"><i class="fa fa-check"></i><b>5.6.2</b> Time Flattened Visualizations</a></li>
+<li class="chapter" data-level="5.6.3" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#dynamic-network-movies"><i class="fa fa-check"></i><b>5.6.3</b> Dynamic Network Movies</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html"><i class="fa fa-check"></i><b>6</b> Ego Network Data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#working-with-ego-network-data"><i class="fa fa-check"></i><b>6.1</b> Working with Ego Network Data</a></li>
+<li class="chapter" data-level="6.2" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#plotting-networks"><i class="fa fa-check"></i><b>6.2</b> Plotting Networks</a></li>
+<li class="chapter" data-level="6.3" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#homophily-ego-alter-attributes"><i class="fa fa-check"></i><b>6.3</b> Homophily: Ego-Alter Attributes</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#proportion-of-alters-matching-ego"><i class="fa fa-check"></i><b>6.3.1</b> Proportion of Alters Matching Ego</a></li>
+<li class="chapter" data-level="6.3.2" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#analyzing-homophily-at-the-dyadic-level-ego-alter-pairs"><i class="fa fa-check"></i><b>6.3.2</b> Analyzing Homophily at the Dyadic Level: Ego-Alter Pairs</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#homophily-alter-attributes"><i class="fa fa-check"></i><b>6.4</b> Homophily: Alter Attributes</a></li>
+<li class="chapter" data-level="6.5" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#ego-networks-as-predictors"><i class="fa fa-check"></i><b>6.5</b> Ego Networks as Predictors</a></li>
+<li class="chapter" data-level="6.6" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#working-with-one-input-file"><i class="fa fa-check"></i><b>6.6</b> Working with One Input File</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html"><i class="fa fa-check"></i><b>7</b> Dyads and Triads</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#setting-up-the-session-1"><i class="fa fa-check"></i><b>7.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="7.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyadic-processes"><i class="fa fa-check"></i><b>7.2</b> Dyadic Processes</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyad-census-and-reciprocity"><i class="fa fa-check"></i><b>7.2.1</b> Dyad Census and Reciprocity</a></li>
+<li class="chapter" data-level="7.2.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#conditional-uniform-graph-tests"><i class="fa fa-check"></i><b>7.2.2</b> Conditional Uniform Graph Tests</a></li>
+<li class="chapter" data-level="7.2.3" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyad-census-by-attributes-of-nodes"><i class="fa fa-check"></i><b>7.2.3</b> Dyad Census by Attributes of Nodes</a></li>
+<li class="chapter" data-level="7.2.4" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#advice-and-friendship-together"><i class="fa fa-check"></i><b>7.2.4</b> Advice and Friendship Together</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#triadic-processes"><i class="fa fa-check"></i><b>7.3</b> Triadic Processes</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#triad-census"><i class="fa fa-check"></i><b>7.3.1</b> Triad Census</a></li>
+<li class="chapter" data-level="7.3.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#transitivity"><i class="fa fa-check"></i><b>7.3.2</b> Transitivity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html"><i class="fa fa-check"></i><b>8</b> Network Cohesion and Communities</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#first-example-network"><i class="fa fa-check"></i><b>8.1</b> First Example Network</a></li>
+<li class="chapter" data-level="8.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#cohesion"><i class="fa fa-check"></i><b>8.2</b> Cohesion</a></li>
+<li class="chapter" data-level="8.3" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#community-or-group-detection"><i class="fa fa-check"></i><b>8.3</b> Community (or Group) Detection</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#walktrap"><i class="fa fa-check"></i><b>8.3.1</b> Walktrap</a></li>
+<li class="chapter" data-level="8.3.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#edge-betweenness"><i class="fa fa-check"></i><b>8.3.2</b> Edge Betweenness</a></li>
+<li class="chapter" data-level="8.3.3" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#scree-plots"><i class="fa fa-check"></i><b>8.3.3</b> Scree Plots</a></li>
+<li class="chapter" data-level="8.3.4" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#multi-level-clustering"><i class="fa fa-check"></i><b>8.3.4</b> Multi-level Clustering</a></li>
+<li class="chapter" data-level="8.3.5" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#cohesive-blocking"><i class="fa fa-check"></i><b>8.3.5</b> Cohesive Blocking</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#demographic-characteristics"><i class="fa fa-check"></i><b>8.4</b> Demographic Characteristics</a></li>
+<li class="chapter" data-level="8.5" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#community-overlap"><i class="fa fa-check"></i><b>8.5</b> Community Overlap</a></li>
+<li class="chapter" data-level="8.6" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#big-data-example"><i class="fa fa-check"></i><b>8.6</b> Big Data Example</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#multi-level-clustering-1"><i class="fa fa-check"></i><b>8.6.1</b> Multi-level Clustering</a></li>
+<li class="chapter" data-level="8.6.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#looking-at-the-community-structure-within-the-initial-communities"><i class="fa fa-check"></i><b>8.6.2</b> Looking at the Community Structure within the Initial Communities</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html"><i class="fa fa-check"></i><b>9</b> Network Centrality and Hierarchy</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#setting-up-the-session-2"><i class="fa fa-check"></i><b>9.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="9.2" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality"><i class="fa fa-check"></i><b>9.2</b> Centrality</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality-measures-for-social-interactions"><i class="fa fa-check"></i><b>9.2.1</b> Centrality Measures for Social Interactions</a></li>
+<li class="chapter" data-level="9.2.2" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#correlations-between-centrality-measures"><i class="fa fa-check"></i><b>9.2.2</b> Correlations between Centrality Measures</a></li>
+<li class="chapter" data-level="9.2.3" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality-for-task-interactions"><i class="fa fa-check"></i><b>9.2.3</b> Centrality for Task Interactions</a></li>
+<li class="chapter" data-level="9.2.4" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#tasksocial-correlations"><i class="fa fa-check"></i><b>9.2.4</b> Task/Social Correlations</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centralization"><i class="fa fa-check"></i><b>9.3</b> Centralization</a></li>
+<li class="chapter" data-level="9.4" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#clustering-and-hierarchy"><i class="fa fa-check"></i><b>9.4</b> Clustering and Hierarchy</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html"><i class="fa fa-check"></i><b>10</b> Positions and Roles</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#classroom-network-data"><i class="fa fa-check"></i><b>10.1</b> Classroom Network Data</a></li>
+<li class="chapter" data-level="10.2" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#getting-the-data-ready-3"><i class="fa fa-check"></i><b>10.2</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="10.3" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#structural-equivalence"><i class="fa fa-check"></i><b>10.3</b> Structural Equivalence</a></li>
+<li class="chapter" data-level="10.4" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#defining-positions"><i class="fa fa-check"></i><b>10.4</b> Defining Positions</a></li>
+<li class="chapter" data-level="10.5" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#role-analysis"><i class="fa fa-check"></i><b>10.5</b> Role Analysis</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#permuting-the-matrix-by-position"><i class="fa fa-check"></i><b>10.5.1</b> Permuting the Matrix by Position</a></li>
+<li class="chapter" data-level="10.5.2" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#constructing-a-blockmodel"><i class="fa fa-check"></i><b>10.5.2</b> Constructing a Blockmodel</a></li>
+<li class="chapter" data-level="10.5.3" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#plotting-a-blockmodel"><i class="fa fa-check"></i><b>10.5.3</b> Plotting a Blockmodel</a></li>
+<li class="chapter" data-level="10.5.4" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#interpretation-of-blockmodel"><i class="fa fa-check"></i><b>10.5.4</b> Interpretation of Blockmodel</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#local-equivalence"><i class="fa fa-check"></i><b>10.6</b> Local Equivalence</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html"><i class="fa fa-check"></i><b>11</b> Two-mode Networks: Affilitations and Dualities</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#example-affiliation-data"><i class="fa fa-check"></i><b>11.1</b> Example Affiliation Data</a></li>
+<li class="chapter" data-level="11.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#plotting-the-network"><i class="fa fa-check"></i><b>11.2</b> Plotting the Network</a></li>
+<li class="chapter" data-level="11.3" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#single-mode-networks"><i class="fa fa-check"></i><b>11.3</b> Single Mode Networks</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#constructing-one-mode-projections"><i class="fa fa-check"></i><b>11.3.1</b> Constructing One-Mode Projections</a></li>
+<li class="chapter" data-level="11.3.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#plotting-one-mode-projections"><i class="fa fa-check"></i><b>11.3.2</b> Plotting One-Mode Projections</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#club-to-club-network"><i class="fa fa-check"></i><b>11.4</b> Club-to-Club Network</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#centrality-1"><i class="fa fa-check"></i><b>11.4.1</b> Centrality</a></li>
+<li class="chapter" data-level="11.4.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#groups"><i class="fa fa-check"></i><b>11.4.2</b> Groups</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#using-the-tnet-package"><i class="fa fa-check"></i><b>11.5</b> Using the tnet package</a></li>
+<li class="chapter" data-level="11.6" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#racial-segregation"><i class="fa fa-check"></i><b>11.6</b> Racial Segregation</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#proportion-of-co-membership-edges-where-students-match-on-race"><i class="fa fa-check"></i><b>11.6.1</b> Proportion of Co-membership Edges where Students Match on Race</a></li>
+<li class="chapter" data-level="11.6.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#do-students-match-racially-with-at-least-one-other-student"><i class="fa fa-check"></i><b>11.6.2</b> Do Students Match Racially with at Least One Other Student?</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#club-centrality-and-attributes"><i class="fa fa-check"></i><b>11.7</b> Club Centrality and Attributes</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="ch12-Networks-Culture-R.html"><a href="ch12-Networks-Culture-R.html"><i class="fa fa-check"></i><b>12</b> Networks and Culture</a></li>
+<li class="chapter" data-level="" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html"><i class="fa fa-check"></i>12, Part 1. Cultural Structures</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#getting-the-data-ready-4"><i class="fa fa-check"></i><b>12.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="12.2" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#topic-modeling"><i class="fa fa-check"></i><b>12.2</b> Topic Modeling</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#lda-initial-model"><i class="fa fa-check"></i><b>12.2.1</b> LDA: Initial Model</a></li>
+<li class="chapter" data-level="12.2.2" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#lda-picking-the-number-of-topics"><i class="fa fa-check"></i><b>12.2.2</b> LDA: Picking the Number of Topics</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#a-network-representation"><i class="fa fa-check"></i><b>12.3</b> A Network Representation</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html"><i class="fa fa-check"></i>12, Part 2. Cultural Spaces</a>
+<ul>
+<li class="chapter" data-level="12.4" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#correspondence-analysis"><i class="fa fa-check"></i><b>12.4</b> Correspondence Analysis</a></li>
+<li class="chapter" data-level="12.5" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#number-of-dimensions"><i class="fa fa-check"></i><b>12.5</b> Number of Dimensions</a></li>
+<li class="chapter" data-level="12.6" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#importance-of-rowscolumns"><i class="fa fa-check"></i><b>12.6</b> Importance of Rows/Columns</a></li>
+<li class="chapter" data-level="12.7" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#hierarchical-clustering"><i class="fa fa-check"></i><b>12.7</b> Hierarchical Clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="ch13-Statistical-Models-Networks-R.html"><a href="ch13-Statistical-Models-Networks-R.html"><i class="fa fa-check"></i><b>13</b> Statistical Models for Networks</a></li>
+<li class="chapter" data-level="" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><i class="fa fa-check"></i>13, Part 1. Cross-Sectional Network Models: ERGM</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#setting-up-the-session-3"><i class="fa fa-check"></i><b>13.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="13.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#descriptive-statistics"><i class="fa fa-check"></i><b>13.2</b> Descriptive Statistics</a></li>
+<li class="chapter" data-level="13.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#cug-tests"><i class="fa fa-check"></i><b>13.3</b> CUG Tests</a></li>
+<li class="chapter" data-level="13.4" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#fitting-an-ergm"><i class="fa fa-check"></i><b>13.4</b> Fitting an ERGM</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-only"><i class="fa fa-check"></i><b>13.4.1</b> Edges Only</a></li>
+<li class="chapter" data-level="13.4.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-and-homophily"><i class="fa fa-check"></i><b>13.4.2</b> Edges and Homophily</a></li>
+<li class="chapter" data-level="13.4.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-homophily-and-node-covariates"><i class="fa fa-check"></i><b>13.4.3</b> Edges, Homophily, and Node Covariates</a></li>
+<li class="chapter" data-level="13.4.4" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-homophily-node-covariates-and-reciprocity"><i class="fa fa-check"></i><b>13.4.4</b> Edges, Homophily, Node Covariates, and Reciprocity</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#checking-model-convergence"><i class="fa fa-check"></i><b>13.5</b> Checking Model Convergence</a></li>
+<li class="chapter" data-level="13.6" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#goodness-of-fit"><i class="fa fa-check"></i><b>13.6</b> Goodness of Fit</a></li>
+<li class="chapter" data-level="13.7" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#adding-gwesp-to-the-model"><i class="fa fa-check"></i><b>13.7</b> Adding GWESP to the Model</a></li>
+<li class="chapter" data-level="13.8" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#simulation"><i class="fa fa-check"></i><b>13.8</b> Simulation</a></li>
+<li class="chapter" data-level="13.9" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#example-on-a-large-network"><i class="fa fa-check"></i><b>13.9</b> Example on a Large Network</a></li>
+<li class="chapter" data-level="13.10" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#ergm-on-a-valued-network"><i class="fa fa-check"></i><b>13.10</b> ERGM on a Valued Network</a>
+<ul>
+<li class="chapter" data-level="13.10.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#baseline-ergm-on-valued-network"><i class="fa fa-check"></i><b>13.10.1</b> Baseline ERGM on Valued Network</a></li>
+<li class="chapter" data-level="13.10.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#adding-nodematch-and-nodefactor-terms"><i class="fa fa-check"></i><b>13.10.2</b> Adding Nodematch and Nodefactor Terms</a></li>
+<li class="chapter" data-level="13.10.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#transitivity-in-valued-networks"><i class="fa fa-check"></i><b>13.10.3</b> Transitivity in Valued Networks</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html"><i class="fa fa-check"></i>13, Part 2. Longitudinal Network Models: STERGM</a>
+<ul>
+<li class="chapter" data-level="13.11" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#getting-the-data-ready-5"><i class="fa fa-check"></i><b>13.11</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="13.12" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#stergms"><i class="fa fa-check"></i><b>13.12</b> STERGMs</a>
+<ul>
+<li class="chapter" data-level="13.12.1" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-1-just-edges"><i class="fa fa-check"></i><b>13.12.1</b> Model 1: Just Edges</a></li>
+<li class="chapter" data-level="13.12.2" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-2-edges-homophily-and-nodefactor"><i class="fa fa-check"></i><b>13.12.2</b> Model 2: Edges, Homophily and Nodefactor</a></li>
+<li class="chapter" data-level="13.12.3" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-3-edges-nodefactor-and-seating"><i class="fa fa-check"></i><b>13.12.3</b> Model 3: Edges, Nodefactor, and Seating</a></li>
+<li class="chapter" data-level="13.12.4" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-4-adding-gwesp-to-the-model"><i class="fa fa-check"></i><b>13.12.4</b> Model 4: Adding GWESP to the Model</a></li>
+</ul></li>
+<li class="chapter" data-level="13.13" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#checking-model-fit"><i class="fa fa-check"></i><b>13.13</b> Checking Model Fit</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><i class="fa fa-check"></i>13, Part 3. Two-mode Network Models</a>
+<ul>
+<li class="chapter" data-level="13.14" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#affiliation-data"><i class="fa fa-check"></i><b>13.14</b> Affiliation Data</a></li>
+<li class="chapter" data-level="13.15" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#ergm-on-a-two-mode-network"><i class="fa fa-check"></i><b>13.15</b> ERGM on a Two-mode Network</a>
+<ul>
+<li class="chapter" data-level="13.15.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#edges"><i class="fa fa-check"></i><b>13.15.1</b> Edges</a></li>
+<li class="chapter" data-level="13.15.2" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#adjusting-for-structural-issues-gender-and-grade-specific-clubs"><i class="fa fa-check"></i><b>13.15.2</b> Adjusting for Structural Issues: Gender and Grade Specific Clubs</a></li>
+</ul></li>
+<li class="chapter" data-level="13.16" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#second-mode-terms"><i class="fa fa-check"></i><b>13.16</b> Second Mode Terms</a>
+<ul>
+<li class="chapter" data-level="13.16.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#nodefactor"><i class="fa fa-check"></i><b>13.16.1</b> Nodefactor</a></li>
+<li class="chapter" data-level="13.16.2" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#homophily"><i class="fa fa-check"></i><b>13.16.2</b> Homophily</a></li>
+</ul></li>
+<li class="chapter" data-level="13.17" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#first-mode-terms"><i class="fa fa-check"></i><b>13.17</b> First Mode Terms</a></li>
+<li class="chapter" data-level="13.18" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#clustering"><i class="fa fa-check"></i><b>13.18</b> Clustering</a></li>
+<li class="chapter" data-level="13.19" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#two-mode-longitudinal-networks"><i class="fa fa-check"></i><b>13.19</b> Two-mode Longitudinal Networks</a>
+<ul>
+<li class="chapter" data-level="13.19.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#entry-and-exit-of-nodes"><i class="fa fa-check"></i><b>13.19.1</b> Entry and Exit of Nodes</a></li>
+</ul></li>
+<li class="chapter" data-level="13.20" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#stergm-on-a-two-mode-network"><i class="fa fa-check"></i><b>13.20</b> STERGM on a Two-mode Network</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html"><i class="fa fa-check"></i>13, Part 4. Relational Event Models</a>
+<ul>
+<li class="chapter" data-level="13.21" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#getting-the-data-ready-6"><i class="fa fa-check"></i><b>13.21</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="13.22" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#running-initial-models"><i class="fa fa-check"></i><b>13.22</b> Running Initial Models</a>
+<ul>
+<li class="chapter" data-level="13.22.1" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#intercept-only-model"><i class="fa fa-check"></i><b>13.22.1</b> Intercept Only Model</a></li>
+<li class="chapter" data-level="13.22.2" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#adding-sender-and-receiver-effects"><i class="fa fa-check"></i><b>13.22.2</b> Adding Sender and Receiver Effects</a></li>
+<li class="chapter" data-level="13.22.3" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#adding-covariate-event-terms"><i class="fa fa-check"></i><b>13.22.3</b> Adding Covariate Event Terms</a></li>
+</ul></li>
+<li class="chapter" data-level="13.23" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#micro-rules-of-interaction"><i class="fa fa-check"></i><b>13.23</b> Micro Rules of Interaction</a></li>
+<li class="chapter" data-level="13.24" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#assessing-model-fit"><i class="fa fa-check"></i><b>13.24</b> Assessing Model Fit</a></li>
+<li class="chapter" data-level="13.25" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#comparison-to-a-second-date"><i class="fa fa-check"></i><b>13.25</b> Comparison to a Second Date</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="ch14-Network-Diffusion-R.html"><a href="ch14-Network-Diffusion-R.html"><i class="fa fa-check"></i><b>14</b> Network Diffusion</a></li>
+<li class="chapter" data-level="" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html"><i class="fa fa-check"></i>14, Part 1. Network Diffusion: Infectious Diseases</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#reading-in-data"><i class="fa fa-check"></i><b>14.1</b> Reading in Data</a></li>
+<li class="chapter" data-level="14.2" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#specifying-the-network-model"><i class="fa fa-check"></i><b>14.2</b> Specifying the Network Model</a></li>
+<li class="chapter" data-level="14.3" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#estimating-the-network-model"><i class="fa fa-check"></i><b>14.3</b> Estimating the Network Model</a></li>
+<li class="chapter" data-level="14.4" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#specifying-the-epidemic-model"><i class="fa fa-check"></i><b>14.4</b> Specifying the Epidemic Model</a></li>
+<li class="chapter" data-level="14.5" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#running-simulations"><i class="fa fa-check"></i><b>14.5</b> Running Simulations</a>
+<ul>
+<li class="chapter" data-level="14.5.1" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#running-baseline-model"><i class="fa fa-check"></i><b>14.5.1</b> Running Baseline Model</a></li>
+<li class="chapter" data-level="14.5.2" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#varying-network-features"><i class="fa fa-check"></i><b>14.5.2</b> Varying Network Features</a></li>
+<li class="chapter" data-level="14.5.3" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#varying-epidemic-model"><i class="fa fa-check"></i><b>14.5.3</b> Varying Epidemic Model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html"><i class="fa fa-check"></i>14, Part 2. Social Diffusion Processes</a>
+<ul>
+<li class="chapter" data-level="14.6" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#setting-up-the-session-4"><i class="fa fa-check"></i><b>14.6</b> Setting up the Session</a></li>
+<li class="chapter" data-level="14.7" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simple-diffusion-models"><i class="fa fa-check"></i><b>14.7</b> Simple Diffusion Models</a></li>
+<li class="chapter" data-level="14.8" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#threshold-models-of-diffusion"><i class="fa fa-check"></i><b>14.8</b> Threshold Models of Diffusion</a>
+<ul>
+<li class="chapter" data-level="14.8.1" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simulating-diffusion-processes-using-the-netdiffuser-package"><i class="fa fa-check"></i><b>14.8.1</b> Simulating Diffusion Processes using the netdiffuseR Package</a></li>
+<li class="chapter" data-level="14.8.2" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#comparing-diffusion-under-different-network-and-adoption-behavior-conditions"><i class="fa fa-check"></i><b>14.8.2</b> Comparing Diffusion under Different Network and Adoption Behavior Conditions</a></li>
+<li class="chapter" data-level="14.8.3" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simulations-using-multiple-runs"><i class="fa fa-check"></i><b>14.8.3</b> Simulations using Multiple Runs</a></li>
+</ul></li>
+<li class="chapter" data-level="14.9" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#working-with-empirical-data"><i class="fa fa-check"></i><b>14.9</b> Working with Empirical Data</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html"><i class="fa fa-check"></i><b>15</b> Social Influence: Coevolution of Networks and Behaviors</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#reading-in-classroom-data"><i class="fa fa-check"></i><b>15.1</b> Reading in Classroom Data</a></li>
+<li class="chapter" data-level="15.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#siena-model-setup"><i class="fa fa-check"></i><b>15.2</b> SIENA Model Setup</a></li>
+<li class="chapter" data-level="15.3" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification"><i class="fa fa-check"></i><b>15.3</b> Model Specification</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-behavioral-model"><i class="fa fa-check"></i><b>15.3.1</b> Model Specification: Behavioral Model</a></li>
+<li class="chapter" data-level="15.3.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-network-model"><i class="fa fa-check"></i><b>15.3.2</b> Model Specification: Network Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-estimation"><i class="fa fa-check"></i><b>15.4</b> Model Estimation</a></li>
+<li class="chapter" data-level="15.5" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpretation"><i class="fa fa-check"></i><b>15.5</b> Interpretation</a>
+<ul>
+<li class="chapter" data-level="15.5.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpreting-network-model"><i class="fa fa-check"></i><b>15.5.1</b> Interpreting Network Model</a></li>
+<li class="chapter" data-level="15.5.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpreting-behavioral-model"><i class="fa fa-check"></i><b>15.5.2</b> Interpreting Behavioral Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.6" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#checking-model-fit-1"><i class="fa fa-check"></i><b>15.6</b> Checking Model Fit</a></li>
+<li class="chapter" data-level="15.7" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#example-with-3-time-periods"><i class="fa fa-check"></i><b>15.7</b> Example with 3 Time Periods</a>
+<ul>
+<li class="chapter" data-level="15.7.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-and-estimation"><i class="fa fa-check"></i><b>15.7.1</b> Model Specification and Estimation</a></li>
+<li class="chapter" data-level="15.7.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#time-heterogeneity"><i class="fa fa-check"></i><b>15.7.2</b> Time Heterogeneity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="how-to-cite.html"><a href="how-to-cite.html"><i class="fa fa-check"></i>How to Cite</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Network Analysis: Integrating Social Network Theory, Method, and Application with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ch13-Longitudinal-Network-Models-STERGM-R" class="section level1 unnumbered hasAnchor">
+<h1>13, Part 2. Longitudinal Network Models: STERGM<a href="ch13-Longitudinal-Network-Models-STERGM-R.html#ch13-Longitudinal-Network-Models-STERGM-R" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This is the second tutorial for Chapter 13 on statistical network models. The first tutorial covered the case of <a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#ch13-Cross-Sectional-Network-Models-ERGM-R">cross-sectional network data</a>. Here, we assume that a researcher has data on at least two time points and is interested in modeling change in the network over time. In this tutorial, we will walk through the estimation and interpretation of separable temporal exponential random graph models (STERGM). We can think of STERGM as a longitudinal extension to ERGM (see previous tutorial).</p>
+<p>With STERG models, we are interested in predicting the formation and dissolution of edges from time T to T+1 (however defined). The model is appropriate for cases where the edges can be defined discretely, for the periods defined in the study. For example, we could predict the formation/dissolution of edges from data collected on relationships amongst students at two different time points. We will consider relational event models, appropriate for continuous-time, streaming data in the fourth tutorial (<a href="ch13-Relational-Event-Models-R.html#ch13-Relational-Event-Models-R">Chapter 13, Part 4</a>).</p>
+<p>For this tutorial, we will use network data collected by Daniel McFarland on adolescents in a classroom. We have four discrete networks, capturing changes in network ties across different segments of a single class period. An edge exists in the first network if i and j talked in the first 10 minutes of the class (0-10 minutes); there is an edge in the second network if i and j talked in the second 10 minutes (10-20 minutes); there is an edge in the third network if i and j talked in the third 10 minutes (20-30 minutes); and there is an edge in the fourth network if i and j talked j in the last segment of the class (30-40 minutes). The networks are treated as undirected.</p>
+<p>Substantively, our main question is how interaction partners in the classroom shift over a single class period. What mechanisms predict the adding of a tie that did not exist earlier in the class? What mechanisms predict the dropping of a tie? And are the mechanisms that predict the adding of a tie the same as dropping one? For example, students are likely to initiate conversations (i.e., add ties) with students who are sitting physically nearby. On the other hand, once two students are talking, sitting adjacent might not have a large effect on maintaining the tie over time; as they have already overcome the initial hurdle of being physically distant.</p>
+<div id="getting-the-data-ready-5" class="section level2 hasAnchor" number="13.11">
+<h2><span class="header-section-number">13.11</span> Getting the Data Ready<a href="ch13-Longitudinal-Network-Models-STERGM-R.html#getting-the-data-ready-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We will make use of the <strong>network</strong> and <strong>sna</strong> packages in this tutorial (rather than <strong>igraph</strong>).</p>
+<div class="sourceCode" id="cb1411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1411-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1411-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sna)</span>
+<span id="cb1411-2"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1411-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(network)</span>
+<span id="cb1411-3"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1411-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(networkDynamic)</span></code></pre></div>
+<p>As a first step, we will load our four networks, already constructed as network objects.</p>
+<div class="sourceCode" id="cb1412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1412-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1412-1" aria-hidden="true" tabindex="-1"></a>url1 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/talk_nets_undirected.RData&quot;</span></span>
+<span id="cb1412-2"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1412-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1412-3"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1412-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">url</span>(<span class="at">description =</span> url1))</span></code></pre></div>
+<p>Let's take a look at the four networks, <code>talk_time1</code>, <code>talk_time2</code>, <code>talk_time3</code> and <code>talk_time4</code>:</p>
+<div class="sourceCode" id="cb1413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1413-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1413-1" aria-hidden="true" tabindex="-1"></a>talk_time1</span></code></pre></div>
+<pre><code>##  Network attributes:
+##   vertices = 18 
+##   directed = FALSE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = FALSE 
+##   total edges= 14 
+##     missing edges= 0 
+##     non-missing edges= 14 
+## 
+##  Vertex attribute names: 
+##     gender race vertex.names 
+## 
+## No edge attributes</code></pre>
+<div class="sourceCode" id="cb1415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1415-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1415-1" aria-hidden="true" tabindex="-1"></a>talk_time2</span></code></pre></div>
+<pre><code>##  Network attributes:
+##   vertices = 18 
+##   directed = FALSE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = FALSE 
+##   total edges= 16 
+##     missing edges= 0 
+##     non-missing edges= 16 
+## 
+##  Vertex attribute names: 
+##     gender race vertex.names 
+## 
+## No edge attributes</code></pre>
+<div class="sourceCode" id="cb1417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1417-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1417-1" aria-hidden="true" tabindex="-1"></a>talk_time3</span></code></pre></div>
+<pre><code>##  Network attributes:
+##   vertices = 18 
+##   directed = FALSE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = FALSE 
+##   total edges= 13 
+##     missing edges= 0 
+##     non-missing edges= 13 
+## 
+##  Vertex attribute names: 
+##     gender race vertex.names 
+## 
+## No edge attributes</code></pre>
+<div class="sourceCode" id="cb1419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1419-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1419-1" aria-hidden="true" tabindex="-1"></a>talk_time4</span></code></pre></div>
+<pre><code>##  Network attributes:
+##   vertices = 18 
+##   directed = FALSE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = FALSE 
+##   total edges= 12 
+##     missing edges= 0 
+##     non-missing edges= 12 
+## 
+##  Vertex attribute names: 
+##     gender race vertex.names 
+## 
+## No edge attributes</code></pre>
+<p><code>talk_time1</code> corresponds to interactions taking place in the first 'period' (0-10 minutes), <code>talk_time2</code> corresponds to interactions taking place in the second 'period' (10-20 minutes) and so on. Note that each of these networks already has attributes mapped onto them; specifically gender and race. In this case, all nodes are present in each period of observation. Each network (period 1 through 4) thus has the same set of nodes. In many cases, however, nodes may enter or exit through time (i.e., be present in period 1 but not period 2). We consider problems of entry/exit in the next lab, on two-mode networks.</p>
+<p>Let's plot the networks for the first two periods. We will set the color of the nodes by gender (navy blue for male and light blue for female). We start by extracting gender from the first network.</p>
+<div class="sourceCode" id="cb1421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1421-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1421-1" aria-hidden="true" tabindex="-1"></a>gender <span class="ot">&lt;-</span> <span class="fu">get.vertex.attribute</span>(talk_time1, <span class="st">&quot;gender&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1422-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1422-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gender)</span></code></pre></div>
+<pre><code>## [1] &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot;</code></pre>
+<p>We now set color based on gender.</p>
+<div class="sourceCode" id="cb1424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1424-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1424-1" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(gender <span class="sc">==</span> <span class="st">&quot;male&quot;</span>, <span class="st">&quot;navy blue&quot;</span>, <span class="st">&quot;light blue&quot;</span>)</span></code></pre></div>
+<p>We will also set the layout for the plot to be the same across the two periods. This makes it easier to see how edges are dropped/added from period to period. We accomplish this by defining the locations (<code>locs</code>) to place the nodes and then using the coord argument in the plot statement. We define the locations of the nodes based on the period 1 network.</p>
+<div class="sourceCode" id="cb1425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1425-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1425-1" aria-hidden="true" tabindex="-1"></a>locs <span class="ot">&lt;-</span> <span class="fu">network.layout.fruchtermanreingold</span>(talk_time1, <span class="at">layout.par =</span> <span class="cn">NULL</span>)</span>
+<span id="cb1425-2"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1425-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1425-3"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1425-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb1425-4"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1425-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1425-5"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1425-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(talk_time1, <span class="at">main =</span> <span class="st">&quot;Talk to Network, 0 to 10 Minutes&quot;</span>, </span>
+<span id="cb1425-6"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1425-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.col =</span> cols, <span class="at">coord =</span> locs, <span class="at">vertex.cex =</span> <span class="dv">2</span>)</span>
+<span id="cb1425-7"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1425-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1425-8"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1425-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(talk_time2, <span class="at">main =</span> <span class="st">&quot;Talk to Network, 10 to 20 Minutes&quot;</span>, </span>
+<span id="cb1425-9"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1425-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.col =</span> cols, <span class="at">coord =</span> locs, <span class="at">vertex.cex =</span> <span class="dv">2</span>) </span></code></pre></div>
+<p><img src="Chapter13b_Integrated_Network_Science_Rtutorial_longitudinal_network_models_stergm_files/figure-html/unnamed-chunk-7-1.png" width="864" /></p>
+<p>We see that the basic structure of the network is pretty similar period to period, but specific edges do change. For example, in a number of instances students who were isolates (did not talk to anyone in the first 10 minutes) become active, socially, making connections to existing groups of talking students. We also see that one social group is almost entirely female, but otherwise boys and girls seem to mix pretty freely in this classroom.</p>
+<p>STERG models require that our discrete, longitudinal networks be put together as a networkDynamic object. The function is <code>networkDynamic()</code>. In this case, the only input we need is a list of networks, where the networks are placed into a list in sequential order (see <a href="ch3-Dynamic-Network-Data-R.html#ch3-Dynamic-Network-Data-R">Chapter 3</a> for more complicated examples; e.g., where there are time changing vertex attributes or nodes becoming inactive/active over time). The resulting networkDynamic object will serve as input into our STERG model.</p>
+<div class="sourceCode" id="cb1426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1426-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1426-1" aria-hidden="true" tabindex="-1"></a>net_dynamic_4periods <span class="ot">&lt;-</span> <span class="fu">networkDynamic</span>(<span class="at">network.list =</span> <span class="fu">list</span>(talk_time1, </span>
+<span id="cb1426-2"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1426-2" aria-hidden="true" tabindex="-1"></a>                                                           talk_time2, </span>
+<span id="cb1426-3"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1426-3" aria-hidden="true" tabindex="-1"></a>                                                           talk_time3,</span>
+<span id="cb1426-4"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1426-4" aria-hidden="true" tabindex="-1"></a>                                                           talk_time4))</span></code></pre></div>
+<div class="sourceCode" id="cb1427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1427-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1427-1" aria-hidden="true" tabindex="-1"></a>net_dynamic_4periods</span></code></pre></div>
+<pre><code>## NetworkDynamic properties:
+##   distinct change times: 5 
+##   maximal time range: 0 until  4 
+## 
+## Includes optional net.obs.period attribute:
+##  Network observation period info:
+##   Number of observation spells: 1 
+##   Maximal time range observed: 0 until 4 
+##   Temporal mode: discrete 
+##   Time unit: step 
+##   Suggested time increment: 1 
+## 
+##  Network attributes:
+##   vertices = 18 
+##   directed = FALSE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = FALSE 
+##   net.obs.period: (not shown)
+##   total edges= 25 
+##     missing edges= 0 
+##     non-missing edges= 25 
+## 
+##  Vertex attribute names: 
+##     active gender race vertex.names 
+## 
+##  Edge attribute names: 
+##     active</code></pre>
+<p>Note that the default here is to set the start time (or onset) at 0 and the terminus at 4, defined as the period where no further change is recorded. We thus have a starting point of period 0 and changes occurring in period 1 , 2 and 3. Let's look at the object as a data frame.</p>
+<div class="sourceCode" id="cb1429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1429-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1429-1" aria-hidden="true" tabindex="-1"></a>net_dynamic_4periods_dat <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(net_dynamic_4periods)</span></code></pre></div>
+<div class="sourceCode" id="cb1430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1430-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1430-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(net_dynamic_4periods_dat)</span></code></pre></div>
+<pre><code>##   onset terminus tail head onset.censored terminus.censored duration edge.id
+## 1     0        4    2   11          FALSE             FALSE        4       1
+## 2     0        3    8    9          FALSE             FALSE        3       2
+## 3     0        4    1    7          FALSE             FALSE        4       3
+## 4     0        1    7    8          FALSE             FALSE        1       4
+## 5     0        1    7    9          FALSE             FALSE        1       5
+## 6     0        1    2    3          FALSE             FALSE        1       6</code></pre>
+<p>We can see that there is an edge between node 2 and node 11 in period 0 (onset) and this lasts to the end of the observation period. As another example, the edge between node 7 and 8 is present in period 0 (duration = 1), but is dropped during period 1.</p>
+<p>We will also add an edge covariate to the networkDynamic object. Here we will include the seating arrangement in the classroom, as we might expect that students who sit close together are more likely to talk to one another. Let's read in the edgelist.</p>
+<div class="sourceCode" id="cb1432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1432-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1432-1" aria-hidden="true" tabindex="-1"></a>url2 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/discrete_talk_nets_seating.txt&quot;</span></span>
+<span id="cb1432-2"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1432-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1432-3"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1432-3" aria-hidden="true" tabindex="-1"></a>seating_edgelist <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> url2, <span class="at">header =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb1433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1433-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1433-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(seating_edgelist)</span></code></pre></div>
+<pre><code>##   ego_id alter_id
+## 1      1        7
+## 2      1        9
+## 3      1       15
+## 4      2        3
+## 5      2        5
+## 6      2       11</code></pre>
+<p>The data is stored as an edgelist, where i-&gt;j exists if node i is sitting near (i.e., adjacent) to node j. Let's turn the seating edgelist into a matrix and then add it to the networkDynamic object. We will first take the seating edgelist and turn it into a directed network object. We will then symmetrize it to make it undirected. We will use a 'weak' rule when symmetrizing the matrix, so if i is next to j or j is next to i, the matrix will have a 1 for both ij and ji (we do this to ensure that the matrix is logically consistent, so that if i is next to j, then j must be next to i). The <code>symmetrize()</code> function will output a matrix by default, which is what we want here. We will then attach the matrix to the networkDynamic object using <code>set.network.attribute()</code>.</p>
+<div class="sourceCode" id="cb1435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1435-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1435-1" aria-hidden="true" tabindex="-1"></a>seating_network <span class="ot">&lt;-</span> <span class="fu">network</span>(<span class="at">x =</span> seating_edgelist, <span class="at">directed =</span> T, </span>
+<span id="cb1435-2"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1435-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">vertices =</span> <span class="fu">data.frame</span>(<span class="at">ids =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">18</span>)) </span>
+<span id="cb1435-3"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1435-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1435-4"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1435-4" aria-hidden="true" tabindex="-1"></a>seating_matrix <span class="ot">&lt;-</span> <span class="fu">symmetrize</span>(seating_network, <span class="at">rule =</span> <span class="st">&quot;weak&quot;</span>)</span>
+<span id="cb1435-5"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1435-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1435-6"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1435-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.network.attribute</span>(net_dynamic_4periods, <span class="st">&quot;seating&quot;</span>, seating_matrix)</span></code></pre></div>
+</div>
+<div id="stergms" class="section level2 hasAnchor" number="13.12">
+<h2><span class="header-section-number">13.12</span> STERGMs<a href="ch13-Longitudinal-Network-Models-STERGM-R.html#stergms" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We are now ready to run an initial STERG model, where the goal is to predict the adding and dropping (or keeping) of edges across discretely defined time periods. This amounts to running separate ERGMs predicting the formation and persistence/dissolution of edges, given the network at time T. Note that the <strong>tergm</strong> package will allow us to choose if we want to model the keeping of an edge (persistence) or dropping of an edge (dissolution) for the persistence/dissolution portion of the model.</p>
+<p>For the formation model, we run an ERGM predicting an edge between i-j in T+1, given that the i-j edge does not exist in the current network, time T. For the persistence model, we run an ERGM predicting an edge between i-j in time T+1, given that i-j does exist in time T. For the dissolution model, we run an ERGM predicting the absence of an edge between i-j in time T+1, given that i-j does exist in time T. In this way, STERGM is a direct extension of the exponential random graph models covered in the previous tutorial. The models are simply run with the addition of a time component, and corresponding conditioning to capture the formation and persistence/dissolution of edges. This means that the model specifications that work in the ERGM case will (mostly) be appropriate in the STERGM case. In this case, the network is undirected so we will only include terms appropriate for undirected networks.</p>
+<p>Let's load the tergm package <span class="citation">(Pavel N. Krivitsky and Handcock 2023)</span>. Note this depends on <strong>networkDynamic</strong> and <strong>ergm</strong>. Let's also load <strong>tsna</strong>.</p>
+<div class="sourceCode" id="cb1436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1436-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1436-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tergm) </span>
+<span id="cb1436-2"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1436-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tsna)</span></code></pre></div>
+<div id="model-1-just-edges" class="section level3 hasAnchor" number="13.12.1">
+<h3><span class="header-section-number">13.12.1</span> Model 1: Just Edges<a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-1-just-edges" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The main function is <code>tergm()</code>. The key arguments are:</p>
+<ul>
+<li>formula = formula specifying the formation and persistence/dissolution equation</li>
+<li>estimate = type of estimation to use in fitting model</li>
+<li>constraints = formula specifying any constraints to put on model</li>
+<li>control = list of inputs to control estimation algorithm; set using <code>control.tergm()</code></li>
+<li>times = periods to include in estimating model</li>
+</ul>
+<p>Note that the formation and persistence/dissolution formulas are specified separately and do not need to be the same. The formation formula is set using <code>Form(~...)</code>. The persistence/dissolution formulas can be set using <code>Diss(~...)</code> or <code>Persist(~...)</code>. If we use Persist, then we will predict if the i-j edge remains from one period to the next. If we use Diss we predict the dissolution, or dropping, of edges from one period to next. For our example, we will focus on the persistence model. With the persistence model, positive effects make it more likely for an edge to last from one period to another. Note also that the constraints and control arguments work in very similar ways to what we saw in the ERGM case (see previous tutorial). For our first model, we will do something simple and only include a term for edges, capturing the base rate of tie formation/persistence. We set estimate to CMLE.</p>
+<div class="sourceCode" id="cb1437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1437-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1437-1" aria-hidden="true" tabindex="-1"></a>stergm_mod1 <span class="ot">&lt;-</span> <span class="fu">tergm</span>(net_dynamic_4periods <span class="sc">~</span> <span class="fu">Form</span>(<span class="sc">~</span> edges) <span class="sc">+</span> <span class="fu">Persist</span>(<span class="sc">~</span> edges),</span>
+<span id="cb1437-2"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1437-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">estimate =</span> <span class="st">&quot;CMLE&quot;</span>, <span class="at">times =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1438-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1438-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(stergm_mod1)</span></code></pre></div>
+<pre><code>## Call:
+## tergm(formula = net_dynamic_4periods ~ Form(~edges) + Persist(~edges), 
+##     estimate = &quot;CMLE&quot;, times = 0:3)
+## 
+## Conditional Maximum Likelihood Results:
+## 
+##                  Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## Form(1)~edges     -3.2859     0.2630      0 -12.495   &lt;1e-04 ***
+## Persist(1)~edges   0.4249     0.3119      0   1.362    0.173    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 636.3  on 459  degrees of freedom
+##  Residual Deviance: 186.8  on 457  degrees of freedom
+##  
+## AIC: 190.8  BIC: 199.1  (Smaller is better. MC Std. Err. = 0)</code></pre>
+<p>We can see that we have two different equations, one for tie formation and one for tie persistence. The results suggest that ties form at a lower rate than if people were randomly forming ties (based on the negative coefficient on edges for the formation model). To get a sense of what the results mean, we can look at the coefficient on edges for the tie persistence model. If we take the .4249, we can calculate the probability of an edge persisting from one period to the next:</p>
+<div class="sourceCode" id="cb1440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1440-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1440-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(.<span class="dv">4249</span>) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(.<span class="dv">4249</span>))</span></code></pre></div>
+<pre><code>## [1] 0.6046552</code></pre>
+<p>Thus, an edge that existed in one period has a .605 probability of still existing in the next period.</p>
+<p>Note that we set times to 0:3, as we want to model the formation and persistence of edges across our four time periods. If we tried to run the following bit of code, without times explicitly set, we would run into problems: <code>wrong_mod1 &lt;- tergm(net_dynamic_4periods ~ Form(~ edges) + Persist(~ edges), estimate = "CMLE")</code></p>
+<p>If we had run the dissolution model, we would get the same basic results but the .4249 would now be negative (as we are predicting the dropping of a tie):</p>
+<div class="sourceCode" id="cb1442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1442-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1442-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">tergm</span>(net_dynamic_4periods <span class="sc">~</span> <span class="fu">Form</span>(<span class="sc">~</span> edges) <span class="sc">+</span> <span class="fu">Diss</span>(<span class="sc">~</span> edges), </span>
+<span id="cb1442-2"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1442-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">estimate =</span> <span class="st">&quot;CMLE&quot;</span>, <span class="at">times =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>))</span></code></pre></div>
+<pre><code>## Call:
+## tergm(formula = net_dynamic_4periods ~ Form(~edges) + Diss(~edges), 
+##     estimate = &quot;CMLE&quot;, times = 0:3)
+## 
+## Conditional Maximum Likelihood Results:
+## 
+##               Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## Form(1)~edges  -3.2859     0.2630      0 -12.495   &lt;1e-04 ***
+## Diss(1)~edges  -0.4249     0.3119      0  -1.362    0.173    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 636.3  on 459  degrees of freedom
+##  Residual Deviance: 186.8  on 457  degrees of freedom
+##  
+## AIC: 190.8  BIC: 199.1  (Smaller is better. MC Std. Err. = 0)</code></pre>
+</div>
+<div id="model-2-edges-homophily-and-nodefactor" class="section level3 hasAnchor" number="13.12.2">
+<h3><span class="header-section-number">13.12.2</span> Model 2: Edges, Homophily and Nodefactor<a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-2-edges-homophily-and-nodefactor" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We will now try a little more interesting model, including nodematch and nodefactor terms for gender and race. The nodefactor terms capture basic differences in degree by the nodal attribute of interest (i.e., do girls talk more than boys in class?), while the nodematch terms capture if there is homophily on the attribute (do girls tend to talk to other girls in class?). Here we will keep the formulas for formation and persistence the same.</p>
+<div class="sourceCode" id="cb1444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1444-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1444-1" aria-hidden="true" tabindex="-1"></a>stergm_mod2 <span class="ot">&lt;-</span> <span class="fu">tergm</span>(net_dynamic_4periods <span class="sc">~</span></span>
+<span id="cb1444-2"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1444-2" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">Form</span>(<span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">nodematch</span>(<span class="st">&quot;gender&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb1444-3"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1444-3" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">nodefactor</span>(<span class="st">&quot;gender&quot;</span>) <span class="sc">+</span>  </span>
+<span id="cb1444-4"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1444-4" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">nodematch</span>(<span class="st">&quot;race&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb1444-5"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1444-5" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">nodefactor</span>(<span class="st">&quot;race&quot;</span>)) <span class="sc">+</span> </span>
+<span id="cb1444-6"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1444-6" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">Persist</span>(<span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">nodematch</span>(<span class="st">&quot;gender&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb1444-7"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1444-7" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">nodefactor</span>(<span class="st">&quot;gender&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb1444-8"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1444-8" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">nodematch</span>(<span class="st">&quot;race&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb1444-9"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1444-9" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">nodefactor</span>(<span class="st">&quot;race&quot;</span>)), </span>
+<span id="cb1444-10"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1444-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">estimate =</span> <span class="st">&quot;CMLE&quot;</span>, <span class="at">times =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1445-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1445-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(stergm_mod2)</span></code></pre></div>
+<pre><code>## Call:
+## tergm(formula = net_dynamic_4periods ~ Form(~edges + nodematch(&quot;gender&quot;) + 
+##     nodefactor(&quot;gender&quot;) + nodematch(&quot;race&quot;) + nodefactor(&quot;race&quot;)) + 
+##     Persist(~edges + nodematch(&quot;gender&quot;) + nodefactor(&quot;gender&quot;) + 
+##         nodematch(&quot;race&quot;) + nodefactor(&quot;race&quot;)), estimate = &quot;CMLE&quot;, 
+##     times = 0:3)
+## 
+## Conditional Maximum Likelihood Results:
+## 
+##                                   Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## Form(1)~edges                     -3.01959    0.82990      0  -3.639 0.000274 ***
+## Form(1)~nodematch.gender           0.63323    0.55982      0   1.131 0.258000    
+## Form(1)~nodefactor.gender.male     0.40814    0.36992      0   1.103 0.269888    
+## Form(1)~nodematch.race            -0.08931    0.66430      0  -0.134 0.893056    
+## Form(1)~nodefactor.race.white     -1.07422    0.54052      0  -1.987 0.046879 *  
+## Persist(1)~edges                   0.85108    1.13717      0   0.748 0.454209    
+## Persist(1)~nodematch.gender        0.71104    0.78997      0   0.900 0.368074    
+## Persist(1)~nodefactor.gender.male -0.89406    0.54060      0  -1.654 0.098163 .  
+## Persist(1)~nodematch.race         -0.59615    0.75889      0  -0.786 0.432134    
+## Persist(1)~nodefactor.race.white  -0.08171    0.51961      0  -0.157 0.875045    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 636.3  on 459  degrees of freedom
+##  Residual Deviance: 172.0  on 449  degrees of freedom
+##  
+## AIC: 192  BIC: 233.3  (Smaller is better. MC Std. Err. = 0)</code></pre>
+<p>Race and gender would not appear to play a large role in the formation or persistence of edges in this classroom network, although there is some evidence that students who identify as white initiate interactions at lower rates. The fit (based on BIC) is actually worse than in model 1, just including edges.</p>
+</div>
+<div id="model-3-edges-nodefactor-and-seating" class="section level3 hasAnchor" number="13.12.3">
+<h3><span class="header-section-number">13.12.3</span> Model 3: Edges, Nodefactor, and Seating<a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-3-edges-nodefactor-and-seating" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As a third model, we will incorporate seating arrangements into the formation and persistence models. The question is whether students who sit close to one another are more likely to initiate, and then maintain, interaction ties. Here, we will include an edgecov term with the seating matrix as the input. Note that we have already included the seating matrix on the networkDynamic object above (so no further manipulation is necessary here). Given our results above, we will drop most of the gender and race terms from the model, just keeping the nodefactor terms for race in the formation model and gender in the persistence model.</p>
+<div class="sourceCode" id="cb1447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1447-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1447-1" aria-hidden="true" tabindex="-1"></a>stergm_mod3 <span class="ot">&lt;-</span> <span class="fu">tergm</span>(net_dynamic_4periods <span class="sc">~</span> </span>
+<span id="cb1447-2"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1447-2" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">Form</span>(<span class="sc">~</span> edges <span class="sc">+</span></span>
+<span id="cb1447-3"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1447-3" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">nodefactor</span>(<span class="st">&quot;race&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1447-4"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1447-4" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">edgecov</span>(<span class="st">&quot;seating&quot;</span>)) <span class="sc">+</span> </span>
+<span id="cb1447-5"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1447-5" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">Persist</span>(<span class="sc">~</span> edges <span class="sc">+</span> </span>
+<span id="cb1447-6"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1447-6" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">nodefactor</span>(<span class="st">&quot;gender&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1447-7"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1447-7" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">edgecov</span>(<span class="st">&quot;seating&quot;</span>)),  </span>
+<span id="cb1447-8"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1447-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">estimate =</span> <span class="st">&quot;CMLE&quot;</span>, <span class="at">times =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1448-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1448-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(stergm_mod3)</span></code></pre></div>
+<pre><code>## Call:
+## tergm(formula = net_dynamic_4periods ~ Form(~edges + nodefactor(&quot;race&quot;) + 
+##     edgecov(&quot;seating&quot;)) + Persist(~edges + nodefactor(&quot;gender&quot;) + 
+##     edgecov(&quot;seating&quot;)), estimate = &quot;CMLE&quot;, times = 0:3)
+## 
+## Conditional Maximum Likelihood Results:
+## 
+##                                   Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## Form(1)~edges                      -3.3301     0.4996      0  -6.666   &lt;1e-04 ***
+## Form(1)~nodefactor.race.white      -0.8750     0.4161      0  -2.103   0.0355 *  
+## Form(1)~edgecov.seating             2.3582     0.5574      0   4.231   &lt;1e-04 ***
+## Persist(1)~edges                    0.6369     1.2705      0   0.501   0.6161    
+## Persist(1)~nodefactor.gender.male  -0.8748     0.7035      0  -1.244   0.2137    
+## Persist(1)~edgecov.seating          0.3550     1.1585      0   0.306   0.7593    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 636.3  on 459  degrees of freedom
+##  Residual Deviance: 158.3  on 453  degrees of freedom
+##  
+## AIC: 170.3  BIC: 195  (Smaller is better. MC Std. Err. = 0)</code></pre>
+<p>It looks like being physically close in the classroom increases the probability of forming a tie but less so for the probability of the tie persisting from one period to the next (although the standard errors are high here). The odds of a tie forming between i and j is <code>exp(2.3582)</code> = 10.572 times higher if i and j are sitting close together than if they are not sitting close together. This suggests the importance of opportunity for beginning social ties. The results are similar if we kept the full range of nodefactor and nodematch terms on race and gender.</p>
+</div>
+<div id="model-4-adding-gwesp-to-the-model" class="section level3 hasAnchor" number="13.12.4">
+<h3><span class="header-section-number">13.12.4</span> Model 4: Adding GWESP to the Model<a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-4-adding-gwesp-to-the-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For our last model, we will include a gwesp term, capturing if students form (and keep) edges when they share many common interaction partners. Here we will only include gwesp in the formation model, as including it in the persistence model leads to estimation problems.</p>
+<div class="sourceCode" id="cb1450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1450-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1450-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">107</span>)</span>
+<span id="cb1450-2"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1450-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1450-3"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1450-3" aria-hidden="true" tabindex="-1"></a>stergm_mod4 <span class="ot">&lt;-</span> <span class="fu">tergm</span>(net_dynamic_4periods <span class="sc">~</span> </span>
+<span id="cb1450-4"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1450-4" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">Form</span>(<span class="sc">~</span> edges <span class="sc">+</span> </span>
+<span id="cb1450-5"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1450-5" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">nodefactor</span>(<span class="st">&quot;race&quot;</span>) <span class="sc">+</span>  </span>
+<span id="cb1450-6"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1450-6" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">edgecov</span>(<span class="st">&quot;seating&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb1450-7"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1450-7" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">gwesp</span>(<span class="at">decay =</span> .<span class="dv">5</span>, <span class="at">fixed =</span> T)) <span class="sc">+</span> </span>
+<span id="cb1450-8"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1450-8" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">Persist</span>(<span class="sc">~</span> edges <span class="sc">+</span></span>
+<span id="cb1450-9"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1450-9" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">nodefactor</span>(<span class="st">&quot;gender&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1450-10"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1450-10" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">edgecov</span>(<span class="st">&quot;seating&quot;</span>)),</span>
+<span id="cb1450-11"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1450-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">estimate =</span> <span class="st">&quot;CMLE&quot;</span>, <span class="at">times =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, </span>
+<span id="cb1450-12"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1450-12" aria-hidden="true" tabindex="-1"></a>                      <span class="at">control =</span> <span class="fu">control.tergm</span>(<span class="at">CMLE.ergm =</span> </span>
+<span id="cb1450-13"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1450-13" aria-hidden="true" tabindex="-1"></a>                                           <span class="fu">control.ergm</span>(<span class="at">MCMC.burnin =</span> <span class="dv">50000</span>, </span>
+<span id="cb1450-14"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1450-14" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">MCMC.interval =</span> <span class="dv">3000</span>, </span>
+<span id="cb1450-15"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1450-15" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">MCMC.samplesize =</span> <span class="dv">6500</span>)))</span></code></pre></div>
+<p>The model with gwesp is estimated with MCMC estimation so we need to check the diagnostics, to make sure the model is converging. This is directly analogous to the kind of diagnostics we saw in the ERGM case.</p>
+<div class="sourceCode" id="cb1451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1451-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1451-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc.diagnostics</span>(stergm_mod4, <span class="at">vars.per.page =</span> <span class="dv">4</span>)</span></code></pre></div>
+<p><img src="Chapter13b_Integrated_Network_Science_Rtutorial_longitudinal_network_models_stergm_files/figure-html/unnamed-chunk-25-1.png" width="672" /><img src="Chapter13b_Integrated_Network_Science_Rtutorial_longitudinal_network_models_stergm_files/figure-html/unnamed-chunk-25-2.png" width="672" /></p>
+<p>There are two sets of diagnostics; first for the formation model and then for the persistence model. Looks okay on the whole, although we might consider rerunning with different input parameters or a simpler model. Let's take a look at the model results.</p>
+<div class="sourceCode" id="cb1452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1452-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1452-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(stergm_mod4)</span></code></pre></div>
+<pre><code>## Call:
+## tergm(formula = net_dynamic_4periods ~ Form(~edges + nodefactor(&quot;race&quot;) + 
+##     edgecov(&quot;seating&quot;) + gwesp(decay = 0.5, fixed = T)) + Persist(~edges + 
+##     nodefactor(&quot;gender&quot;) + edgecov(&quot;seating&quot;)), estimate = &quot;CMLE&quot;, 
+##     control = control.tergm(CMLE.ergm = control.ergm(MCMC.burnin = 50000, 
+##         MCMC.interval = 3000, MCMC.samplesize = 6500)), times = 0:3)
+## 
+## Monte Carlo Conditional Maximum Likelihood Results:
+## 
+##                                   Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## Form(1)~edges                      -4.1382     0.5368      0  -7.708  &lt; 1e-04 ***
+## Form(1)~nodefactor.race.white      -0.6255     0.3811      0  -1.641 0.100728    
+## Form(1)~edgecov.seating             1.4868     0.5749      0   2.586 0.009702 ** 
+## Form(1)~gwesp.fixed.0.5             0.9417     0.2810      0   3.351 0.000806 ***
+## Persist(1)~edges                    0.6543     1.2901      0   0.507 0.612008    
+## Persist(1)~nodefactor.gender.male  -0.8758     0.7157      0  -1.224 0.221065    
+## Persist(1)~edgecov.seating          0.3374     1.1704      0   0.288 0.773100    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 636.3  on 459  degrees of freedom
+##  Residual Deviance: 146.3  on 452  degrees of freedom
+##  
+## AIC: 160.3  BIC: 189.2  (Smaller is better. MC Std. Err. = 0.1137)</code></pre>
+<p>The results suggest that students tend to form talking relationships when they have common interaction partners (looking at the positive, significant gwesp coefficient). So, if i and j talk with the same other students in Time T, they are likely to start talking with each other in T + 1.</p>
+</div>
+</div>
+<div id="checking-model-fit" class="section level2 hasAnchor" number="13.13">
+<h2><span class="header-section-number">13.13</span> Checking Model Fit<a href="ch13-Longitudinal-Network-Models-STERGM-R.html#checking-model-fit" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let's go ahead and check the fit of the model. One way of seeing if the model is fitting well is to simulate networks based on the underlying model and then compare the statistics in the simulated networks to that observed in the true networks (analogous to the <code>gof()</code> function in the ERGM case). Note that the simulations combine the formation and persistence processes and output the generated networks (based on both processes) at a given time slice. We will use a <code>simulate()</code> function. The main arguments are:</p>
+<ul>
+<li>object = model of interest</li>
+<li>nsim = number of separate replications; set to 1 in case of networkDynamic object</li>
+<li>time.slices = number of distinct periods to run dynamic simulation over</li>
+<li>nw.start = indicator for what network to start simulation at; nw.start=1 to begin with first observed network</li>
+<li>monitor = formula indicating statistics to calculate on the simulated networks.</li>
+</ul>
+<p>For our simulation we will set time.slices to 1000, so we simulate change over 1000 different time periods. Of course our actual data only has 4 time periods, but since the model is about the general tendencies of tie formation and persistence, having a larger number of time periods simply adds more information about how the model is fitting (i.e., can it generate realistic networks over many periods that correspond to what we saw in the actual data?). We will start the simulations at the time 1 network. We set monitor to edges and triadcensus (there are four types as the network is undirected). Note that triadcensus was not a term in the model. We use <code>set.seed()</code> to ease reproducibility.</p>
+<div class="sourceCode" id="cb1454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1454-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1454-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">130</span>)</span>
+<span id="cb1454-2"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1454-2" aria-hidden="true" tabindex="-1"></a>sim_mod4 <span class="ot">&lt;-</span> <span class="fu">simulate</span>(stergm_mod4, <span class="at">nsim =</span> <span class="dv">1</span>, <span class="at">time.slices =</span> <span class="dv">1000</span>,</span>
+<span id="cb1454-3"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1454-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">nw.start =</span> <span class="dv">1</span>, <span class="at">monitor =</span> <span class="sc">~</span> edges <span class="sc">+</span> <span class="fu">triadcensus</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)))</span></code></pre></div>
+<p>If we take the generated object, <code>sim_mod4</code>, and use the <code>attributes()</code> function, we can grab the statistics for each generated network (specified in the monitor formula). This is housed under the <code>stats</code> part of the object.</p>
+<div class="sourceCode" id="cb1455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1455-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1455-1" aria-hidden="true" tabindex="-1"></a>sim_stats <span class="ot">&lt;-</span> <span class="fu">attributes</span>(sim_mod4)<span class="sc">$</span>stats</span></code></pre></div>
+<div class="sourceCode" id="cb1456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1456-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1456-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sim_stats)</span></code></pre></div>
+<pre><code>## Markov Chain Monte Carlo (MCMC) output:
+## Start = 1 
+## End = 7 
+## Thinning interval = 1 
+##      edges triadcensus.0 triadcensus.1 triadcensus.2 triadcensus.3
+## [1,]    14           619           177            13             7
+## [2,]    13           635           159            17             5
+## [3,]    10           667           140             7             2
+## [4,]     7           711            98             7             0
+## [5,]    12           645           153            15             3
+## [6,]    13           636           156            20             4
+## [7,]    11           665           129            19             3</code></pre>
+<p>There are 1000 rows, 1 for each generated network. We see that there is a column for edges and four columns for the triadcensus, showing the count for edges and the four triad types (null triads, triads with 1 tie, triads with 2 ties and triads with 3 ties) for each simulated network (or time period in the larger simulation). This can be compared to what we saw in the observed network. We will use a <code>tErgmStats()</code> function to calculate the statistics on the observed network. The main arguments are:</p>
+<ul>
+<li>nd = networkDynamic object</li>
+<li>formula = ergm formula describing terms to calculate statistics on</li>
+<li>start = period where calculations should start</li>
+<li>end = period where calculations should end</li>
+</ul>
+<p>We will set formula to include edges and triadcensus, matching what was calculated on the simulated networks above. We set start to 0 and end to 3, as we have 4 time periods, starting from 0 (onset).</p>
+<div class="sourceCode" id="cb1458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1458-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1458-1" aria-hidden="true" tabindex="-1"></a>true_values <span class="ot">&lt;-</span> <span class="fu">tErgmStats</span>(<span class="at">nd =</span> net_dynamic_4periods, </span>
+<span id="cb1458-2"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1458-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">formula =</span> <span class="st">&#39;~ edges + triadcensus(c(0, 1, 2, 3))&#39;</span>, </span>
+<span id="cb1458-3"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1458-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">start =</span> <span class="dv">0</span>, <span class="at">end =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1459-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1459-1" aria-hidden="true" tabindex="-1"></a>true_values</span></code></pre></div>
+<pre><code>## Time Series:
+## Start = 0 
+## End = 3 
+## Frequency = 1 
+##   edges triadcensus.0 triadcensus.1 triadcensus.2 triadcensus.3
+## 0    14           613           188             9             6
+## 1    16           584           213            14             5
+## 2    13           625           177            11             3
+## 3    12           640           165             6             5</code></pre>
+<p>Here we summarize the statistics of the simulated networks using <code>apply()</code> (summarizing over the columns):</p>
+<div class="sourceCode" id="cb1461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1461-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1461-1" aria-hidden="true" tabindex="-1"></a>sim_values <span class="ot">&lt;-</span> <span class="fu">apply</span>(sim_stats, <span class="dv">2</span>, summary)</span></code></pre></div>
+<p>And now let’s add some useful rownames to the values calculated above.</p>
+<div class="sourceCode" id="cb1462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1462-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1462-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(sim_values) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;sim&quot;</span>, <span class="fu">rownames</span>(sim_values), <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1463-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1463-1" aria-hidden="true" tabindex="-1"></a>sim_values</span></code></pre></div>
+<pre><code>##              edges triadcensus.0 triadcensus.1 triadcensus.2 triadcensus.3
+## sim_Min.     5.000       409.000        70.000         2.000         0.000
+## sim_1st Qu. 13.000       557.000       161.000        16.000         2.000
+## sim_Median  16.000       597.000       189.000        24.000         4.000
+## sim_Mean    15.979       595.934       189.173        26.188         4.705
+## sim_3rd Qu. 19.000       633.250       218.000        35.000         6.000
+## sim_Max.    34.000       741.000       294.000        89.000        24.000</code></pre>
+<p>Here we calculate the true values over the 4 periods as a means of comparison.</p>
+<div class="sourceCode" id="cb1465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1465-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1465-1" aria-hidden="true" tabindex="-1"></a>true_values_mean <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(true_values)</span></code></pre></div>
+<p>Putting together the true and simulated values:</p>
+<div class="sourceCode" id="cb1466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1466-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1466-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(sim_values, <span class="at">true_mean =</span> true_values_mean)</span></code></pre></div>
+<pre><code>##              edges triadcensus.0 triadcensus.1 triadcensus.2 triadcensus.3
+## sim_Min.     5.000       409.000        70.000         2.000         0.000
+## sim_1st Qu. 13.000       557.000       161.000        16.000         2.000
+## sim_Median  16.000       597.000       189.000        24.000         4.000
+## sim_Mean    15.979       595.934       189.173        26.188         4.705
+## sim_3rd Qu. 19.000       633.250       218.000        35.000         6.000
+## sim_Max.    34.000       741.000       294.000        89.000        24.000
+## true_mean   13.750       615.500       185.750        10.000         4.750</code></pre>
+<p>Looks like the model is fitting okay, although the simulated networks have too many intransitive triads (<code>triadcensus.2</code>). We could imagine adjusting the model to account for that. As another way of assessing fit, we can extract networks from particular time periods and plot them against the observed network (we could also run a movie over all of the simulated networks). Here we will take the network from time period 10. We will use the <code>network.extract()</code> function, setting at to 10.</p>
+<div class="sourceCode" id="cb1468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1468-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1468-1" aria-hidden="true" tabindex="-1"></a>net10 <span class="ot">&lt;-</span> <span class="fu">network.extract</span>(sim_mod4, <span class="at">at =</span> <span class="dv">10</span>)</span></code></pre></div>
+<p>And now let’s plot the simulated network against the observed network, here just from the first 10 minute period.</p>
+<div class="sourceCode" id="cb1469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1469-1"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1469-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb1469-2"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1469-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(talk_time1, <span class="at">main =</span> <span class="st">&quot;Observed Network from 0-10 Minutes&quot;</span>)</span>
+<span id="cb1469-3"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#cb1469-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(net10, <span class="at">main =</span> <span class="st">&quot;Example Simulated Network&quot;</span>)</span></code></pre></div>
+<p><img src="Chapter13b_Integrated_Network_Science_Rtutorial_longitudinal_network_models_stergm_files/figure-html/unnamed-chunk-38-1.png" width="864" /></p>
+<p>Looks okay on the whole, although we might consider adding additional homophliy terms to try and deal with the over count of intransitive triads.</p>
+<p>Overall, our results suggest that seating arrangements structure the formation of interaction ties. Individuals sitting close together are likely to initiate interactions. Gender and race have relatively weak effects on the formation of ties. For example, even though there is one group of isolated girls, the overall effect of gender on formation of ties is not particularly strong. We also see that students tend to form new ties to people in their social cluster, with students initiating talking relationships with other students who have the same (current) partners as themselves. The tie persistence results are less clear, with few good predictors in the persistence model. In sum, the results suggest that classroom interactions are largely based on opportunity structure and norms of interaction: one tends to talk to other students in close proximity (socially or physically); once an initial discussion relationship is prompted, however, the interaction between i-j has its own internal dynamics largely independent of other, external factors.</p>
+<p>This tutorial has covered statistical models for discrete, longitudinal network data. In the next tutorial, we consider the application of ERGMs and STERGMs to the case of <a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#ch13-Two-mode-Network-Models-ERGM-STERGM-R">two-mode</a> (or bipartite) networks.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "serif",
+"size": 2.5
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"info": false
+});
+});
+</script>
+
+</body>
+
+</html>

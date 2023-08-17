@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3, Part 1. Cross-Sectional Network Data | Network Analysis: Integrating Social Network Theory, Method, and Application with R</title>
+  <meta name="description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3, Part 1. Cross-Sectional Network Data | Network Analysis: Integrating Social Network Theory, Method, and Application with R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3, Part 1. Cross-Sectional Network Data | Network Analysis: Integrating Social Network Theory, Method, and Application with R" />
+  
+  <meta name="twitter:description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  
+
+<meta name="author" content="Craig Rawlings, Jeffrey A. Smith, James Moody, and Daniel McFarland" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ch3-Network-Data-R.html"/>
+<link rel="next" href="ch3-Dynamic-Network-Data-R.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/d3-4.5.0/d3.min.js"></script>
+<script src="libs/forceNetwork-binding-0.4/forceNetwork.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="https://inarwhal.github.io/NetworkAnalysisR-book/">
+Network Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#how-to-read-the-book"><i class="fa fa-check"></i><b>1.1</b> How to Read the Book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#citations-and-use"><i class="fa fa-check"></i><b>1.2</b> Citations and Use</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#updates-and-feedback"><i class="fa fa-check"></i><b>1.3</b> Updates and Feedback</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i><b>1.4</b> Acknowledgments</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#author-informtion"><i class="fa fa-check"></i><b>1.5</b> Author Informtion</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#session-information"><i class="fa fa-check"></i><b>1.6</b> Session Information</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html"><i class="fa fa-check"></i><b>2</b> Basic Introduction to R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html#preliminaries"><i class="fa fa-check"></i><b>2.1</b> Preliminaries</a></li>
+<li class="chapter" data-level="2.2" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html#packages"><i class="fa fa-check"></i><b>2.2</b> Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ch3-Network-Data-R.html"><a href="ch3-Network-Data-R.html"><i class="fa fa-check"></i><b>3</b> Network Data</a></li>
+<li class="chapter" data-level="" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html"><i class="fa fa-check"></i>3, Part 1. Cross-Sectional Network Data</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#reading-data-into-r"><i class="fa fa-check"></i><b>3.1</b> Reading Data into R</a></li>
+<li class="chapter" data-level="3.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#networks-in-igraph"><i class="fa fa-check"></i><b>3.2</b> Networks in igraph</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-a-matrix-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.1</b> Using a Matrix to Construct the Network</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-edgelist-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.2</b> Using an Edgelist to Construct the Network</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#extracting-information-from-igraph-objects"><i class="fa fa-check"></i><b>3.2.3</b> Extracting Information from igraph Objects</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-adjacency-list-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.4</b> Using an Adjacency List to Construct the Network</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-the-network-package"><i class="fa fa-check"></i><b>3.3</b> Using the network Package</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-a-matrix-to-construct-the-network-1"><i class="fa fa-check"></i><b>3.3.1</b> Using a Matrix to Construct the Network</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-edgelist-to-construct-the-network-1"><i class="fa fa-check"></i><b>3.3.2</b> Using an Edgelist to Construct the Network</a></li>
+<li class="chapter" data-level="3.3.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#putting-edge-attributes-onto-the-network"><i class="fa fa-check"></i><b>3.3.3</b> Putting Edge Attributes onto the Network</a></li>
+<li class="chapter" data-level="3.3.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#moving-between-igraph-and-network-objects"><i class="fa fa-check"></i><b>3.3.4</b> Moving between igraph and network Objects</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#some-key-network-measures"><i class="fa fa-check"></i><b>3.4</b> Some Key Network Measures</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#degree"><i class="fa fa-check"></i><b>3.4.1</b> Degree</a></li>
+<li class="chapter" data-level="3.4.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#density"><i class="fa fa-check"></i><b>3.4.2</b> Density</a></li>
+<li class="chapter" data-level="3.4.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#walks"><i class="fa fa-check"></i><b>3.4.3</b> Walks</a></li>
+<li class="chapter" data-level="3.4.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#paths-distance-and-closeness"><i class="fa fa-check"></i><b>3.4.4</b> Paths, Distance, and Closeness</a></li>
+<li class="chapter" data-level="3.4.5" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#reachability"><i class="fa fa-check"></i><b>3.4.5</b> Reachability</a></li>
+<li class="chapter" data-level="3.4.6" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#diameter"><i class="fa fa-check"></i><b>3.4.6</b> Diameter</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html"><i class="fa fa-check"></i>3, Part 2. Dynamic Network Data</a>
+<ul>
+<li class="chapter" data-level="3.5" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#discrete-longitudinal-networks"><i class="fa fa-check"></i><b>3.5</b> Discrete Longitudinal Networks</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#getting-the-data-ready"><i class="fa fa-check"></i><b>3.5.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="3.5.2" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#constructing-networkdynamic-objects"><i class="fa fa-check"></i><b>3.5.2</b> Constructing networkDynamic Objects</a></li>
+<li class="chapter" data-level="3.5.3" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#summary-statistics"><i class="fa fa-check"></i><b>3.5.3</b> Summary Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#continuous-time-networks"><i class="fa fa-check"></i><b>3.6</b> Continuous-Time Networks</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#getting-the-data-ready-1"><i class="fa fa-check"></i><b>3.6.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="3.6.2" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#constructing-networkdynamic-objects-1"><i class="fa fa-check"></i><b>3.6.2</b> Constructing networkDynamic Objects</a></li>
+<li class="chapter" data-level="3.6.3" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#summary-statistics-1"><i class="fa fa-check"></i><b>3.6.3</b> Summary Statistics</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html"><i class="fa fa-check"></i><b>4</b> Missing Network Data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#missing-data"><i class="fa fa-check"></i><b>4.1</b> Missing Data</a></li>
+<li class="chapter" data-level="4.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#listwise-deletion"><i class="fa fa-check"></i><b>4.2</b> Listwise Deletion</a></li>
+<li class="chapter" data-level="4.3" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-the-level-of-bias"><i class="fa fa-check"></i><b>4.3</b> Gauging the Level of Bias</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-bias-using-past-results"><i class="fa fa-check"></i><b>4.3.1</b> Gauging Bias Using Past Results</a></li>
+<li class="chapter" data-level="4.3.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-bias-using-predictive-models"><i class="fa fa-check"></i><b>4.3.2</b> Gauging Bias Using Predictive Models</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-options"><i class="fa fa-check"></i><b>4.4</b> Simple Imputation Options</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-asymmetric-option"><i class="fa fa-check"></i><b>4.4.1</b> Simple Imputation with Asymmetric Option</a></li>
+<li class="chapter" data-level="4.4.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-symmetric-option"><i class="fa fa-check"></i><b>4.4.2</b> Simple Imputation with Symmetric Option</a></li>
+<li class="chapter" data-level="4.4.3" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-probabilistic-option"><i class="fa fa-check"></i><b>4.4.3</b> Simple Imputation with Probabilistic Option</a></li>
+<li class="chapter" data-level="4.4.4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#comparing-estimates"><i class="fa fa-check"></i><b>4.4.4</b> Comparing Estimates</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html"><i class="fa fa-check"></i><b>5</b> Network Visualization</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#setting-up-the-session"><i class="fa fa-check"></i><b>5.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="5.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#network-plots-using-igraph"><i class="fa fa-check"></i><b>5.2</b> Network Plots using igraph</a></li>
+<li class="chapter" data-level="5.3" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#network-plots-based-on-ggplot"><i class="fa fa-check"></i><b>5.3</b> Network Plots based on ggplot</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#ggally-package"><i class="fa fa-check"></i><b>5.3.1</b> GGally package</a></li>
+<li class="chapter" data-level="5.3.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#ggnetwork-package"><i class="fa fa-check"></i><b>5.3.2</b> ggnetwork package</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#contour-plots"><i class="fa fa-check"></i><b>5.4</b> Contour Plots</a></li>
+<li class="chapter" data-level="5.5" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#interactive-plots"><i class="fa fa-check"></i><b>5.5</b> Interactive Plots</a></li>
+<li class="chapter" data-level="5.6" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#dynamic-network-visualizations"><i class="fa fa-check"></i><b>5.6</b> Dynamic Network Visualizations</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#getting-the-data-ready-2"><i class="fa fa-check"></i><b>5.6.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="5.6.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#time-flattened-visualizations"><i class="fa fa-check"></i><b>5.6.2</b> Time Flattened Visualizations</a></li>
+<li class="chapter" data-level="5.6.3" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#dynamic-network-movies"><i class="fa fa-check"></i><b>5.6.3</b> Dynamic Network Movies</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html"><i class="fa fa-check"></i><b>6</b> Ego Network Data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#working-with-ego-network-data"><i class="fa fa-check"></i><b>6.1</b> Working with Ego Network Data</a></li>
+<li class="chapter" data-level="6.2" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#plotting-networks"><i class="fa fa-check"></i><b>6.2</b> Plotting Networks</a></li>
+<li class="chapter" data-level="6.3" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#homophily-ego-alter-attributes"><i class="fa fa-check"></i><b>6.3</b> Homophily: Ego-Alter Attributes</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#proportion-of-alters-matching-ego"><i class="fa fa-check"></i><b>6.3.1</b> Proportion of Alters Matching Ego</a></li>
+<li class="chapter" data-level="6.3.2" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#analyzing-homophily-at-the-dyadic-level-ego-alter-pairs"><i class="fa fa-check"></i><b>6.3.2</b> Analyzing Homophily at the Dyadic Level: Ego-Alter Pairs</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#homophily-alter-attributes"><i class="fa fa-check"></i><b>6.4</b> Homophily: Alter Attributes</a></li>
+<li class="chapter" data-level="6.5" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#ego-networks-as-predictors"><i class="fa fa-check"></i><b>6.5</b> Ego Networks as Predictors</a></li>
+<li class="chapter" data-level="6.6" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#working-with-one-input-file"><i class="fa fa-check"></i><b>6.6</b> Working with One Input File</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html"><i class="fa fa-check"></i><b>7</b> Dyads and Triads</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#setting-up-the-session-1"><i class="fa fa-check"></i><b>7.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="7.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyadic-processes"><i class="fa fa-check"></i><b>7.2</b> Dyadic Processes</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyad-census-and-reciprocity"><i class="fa fa-check"></i><b>7.2.1</b> Dyad Census and Reciprocity</a></li>
+<li class="chapter" data-level="7.2.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#conditional-uniform-graph-tests"><i class="fa fa-check"></i><b>7.2.2</b> Conditional Uniform Graph Tests</a></li>
+<li class="chapter" data-level="7.2.3" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyad-census-by-attributes-of-nodes"><i class="fa fa-check"></i><b>7.2.3</b> Dyad Census by Attributes of Nodes</a></li>
+<li class="chapter" data-level="7.2.4" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#advice-and-friendship-together"><i class="fa fa-check"></i><b>7.2.4</b> Advice and Friendship Together</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#triadic-processes"><i class="fa fa-check"></i><b>7.3</b> Triadic Processes</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#triad-census"><i class="fa fa-check"></i><b>7.3.1</b> Triad Census</a></li>
+<li class="chapter" data-level="7.3.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#transitivity"><i class="fa fa-check"></i><b>7.3.2</b> Transitivity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html"><i class="fa fa-check"></i><b>8</b> Network Cohesion and Communities</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#first-example-network"><i class="fa fa-check"></i><b>8.1</b> First Example Network</a></li>
+<li class="chapter" data-level="8.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#cohesion"><i class="fa fa-check"></i><b>8.2</b> Cohesion</a></li>
+<li class="chapter" data-level="8.3" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#community-or-group-detection"><i class="fa fa-check"></i><b>8.3</b> Community (or Group) Detection</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#walktrap"><i class="fa fa-check"></i><b>8.3.1</b> Walktrap</a></li>
+<li class="chapter" data-level="8.3.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#edge-betweenness"><i class="fa fa-check"></i><b>8.3.2</b> Edge Betweenness</a></li>
+<li class="chapter" data-level="8.3.3" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#scree-plots"><i class="fa fa-check"></i><b>8.3.3</b> Scree Plots</a></li>
+<li class="chapter" data-level="8.3.4" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#multi-level-clustering"><i class="fa fa-check"></i><b>8.3.4</b> Multi-level Clustering</a></li>
+<li class="chapter" data-level="8.3.5" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#cohesive-blocking"><i class="fa fa-check"></i><b>8.3.5</b> Cohesive Blocking</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#demographic-characteristics"><i class="fa fa-check"></i><b>8.4</b> Demographic Characteristics</a></li>
+<li class="chapter" data-level="8.5" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#community-overlap"><i class="fa fa-check"></i><b>8.5</b> Community Overlap</a></li>
+<li class="chapter" data-level="8.6" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#big-data-example"><i class="fa fa-check"></i><b>8.6</b> Big Data Example</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#multi-level-clustering-1"><i class="fa fa-check"></i><b>8.6.1</b> Multi-level Clustering</a></li>
+<li class="chapter" data-level="8.6.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#looking-at-the-community-structure-within-the-initial-communities"><i class="fa fa-check"></i><b>8.6.2</b> Looking at the Community Structure within the Initial Communities</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html"><i class="fa fa-check"></i><b>9</b> Network Centrality and Hierarchy</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#setting-up-the-session-2"><i class="fa fa-check"></i><b>9.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="9.2" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality"><i class="fa fa-check"></i><b>9.2</b> Centrality</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality-measures-for-social-interactions"><i class="fa fa-check"></i><b>9.2.1</b> Centrality Measures for Social Interactions</a></li>
+<li class="chapter" data-level="9.2.2" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#correlations-between-centrality-measures"><i class="fa fa-check"></i><b>9.2.2</b> Correlations between Centrality Measures</a></li>
+<li class="chapter" data-level="9.2.3" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality-for-task-interactions"><i class="fa fa-check"></i><b>9.2.3</b> Centrality for Task Interactions</a></li>
+<li class="chapter" data-level="9.2.4" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#tasksocial-correlations"><i class="fa fa-check"></i><b>9.2.4</b> Task/Social Correlations</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centralization"><i class="fa fa-check"></i><b>9.3</b> Centralization</a></li>
+<li class="chapter" data-level="9.4" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#clustering-and-hierarchy"><i class="fa fa-check"></i><b>9.4</b> Clustering and Hierarchy</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html"><i class="fa fa-check"></i><b>10</b> Positions and Roles</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#classroom-network-data"><i class="fa fa-check"></i><b>10.1</b> Classroom Network Data</a></li>
+<li class="chapter" data-level="10.2" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#getting-the-data-ready-3"><i class="fa fa-check"></i><b>10.2</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="10.3" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#structural-equivalence"><i class="fa fa-check"></i><b>10.3</b> Structural Equivalence</a></li>
+<li class="chapter" data-level="10.4" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#defining-positions"><i class="fa fa-check"></i><b>10.4</b> Defining Positions</a></li>
+<li class="chapter" data-level="10.5" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#role-analysis"><i class="fa fa-check"></i><b>10.5</b> Role Analysis</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#permuting-the-matrix-by-position"><i class="fa fa-check"></i><b>10.5.1</b> Permuting the Matrix by Position</a></li>
+<li class="chapter" data-level="10.5.2" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#constructing-a-blockmodel"><i class="fa fa-check"></i><b>10.5.2</b> Constructing a Blockmodel</a></li>
+<li class="chapter" data-level="10.5.3" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#plotting-a-blockmodel"><i class="fa fa-check"></i><b>10.5.3</b> Plotting a Blockmodel</a></li>
+<li class="chapter" data-level="10.5.4" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#interpretation-of-blockmodel"><i class="fa fa-check"></i><b>10.5.4</b> Interpretation of Blockmodel</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#local-equivalence"><i class="fa fa-check"></i><b>10.6</b> Local Equivalence</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html"><i class="fa fa-check"></i><b>11</b> Two-mode Networks: Affilitations and Dualities</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#example-affiliation-data"><i class="fa fa-check"></i><b>11.1</b> Example Affiliation Data</a></li>
+<li class="chapter" data-level="11.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#plotting-the-network"><i class="fa fa-check"></i><b>11.2</b> Plotting the Network</a></li>
+<li class="chapter" data-level="11.3" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#single-mode-networks"><i class="fa fa-check"></i><b>11.3</b> Single Mode Networks</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#constructing-one-mode-projections"><i class="fa fa-check"></i><b>11.3.1</b> Constructing One-Mode Projections</a></li>
+<li class="chapter" data-level="11.3.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#plotting-one-mode-projections"><i class="fa fa-check"></i><b>11.3.2</b> Plotting One-Mode Projections</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#club-to-club-network"><i class="fa fa-check"></i><b>11.4</b> Club-to-Club Network</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#centrality-1"><i class="fa fa-check"></i><b>11.4.1</b> Centrality</a></li>
+<li class="chapter" data-level="11.4.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#groups"><i class="fa fa-check"></i><b>11.4.2</b> Groups</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#using-the-tnet-package"><i class="fa fa-check"></i><b>11.5</b> Using the tnet package</a></li>
+<li class="chapter" data-level="11.6" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#racial-segregation"><i class="fa fa-check"></i><b>11.6</b> Racial Segregation</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#proportion-of-co-membership-edges-where-students-match-on-race"><i class="fa fa-check"></i><b>11.6.1</b> Proportion of Co-membership Edges where Students Match on Race</a></li>
+<li class="chapter" data-level="11.6.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#do-students-match-racially-with-at-least-one-other-student"><i class="fa fa-check"></i><b>11.6.2</b> Do Students Match Racially with at Least One Other Student?</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#club-centrality-and-attributes"><i class="fa fa-check"></i><b>11.7</b> Club Centrality and Attributes</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="ch12-Networks-Culture-R.html"><a href="ch12-Networks-Culture-R.html"><i class="fa fa-check"></i><b>12</b> Networks and Culture</a></li>
+<li class="chapter" data-level="" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html"><i class="fa fa-check"></i>12, Part 1. Cultural Structures</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#getting-the-data-ready-4"><i class="fa fa-check"></i><b>12.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="12.2" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#topic-modeling"><i class="fa fa-check"></i><b>12.2</b> Topic Modeling</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#lda-initial-model"><i class="fa fa-check"></i><b>12.2.1</b> LDA: Initial Model</a></li>
+<li class="chapter" data-level="12.2.2" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#lda-picking-the-number-of-topics"><i class="fa fa-check"></i><b>12.2.2</b> LDA: Picking the Number of Topics</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#a-network-representation"><i class="fa fa-check"></i><b>12.3</b> A Network Representation</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html"><i class="fa fa-check"></i>12, Part 2. Cultural Spaces</a>
+<ul>
+<li class="chapter" data-level="12.4" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#correspondence-analysis"><i class="fa fa-check"></i><b>12.4</b> Correspondence Analysis</a></li>
+<li class="chapter" data-level="12.5" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#number-of-dimensions"><i class="fa fa-check"></i><b>12.5</b> Number of Dimensions</a></li>
+<li class="chapter" data-level="12.6" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#importance-of-rowscolumns"><i class="fa fa-check"></i><b>12.6</b> Importance of Rows/Columns</a></li>
+<li class="chapter" data-level="12.7" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#hierarchical-clustering"><i class="fa fa-check"></i><b>12.7</b> Hierarchical Clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="ch13-Statistical-Models-Networks-R.html"><a href="ch13-Statistical-Models-Networks-R.html"><i class="fa fa-check"></i><b>13</b> Statistical Models for Networks</a></li>
+<li class="chapter" data-level="" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><i class="fa fa-check"></i>13, Part 1. Cross-Sectional Network Models: ERGM</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#setting-up-the-session-3"><i class="fa fa-check"></i><b>13.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="13.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#descriptive-statistics"><i class="fa fa-check"></i><b>13.2</b> Descriptive Statistics</a></li>
+<li class="chapter" data-level="13.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#cug-tests"><i class="fa fa-check"></i><b>13.3</b> CUG Tests</a></li>
+<li class="chapter" data-level="13.4" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#fitting-an-ergm"><i class="fa fa-check"></i><b>13.4</b> Fitting an ERGM</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-only"><i class="fa fa-check"></i><b>13.4.1</b> Edges Only</a></li>
+<li class="chapter" data-level="13.4.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-and-homophily"><i class="fa fa-check"></i><b>13.4.2</b> Edges and Homophily</a></li>
+<li class="chapter" data-level="13.4.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-homophily-and-node-covariates"><i class="fa fa-check"></i><b>13.4.3</b> Edges, Homophily, and Node Covariates</a></li>
+<li class="chapter" data-level="13.4.4" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-homophily-node-covariates-and-reciprocity"><i class="fa fa-check"></i><b>13.4.4</b> Edges, Homophily, Node Covariates, and Reciprocity</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#checking-model-convergence"><i class="fa fa-check"></i><b>13.5</b> Checking Model Convergence</a></li>
+<li class="chapter" data-level="13.6" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#goodness-of-fit"><i class="fa fa-check"></i><b>13.6</b> Goodness of Fit</a></li>
+<li class="chapter" data-level="13.7" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#adding-gwesp-to-the-model"><i class="fa fa-check"></i><b>13.7</b> Adding GWESP to the Model</a></li>
+<li class="chapter" data-level="13.8" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#simulation"><i class="fa fa-check"></i><b>13.8</b> Simulation</a></li>
+<li class="chapter" data-level="13.9" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#example-on-a-large-network"><i class="fa fa-check"></i><b>13.9</b> Example on a Large Network</a></li>
+<li class="chapter" data-level="13.10" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#ergm-on-a-valued-network"><i class="fa fa-check"></i><b>13.10</b> ERGM on a Valued Network</a>
+<ul>
+<li class="chapter" data-level="13.10.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#baseline-ergm-on-valued-network"><i class="fa fa-check"></i><b>13.10.1</b> Baseline ERGM on Valued Network</a></li>
+<li class="chapter" data-level="13.10.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#adding-nodematch-and-nodefactor-terms"><i class="fa fa-check"></i><b>13.10.2</b> Adding Nodematch and Nodefactor Terms</a></li>
+<li class="chapter" data-level="13.10.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#transitivity-in-valued-networks"><i class="fa fa-check"></i><b>13.10.3</b> Transitivity in Valued Networks</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html"><i class="fa fa-check"></i>13, Part 2. Longitudinal Network Models: STERGM</a>
+<ul>
+<li class="chapter" data-level="13.11" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#getting-the-data-ready-5"><i class="fa fa-check"></i><b>13.11</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="13.12" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#stergms"><i class="fa fa-check"></i><b>13.12</b> STERGMs</a>
+<ul>
+<li class="chapter" data-level="13.12.1" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-1-just-edges"><i class="fa fa-check"></i><b>13.12.1</b> Model 1: Just Edges</a></li>
+<li class="chapter" data-level="13.12.2" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-2-edges-homophily-and-nodefactor"><i class="fa fa-check"></i><b>13.12.2</b> Model 2: Edges, Homophily and Nodefactor</a></li>
+<li class="chapter" data-level="13.12.3" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-3-edges-nodefactor-and-seating"><i class="fa fa-check"></i><b>13.12.3</b> Model 3: Edges, Nodefactor, and Seating</a></li>
+<li class="chapter" data-level="13.12.4" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-4-adding-gwesp-to-the-model"><i class="fa fa-check"></i><b>13.12.4</b> Model 4: Adding GWESP to the Model</a></li>
+</ul></li>
+<li class="chapter" data-level="13.13" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#checking-model-fit"><i class="fa fa-check"></i><b>13.13</b> Checking Model Fit</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><i class="fa fa-check"></i>13, Part 3. Two-mode Network Models</a>
+<ul>
+<li class="chapter" data-level="13.14" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#affiliation-data"><i class="fa fa-check"></i><b>13.14</b> Affiliation Data</a></li>
+<li class="chapter" data-level="13.15" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#ergm-on-a-two-mode-network"><i class="fa fa-check"></i><b>13.15</b> ERGM on a Two-mode Network</a>
+<ul>
+<li class="chapter" data-level="13.15.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#edges"><i class="fa fa-check"></i><b>13.15.1</b> Edges</a></li>
+<li class="chapter" data-level="13.15.2" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#adjusting-for-structural-issues-gender-and-grade-specific-clubs"><i class="fa fa-check"></i><b>13.15.2</b> Adjusting for Structural Issues: Gender and Grade Specific Clubs</a></li>
+</ul></li>
+<li class="chapter" data-level="13.16" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#second-mode-terms"><i class="fa fa-check"></i><b>13.16</b> Second Mode Terms</a>
+<ul>
+<li class="chapter" data-level="13.16.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#nodefactor"><i class="fa fa-check"></i><b>13.16.1</b> Nodefactor</a></li>
+<li class="chapter" data-level="13.16.2" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#homophily"><i class="fa fa-check"></i><b>13.16.2</b> Homophily</a></li>
+</ul></li>
+<li class="chapter" data-level="13.17" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#first-mode-terms"><i class="fa fa-check"></i><b>13.17</b> First Mode Terms</a></li>
+<li class="chapter" data-level="13.18" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#clustering"><i class="fa fa-check"></i><b>13.18</b> Clustering</a></li>
+<li class="chapter" data-level="13.19" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#two-mode-longitudinal-networks"><i class="fa fa-check"></i><b>13.19</b> Two-mode Longitudinal Networks</a>
+<ul>
+<li class="chapter" data-level="13.19.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#entry-and-exit-of-nodes"><i class="fa fa-check"></i><b>13.19.1</b> Entry and Exit of Nodes</a></li>
+</ul></li>
+<li class="chapter" data-level="13.20" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#stergm-on-a-two-mode-network"><i class="fa fa-check"></i><b>13.20</b> STERGM on a Two-mode Network</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html"><i class="fa fa-check"></i>13, Part 4. Relational Event Models</a>
+<ul>
+<li class="chapter" data-level="13.21" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#getting-the-data-ready-6"><i class="fa fa-check"></i><b>13.21</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="13.22" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#running-initial-models"><i class="fa fa-check"></i><b>13.22</b> Running Initial Models</a>
+<ul>
+<li class="chapter" data-level="13.22.1" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#intercept-only-model"><i class="fa fa-check"></i><b>13.22.1</b> Intercept Only Model</a></li>
+<li class="chapter" data-level="13.22.2" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#adding-sender-and-receiver-effects"><i class="fa fa-check"></i><b>13.22.2</b> Adding Sender and Receiver Effects</a></li>
+<li class="chapter" data-level="13.22.3" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#adding-covariate-event-terms"><i class="fa fa-check"></i><b>13.22.3</b> Adding Covariate Event Terms</a></li>
+</ul></li>
+<li class="chapter" data-level="13.23" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#micro-rules-of-interaction"><i class="fa fa-check"></i><b>13.23</b> Micro Rules of Interaction</a></li>
+<li class="chapter" data-level="13.24" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#assessing-model-fit"><i class="fa fa-check"></i><b>13.24</b> Assessing Model Fit</a></li>
+<li class="chapter" data-level="13.25" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#comparison-to-a-second-date"><i class="fa fa-check"></i><b>13.25</b> Comparison to a Second Date</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="ch14-Network-Diffusion-R.html"><a href="ch14-Network-Diffusion-R.html"><i class="fa fa-check"></i><b>14</b> Network Diffusion</a></li>
+<li class="chapter" data-level="" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html"><i class="fa fa-check"></i>14, Part 1. Network Diffusion: Infectious Diseases</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#reading-in-data"><i class="fa fa-check"></i><b>14.1</b> Reading in Data</a></li>
+<li class="chapter" data-level="14.2" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#specifying-the-network-model"><i class="fa fa-check"></i><b>14.2</b> Specifying the Network Model</a></li>
+<li class="chapter" data-level="14.3" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#estimating-the-network-model"><i class="fa fa-check"></i><b>14.3</b> Estimating the Network Model</a></li>
+<li class="chapter" data-level="14.4" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#specifying-the-epidemic-model"><i class="fa fa-check"></i><b>14.4</b> Specifying the Epidemic Model</a></li>
+<li class="chapter" data-level="14.5" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#running-simulations"><i class="fa fa-check"></i><b>14.5</b> Running Simulations</a>
+<ul>
+<li class="chapter" data-level="14.5.1" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#running-baseline-model"><i class="fa fa-check"></i><b>14.5.1</b> Running Baseline Model</a></li>
+<li class="chapter" data-level="14.5.2" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#varying-network-features"><i class="fa fa-check"></i><b>14.5.2</b> Varying Network Features</a></li>
+<li class="chapter" data-level="14.5.3" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#varying-epidemic-model"><i class="fa fa-check"></i><b>14.5.3</b> Varying Epidemic Model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html"><i class="fa fa-check"></i>14, Part 2. Social Diffusion Processes</a>
+<ul>
+<li class="chapter" data-level="14.6" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#setting-up-the-session-4"><i class="fa fa-check"></i><b>14.6</b> Setting up the Session</a></li>
+<li class="chapter" data-level="14.7" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simple-diffusion-models"><i class="fa fa-check"></i><b>14.7</b> Simple Diffusion Models</a></li>
+<li class="chapter" data-level="14.8" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#threshold-models-of-diffusion"><i class="fa fa-check"></i><b>14.8</b> Threshold Models of Diffusion</a>
+<ul>
+<li class="chapter" data-level="14.8.1" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simulating-diffusion-processes-using-the-netdiffuser-package"><i class="fa fa-check"></i><b>14.8.1</b> Simulating Diffusion Processes using the netdiffuseR Package</a></li>
+<li class="chapter" data-level="14.8.2" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#comparing-diffusion-under-different-network-and-adoption-behavior-conditions"><i class="fa fa-check"></i><b>14.8.2</b> Comparing Diffusion under Different Network and Adoption Behavior Conditions</a></li>
+<li class="chapter" data-level="14.8.3" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simulations-using-multiple-runs"><i class="fa fa-check"></i><b>14.8.3</b> Simulations using Multiple Runs</a></li>
+</ul></li>
+<li class="chapter" data-level="14.9" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#working-with-empirical-data"><i class="fa fa-check"></i><b>14.9</b> Working with Empirical Data</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html"><i class="fa fa-check"></i><b>15</b> Social Influence: Coevolution of Networks and Behaviors</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#reading-in-classroom-data"><i class="fa fa-check"></i><b>15.1</b> Reading in Classroom Data</a></li>
+<li class="chapter" data-level="15.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#siena-model-setup"><i class="fa fa-check"></i><b>15.2</b> SIENA Model Setup</a></li>
+<li class="chapter" data-level="15.3" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification"><i class="fa fa-check"></i><b>15.3</b> Model Specification</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-behavioral-model"><i class="fa fa-check"></i><b>15.3.1</b> Model Specification: Behavioral Model</a></li>
+<li class="chapter" data-level="15.3.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-network-model"><i class="fa fa-check"></i><b>15.3.2</b> Model Specification: Network Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-estimation"><i class="fa fa-check"></i><b>15.4</b> Model Estimation</a></li>
+<li class="chapter" data-level="15.5" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpretation"><i class="fa fa-check"></i><b>15.5</b> Interpretation</a>
+<ul>
+<li class="chapter" data-level="15.5.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpreting-network-model"><i class="fa fa-check"></i><b>15.5.1</b> Interpreting Network Model</a></li>
+<li class="chapter" data-level="15.5.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpreting-behavioral-model"><i class="fa fa-check"></i><b>15.5.2</b> Interpreting Behavioral Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.6" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#checking-model-fit-1"><i class="fa fa-check"></i><b>15.6</b> Checking Model Fit</a></li>
+<li class="chapter" data-level="15.7" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#example-with-3-time-periods"><i class="fa fa-check"></i><b>15.7</b> Example with 3 Time Periods</a>
+<ul>
+<li class="chapter" data-level="15.7.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-and-estimation"><i class="fa fa-check"></i><b>15.7.1</b> Model Specification and Estimation</a></li>
+<li class="chapter" data-level="15.7.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#time-heterogeneity"><i class="fa fa-check"></i><b>15.7.2</b> Time Heterogeneity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="how-to-cite.html"><a href="how-to-cite.html"><i class="fa fa-check"></i>How to Cite</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Network Analysis: Integrating Social Network Theory, Method, and Application with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ch3-Cross-Sectional-Network-Data-R" class="section level1 unnumbered hasAnchor">
+<h1>3, Part 1. Cross-Sectional Network Data<a href="ch3-Cross-Sectional-Network-Data-R.html#ch3-Cross-Sectional-Network-Data-R" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This tutorial covers the basics of dealing with network data in R, focusing on the case of cross-sectional network data (a network observed at one time point). We assume that the reader has installed R, as well as a few key packages. In this tutorial we will use <strong>igraph</strong>, <strong>network</strong>, <strong>reshape</strong> and <strong>intergraph</strong>. We will learn how to take actual network data, read it into R, and then use the data to construct networks. This will make it possible to plot, summarize and manipulate the network information in a useful manner. All subsequent chapters will assume some basic knowledge of core network construction functions in R. We will end the tutorial by going over how to calculate key summary measures, like density and distance, using the <strong>igraph</strong> package. These measures offer important building blocks for later chapters, where we will cover topics like diffusion, hierarchy and cohesion, which require a working knowledge of more basic network measures.</p>
+<p>The data we will use for this tutorial are based on classroom friendships collected by Daniel McFarland. The nodes, or vertices, are students in a classroom. There are 24 students. The survey asked each student to nominate classmates they "hung out with" as friends. The survey also asked each student about their gender, race and grade level. We thus have network data, based on the friendships between students, as well as node-level attribute data.</p>
+<div id="reading-data-into-r" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Reading Data into R<a href="ch3-Cross-Sectional-Network-Data-R.html#reading-data-into-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The first step is to read the network data into R (it is possible, but not practical, to type out the data within R). In this case, we have stored the network data as a matrix, describing the friendships between each student in the class. The network is binary and directed. The matrix is stored as a CSV file called class555_matrix.csv. The attribute data for the students in this classroom is called class555_attributedata.csv. It contains data on the gender, race and grade for each student in the class. We have also created an edgelist for this network called class555_edgelist.csv.</p>
+<p>We begin by reading in the data matrix using a <code>read.csv()</code> function. The main argument to the function is file, set to the location of the file we want to read in. In this case, we will read in the file directly from a URL (we could also read in a file saved locally on a computer). The first line below simply defines the URL of interest (defined as url1), while the second line reads in the file using read.csv.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb13-1" aria-hidden="true" tabindex="-1"></a>url1 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/class555_matrix.csv&quot;</span></span>
+<span id="cb13-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb13-3" aria-hidden="true" tabindex="-1"></a>class_mat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> url1)</span></code></pre></div>
+<p>We have now created an object called <code>class_mat</code>, which holds the information read in from the class555_matrix file. Before we take a closer look, let's clean things up a bit. Let's first check on the class of the object we created:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(class_mat)</span></code></pre></div>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<p>We can see that <code>class_mat</code> is a data frame. Data frames are one kind of object in R, akin to traditional data sets that we may find in other programs like Stata or Excel. Data frames allow users to hold different kinds of columns (like numeric values and characters) all together in a single object. Data frames are, however, not conducive to matrix operations (like matrix multiplication). If we want to do matrix multiplication and related operations, we need to work with matrix objects, rather than data frames. Additionally, the main packages in R for network analysis take matrices as inputs. Given this, let's go ahead and turn our object, class_mat, into a matrix. We can turn our data frame into a matrix using the <code>as.matrix()</code> function:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb16-1" aria-hidden="true" tabindex="-1"></a>class_mat <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(class_mat)</span></code></pre></div>
+<p>Let's also add a useful set of row names and column names to the matrix. This will make it easier to interpret the matrix when printed. We will set the row names to be 1 to the number of rows and the column names to be 1 to the number of columns.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(class_mat) <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(class_mat)</span>
+<span id="cb17-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(class_mat) <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(class_mat)</span></code></pre></div>
+<p>Now, let’s take a look at the matrix. Note that R will automatically print the object if no assignment is made, like this:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb18-1" aria-hidden="true" tabindex="-1"></a>class_mat</span></code></pre></div>
+<pre><code>##    1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+## 1  0 0 1 0 1 0 1 0 0  0  0  0  0  0  0  0  0  0  0  0  1  0  0  0
+## 2  0 0 1 0 0 1 0 0 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+## 3  0 0 0 0 0 1 0 1 0  0  0  0  0  0  0  1  0  0  0  0  0  0  0  1
+## 4  0 0 0 0 0 0 0 0 0  0  0  0  1  0  0  0  0  1  0  0  0  0  0  0
+## 5  0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+## 6  0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+## 7  1 0 0 0 0 0 0 0 1  1  0  0  0  0  0  1  0  0  0  0  0  0  0  0
+## 8  0 0 1 0 0 0 0 0 1  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0
+## 9  0 0 0 0 1 0 0 1 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+## 10 0 0 0 0 0 1 0 0 0  0  0  0  0  1  0  0  0  0  1  1  0  0  0  1
+## 11 0 0 0 0 0 0 0 0 0  0  0  1  0  0  1  0  0  1  0  0  0  0  0  1
+## 12 0 0 0 0 0 0 0 0 0  0  1  0  0  0  1  0  0  0  0  0  0  0  0  1
+## 13 0 0 0 0 0 0 0 1 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+## 14 0 0 0 0 0 0 0 0 0  1  0  0  1  0  0  0  0  0  1  0  1  0  0  1
+## 15 0 0 0 0 0 0 0 0 0  1  1  0  1  1  0  0  0  0  0  0  0  0  0  1
+## 16 0 0 1 0 1 0 0 0 1  0  0  0  0  0  0  0  0  0  1  0  0  0  0  0
+## 17 0 0 0 0 0 0 0 1 0  0  0  0  1  0  0  0  0  1  0  0  0  0  1  1
+## 18 0 0 0 0 0 0 0 0 0  0  0  0  1  0  0  0  1  0  0  0  0  0  1  1
+## 19 0 0 0 0 0 0 0 0 0  0  0  0  0  1  0  1  0  0  0  1  1  0  0  0
+## 20 0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  1  0  1  0  0  1
+## 21 0 0 0 0 1 0 0 0 0  0  0  0  0  0  0  0  0  0  1  1  0  0  0  0
+## 22 0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0  0  0  1  0
+## 23 0 0 0 0 1 0 0 0 0  0  0  0  1  0  0  0  1  1  0  0  0  0  0  0
+## 24 0 0 0 0 0 1 0 0 0  1  0  0  0  1  1  0  0  0  0  0  1  0  0  0</code></pre>
+<p>We can see that the row names and column names run from 1 to 24, as we set above. The matrix itself consists of 0s and 1s, where a 1 means that i nominates j as a friend and 0 means that i did not nominate j as a friend, where i is the row and j is the column. For example, student 1 nominates students 3, 5, 7, and 21 as friends. Now, let's go ahead and read in the attribute data. Again, we read in the data directly using a URL, setting stringsAsFactors to T (this sets how non-numeric variables are read into R):</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb20-1" aria-hidden="true" tabindex="-1"></a>url2 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/class555_attributedata.csv&quot;</span></span>
+<span id="cb20-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb20-3" aria-hidden="true" tabindex="-1"></a>class_attributes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> url2, <span class="at">stringsAsFactors =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb21-1" aria-hidden="true" tabindex="-1"></a>class_attributes</span></code></pre></div>
+<pre><code>##    id gender grade  race
+## 1   1   Male    12 White
+## 2   2 Female    12 White
+## 3   3 Female    12 White
+## 4   4 Female    12 White
+## 5   5   Male    12 White
+## 6   6 Female    12 White
+## 7   7   Male    11 Black
+## 8   8   Male    11 White
+## 9   9   Male    11 White
+## 10 10 Female    11 White
+## 11 11 Female    10 White
+## 12 12 Female    10 White
+## 13 13   Male    10 White
+## 14 14   Male    10 White
+## 15 15 Female    10 White
+## 16 16   Male    10 White
+## 17 17 Female    10 White
+## 18 18 Female    10 White
+## 19 19 Female    10 White
+## 20 20 Female    10 White
+## 21 21 Female    10 White
+## 22 22 Female    10 White
+## 23 23 Female    10 White
+## 24 24 Female    10 White</code></pre>
+<p>This is a simple data frame describing the gender, grade and race of each student in the network. The data frame thus holds the attributes of our nodes. Note that the order of the data frame has to be the same as the order in the matrix. Also note that the first column is the id of each node in the network (this must be consistent with the ids in the edgelist). We can grab particular columns by using a $ command or by calling a particular column in the data frame. Here we look at the first five values for <code>gender</code>:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb23-1" aria-hidden="true" tabindex="-1"></a>class_attributes<span class="sc">$</span>gender[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
+<pre><code>## [1] Male   Female Female Female Male  
+## Levels: Female Male</code></pre>
+<p>Same as above:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb25-1" aria-hidden="true" tabindex="-1"></a>class_attributes[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="st">&quot;gender&quot;</span>] </span></code></pre></div>
+<pre><code>## [1] Male   Female Female Female Male  
+## Levels: Female Male</code></pre>
+<p>The columns in a data frame can take different forms, or classes. For example, let's check on the class of the <code>grade</code> variable.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(class_attributes[, <span class="st">&quot;grade&quot;</span>])</span></code></pre></div>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
+<p>The grade variable is an integer, meaning we can do mathematical operations on it.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb29-1" aria-hidden="true" tabindex="-1"></a>class_attributes[, <span class="st">&quot;grade&quot;</span>] <span class="sc">*</span> <span class="dv">2</span></span></code></pre></div>
+<pre><code>##  [1] 24 24 24 24 24 24 22 22 22 22 20 20 20 20 20 20 20 20 20 20 20 20 20 20</code></pre>
+<p>Note that our code above does not change the values of <code>grade</code> on the <code>class_attributes</code> data frame (as no assignment was made). If we had wanted to change the values we could do:<br />
+<code>class_attributes[, "grade"] &lt;- class_attributes[, "grade"] * 2</code></p>
+<p>Now, let's check on the class of <code>gender</code>.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(class_attributes[, <span class="st">&quot;gender&quot;</span>])</span></code></pre></div>
+<pre><code>## [1] &quot;factor&quot;</code></pre>
+<p><code>gender</code> is a factor, meaning it is a categorical (i.e., non-numeric) variable with an order to it. In this case Female is first and Male is second:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(class_attributes[, <span class="st">&quot;gender&quot;</span>])</span></code></pre></div>
+<pre><code>## [1] &quot;Female&quot; &quot;Male&quot;</code></pre>
+<p>Factors do not represent meaningful numbers and thus we cannot do mathematical operations on them. Factors are still useful, however, as we can use them in analyses to make group comparisons (Female versus Male, for example). If we do not need (or want) to have the values ordered, we can turn our factors into characters using an <code>as.character()</code> function (or set stringsAsFactors to F when reading in the data).</p>
+<p>It is important to note that a matrix cannot hold numeric and character columns at the same time, as all columns must be of the same class (i.e., all numeric or all character). This is the main disadvantage of a matrix in R. And conversely, we can now see the main advantage of a data frame, that we can hold different kinds of columns in one object.</p>
+</div>
+<div id="networks-in-igraph" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Networks in igraph<a href="ch3-Cross-Sectional-Network-Data-R.html#networks-in-igraph" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Here we will use the <strong>igraph</strong> package to construct a network out of the friendship data. We will demonstrate how to do the same task using the <strong>network</strong> package below.</p>
+<div id="using-a-matrix-to-construct-the-network" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Using a Matrix to Construct the Network<a href="ch3-Cross-Sectional-Network-Data-R.html#using-a-matrix-to-construct-the-network" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We begin by using the matrix representation of the network data. The advantage of turning our raw matrix into a network in the <strong>igraph</strong> (or <strong>network</strong>) format is that we can use all of the plotting, measure and statistical functions available within the various network packages. <strong>igraph</strong>, for example, offers a wide variety of functions to perform network calculations, plotting and simulations. We start by loading the <strong>igraph</strong> package <span class="citation">(Csardi and Nepusz 2006)</span>.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span></code></pre></div>
+<p>The function in <strong>igraph</strong> to create a network from a matrix is <code>graph_from_adjacency_matrix()</code>. The arguments are:</p>
+<ul>
+<li>adjmatrix = the input matrix</li>
+<li>mode = directed or undirected</li>
+</ul>
+<p>The output is an igraph object, which holds all of the network information defined by the input matrix. Here we will create an igraph object called <code>class_netbymatrix</code> using <code>class_mat</code> as input.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb36-1" aria-hidden="true" tabindex="-1"></a>class_netbymatrix <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(<span class="at">adjmatrix =</span> class_mat, </span>
+<span id="cb36-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb36-2" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">mode =</span> <span class="st">&quot;directed&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb37-1" aria-hidden="true" tabindex="-1"></a>class_netbymatrix</span></code></pre></div>
+<pre><code>## IGRAPH 54bea70 DN-- 24 77 -- 
+## + attr: name (v/c)
+## + edges from 54bea70 (vertex names):
+##  [1] 1 -&gt;3  1 -&gt;5  1 -&gt;7  1 -&gt;21 2 -&gt;3  2 -&gt;6  3 -&gt;6  3 -&gt;8  3 -&gt;16 3 -&gt;24
+## [11] 4 -&gt;13 4 -&gt;18 7 -&gt;1  7 -&gt;9  7 -&gt;10 7 -&gt;16 8 -&gt;3  8 -&gt;9  8 -&gt;13 9 -&gt;5 
+## [21] 9 -&gt;8  10-&gt;6  10-&gt;14 10-&gt;19 10-&gt;20 10-&gt;24 11-&gt;12 11-&gt;15 11-&gt;18 11-&gt;24
+## [31] 12-&gt;11 12-&gt;15 12-&gt;24 13-&gt;8  14-&gt;10 14-&gt;13 14-&gt;19 14-&gt;21 14-&gt;24 15-&gt;10
+## [41] 15-&gt;11 15-&gt;13 15-&gt;14 15-&gt;24 16-&gt;3  16-&gt;5  16-&gt;9  16-&gt;19 17-&gt;8  17-&gt;13
+## [51] 17-&gt;18 17-&gt;23 17-&gt;24 18-&gt;13 18-&gt;17 18-&gt;23 18-&gt;24 19-&gt;14 19-&gt;16 19-&gt;20
+## [61] 19-&gt;21 20-&gt;19 20-&gt;21 20-&gt;24 21-&gt;5  21-&gt;19 21-&gt;20 22-&gt;23 23-&gt;5  23-&gt;13
+## [71] 23-&gt;17 23-&gt;18 24-&gt;6  24-&gt;10 24-&gt;14 24-&gt;15 24-&gt;21</code></pre>
+<p>We can see that the igraph object contains lots of useful information, including the size of the network (24), the number of edges (77) and specific edge information. Now, let's map the node attributes we read in above, like gender and race, onto our igraph object. Here we need to use a <code>set_vertex_attr()</code> function. This makes it possible to take an attribute, like gender, and map it to the nodes in the network (so we will know what the gender of each node in the network is). The arguments are:</p>
+<ul>
+<li>graph = network of interest, as igraph object</li>
+<li>name = name of node attribute on network to be created</li>
+<li>value = a vector of node attributes</li>
+</ul>
+<p>Let's first do gender, adding an attribute called <code>gender</code> to the igraph object, equal to the gender values in <code>class_attributes$gender</code>.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb39-1" aria-hidden="true" tabindex="-1"></a>class_netbymatrix <span class="ot">&lt;-</span> <span class="fu">set_vertex_attr</span>(<span class="at">graph =</span> class_netbymatrix, </span>
+<span id="cb39-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb39-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">name =</span> <span class="st">&quot;gender&quot;</span>, </span>
+<span id="cb39-3"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb39-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">value =</span> class_attributes<span class="sc">$</span>gender)</span></code></pre></div>
+<p>And now we add grade and race to the igraph object.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb40-1" aria-hidden="true" tabindex="-1"></a>class_netbymatrix <span class="ot">&lt;-</span> <span class="fu">set_vertex_attr</span>(<span class="at">graph =</span> class_netbymatrix, </span>
+<span id="cb40-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb40-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">name =</span> <span class="st">&quot;grade&quot;</span>,</span>
+<span id="cb40-3"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb40-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">value =</span> class_attributes<span class="sc">$</span>grade)</span>
+<span id="cb40-4"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb40-5" aria-hidden="true" tabindex="-1"></a>class_netbymatrix <span class="ot">&lt;-</span> <span class="fu">set_vertex_attr</span>(<span class="at">graph =</span> class_netbymatrix, </span>
+<span id="cb40-6"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb40-6" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">name =</span> <span class="st">&quot;race&quot;</span>,</span>
+<span id="cb40-7"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb40-7" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">value =</span> class_attributes<span class="sc">$</span>race)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb41-1" aria-hidden="true" tabindex="-1"></a>class_netbymatrix</span></code></pre></div>
+<pre><code>## IGRAPH 54bea70 DN-- 24 77 -- 
+## + attr: name (v/c), gender (v/x), grade (v/n), race (v/x)
+## + edges from 54bea70 (vertex names):
+##  [1] 1 -&gt;3  1 -&gt;5  1 -&gt;7  1 -&gt;21 2 -&gt;3  2 -&gt;6  3 -&gt;6  3 -&gt;8  3 -&gt;16 3 -&gt;24
+## [11] 4 -&gt;13 4 -&gt;18 7 -&gt;1  7 -&gt;9  7 -&gt;10 7 -&gt;16 8 -&gt;3  8 -&gt;9  8 -&gt;13 9 -&gt;5 
+## [21] 9 -&gt;8  10-&gt;6  10-&gt;14 10-&gt;19 10-&gt;20 10-&gt;24 11-&gt;12 11-&gt;15 11-&gt;18 11-&gt;24
+## [31] 12-&gt;11 12-&gt;15 12-&gt;24 13-&gt;8  14-&gt;10 14-&gt;13 14-&gt;19 14-&gt;21 14-&gt;24 15-&gt;10
+## [41] 15-&gt;11 15-&gt;13 15-&gt;14 15-&gt;24 16-&gt;3  16-&gt;5  16-&gt;9  16-&gt;19 17-&gt;8  17-&gt;13
+## [51] 17-&gt;18 17-&gt;23 17-&gt;24 18-&gt;13 18-&gt;17 18-&gt;23 18-&gt;24 19-&gt;14 19-&gt;16 19-&gt;20
+## [61] 19-&gt;21 20-&gt;19 20-&gt;21 20-&gt;24 21-&gt;5  21-&gt;19 21-&gt;20 22-&gt;23 23-&gt;5  23-&gt;13
+## [71] 23-&gt;17 23-&gt;18 24-&gt;6  24-&gt;10 24-&gt;14 24-&gt;15 24-&gt;21</code></pre>
+<p>We can see that we have now added <code>gender</code>, <code>grade</code> and <code>race</code> as node (or vertex) attributes to the igraph object (looking at the attr line in the output). At this point we have the basic network constructed and can start to analyze, plot, etc.</p>
+</div>
+<div id="using-an-edgelist-to-construct-the-network" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Using an Edgelist to Construct the Network<a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-edgelist-to-construct-the-network" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Now we will do the same task of constructing a network (as an igraph object) but we will use an edgelist as the input data structure. Remember, an edgelist is a data set recording the edges in the network. The basic form is for the first column to be the sender of the tie and the second column to be the receiver. An edgelist contains all of the information of the matrix, except that it does not capture whether there are isolates (with no ties in and no ties out).</p>
+<p>The first task is to read in the edgelist. As before, we read in the file directly from a URL.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb43-1" aria-hidden="true" tabindex="-1"></a>url3 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/class555_edgelist.csv&quot;</span></span>
+<span id="cb43-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb43-3" aria-hidden="true" tabindex="-1"></a>class_edges <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> url3)</span></code></pre></div>
+<p>And now let's use the <code>head()</code> function to look at the first six rows of the edgelist.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(class_edges) </span></code></pre></div>
+<pre><code>##   sender receiver weight
+## 1      1        3      1
+## 2      1        5      1
+## 3      1        7      1
+## 4      1       21      1
+## 5      2        3      1
+## 6      2        6      1</code></pre>
+<p>We see again that student 1 nominates student 3, 5, 7 and 21. Note that in many cases we will have edge attributes, or weights, capturing the strength or type of relationship between i and j. These can be easily represented by extra columns on the edgelist. Here we have included another column called <code>weight</code>. As the relation in this case is binary (friend or no friend) all the weights are the same across edges, equal to 1. In other cases the values would be different, capturing the strength of relationship between i and j.</p>
+<p>Now, we want to create an igraph object, as before, but this time use the edgelist as input. Here the function is <code>graph_from_data_frame()</code>. The arguments are:</p>
+<ul>
+<li>d = the edgelist;</li>
+<li>directed = T or F (true or false).</li>
+<li>vertices = optional data frame with vertex (i.e, node) attributes</li>
+</ul>
+<p>Here we create an igraph object called <code>class_netbyedgelist</code> based on the edgelist, <code>class_edges</code>. Note that we do not need to turn the edgelist into a matrix, as the function takes a data frame as input.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb46-1" aria-hidden="true" tabindex="-1"></a>class_netbyedgelist <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> class_edges, <span class="at">directed =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb47-1" aria-hidden="true" tabindex="-1"></a>class_netbyedgelist</span></code></pre></div>
+<pre><code>## IGRAPH dd8b373 DNW- 24 77 -- 
+## + attr: name (v/c), weight (e/n)
+## + edges from dd8b373 (vertex names):
+##  [1] 1 -&gt;3  1 -&gt;5  1 -&gt;7  1 -&gt;21 2 -&gt;3  2 -&gt;6  3 -&gt;6  3 -&gt;8  3 -&gt;16 3 -&gt;24
+## [11] 4 -&gt;13 4 -&gt;18 7 -&gt;1  7 -&gt;9  7 -&gt;10 7 -&gt;16 8 -&gt;3  8 -&gt;9  8 -&gt;13 9 -&gt;5 
+## [21] 9 -&gt;8  10-&gt;6  10-&gt;14 10-&gt;19 10-&gt;20 10-&gt;24 11-&gt;12 11-&gt;15 11-&gt;18 11-&gt;24
+## [31] 12-&gt;11 12-&gt;15 12-&gt;24 13-&gt;8  14-&gt;10 14-&gt;13 14-&gt;19 14-&gt;21 14-&gt;24 15-&gt;10
+## [41] 15-&gt;11 15-&gt;13 15-&gt;14 15-&gt;24 16-&gt;3  16-&gt;5  16-&gt;9  16-&gt;19 17-&gt;8  17-&gt;13
+## [51] 17-&gt;18 17-&gt;23 17-&gt;24 18-&gt;13 18-&gt;17 18-&gt;23 18-&gt;24 19-&gt;14 19-&gt;16 19-&gt;20
+## [61] 19-&gt;21 20-&gt;19 20-&gt;21 20-&gt;24 21-&gt;5  21-&gt;19 21-&gt;20 22-&gt;23 23-&gt;5  23-&gt;13
+## [71] 23-&gt;17 23-&gt;18 24-&gt;6  24-&gt;10 24-&gt;14 24-&gt;15 24-&gt;21</code></pre>
+<p>As we can see, <strong>igraph</strong> will automatically add the edge attributes (here <code>weight</code>) to the igraph object. One advantage of using an edgelist is that it is easy to incorporate node attributes into the igraph object. This simply requires using a vertices argument when specifying the <code>graph_from_data_frame()</code> function. The input to vertices is a data frame of the attributes of each node, here <code>class_attributes</code>. <strong>igraph</strong> will add every column in the data frame (except the first column, which is assumed to be the ids of the nodes) to the created igraph object. The ids in the attribute data frame must correspond to the ids in the edgelist. Here we will go ahead and redo the command above using a vertices argument.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb49-1" aria-hidden="true" tabindex="-1"></a>class_netbyedgelist <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> class_edges, <span class="at">directed =</span> T,</span>
+<span id="cb49-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb49-2" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">vertices =</span> class_attributes)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb50-1" aria-hidden="true" tabindex="-1"></a>class_netbyedgelist</span></code></pre></div>
+<pre><code>## IGRAPH b2bf692 DNW- 24 77 -- 
+## + attr: name (v/c), gender (v/c), grade (v/n), race (v/c), weight (e/n)
+## + edges from b2bf692 (vertex names):
+##  [1] 1 -&gt;3  1 -&gt;5  1 -&gt;7  1 -&gt;21 2 -&gt;3  2 -&gt;6  3 -&gt;6  3 -&gt;8  3 -&gt;16 3 -&gt;24
+## [11] 4 -&gt;13 4 -&gt;18 7 -&gt;1  7 -&gt;9  7 -&gt;10 7 -&gt;16 8 -&gt;3  8 -&gt;9  8 -&gt;13 9 -&gt;5 
+## [21] 9 -&gt;8  10-&gt;6  10-&gt;14 10-&gt;19 10-&gt;20 10-&gt;24 11-&gt;12 11-&gt;15 11-&gt;18 11-&gt;24
+## [31] 12-&gt;11 12-&gt;15 12-&gt;24 13-&gt;8  14-&gt;10 14-&gt;13 14-&gt;19 14-&gt;21 14-&gt;24 15-&gt;10
+## [41] 15-&gt;11 15-&gt;13 15-&gt;14 15-&gt;24 16-&gt;3  16-&gt;5  16-&gt;9  16-&gt;19 17-&gt;8  17-&gt;13
+## [51] 17-&gt;18 17-&gt;23 17-&gt;24 18-&gt;13 18-&gt;17 18-&gt;23 18-&gt;24 19-&gt;14 19-&gt;16 19-&gt;20
+## [61] 19-&gt;21 20-&gt;19 20-&gt;21 20-&gt;24 21-&gt;5  21-&gt;19 21-&gt;20 22-&gt;23 23-&gt;5  23-&gt;13
+## [71] 23-&gt;17 23-&gt;18 24-&gt;6  24-&gt;10 24-&gt;14 24-&gt;15 24-&gt;21</code></pre>
+<p>The attributes will be added to the igraph object in the same order as in the input data frame (important when we extract information from the igraph object; see below). We can check the order of the nodes in our igraph object using:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(class_netbyedgelist)<span class="sc">$</span>name</span></code></pre></div>
+<pre><code>##  [1] &quot;1&quot;  &quot;2&quot;  &quot;3&quot;  &quot;4&quot;  &quot;5&quot;  &quot;6&quot;  &quot;7&quot;  &quot;8&quot;  &quot;9&quot;  &quot;10&quot; &quot;11&quot; &quot;12&quot; &quot;13&quot; &quot;14&quot; &quot;15&quot;
+## [16] &quot;16&quot; &quot;17&quot; &quot;18&quot; &quot;19&quot; &quot;20&quot; &quot;21&quot; &quot;22&quot; &quot;23&quot; &quot;24&quot;</code></pre>
+<p>We offer one final note on constructing networks from an edgelist. As discussed above, the edgelist does not contain information about isolates. If there are isolates in the network and we want to construct the network from an edgelist, we need to be careful. One simple solution is to include a vertices argument, with a data frame of node attributes. Even if no attributes are available, including a data frame of just ids will tell igraph how big the network really is, including isolates (who would be missed by the edgelist alone). For example, the following code creates a network with two isolates, with ids of 25 and 26.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb54-1" aria-hidden="true" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> class_edges, <span class="at">directed =</span> T, </span>
+<span id="cb54-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb54-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">vertices =</span> (<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">26</span>))</span>
+<span id="cb54-3"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(net)</span></code></pre></div>
+<p><img src="Chapter3a_Integrated_Network_Science_Rtutorial_network_data_files/figure-html/unnamed-chunk-27-1.png" width="720" /></p>
+<p>More generally, it is good practice to use a vertices argument when using graph_from_data_frame. This ensures that the order of the nodes (in the created object) is set in a clear manner; rather than allow the function to set the order, which can sometimes lead to unexpected results.</p>
+</div>
+<div id="extracting-information-from-igraph-objects" class="section level3 hasAnchor" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> Extracting Information from igraph Objects<a href="ch3-Cross-Sectional-Network-Data-R.html#extracting-information-from-igraph-objects" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Note that we can get node attributes, like <code>grade</code>, back out of the igraph object using a <code>vertex_attr()</code> function. This is useful as we no longer have to go back to the original data to grab the attributes of the nodes. Importantly, any action taken on the network (like removing isolates) would be reflected in the attributes attached to the network, unlike with the original data (i.e., any removed nodes would still be in the original data frame). This makes it easier to answer substantive questions about network structure and demographic characteristics. The basic arguments for <code>vertex_attr()</code> are graph and name (name of vertex attribute to extract).</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vertex_attr</span>(<span class="at">graph =</span> class_netbyedgelist, <span class="at">name =</span> <span class="st">&quot;grade&quot;</span>)</span></code></pre></div>
+<pre><code>##  [1] 12 12 12 12 12 12 11 11 11 11 10 10 10 10 10 10 10 10 10 10 10 10 10 10</code></pre>
+<p>We can extract the edge attribute, weight, from the igraph object using an <code>edge_attr()</code> function (with name set to the edge attribute of interest): <code>weights &lt;- edge_attr(graph = class_netbyedgelist, name = "weight")</code></p>
+<p>We can also extract the edgelist and matrix, which is useful for a number of reasons. First, this makes it possible to extract an edgelist in a case where the input was a matrix (or vice versa). Second, the extracted edgelist or matrix will reflect any changes in the network (e.g., removing isolates). Similarly, certain functions will yield igraph objects as part of their output, and it is often useful to transform the igraph objects to matrices or edgelists for additional analyses. To get the edgelist we use an <code>as_edgelist()</code> function.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb57-1" aria-hidden="true" tabindex="-1"></a>class_edges_temp <span class="ot">&lt;-</span> <span class="fu">as_edgelist</span>(<span class="at">graph =</span> class_netbyedgelist, <span class="at">names =</span> F)</span></code></pre></div>
+<p>Here, we take a look at the first six rows of the edgelist:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(class_edges_temp) </span></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    1    3
+## [2,]    1    5
+## [3,]    1    7
+## [4,]    1   21
+## [5,]    2    3
+## [6,]    2    6</code></pre>
+<p>The matrix can be extracted using the <code>as_adjacency_matrix()</code> function.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_adjacency_matrix</span>(<span class="at">graph =</span> class_netbyedgelist) </span></code></pre></div>
+<pre><code>## 24 x 24 sparse Matrix of class &quot;dgCMatrix&quot;
+##                                                   
+## 1  . . 1 . 1 . 1 . . . . . . . . . . . . . 1 . . .
+## 2  . . 1 . . 1 . . . . . . . . . . . . . . . . . .
+## 3  . . . . . 1 . 1 . . . . . . . 1 . . . . . . . 1
+## 4  . . . . . . . . . . . . 1 . . . . 1 . . . . . .
+## 5  . . . . . . . . . . . . . . . . . . . . . . . .
+## 6  . . . . . . . . . . . . . . . . . . . . . . . .
+## 7  1 . . . . . . . 1 1 . . . . . 1 . . . . . . . .
+## 8  . . 1 . . . . . 1 . . . 1 . . . . . . . . . . .
+## 9  . . . . 1 . . 1 . . . . . . . . . . . . . . . .
+## 10 . . . . . 1 . . . . . . . 1 . . . . 1 1 . . . 1
+## 11 . . . . . . . . . . . 1 . . 1 . . 1 . . . . . 1
+## 12 . . . . . . . . . . 1 . . . 1 . . . . . . . . 1
+## 13 . . . . . . . 1 . . . . . . . . . . . . . . . .
+## 14 . . . . . . . . . 1 . . 1 . . . . . 1 . 1 . . 1
+## 15 . . . . . . . . . 1 1 . 1 1 . . . . . . . . . 1
+## 16 . . 1 . 1 . . . 1 . . . . . . . . . 1 . . . . .
+## 17 . . . . . . . 1 . . . . 1 . . . . 1 . . . . 1 1
+## 18 . . . . . . . . . . . . 1 . . . 1 . . . . . 1 1
+## 19 . . . . . . . . . . . . . 1 . 1 . . . 1 1 . . .
+## 20 . . . . . . . . . . . . . . . . . . 1 . 1 . . 1
+## 21 . . . . 1 . . . . . . . . . . . . . 1 1 . . . .
+## 22 . . . . . . . . . . . . . . . . . . . . . . 1 .
+## 23 . . . . 1 . . . . . . . 1 . . . 1 1 . . . . . .
+## 24 . . . . . 1 . . . 1 . . . 1 1 . . . . . 1 . . .</code></pre>
+<p>Note that the matrix is outputted as a sparse matrix by default, but this behavior can be changed by setting sparse = F.</p>
+</div>
+<div id="using-an-adjacency-list-to-construct-the-network" class="section level3 hasAnchor" number="3.2.4">
+<h3><span class="header-section-number">3.2.4</span> Using an Adjacency List to Construct the Network<a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-adjacency-list-to-construct-the-network" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As another example, we will walk through how to work with network data stored as an adjacency list. Here, each node is on the rows and the columns capture who that node sends ties to. This is often how survey data will look in its raw form. Let's read in the adjacency list associated with our example network from above:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb62-1" aria-hidden="true" tabindex="-1"></a>url4 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/class555_adjacency_list.csv&quot;</span></span>
+<span id="cb62-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-3"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb62-3" aria-hidden="true" tabindex="-1"></a>class_adjacency <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> url4)</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb63-1" aria-hidden="true" tabindex="-1"></a>class_adjacency</span></code></pre></div>
+<pre><code>##    id Nomination1 Nomination2 Nomination3 Nomination4 Nomination5
+## 1   1           3           5           7          21          NA
+## 2   2           3           6          NA          NA          NA
+## 3   3           6           8          16          24          NA
+## 4   4          13          18          NA          NA          NA
+## 5   5          NA          NA          NA          NA          NA
+## 6   6          NA          NA          NA          NA          NA
+## 7   7           1           9          10          16          NA
+## 8   8           3           9          13          NA          NA
+## 9   9           5           8          NA          NA          NA
+## 10 10           6          14          19          20          24
+## 11 11          12          15          18          24          NA
+## 12 12          11          15          24          NA          NA
+## 13 13           8          NA          NA          NA          NA
+## 14 14          10          13          19          21          24
+## 15 15          10          11          13          14          24
+## 16 16           3           5           9          19          NA
+## 17 17           8          13          18          23          24
+## 18 18          13          17          23          24          NA
+## 19 19          14          16          20          21          NA
+## 20 20          19          21          24          NA          NA
+## 21 21           5          19          20          NA          NA
+## 22 22          23          NA          NA          NA          NA
+## 23 23           5          13          17          18          NA
+## 24 24           6          10          14          15          21</code></pre>
+<p>The adjacency list has 24 rows, one for each node, and 6 columns. The first column shows the id of the node (here students) and the remaining columns capture who they name as friends. Looking at the first row, we again see that node 1 nominates 3, 5, 7 and 21 as friends. It is often useful to transform our adjacency list into an edgelist (or matrix), as it is easy to construct a network from an edgelist but somewhat more difficult using an adjacency list (although see the function <code>graph_from_adj_list()</code>). Here we will use functions from the <strong>reshape</strong> package to turn our adjacency list into an edgelist. Let's begin by loading the <strong>reshape</strong> package.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape)</span></code></pre></div>
+<p>We first need to identify the columns in the adjacency list that correspond to the nomination data. In this case, the columns of interest are: Nomination1, Nomination2,...Nomination5. These are the columns that we need to stack together to form the receiver column in the edgelist. Here, we will use a paste command to create a vector of column names corresponding to the nomination columns.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb66-1" aria-hidden="true" tabindex="-1"></a>nomination_columns <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;Nomination&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb67-1" aria-hidden="true" tabindex="-1"></a>nomination_columns</span></code></pre></div>
+<pre><code>## [1] &quot;Nomination1&quot; &quot;Nomination2&quot; &quot;Nomination3&quot; &quot;Nomination4&quot; &quot;Nomination5&quot;</code></pre>
+<p>Now we use a <code>reshape()</code> function to turn our data from a 'wide' format to a 'long' format. We thus move from having the nodes as rows to having edges as rows. The basic idea is take the id variable and repeat it (forming the sender column), while stacking the nomination data to form the receiver column. In the <code>reshape()</code> function, we set data to the adjacency list created above (class_adjacency); varying to the columns to stack (nomination_columns); v.names to the name of the variable to be created in the long format; idvar to the id variable for the nodes (id); and direction to long.</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb69-1" aria-hidden="true" tabindex="-1"></a>class_edgelist_byadjacency <span class="ot">&lt;-</span> <span class="fu">reshape</span>(<span class="at">data =</span> class_adjacency, </span>
+<span id="cb69-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb69-2" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">varying =</span> nomination_columns, </span>
+<span id="cb69-3"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb69-3" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">v.names =</span> <span class="st">&quot;receiver&quot;</span>, <span class="at">idvar =</span> <span class="st">&quot;id&quot;</span>,</span>
+<span id="cb69-4"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb69-4" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">direction =</span> <span class="st">&quot;long&quot;</span>)  </span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(class_edgelist_byadjacency)</span></code></pre></div>
+<pre><code>##     id time receiver
+## 1.1  1    1        3
+## 2.1  2    1        3
+## 3.1  3    1        6
+## 4.1  4    1       13
+## 5.1  5    1       NA
+## 6.1  6    1       NA</code></pre>
+<p>We can see that the data is beginning to look like an edgelist (running long rather than wide) but there is still some cleaning up to do before we can actually use it. For example, we don't really need that second column (showing the nomination column), so we want to remove it. We also want to add a better set of column names to the data.</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb72-1" aria-hidden="true" tabindex="-1"></a>class_edgelist_byadjacency <span class="ot">&lt;-</span> class_edgelist_byadjacency[, <span class="sc">-</span><span class="dv">2</span>]</span>
+<span id="cb72-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(class_edgelist_byadjacency) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;sender&quot;</span>, <span class="st">&quot;receiver&quot;</span>)</span></code></pre></div>
+<p>We also need to take out any NAs in the data, which were simply copied over from the adjacency list. We can use a <code>complete.cases()</code> function to only keep those rows where we have no NA values.</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb73-1" aria-hidden="true" tabindex="-1"></a>which_keep <span class="ot">&lt;-</span> <span class="fu">complete.cases</span>(class_edgelist_byadjacency)</span>
+<span id="cb73-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb73-2" aria-hidden="true" tabindex="-1"></a>class_edgelist_byadjacency <span class="ot">&lt;-</span> class_edgelist_byadjacency[which_keep, ]</span></code></pre></div>
+<p>And let's also reorder the data (although this is not strictly necessary) to match the edgelist read in before.</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb74-1" aria-hidden="true" tabindex="-1"></a>what_order <span class="ot">&lt;-</span> <span class="fu">order</span>(class_edgelist_byadjacency<span class="sc">$</span>sender)</span>
+<span id="cb74-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb74-2" aria-hidden="true" tabindex="-1"></a>class_edgelist_byadjacency <span class="ot">&lt;-</span> class_edgelist_byadjacency[what_order, ]</span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(class_edgelist_byadjacency)</span></code></pre></div>
+<pre><code>##     sender receiver
+## 1.1      1        3
+## 1.2      1        5
+## 1.3      1        7
+## 1.4      1       21
+## 2.1      2        3
+## 2.2      2        6</code></pre>
+<p>The edgelist looks good, and, at this point, we can take the newly constructed edgelist and construct an igraph object from it, using the syntax from above.</p>
+</div>
+</div>
+<div id="using-the-network-package" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Using the network Package<a href="ch3-Cross-Sectional-Network-Data-R.html#using-the-network-package" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We now demonstrate how to do the exact same tasks as in section 2 using the <strong>network</strong> package <span class="citation">(Butts 2015)</span> instead of <strong>igraph</strong>. We still want to take the input matrix (or edgelist) and attribute file and create a network. The only difference is that the format and functions will be a little different using the <strong>network</strong> package. The objects created by <strong>network</strong> can then be used with other packages, like <strong>sna</strong>, <strong>ergm</strong>, <strong>latentnet</strong>, etc., which allow us to perform network calculations, produce plots, and estimate sophisticated statistical models. Moreover, the functions and capabilities of <strong>igraph</strong> are often different than the packages associated with network.</p>
+<p>First let's detach the <strong>igraph</strong> package and load <strong>network</strong>.</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">detach</span>(package<span class="sc">:</span>igraph)</span>
+<span id="cb77-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(network)</span></code></pre></div>
+<div id="using-a-matrix-to-construct-the-network-1" class="section level3 hasAnchor" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Using a Matrix to Construct the Network<a href="ch3-Cross-Sectional-Network-Data-R.html#using-a-matrix-to-construct-the-network-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We are first going to create a network object using the matrix as input. The function is <code>network()</code>. The basic arguments are:</p>
+<ul>
+<li>x = the name of the matrix</li>
+<li>directed = T/F if directed or not</li>
+<li>vertex.attr = list of vertex (i.e., node) attributes</li>
+</ul>
+<p>Here we construct the network using the matrix read in above as input.</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb78-1" aria-hidden="true" tabindex="-1"></a>class_netbymatrix_example2 <span class="ot">&lt;-</span> <span class="fu">network</span>(<span class="at">x =</span> class_mat, <span class="at">directed =</span> T) </span></code></pre></div>
+<p>We can also use the <code>network()</code> function to put node attributes onto the network. We can do this all at once, constructing a network based on the matrix and putting the attributes on the nodes. The input is a list of attributes. Let's first create that list. It is often easier to treat the attributes as characters (rather than factors) when they are categorical variables, like <code>gender</code> or <code>race</code>. So let's go ahead and turn <code>gender</code> and <code>race</code> into character variables using an <code>as.character()</code> function.</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb79-1" aria-hidden="true" tabindex="-1"></a>class_attributes<span class="sc">$</span>race <span class="ot">&lt;-</span> <span class="fu">as.character</span>(class_attributes<span class="sc">$</span>race)</span>
+<span id="cb79-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb79-2" aria-hidden="true" tabindex="-1"></a>class_attributes<span class="sc">$</span>gender <span class="ot">&lt;-</span> <span class="fu">as.character</span>(class_attributes<span class="sc">$</span>gender)</span></code></pre></div>
+<p>Now let’s create a list to use as input to the <code>network()</code> function. We will use a <code>do.call()</code> function to turn the data frame into a list where each element in the list is a different attribute, taken from the class_attributes data frame.</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb80-1" aria-hidden="true" tabindex="-1"></a>attribute_list <span class="ot">&lt;-</span> <span class="fu">do.call</span>(list, class_attributes)</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb81-1" aria-hidden="true" tabindex="-1"></a>attribute_list</span></code></pre></div>
+<pre><code>## $id
+##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+## 
+## $gender
+##  [1] &quot;Male&quot;   &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Male&quot;   &quot;Female&quot; &quot;Male&quot;   &quot;Male&quot;  
+##  [9] &quot;Male&quot;   &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Male&quot;   &quot;Male&quot;   &quot;Female&quot; &quot;Male&quot;  
+## [17] &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot;
+## 
+## $grade
+##  [1] 12 12 12 12 12 12 11 11 11 11 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+## 
+## $race
+##  [1] &quot;White&quot; &quot;White&quot; &quot;White&quot; &quot;White&quot; &quot;White&quot; &quot;White&quot; &quot;Black&quot; &quot;White&quot; &quot;White&quot;
+## [10] &quot;White&quot; &quot;White&quot; &quot;White&quot; &quot;White&quot; &quot;White&quot; &quot;White&quot; &quot;White&quot; &quot;White&quot; &quot;White&quot;
+## [19] &quot;White&quot; &quot;White&quot; &quot;White&quot; &quot;White&quot; &quot;White&quot; &quot;White&quot;</code></pre>
+<p>Now, let's create the network using the <code>network()</code> function but this time add a vertex.attr argument, set equal to the list of vertex (or node) attributes.</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb83-1" aria-hidden="true" tabindex="-1"></a>class_netbymatrix_example2 <span class="ot">&lt;-</span> <span class="fu">network</span>(<span class="at">x =</span> class_mat, <span class="at">directed =</span> T, </span>
+<span id="cb83-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb83-2" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">vertex.attr =</span> attribute_list) </span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb84-1" aria-hidden="true" tabindex="-1"></a>class_netbymatrix_example2</span></code></pre></div>
+<pre><code>##  Network attributes:
+##   vertices = 24 
+##   directed = TRUE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = FALSE 
+##   total edges= 77 
+##     missing edges= 0 
+##     non-missing edges= 77 
+## 
+##  Vertex attribute names: 
+##     gender grade id race vertex.names 
+## 
+## No edge attributes</code></pre>
+<p>We see a number of vertex (i.e., node) attributes are on the constructed network. We could also have put the attributes on one at a time using the <code>set.vertex.attribute()</code> function, where the arguments are:</p>
+<ul>
+<li>x = network of interest</li>
+<li>attrname = name of attribute</li>
+<li>value = vector of attribute</li>
+</ul>
+<p>Here, we will we create a vertex attribute called <code>gradenew</code> on the network based on the <code>grade</code> attribute.</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.vertex.attribute</span>(<span class="at">x =</span> class_netbymatrix_example2, <span class="at">attrname =</span> <span class="st">&quot;gradenew&quot;</span>,</span>
+<span id="cb86-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb86-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">value =</span> class_attributes<span class="sc">$</span>grade)</span></code></pre></div>
+<p>Note for this function we do not need to assign the output to a new object. It will automatically update the input network, <code>class_netbymatrix_example2</code>.</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb87-1" aria-hidden="true" tabindex="-1"></a>class_netbymatrix_example2</span></code></pre></div>
+<pre><code>##  Network attributes:
+##   vertices = 24 
+##   directed = TRUE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = FALSE 
+##   total edges= 77 
+##     missing edges= 0 
+##     non-missing edges= 77 
+## 
+##  Vertex attribute names: 
+##     gender grade gradenew id race vertex.names 
+## 
+## No edge attributes</code></pre>
+</div>
+<div id="using-an-edgelist-to-construct-the-network-1" class="section level3 hasAnchor" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> Using an Edgelist to Construct the Network<a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-edgelist-to-construct-the-network-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Now we will construct the same network but this time use the edgelist as input (still using the <strong>network</strong> package). To create a network from an edgelist, we still use the <code>network()</code> function, but this time the edgelist will be the main input. We will use the vertices argument to input the attribute information, although it is also possible to still use a vertex.attr argument. Using vertices, the attributes are inputted as a data frame, where the first column should be the ids of the nodes. The vertices approach will be particularly useful, as it makes it easier to deal with isolates (in much the same way that we saw with igraph). Using a vertices argument is also very useful as it sets the order that the vertices will be added to the network, ensuring that unexpected behavior does not occur. Now, we use the <code>network()</code> function to create the network. As before:</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb89-1" aria-hidden="true" tabindex="-1"></a>class_netbyedgelist_example2 <span class="ot">&lt;-</span> <span class="fu">network</span>(<span class="at">x =</span> class_edges, <span class="at">directed =</span> T, </span>
+<span id="cb89-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb89-2" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">vertices =</span> class_attributes) </span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb90-1" aria-hidden="true" tabindex="-1"></a>class_netbyedgelist_example2</span></code></pre></div>
+<pre><code>##  Network attributes:
+##   vertices = 24 
+##   directed = TRUE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = FALSE 
+##   total edges= 77 
+##     missing edges= 0 
+##     non-missing edges= 77 
+## 
+##  Vertex attribute names: 
+##     gender grade race vertex.names 
+## 
+##  Edge attribute names: 
+##     weight</code></pre>
+<p>As with <strong>igraph</strong>, we can extract the matrix, edgelist and vertex attributes from the network object. For example, to get the matrix back out, use:</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.matrix</span>(class_netbyedgelist_example2)</span></code></pre></div>
+<pre><code>##    1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+## 1  0 0 1 0 1 0 1 0 0  0  0  0  0  0  0  0  0  0  0  0  1  0  0  0
+## 2  0 0 1 0 0 1 0 0 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+## 3  0 0 0 0 0 1 0 1 0  0  0  0  0  0  0  1  0  0  0  0  0  0  0  1
+## 4  0 0 0 0 0 0 0 0 0  0  0  0  1  0  0  0  0  1  0  0  0  0  0  0
+## 5  0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+## 6  0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+## 7  1 0 0 0 0 0 0 0 1  1  0  0  0  0  0  1  0  0  0  0  0  0  0  0
+## 8  0 0 1 0 0 0 0 0 1  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0
+## 9  0 0 0 0 1 0 0 1 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+## 10 0 0 0 0 0 1 0 0 0  0  0  0  0  1  0  0  0  0  1  1  0  0  0  1
+## 11 0 0 0 0 0 0 0 0 0  0  0  1  0  0  1  0  0  1  0  0  0  0  0  1
+## 12 0 0 0 0 0 0 0 0 0  0  1  0  0  0  1  0  0  0  0  0  0  0  0  1
+## 13 0 0 0 0 0 0 0 1 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+## 14 0 0 0 0 0 0 0 0 0  1  0  0  1  0  0  0  0  0  1  0  1  0  0  1
+## 15 0 0 0 0 0 0 0 0 0  1  1  0  1  1  0  0  0  0  0  0  0  0  0  1
+## 16 0 0 1 0 1 0 0 0 1  0  0  0  0  0  0  0  0  0  1  0  0  0  0  0
+## 17 0 0 0 0 0 0 0 1 0  0  0  0  1  0  0  0  0  1  0  0  0  0  1  1
+## 18 0 0 0 0 0 0 0 0 0  0  0  0  1  0  0  0  1  0  0  0  0  0  1  1
+## 19 0 0 0 0 0 0 0 0 0  0  0  0  0  1  0  1  0  0  0  1  1  0  0  0
+## 20 0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  1  0  1  0  0  1
+## 21 0 0 0 0 1 0 0 0 0  0  0  0  0  0  0  0  0  0  1  1  0  0  0  0
+## 22 0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0  0  0  1  0
+## 23 0 0 0 0 1 0 0 0 0  0  0  0  1  0  0  0  1  1  0  0  0  0  0  0
+## 24 0 0 0 0 0 1 0 0 0  1  0  0  0  1  1  0  0  0  0  0  1  0  0  0</code></pre>
+<p>To get the vertex attributes back out, we use a <code>get.vertex.attribute()</code> function, with two main inputs, the network of interest (defined as x) and the attribute to extract (defined as attrname). Here we extract the <code>grade</code> attribute from the network.</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get.vertex.attribute</span>(<span class="at">x =</span> class_netbyedgelist_example2, <span class="at">attrname =</span> <span class="st">&quot;grade&quot;</span>)</span></code></pre></div>
+<pre><code>##  [1] 12 12 12 12 12 12 11 11 11 11 10 10 10 10 10 10 10 10 10 10 10 10 10 10</code></pre>
+<p>And we can check the order of the nodes using:</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get.vertex.attribute</span>(<span class="at">x =</span> class_netbyedgelist_example2, </span>
+<span id="cb96-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb96-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">attrname =</span> <span class="st">&quot;vertex.names&quot;</span>)</span></code></pre></div>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24</code></pre>
+<p>This is useful when checking if the vertex attributes have been correctly placed onto the network object (as the attributes should be attached in an order consistent with the vertex.names).</p>
+</div>
+<div id="putting-edge-attributes-onto-the-network" class="section level3 hasAnchor" number="3.3.3">
+<h3><span class="header-section-number">3.3.3</span> Putting Edge Attributes onto the Network<a href="ch3-Cross-Sectional-Network-Data-R.html#putting-edge-attributes-onto-the-network" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In cases where there are edge attributes (such as the strength of a relationship) we can use a <code>set.edge.attribute()</code> function to add the edge attribute to the network. The arguments are:</p>
+<ul>
+<li>x = the network of interest</li>
+<li>attrname = name of attribute to put on network</li>
+<li>value = vector of edge values</li>
+</ul>
+<p>Here we add an edge attribute called <code>weight</code> to the network, where <code>weight</code> is the vector of weights taken from the edgelist.</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.edge.attribute</span>(<span class="at">x =</span> class_netbyedgelist_example2, </span>
+<span id="cb98-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb98-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">attrname =</span> <span class="st">&quot;weight&quot;</span>, <span class="at">value =</span> class_edges[, <span class="st">&quot;weight&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb99-1" aria-hidden="true" tabindex="-1"></a>class_netbyedgelist_example2</span></code></pre></div>
+<pre><code>##  Network attributes:
+##   vertices = 24 
+##   directed = TRUE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = FALSE 
+##   total edges= 77 
+##     missing edges= 0 
+##     non-missing edges= 77 
+## 
+##  Vertex attribute names: 
+##     gender grade race vertex.names 
+## 
+##  Edge attribute names: 
+##     weight</code></pre>
+<p>An edge attribute, weight, has now been added to the network. We can extract edge attributes using a <code>get.edge.attribute function()</code>: <code>weights &lt;- get.edge.attribute(class_netbyedgelist_example2, attrname = "weight")</code></p>
+</div>
+<div id="moving-between-igraph-and-network-objects" class="section level3 hasAnchor" number="3.3.4">
+<h3><span class="header-section-number">3.3.4</span> Moving between igraph and network Objects<a href="ch3-Cross-Sectional-Network-Data-R.html#moving-between-igraph-and-network-objects" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We have so far seen how to construct networks using both the <strong>igraph</strong> and <strong>network</strong> packages. It is often useful to be able to move between the two packages, so that an igraph object can be turned into a network one and vice versa. For example, we may want to plot our network using one package but use the other package to do a particular analysis. Luckily, the <strong>intergraph</strong> package makes conversion a fairly easy task. Let's begin by loading the <strong>intergraph</strong> package <span class="citation">(Bojanowski 2015)</span>.</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(intergraph)</span></code></pre></div>
+<p>The main functions are <code>asIgraph()</code> and <code>asNetwork()</code>. <code>asIgraph()</code> converts network objects into igraph objects while <code>asNetwork()</code> turns igraph objects into network objects. For example, here we turn our igraph object into a network one:</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb102-1" aria-hidden="true" tabindex="-1"></a>network_from_igraph <span class="ot">&lt;-</span> <span class="fu">asNetwork</span>(class_netbyedgelist)</span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb103-1" aria-hidden="true" tabindex="-1"></a>network_from_igraph</span></code></pre></div>
+<pre><code>##  Network attributes:
+##   vertices = 24 
+##   directed = TRUE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = FALSE 
+##   total edges= 77 
+##     missing edges= 0 
+##     non-missing edges= 77 
+## 
+##  Vertex attribute names: 
+##     gender grade race vertex.names 
+## 
+##  Edge attribute names: 
+##     weight</code></pre>
+</div>
+</div>
+<div id="some-key-network-measures" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Some Key Network Measures<a href="ch3-Cross-Sectional-Network-Data-R.html#some-key-network-measures" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this section we will walk through the calculation of a few example network measures. The idea is to get a bit more familiar with R and to lay some of the groundwork for what follows. We will examine how to calculate these network measures using the matrix representation of the network, as well as with functions within the <strong>igraph</strong> package (this can also be done within the sna package).</p>
+<div id="degree" class="section level3 hasAnchor" number="3.4.1">
+<h3><span class="header-section-number">3.4.1</span> Degree<a href="ch3-Cross-Sectional-Network-Data-R.html#degree" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We start with degree, which is a simple measure capturing the number of ties for each node. We can define outdegree as the number of ties sent from node i and indegree as the number of ties received by node i. We start by calculating degree using the raw matrix, class_mat. We calculate outdegree by summing over the rows of the matrix. Each element of the matrix shows if i sends a tie to j. By summing over the rows, we calculate the total number of ties sent by i.</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb105-1" aria-hidden="true" tabindex="-1"></a>outdeg <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(class_mat) </span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb106-1" aria-hidden="true" tabindex="-1"></a>outdeg </span></code></pre></div>
+<pre><code>##  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 
+##  4  2  4  2  0  0  4  3  2  5  4  3  1  5  5  4  5  4  4  3  3  1  4  5</code></pre>
+<p>We see that the first student send 4 ties (or nominates 4 friends), the second sends 2 ties, the third sends 4, and so on. Now we sum up over the columns, calculating the number of ties received by i.</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb108-1" aria-hidden="true" tabindex="-1"></a>indeg <span class="ot">&lt;-</span> <span class="fu">colSums</span>(class_mat)</span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb109-1" aria-hidden="true" tabindex="-1"></a>indeg</span></code></pre></div>
+<pre><code>##  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 
+##  1  0  4  0  5  4  1  4  3  4  2  1  7  4  3  3  2  4  5  3  5  0  3  9</code></pre>
+<p>We see that the first student (for example) is nominated by 1 person as a friend. Now, let's do the same thing, but use the functions within the <strong>igraph</strong> package.</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">detach</span>(package<span class="sc">:</span>network)</span>
+<span id="cb111-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb111-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span></code></pre></div>
+<p>The function is <code>degree()</code>. The main arguments are graph (the network of interest) and mode, where mode sets the type of degree calculation: in, out or total (adding up outdegree and indegree). Note that we must use the network constructed as an igraph object to use the <strong>igraph</strong> functions.</p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb112-1" aria-hidden="true" tabindex="-1"></a>outdeg_igraph <span class="ot">&lt;-</span> <span class="fu">degree</span>(<span class="at">graph =</span> class_netbyedgelist, <span class="at">mode =</span> <span class="st">&quot;out&quot;</span>)</span>
+<span id="cb112-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb112-2" aria-hidden="true" tabindex="-1"></a>indeg_igraph <span class="ot">&lt;-</span> <span class="fu">degree</span>(<span class="at">graph =</span> class_netbyedgelist, <span class="at">mode =</span> <span class="st">&quot;in&quot;</span>)</span></code></pre></div>
+<p>Let's check if the previous calculation of outdegree is the same as the calculation from <strong>igraph</strong>.</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(outdeg <span class="sc">==</span> outdeg_igraph) </span></code></pre></div>
+<pre><code>## 
+## TRUE 
+##   24</code></pre>
+<p>We can see that the <strong>igraph</strong> function yields the same outdegree values as calculated above (as outdeg is always equal to outdeg_igraph)</p>
+</div>
+<div id="density" class="section level3 hasAnchor" number="3.4.2">
+<h3><span class="header-section-number">3.4.2</span> Density<a href="ch3-Cross-Sectional-Network-Data-R.html#density" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Density is another simple measure of network structure that captures the total number of edges (or ties) in the network divided by the total number of edges possible. Let's first calculate the density "by hand" using the size and number of edges in the network. The function <code>gsize()</code> get the number of edges and the function <code>gorder()</code> gets the number of nodes.</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb115-1" aria-hidden="true" tabindex="-1"></a>num_edges <span class="ot">&lt;-</span> <span class="fu">gsize</span>(class_netbyedgelist)</span>
+<span id="cb115-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb115-2" aria-hidden="true" tabindex="-1"></a>num_edges</span></code></pre></div>
+<pre><code>## [1] 77</code></pre>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb117-1" aria-hidden="true" tabindex="-1"></a>num_nodes <span class="ot">&lt;-</span> <span class="fu">gorder</span>(class_netbyedgelist)</span>
+<span id="cb117-2"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb117-2" aria-hidden="true" tabindex="-1"></a>num_nodes</span></code></pre></div>
+<pre><code>## [1] 24</code></pre>
+<p>We also need to calculate the number of dyads (excluding ii pairs) which tells us how many edges are possible in the network.</p>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb119-1" aria-hidden="true" tabindex="-1"></a>number_dyads <span class="ot">&lt;-</span> (num_nodes <span class="sc">*</span> (num_nodes <span class="sc">-</span> <span class="dv">1</span>))</span></code></pre></div>
+<p>And now we can go ahead and calculate density, taking the number of edges and dividing by the number possible.</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb120-1" aria-hidden="true" tabindex="-1"></a>den <span class="ot">&lt;-</span> num_edges <span class="sc">/</span> number_dyads</span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb121-1" aria-hidden="true" tabindex="-1"></a>den</span></code></pre></div>
+<pre><code>## [1] 0.1394928</code></pre>
+<p>And here we use the canned function, <code>edge_density()</code>, in <strong>igraph</strong>.</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">edge_density</span>(class_netbyedgelist)</span></code></pre></div>
+<pre><code>## [1] 0.1394928</code></pre>
+</div>
+<div id="walks" class="section level3 hasAnchor" number="3.4.3">
+<h3><span class="header-section-number">3.4.3</span> Walks<a href="ch3-Cross-Sectional-Network-Data-R.html#walks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We now turn to walks on the network, defined as any sequence of nodes and edges (backwards and forwards) that connect i to j. For example, a sequence of i-&gt;j-&gt;k-&gt;j-&gt;l would be a walk of length 4 from i to l. One item of interest is the number of walks of a given length between two nodes. We can use matrix multiplication to calculate this. By raising the matrix to the nth power, we get the number of walks of length n between all ij pairs. Let's calculate the number of walks of length two by multiplying the matrix by itself:</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb125-1" aria-hidden="true" tabindex="-1"></a>walks2 <span class="ot">&lt;-</span> class_mat <span class="sc">%*%</span> class_mat</span></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb126-1" aria-hidden="true" tabindex="-1"></a>walks2 </span></code></pre></div>
+<pre><code>##    1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+## 1  1 0 0 0 1 1 0 1 1  1  0  0  0  0  0  2  0  0  1  1  0  0  0  1
+## 2  0 0 0 0 0 1 0 1 0  0  0  0  0  0  0  1  0  0  0  0  0  0  0  1
+## 3  0 0 2 0 1 1 0 0 2  1  0  0  1  1  1  0  0  0  1  0  1  0  0  0
+## 4  0 0 0 0 0 0 0 1 0  0  0  0  1  0  0  0  1  0  0  0  0  0  1  1
+## 5  0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+## 6  0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+## 7  0 0 2 0 3 1 1 1 1  0  0  0  0  1  0  0  0  0  2  1  1  0  0  1
+## 8  0 0 0 0 1 1 0 3 0  0  0  0  0  0  0  1  0  0  0  0  0  0  0  1
+## 9  0 0 1 0 0 0 0 0 1  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0
+## 10 0 0 0 0 0 1 0 0 0  2  0  0  1  2  1  1  0  0  2  1  4  0  0  2
+## 11 0 0 0 0 0 1 0 0 0  2  2  0  2  2  2  0  1  0  0  0  1  0  1  3
+## 12 0 0 0 0 0 1 0 0 0  2  1  1  1  2  2  0  0  1  0  0  1  0  0  2
+## 13 0 0 1 0 0 0 0 0 1  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0
+## 14 0 0 0 0 1 2 0 1 0  1  0  0  0  3  1  1  0  0  2  3  2  0  0  1
+## 15 0 0 0 0 0 2 0 1 0  2  0  1  1  2  2  0  0  1  2  1  2  0  0  3
+## 16 0 0 0 0 1 1 0 2 0  0  0  0  0  1  0  2  0  0  0  1  1  0  0  1
+## 17 0 0 1 0 1 1 0 1 1  1  0  0  3  1  1  0  2  1  0  0  1  0  1  1
+## 18 0 0 0 0 1 1 0 2 0  1  0  0  2  1  1  0  1  2  0  0  1  0  1  1
+## 19 0 0 1 0 2 0 0 0 1  1  0  0  1  0  0  0  0  0  4  1  2  0  0  2
+## 20 0 0 0 0 1 1 0 0 0  1  0  0  0  2  1  1  0  0  1  2  2  0  0  0
+## 21 0 0 0 0 0 0 0 0 0  0  0  0  0  1  0  1  0  0  1  1  2  0  0  1
+## 22 0 0 0 0 1 0 0 0 0  0  0  0  1  0  0  0  1  1  0  0  0  0  0  0
+## 23 0 0 0 0 0 0 0 2 0  0  0  0  2  0  0  0  1  1  0  0  0  0  2  2
+## 24 0 0 0 0 1 1 0 0 0  2  1  0  2  2  0  0  0  0  3  2  1  0  0  3</code></pre>
+<p>This suggests, for example, that there is 1 walk of length 2 between node 1 and node 1 (themself). In this case, the walk is : 1-&gt;7-&gt;1. We can see this by looking at the rows for node 1 and node 7:</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb128-1" aria-hidden="true" tabindex="-1"></a>class_mat[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">7</span>), ] </span></code></pre></div>
+<pre><code>##   1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+## 1 0 0 1 0 1 0 1 0 0  0  0  0  0  0  0  0  0  0  0  0  1  0  0  0
+## 7 1 0 0 0 0 0 0 0 1  1  0  0  0  0  0  1  0  0  0  0  0  0  0  0</code></pre>
+<p>We can see that node 1 is friends with 3, 5, 7 and 21. We can also see that node 7 is friends with 1, 9, 10 and 16, thus creating a walk of length 2: 1-&gt;7-&gt;1. We can calculate the number of walks of length 3, 4, etc. in an analogous fashion. For example, for walks of length 3:</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb130-1" aria-hidden="true" tabindex="-1"></a>walks3 <span class="ot">&lt;-</span> class_mat <span class="sc">%*%</span> class_mat <span class="sc">%*%</span> class_mat</span></code></pre></div>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb131-1" aria-hidden="true" tabindex="-1"></a>walks3</span></code></pre></div>
+<pre><code>##    1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+## 1  0 0 4 0 4 2 1 1 3  1  0  0  1  3  1  1  0  0  4  2  4  0  0  2
+## 2  0 0 2 0 1 1 0 0 2  1  0  0  1  1  1  0  0  0  1  0  1  0  0  0
+## 3  0 0 0 0 3 3 0 5 0  2  1  0  2  3  0  3  0  0  3  3  2  0  0  5
+## 4  0 0 1 0 1 1 0 2 1  1  0  0  3  1  1  0  1  2  0  0  1  0  1  1
+## 5  0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+## 6  0 0 0 0 0 0 0 0 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+## 7  1 0 1 0 2 3 0 3 2  3  0  0  2  3  1  5  0  0  3  3  5  0  0  4
+## 8  0 0 4 0 1 1 0 0 4  1  0  0  3  1  1  0  0  0  1  0  1  0  0  0
+## 9  0 0 0 0 1 1 0 3 0  0  0  0  0  0  0  1  0  0  0  0  0  0  0  1
+## 10 0 0 1 0 5 4 0 1 1  5  1  0  3  7  2  2  0  0 10  8  7  0  0  6
+## 11 0 0 0 0 2 5 0 3 0  7  2  2  6  7  5  0  1  4  5  3  5  0  1  9
+## 12 0 0 0 0 1 4 0 1 0  6  3  1  5  6  4  0  1  1  5  3  4  0  1  9
+## 13 0 0 0 0 1 1 0 3 0  0  0  0  0  0  0  1  0  0  0  0  0  0  0  1
+## 14 0 0 2 0 3 2 0 0 2  5  1  0  5  5  1  2  0  0 10  5  9  0  0  8
+## 15 0 0 1 0 2 5 0 1 1  7  3  0  6  9  4  2  1  0  7  6  8  0  1  9
+## 16 0 0 4 0 3 1 0 0 4  2  0  0  3  1  1  0  0  0  5  1  3  0  0  2
+## 17 0 0 1 0 3 3 0 7 1  3  1  0  7  3  1  1  2  3  3  2  2  0  3  7
+## 18 0 0 2 0 2 2 0 3 2  3  1  0  8  3  1  0  3  2  3  2  2  0  3  6
+## 19 0 0 0 0 3 4 0 3 0  2  0  0  0  7  2  5  0  0  4  7  7  0  0  3
+## 20 0 0 1 0 3 1 0 0 1  3  1  0  3  3  0  1  0  0  8  4  5  0  0  6
+## 21 0 0 1 0 3 1 0 0 1  2  0  0  1  2  1  1  0  0  5  3  4  0  0  2
+## 22 0 0 0 0 0 0 0 2 0  0  0  0  2  0  0  0  1  1  0  0  0  0  2  2
+## 23 0 0 2 0 2 2 0 3 2  2  0  0  6  2  2  0  3  3  0  0  2  0  2  2
+## 24 0 0 0 0 1 5 0 2 0  5  0  1  2  8  4  3  0  1  7  6 10  0  0  7</code></pre>
+<p>Here, we see that there are 0 walks of length 3 from 1 to 1, but 4 different walks from 1 to 3 (for example, 1-&gt;3-&gt;8-&gt;3).</p>
+</div>
+<div id="paths-distance-and-closeness" class="section level3 hasAnchor" number="3.4.4">
+<h3><span class="header-section-number">3.4.4</span> Paths, Distance, and Closeness<a href="ch3-Cross-Sectional-Network-Data-R.html#paths-distance-and-closeness" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Paths are defined as a sequence of nodes and edges starting with one node and ending with another, where a path is not allowed to revisit the same node twice (unlike with walks). For example, i-&gt;j-&gt;l would be a path of length 2. It is often of interest to know the shortest path, or the distance, between nodes in a network. Here we will rely on the <code>distances()</code> function within the <strong>igraph</strong> package. The main arguments are graph and mode, setting the type of distance to calculate. The 'out' value for mode says we want distance from i to j, which is what we typically want.</p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb133-1" aria-hidden="true" tabindex="-1"></a>dist_mat <span class="ot">&lt;-</span> <span class="fu">distances</span>(<span class="at">graph =</span> class_netbyedgelist, <span class="at">mode =</span> <span class="st">&quot;out&quot;</span>)</span></code></pre></div>
+<p>Let's look at the first 10 rows and columns:</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb134-1" aria-hidden="true" tabindex="-1"></a>dist_mat[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>] </span></code></pre></div>
+<pre><code>##      1   2   3   4   5   6   7   8   9  10
+## 1    0 Inf   1 Inf   1   2   1   2   2   2
+## 2  Inf   0   1 Inf   3   1 Inf   2   3   3
+## 3  Inf Inf   0 Inf   2   1 Inf   1   2   2
+## 4  Inf Inf   3   0   3   3 Inf   2   3   3
+## 5  Inf Inf Inf Inf   0 Inf Inf Inf Inf Inf
+## 6  Inf Inf Inf Inf Inf   0 Inf Inf Inf Inf
+## 7    1 Inf   2 Inf   2   2   0   2   1   1
+## 8  Inf Inf   1 Inf   2   2 Inf   0   1   3
+## 9  Inf Inf   2 Inf   1   3 Inf   1   0   4
+## 10 Inf Inf   3 Inf   3   1 Inf   3   3   0</code></pre>
+<p>This is a matrix holding the length of the shortest path between all pairs of nodes. We can see, for example, that node 1 is 1 step from node 3 and 2 steps from node 6. Note that Inf means that i can not reach j through any path.</p>
+<p>We can get the specific paths connecting i to j using the <code>all_shortest_paths()</code> function. The main inputs are the graph and the starting node (from) and the ending node (to). As an example, let's go ahead and calculate all of the shortest paths between 1 and 6.</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all_shortest_paths</span>(class_netbyedgelist, <span class="at">from =</span> <span class="dv">1</span>, <span class="at">to =</span> <span class="dv">6</span>) </span></code></pre></div>
+<pre><code>## $res
+## $res[[1]]
+## + 3/24 vertices, named, from b2bf692:
+## [1] 1 3 6
+## 
+## 
+## $nrgeo
+##  [1] 1 0 1 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1</code></pre>
+<p>If we look at the first part of the output, we can see a path of length 2 between 1 and 6 (1-&gt;3-&gt;6). As another example, let's look at the shortest paths between 1 and 16.</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all_shortest_paths</span>(class_netbyedgelist, <span class="at">from =</span> <span class="dv">1</span>, <span class="at">to =</span> <span class="dv">16</span>) </span></code></pre></div>
+<pre><code>## $res
+## $res[[1]]
+## + 3/24 vertices, named, from b2bf692:
+## [1] 1  3  16
+## 
+## $res[[2]]
+## + 3/24 vertices, named, from b2bf692:
+## [1] 1  7  16
+## 
+## 
+## $nrgeo
+##  [1] 1 0 1 0 1 1 1 0 1 1 0 0 0 0 0 2 0 0 0 0 1 0 0 1</code></pre>
+<p>We can see there are two paths of length 2 between 1 and 16 (1-&gt;3-&gt;16; 1-&gt;7-&gt;16).</p>
+<p>It is often of interest to summarize the distances over all ij pairs. For example, we may be interested in the mean distance between nodes. Let's go ahead and calculate the mean distance using our matrix calculated above. Before we calculate the mean, let's put an NA on the diagonal, as we are not interested in the distance to oneself (which is by definition 0).</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(dist_mat) <span class="ot">&lt;-</span>  <span class="cn">NA</span></span></code></pre></div>
+<p>Here we calculate the mean distance across all pairs, excluding the NAs on the diagonal.</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(dist_mat, <span class="at">na.rm =</span> T)</span></code></pre></div>
+<pre><code>## [1] Inf</code></pre>
+<p>The mean is Inf, as there are Inf values (so i and j are not reachable) in the matrix. This is not especially informative, however, only telling us that at least one pair is unreachable. One option would be to exclude the unreachable pairs. This is a common approach but also throws out information on all cases where i cannot reach j. Here we calculate mean distance while ignoring the unreachable pairs.</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(dist_mat[dist_mat <span class="sc">!=</span> <span class="cn">Inf</span>], <span class="at">na.rm =</span> T) </span></code></pre></div>
+<pre><code>## [1] 2.808933</code></pre>
+<p>We see a mean of 2.809, so that nodes are, on average, separated by paths of length 2.809 (excluding pairs that cannot reach other at all).</p>
+<p>Alternatively, researchers will often employ closeness as the summary measure when there are unreachable pairs. Closeness is based on the inverse of the distance matrix. By inverting the distance matrix, all Inf values are turned into 0s and thus can be included in the mean calculation. The inverse of the distance matrix has the opposite interpretation as above, showing show how 'close' node i is to node j. The disadvantage of a closeness measure is that the interpretation is not as intuitive as with distance. Let's go ahead and calculate the mean closeness for this network. We first take the inverse of the distance matrix.</p>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb145-1" aria-hidden="true" tabindex="-1"></a>close_mat <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> dist_mat</span></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb146-1" aria-hidden="true" tabindex="-1"></a>close_mat[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code></pre></div>
+<pre><code>##     1  2         3  4         5         6  7         8         9        10
+## 1  NA  0 1.0000000  0 1.0000000 0.5000000  1 0.5000000 0.5000000 0.5000000
+## 2   0 NA 1.0000000  0 0.3333333 1.0000000  0 0.5000000 0.3333333 0.3333333
+## 3   0  0        NA  0 0.5000000 1.0000000  0 1.0000000 0.5000000 0.5000000
+## 4   0  0 0.3333333 NA 0.3333333 0.3333333  0 0.5000000 0.3333333 0.3333333
+## 5   0  0 0.0000000  0        NA 0.0000000  0 0.0000000 0.0000000 0.0000000
+## 6   0  0 0.0000000  0 0.0000000        NA  0 0.0000000 0.0000000 0.0000000
+## 7   1  0 0.5000000  0 0.5000000 0.5000000 NA 0.5000000 1.0000000 1.0000000
+## 8   0  0 1.0000000  0 0.5000000 0.5000000  0        NA 1.0000000 0.3333333
+## 9   0  0 0.5000000  0 1.0000000 0.3333333  0 1.0000000        NA 0.2500000
+## 10  0  0 0.3333333  0 0.3333333 1.0000000  0 0.3333333 0.3333333        NA</code></pre>
+<p>We see NAs on the diagonal and the closeness values for other cells in the matrix. The values range from 0 (not reachable, so minimum closeness) to 1 (directly connected, so maximum closeness). And now we take the mean, as before.</p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(close_mat, <span class="at">na.rm =</span> T) </span></code></pre></div>
+<pre><code>## [1] 0.3482272</code></pre>
+<p>We see a value of .348. Nodes are, on average, 1 / 2.872 paths close to each other. Note that this is somewhat different than what we saw above when calculating distance, where we had a mean distance of 2.809. Remember that the distance calculation excludes all unreachable nodes, while the closeness calculation does not. It may also be useful to calculate the median, as a means of comparison.</p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(dist_mat, <span class="at">na.rm =</span> T)</span></code></pre></div>
+<pre><code>## [1] 3</code></pre>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(close_mat, <span class="at">na.rm =</span> T)</span></code></pre></div>
+<pre><code>## [1] 0.3333333</code></pre>
+<p>In this case we can see that the median yields the same information in both cases, that the median distance is 3 and the median closeness is 1 / 3.</p>
+</div>
+<div id="reachability" class="section level3 hasAnchor" number="3.4.5">
+<h3><span class="header-section-number">3.4.5</span> Reachability<a href="ch3-Cross-Sectional-Network-Data-R.html#reachability" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Reachability captures whether node i can reach node j through any path. This can be calculated directly from the distance matrix. Node i can reach node j if the distance between i and j is less than Inf (i.e., there is some path between i and j). Here we use an <code>ifelse()</code> function to set the reachability matrix to 1 if distance is less than Inf and 0 if it is not less than Inf.</p>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb154-1" aria-hidden="true" tabindex="-1"></a>reach_mat <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(dist_mat <span class="sc">&lt;</span> <span class="cn">Inf</span>, <span class="at">yes =</span> <span class="dv">1</span>, <span class="at">no =</span> <span class="dv">0</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb155-1" aria-hidden="true" tabindex="-1"></a>reach_mat</span></code></pre></div>
+<pre><code>##     1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+## 1  NA  0  1  0  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  1  1
+## 2   0 NA  1  0  1  1  0  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  1  1
+## 3   0  0 NA  0  1  1  0  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  1  1
+## 4   0  0  1 NA  1  1  0  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  1  1
+## 5   0  0  0  0 NA  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+## 6   0  0  0  0  0 NA  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+## 7   1  0  1  0  1  1 NA  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  1  1
+## 8   0  0  1  0  1  1  0 NA  1  1  1  1  1  1  1  1  1  1  1  1  1  0  1  1
+## 9   0  0  1  0  1  1  0  1 NA  1  1  1  1  1  1  1  1  1  1  1  1  0  1  1
+## 10  0  0  1  0  1  1  0  1  1 NA  1  1  1  1  1  1  1  1  1  1  1  0  1  1
+## 11  0  0  1  0  1  1  0  1  1  1 NA  1  1  1  1  1  1  1  1  1  1  0  1  1
+## 12  0  0  1  0  1  1  0  1  1  1  1 NA  1  1  1  1  1  1  1  1  1  0  1  1
+## 13  0  0  1  0  1  1  0  1  1  1  1  1 NA  1  1  1  1  1  1  1  1  0  1  1
+## 14  0  0  1  0  1  1  0  1  1  1  1  1  1 NA  1  1  1  1  1  1  1  0  1  1
+## 15  0  0  1  0  1  1  0  1  1  1  1  1  1  1 NA  1  1  1  1  1  1  0  1  1
+## 16  0  0  1  0  1  1  0  1  1  1  1  1  1  1  1 NA  1  1  1  1  1  0  1  1
+## 17  0  0  1  0  1  1  0  1  1  1  1  1  1  1  1  1 NA  1  1  1  1  0  1  1
+## 18  0  0  1  0  1  1  0  1  1  1  1  1  1  1  1  1  1 NA  1  1  1  0  1  1
+## 19  0  0  1  0  1  1  0  1  1  1  1  1  1  1  1  1  1  1 NA  1  1  0  1  1
+## 20  0  0  1  0  1  1  0  1  1  1  1  1  1  1  1  1  1  1  1 NA  1  0  1  1
+## 21  0  0  1  0  1  1  0  1  1  1  1  1  1  1  1  1  1  1  1  1 NA  0  1  1
+## 22  0  0  1  0  1  1  0  1  1  1  1  1  1  1  1  1  1  1  1  1  1 NA  1  1
+## 23  0  0  1  0  1  1  0  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0 NA  1
+## 24  0  0  1  0  1  1  0  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  1 NA</code></pre>
+<p>We can see that node 1 cannot reach node 2 (for example).</p>
+</div>
+<div id="diameter" class="section level3 hasAnchor" number="3.4.6">
+<h3><span class="header-section-number">3.4.6</span> Diameter<a href="ch3-Cross-Sectional-Network-Data-R.html#diameter" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can also use the distance matrix to calculate diameter, showing the longest geodesic, or distance, between any two nodes in the network. Diameter thus takes all of the shortest paths between nodes (i.e., distance) and calculates the longest path among that set. Note that if we simply calculate the maximum over the distance matrix we will get back Inf if there are nodes that cannot reach other:</p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(dist_mat, <span class="at">na.rm =</span> T)</span></code></pre></div>
+<pre><code>## [1] Inf</code></pre>
+<p>We may, instead, be interested in calculating the maximum distance just over those nodes that can reach other. Here, we exclude any distance that is Inf.</p>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(dist_mat[dist_mat <span class="sc">!=</span> <span class="cn">Inf</span>], <span class="at">na.rm =</span> T)</span></code></pre></div>
+<pre><code>## [1] 7</code></pre>
+<p>We can also calculate diameter using the <code>diameter()</code> function in <strong>igraph</strong>. By default, the function will include only those pairs that are reachable.</p>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="ch3-Cross-Sectional-Network-Data-R.html#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="fu">diameter</span>(class_netbyedgelist)</span></code></pre></div>
+<pre><code>## [1] 7</code></pre>
+<p>This tutorial has offered background information on constructing networks in R and calculating basic network measures. The tutorials in the rest of the book will build on this material. In the second tutorial for <a href="ch3-Dynamic-Network-Data-R.html#ch3-Dynamic-Network-Data-R">Chapter 3</a>, we will cover data management and network construction for the case of dynamic network data.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ch3-Network-Data-R.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ch3-Dynamic-Network-Data-R.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "serif",
+"size": 2.5
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"info": false
+});
+});
+</script>
+
+</body>
+
+</html>

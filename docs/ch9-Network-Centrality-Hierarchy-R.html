@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>9 Network Centrality and Hierarchy | Network Analysis: Integrating Social Network Theory, Method, and Application with R</title>
+  <meta name="description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="9 Network Centrality and Hierarchy | Network Analysis: Integrating Social Network Theory, Method, and Application with R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="9 Network Centrality and Hierarchy | Network Analysis: Integrating Social Network Theory, Method, and Application with R" />
+  
+  <meta name="twitter:description" content="This is the website for the R tutorials associated with Network Analysis Integrating Social Network Theory, Method, and Application with R" />
+  
+
+<meta name="author" content="Craig Rawlings, Jeffrey A. Smith, James Moody, and Daniel McFarland" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ch8-Network-Cohesion-Communities-R.html"/>
+<link rel="next" href="ch10-Positions-Roles-R.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/d3-4.5.0/d3.min.js"></script>
+<script src="libs/forceNetwork-binding-0.4/forceNetwork.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="https://inarwhal.github.io/NetworkAnalysisR-book/">
+Network Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#how-to-read-the-book"><i class="fa fa-check"></i><b>1.1</b> How to Read the Book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#citations-and-use"><i class="fa fa-check"></i><b>1.2</b> Citations and Use</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#updates-and-feedback"><i class="fa fa-check"></i><b>1.3</b> Updates and Feedback</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i><b>1.4</b> Acknowledgments</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#author-informtion"><i class="fa fa-check"></i><b>1.5</b> Author Informtion</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#session-information"><i class="fa fa-check"></i><b>1.6</b> Session Information</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html"><i class="fa fa-check"></i><b>2</b> Basic Introduction to R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html#preliminaries"><i class="fa fa-check"></i><b>2.1</b> Preliminaries</a></li>
+<li class="chapter" data-level="2.2" data-path="ch2-intro-R.html"><a href="ch2-intro-R.html#packages"><i class="fa fa-check"></i><b>2.2</b> Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ch3-Network-Data-R.html"><a href="ch3-Network-Data-R.html"><i class="fa fa-check"></i><b>3</b> Network Data</a></li>
+<li class="chapter" data-level="" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html"><i class="fa fa-check"></i>3, Part 1. Cross-Sectional Network Data</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#reading-data-into-r"><i class="fa fa-check"></i><b>3.1</b> Reading Data into R</a></li>
+<li class="chapter" data-level="3.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#networks-in-igraph"><i class="fa fa-check"></i><b>3.2</b> Networks in igraph</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-a-matrix-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.1</b> Using a Matrix to Construct the Network</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-edgelist-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.2</b> Using an Edgelist to Construct the Network</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#extracting-information-from-igraph-objects"><i class="fa fa-check"></i><b>3.2.3</b> Extracting Information from igraph Objects</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-adjacency-list-to-construct-the-network"><i class="fa fa-check"></i><b>3.2.4</b> Using an Adjacency List to Construct the Network</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-the-network-package"><i class="fa fa-check"></i><b>3.3</b> Using the network Package</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-a-matrix-to-construct-the-network-1"><i class="fa fa-check"></i><b>3.3.1</b> Using a Matrix to Construct the Network</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#using-an-edgelist-to-construct-the-network-1"><i class="fa fa-check"></i><b>3.3.2</b> Using an Edgelist to Construct the Network</a></li>
+<li class="chapter" data-level="3.3.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#putting-edge-attributes-onto-the-network"><i class="fa fa-check"></i><b>3.3.3</b> Putting Edge Attributes onto the Network</a></li>
+<li class="chapter" data-level="3.3.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#moving-between-igraph-and-network-objects"><i class="fa fa-check"></i><b>3.3.4</b> Moving between igraph and network Objects</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#some-key-network-measures"><i class="fa fa-check"></i><b>3.4</b> Some Key Network Measures</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#degree"><i class="fa fa-check"></i><b>3.4.1</b> Degree</a></li>
+<li class="chapter" data-level="3.4.2" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#density"><i class="fa fa-check"></i><b>3.4.2</b> Density</a></li>
+<li class="chapter" data-level="3.4.3" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#walks"><i class="fa fa-check"></i><b>3.4.3</b> Walks</a></li>
+<li class="chapter" data-level="3.4.4" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#paths-distance-and-closeness"><i class="fa fa-check"></i><b>3.4.4</b> Paths, Distance, and Closeness</a></li>
+<li class="chapter" data-level="3.4.5" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#reachability"><i class="fa fa-check"></i><b>3.4.5</b> Reachability</a></li>
+<li class="chapter" data-level="3.4.6" data-path="ch3-Cross-Sectional-Network-Data-R.html"><a href="ch3-Cross-Sectional-Network-Data-R.html#diameter"><i class="fa fa-check"></i><b>3.4.6</b> Diameter</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html"><i class="fa fa-check"></i>3, Part 2. Dynamic Network Data</a>
+<ul>
+<li class="chapter" data-level="3.5" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#discrete-longitudinal-networks"><i class="fa fa-check"></i><b>3.5</b> Discrete Longitudinal Networks</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#getting-the-data-ready"><i class="fa fa-check"></i><b>3.5.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="3.5.2" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#constructing-networkdynamic-objects"><i class="fa fa-check"></i><b>3.5.2</b> Constructing networkDynamic Objects</a></li>
+<li class="chapter" data-level="3.5.3" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#summary-statistics"><i class="fa fa-check"></i><b>3.5.3</b> Summary Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#continuous-time-networks"><i class="fa fa-check"></i><b>3.6</b> Continuous-Time Networks</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#getting-the-data-ready-1"><i class="fa fa-check"></i><b>3.6.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="3.6.2" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#constructing-networkdynamic-objects-1"><i class="fa fa-check"></i><b>3.6.2</b> Constructing networkDynamic Objects</a></li>
+<li class="chapter" data-level="3.6.3" data-path="ch3-Dynamic-Network-Data-R.html"><a href="ch3-Dynamic-Network-Data-R.html#summary-statistics-1"><i class="fa fa-check"></i><b>3.6.3</b> Summary Statistics</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html"><i class="fa fa-check"></i><b>4</b> Missing Network Data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#missing-data"><i class="fa fa-check"></i><b>4.1</b> Missing Data</a></li>
+<li class="chapter" data-level="4.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#listwise-deletion"><i class="fa fa-check"></i><b>4.2</b> Listwise Deletion</a></li>
+<li class="chapter" data-level="4.3" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-the-level-of-bias"><i class="fa fa-check"></i><b>4.3</b> Gauging the Level of Bias</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-bias-using-past-results"><i class="fa fa-check"></i><b>4.3.1</b> Gauging Bias Using Past Results</a></li>
+<li class="chapter" data-level="4.3.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#gauging-bias-using-predictive-models"><i class="fa fa-check"></i><b>4.3.2</b> Gauging Bias Using Predictive Models</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-options"><i class="fa fa-check"></i><b>4.4</b> Simple Imputation Options</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-asymmetric-option"><i class="fa fa-check"></i><b>4.4.1</b> Simple Imputation with Asymmetric Option</a></li>
+<li class="chapter" data-level="4.4.2" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-symmetric-option"><i class="fa fa-check"></i><b>4.4.2</b> Simple Imputation with Symmetric Option</a></li>
+<li class="chapter" data-level="4.4.3" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#simple-imputation-with-probabilistic-option"><i class="fa fa-check"></i><b>4.4.3</b> Simple Imputation with Probabilistic Option</a></li>
+<li class="chapter" data-level="4.4.4" data-path="ch4-Missing-Network-Data-R.html"><a href="ch4-Missing-Network-Data-R.html#comparing-estimates"><i class="fa fa-check"></i><b>4.4.4</b> Comparing Estimates</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html"><i class="fa fa-check"></i><b>5</b> Network Visualization</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#setting-up-the-session"><i class="fa fa-check"></i><b>5.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="5.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#network-plots-using-igraph"><i class="fa fa-check"></i><b>5.2</b> Network Plots using igraph</a></li>
+<li class="chapter" data-level="5.3" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#network-plots-based-on-ggplot"><i class="fa fa-check"></i><b>5.3</b> Network Plots based on ggplot</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#ggally-package"><i class="fa fa-check"></i><b>5.3.1</b> GGally package</a></li>
+<li class="chapter" data-level="5.3.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#ggnetwork-package"><i class="fa fa-check"></i><b>5.3.2</b> ggnetwork package</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#contour-plots"><i class="fa fa-check"></i><b>5.4</b> Contour Plots</a></li>
+<li class="chapter" data-level="5.5" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#interactive-plots"><i class="fa fa-check"></i><b>5.5</b> Interactive Plots</a></li>
+<li class="chapter" data-level="5.6" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#dynamic-network-visualizations"><i class="fa fa-check"></i><b>5.6</b> Dynamic Network Visualizations</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#getting-the-data-ready-2"><i class="fa fa-check"></i><b>5.6.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="5.6.2" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#time-flattened-visualizations"><i class="fa fa-check"></i><b>5.6.2</b> Time Flattened Visualizations</a></li>
+<li class="chapter" data-level="5.6.3" data-path="ch5-Network-Visualization-R.html"><a href="ch5-Network-Visualization-R.html#dynamic-network-movies"><i class="fa fa-check"></i><b>5.6.3</b> Dynamic Network Movies</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html"><i class="fa fa-check"></i><b>6</b> Ego Network Data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#working-with-ego-network-data"><i class="fa fa-check"></i><b>6.1</b> Working with Ego Network Data</a></li>
+<li class="chapter" data-level="6.2" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#plotting-networks"><i class="fa fa-check"></i><b>6.2</b> Plotting Networks</a></li>
+<li class="chapter" data-level="6.3" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#homophily-ego-alter-attributes"><i class="fa fa-check"></i><b>6.3</b> Homophily: Ego-Alter Attributes</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#proportion-of-alters-matching-ego"><i class="fa fa-check"></i><b>6.3.1</b> Proportion of Alters Matching Ego</a></li>
+<li class="chapter" data-level="6.3.2" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#analyzing-homophily-at-the-dyadic-level-ego-alter-pairs"><i class="fa fa-check"></i><b>6.3.2</b> Analyzing Homophily at the Dyadic Level: Ego-Alter Pairs</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#homophily-alter-attributes"><i class="fa fa-check"></i><b>6.4</b> Homophily: Alter Attributes</a></li>
+<li class="chapter" data-level="6.5" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#ego-networks-as-predictors"><i class="fa fa-check"></i><b>6.5</b> Ego Networks as Predictors</a></li>
+<li class="chapter" data-level="6.6" data-path="ch6-Ego-Network-Data-R.html"><a href="ch6-Ego-Network-Data-R.html#working-with-one-input-file"><i class="fa fa-check"></i><b>6.6</b> Working with One Input File</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html"><i class="fa fa-check"></i><b>7</b> Dyads and Triads</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#setting-up-the-session-1"><i class="fa fa-check"></i><b>7.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="7.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyadic-processes"><i class="fa fa-check"></i><b>7.2</b> Dyadic Processes</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyad-census-and-reciprocity"><i class="fa fa-check"></i><b>7.2.1</b> Dyad Census and Reciprocity</a></li>
+<li class="chapter" data-level="7.2.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#conditional-uniform-graph-tests"><i class="fa fa-check"></i><b>7.2.2</b> Conditional Uniform Graph Tests</a></li>
+<li class="chapter" data-level="7.2.3" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#dyad-census-by-attributes-of-nodes"><i class="fa fa-check"></i><b>7.2.3</b> Dyad Census by Attributes of Nodes</a></li>
+<li class="chapter" data-level="7.2.4" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#advice-and-friendship-together"><i class="fa fa-check"></i><b>7.2.4</b> Advice and Friendship Together</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#triadic-processes"><i class="fa fa-check"></i><b>7.3</b> Triadic Processes</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#triad-census"><i class="fa fa-check"></i><b>7.3.1</b> Triad Census</a></li>
+<li class="chapter" data-level="7.3.2" data-path="ch7-Dyads-Triads-R.html"><a href="ch7-Dyads-Triads-R.html#transitivity"><i class="fa fa-check"></i><b>7.3.2</b> Transitivity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html"><i class="fa fa-check"></i><b>8</b> Network Cohesion and Communities</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#first-example-network"><i class="fa fa-check"></i><b>8.1</b> First Example Network</a></li>
+<li class="chapter" data-level="8.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#cohesion"><i class="fa fa-check"></i><b>8.2</b> Cohesion</a></li>
+<li class="chapter" data-level="8.3" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#community-or-group-detection"><i class="fa fa-check"></i><b>8.3</b> Community (or Group) Detection</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#walktrap"><i class="fa fa-check"></i><b>8.3.1</b> Walktrap</a></li>
+<li class="chapter" data-level="8.3.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#edge-betweenness"><i class="fa fa-check"></i><b>8.3.2</b> Edge Betweenness</a></li>
+<li class="chapter" data-level="8.3.3" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#scree-plots"><i class="fa fa-check"></i><b>8.3.3</b> Scree Plots</a></li>
+<li class="chapter" data-level="8.3.4" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#multi-level-clustering"><i class="fa fa-check"></i><b>8.3.4</b> Multi-level Clustering</a></li>
+<li class="chapter" data-level="8.3.5" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#cohesive-blocking"><i class="fa fa-check"></i><b>8.3.5</b> Cohesive Blocking</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#demographic-characteristics"><i class="fa fa-check"></i><b>8.4</b> Demographic Characteristics</a></li>
+<li class="chapter" data-level="8.5" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#community-overlap"><i class="fa fa-check"></i><b>8.5</b> Community Overlap</a></li>
+<li class="chapter" data-level="8.6" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#big-data-example"><i class="fa fa-check"></i><b>8.6</b> Big Data Example</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#multi-level-clustering-1"><i class="fa fa-check"></i><b>8.6.1</b> Multi-level Clustering</a></li>
+<li class="chapter" data-level="8.6.2" data-path="ch8-Network-Cohesion-Communities-R.html"><a href="ch8-Network-Cohesion-Communities-R.html#looking-at-the-community-structure-within-the-initial-communities"><i class="fa fa-check"></i><b>8.6.2</b> Looking at the Community Structure within the Initial Communities</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html"><i class="fa fa-check"></i><b>9</b> Network Centrality and Hierarchy</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#setting-up-the-session-2"><i class="fa fa-check"></i><b>9.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="9.2" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality"><i class="fa fa-check"></i><b>9.2</b> Centrality</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality-measures-for-social-interactions"><i class="fa fa-check"></i><b>9.2.1</b> Centrality Measures for Social Interactions</a></li>
+<li class="chapter" data-level="9.2.2" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#correlations-between-centrality-measures"><i class="fa fa-check"></i><b>9.2.2</b> Correlations between Centrality Measures</a></li>
+<li class="chapter" data-level="9.2.3" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centrality-for-task-interactions"><i class="fa fa-check"></i><b>9.2.3</b> Centrality for Task Interactions</a></li>
+<li class="chapter" data-level="9.2.4" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#tasksocial-correlations"><i class="fa fa-check"></i><b>9.2.4</b> Task/Social Correlations</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#centralization"><i class="fa fa-check"></i><b>9.3</b> Centralization</a></li>
+<li class="chapter" data-level="9.4" data-path="ch9-Network-Centrality-Hierarchy-R.html"><a href="ch9-Network-Centrality-Hierarchy-R.html#clustering-and-hierarchy"><i class="fa fa-check"></i><b>9.4</b> Clustering and Hierarchy</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html"><i class="fa fa-check"></i><b>10</b> Positions and Roles</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#classroom-network-data"><i class="fa fa-check"></i><b>10.1</b> Classroom Network Data</a></li>
+<li class="chapter" data-level="10.2" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#getting-the-data-ready-3"><i class="fa fa-check"></i><b>10.2</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="10.3" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#structural-equivalence"><i class="fa fa-check"></i><b>10.3</b> Structural Equivalence</a></li>
+<li class="chapter" data-level="10.4" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#defining-positions"><i class="fa fa-check"></i><b>10.4</b> Defining Positions</a></li>
+<li class="chapter" data-level="10.5" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#role-analysis"><i class="fa fa-check"></i><b>10.5</b> Role Analysis</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#permuting-the-matrix-by-position"><i class="fa fa-check"></i><b>10.5.1</b> Permuting the Matrix by Position</a></li>
+<li class="chapter" data-level="10.5.2" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#constructing-a-blockmodel"><i class="fa fa-check"></i><b>10.5.2</b> Constructing a Blockmodel</a></li>
+<li class="chapter" data-level="10.5.3" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#plotting-a-blockmodel"><i class="fa fa-check"></i><b>10.5.3</b> Plotting a Blockmodel</a></li>
+<li class="chapter" data-level="10.5.4" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#interpretation-of-blockmodel"><i class="fa fa-check"></i><b>10.5.4</b> Interpretation of Blockmodel</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="ch10-Positions-Roles-R.html"><a href="ch10-Positions-Roles-R.html#local-equivalence"><i class="fa fa-check"></i><b>10.6</b> Local Equivalence</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html"><i class="fa fa-check"></i><b>11</b> Two-mode Networks: Affilitations and Dualities</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#example-affiliation-data"><i class="fa fa-check"></i><b>11.1</b> Example Affiliation Data</a></li>
+<li class="chapter" data-level="11.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#plotting-the-network"><i class="fa fa-check"></i><b>11.2</b> Plotting the Network</a></li>
+<li class="chapter" data-level="11.3" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#single-mode-networks"><i class="fa fa-check"></i><b>11.3</b> Single Mode Networks</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#constructing-one-mode-projections"><i class="fa fa-check"></i><b>11.3.1</b> Constructing One-Mode Projections</a></li>
+<li class="chapter" data-level="11.3.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#plotting-one-mode-projections"><i class="fa fa-check"></i><b>11.3.2</b> Plotting One-Mode Projections</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#club-to-club-network"><i class="fa fa-check"></i><b>11.4</b> Club-to-Club Network</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#centrality-1"><i class="fa fa-check"></i><b>11.4.1</b> Centrality</a></li>
+<li class="chapter" data-level="11.4.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#groups"><i class="fa fa-check"></i><b>11.4.2</b> Groups</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#using-the-tnet-package"><i class="fa fa-check"></i><b>11.5</b> Using the tnet package</a></li>
+<li class="chapter" data-level="11.6" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#racial-segregation"><i class="fa fa-check"></i><b>11.6</b> Racial Segregation</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#proportion-of-co-membership-edges-where-students-match-on-race"><i class="fa fa-check"></i><b>11.6.1</b> Proportion of Co-membership Edges where Students Match on Race</a></li>
+<li class="chapter" data-level="11.6.2" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#do-students-match-racially-with-at-least-one-other-student"><i class="fa fa-check"></i><b>11.6.2</b> Do Students Match Racially with at Least One Other Student?</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="ch11-Two-mode-Networks.html"><a href="ch11-Two-mode-Networks.html#club-centrality-and-attributes"><i class="fa fa-check"></i><b>11.7</b> Club Centrality and Attributes</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="ch12-Networks-Culture-R.html"><a href="ch12-Networks-Culture-R.html"><i class="fa fa-check"></i><b>12</b> Networks and Culture</a></li>
+<li class="chapter" data-level="" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html"><i class="fa fa-check"></i>12, Part 1. Cultural Structures</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#getting-the-data-ready-4"><i class="fa fa-check"></i><b>12.1</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="12.2" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#topic-modeling"><i class="fa fa-check"></i><b>12.2</b> Topic Modeling</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#lda-initial-model"><i class="fa fa-check"></i><b>12.2.1</b> LDA: Initial Model</a></li>
+<li class="chapter" data-level="12.2.2" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#lda-picking-the-number-of-topics"><i class="fa fa-check"></i><b>12.2.2</b> LDA: Picking the Number of Topics</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="ch12-Networks-Structure-Culture-text-R.html"><a href="ch12-Networks-Structure-Culture-text-R.html#a-network-representation"><i class="fa fa-check"></i><b>12.3</b> A Network Representation</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html"><i class="fa fa-check"></i>12, Part 2. Cultural Spaces</a>
+<ul>
+<li class="chapter" data-level="12.4" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#correspondence-analysis"><i class="fa fa-check"></i><b>12.4</b> Correspondence Analysis</a></li>
+<li class="chapter" data-level="12.5" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#number-of-dimensions"><i class="fa fa-check"></i><b>12.5</b> Number of Dimensions</a></li>
+<li class="chapter" data-level="12.6" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#importance-of-rowscolumns"><i class="fa fa-check"></i><b>12.6</b> Importance of Rows/Columns</a></li>
+<li class="chapter" data-level="12.7" data-path="ch12-Networks-Cultural-Spaces-CA-R.html"><a href="ch12-Networks-Cultural-Spaces-CA-R.html#hierarchical-clustering"><i class="fa fa-check"></i><b>12.7</b> Hierarchical Clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="ch13-Statistical-Models-Networks-R.html"><a href="ch13-Statistical-Models-Networks-R.html"><i class="fa fa-check"></i><b>13</b> Statistical Models for Networks</a></li>
+<li class="chapter" data-level="" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><i class="fa fa-check"></i>13, Part 1. Cross-Sectional Network Models: ERGM</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#setting-up-the-session-3"><i class="fa fa-check"></i><b>13.1</b> Setting up the Session</a></li>
+<li class="chapter" data-level="13.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#descriptive-statistics"><i class="fa fa-check"></i><b>13.2</b> Descriptive Statistics</a></li>
+<li class="chapter" data-level="13.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#cug-tests"><i class="fa fa-check"></i><b>13.3</b> CUG Tests</a></li>
+<li class="chapter" data-level="13.4" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#fitting-an-ergm"><i class="fa fa-check"></i><b>13.4</b> Fitting an ERGM</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-only"><i class="fa fa-check"></i><b>13.4.1</b> Edges Only</a></li>
+<li class="chapter" data-level="13.4.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-and-homophily"><i class="fa fa-check"></i><b>13.4.2</b> Edges and Homophily</a></li>
+<li class="chapter" data-level="13.4.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-homophily-and-node-covariates"><i class="fa fa-check"></i><b>13.4.3</b> Edges, Homophily, and Node Covariates</a></li>
+<li class="chapter" data-level="13.4.4" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#edges-homophily-node-covariates-and-reciprocity"><i class="fa fa-check"></i><b>13.4.4</b> Edges, Homophily, Node Covariates, and Reciprocity</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#checking-model-convergence"><i class="fa fa-check"></i><b>13.5</b> Checking Model Convergence</a></li>
+<li class="chapter" data-level="13.6" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#goodness-of-fit"><i class="fa fa-check"></i><b>13.6</b> Goodness of Fit</a></li>
+<li class="chapter" data-level="13.7" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#adding-gwesp-to-the-model"><i class="fa fa-check"></i><b>13.7</b> Adding GWESP to the Model</a></li>
+<li class="chapter" data-level="13.8" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#simulation"><i class="fa fa-check"></i><b>13.8</b> Simulation</a></li>
+<li class="chapter" data-level="13.9" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#example-on-a-large-network"><i class="fa fa-check"></i><b>13.9</b> Example on a Large Network</a></li>
+<li class="chapter" data-level="13.10" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#ergm-on-a-valued-network"><i class="fa fa-check"></i><b>13.10</b> ERGM on a Valued Network</a>
+<ul>
+<li class="chapter" data-level="13.10.1" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#baseline-ergm-on-valued-network"><i class="fa fa-check"></i><b>13.10.1</b> Baseline ERGM on Valued Network</a></li>
+<li class="chapter" data-level="13.10.2" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#adding-nodematch-and-nodefactor-terms"><i class="fa fa-check"></i><b>13.10.2</b> Adding Nodematch and Nodefactor Terms</a></li>
+<li class="chapter" data-level="13.10.3" data-path="ch13-Cross-Sectional-Network-Models-ERGM-R.html"><a href="ch13-Cross-Sectional-Network-Models-ERGM-R.html#transitivity-in-valued-networks"><i class="fa fa-check"></i><b>13.10.3</b> Transitivity in Valued Networks</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html"><i class="fa fa-check"></i>13, Part 2. Longitudinal Network Models: STERGM</a>
+<ul>
+<li class="chapter" data-level="13.11" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#getting-the-data-ready-5"><i class="fa fa-check"></i><b>13.11</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="13.12" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#stergms"><i class="fa fa-check"></i><b>13.12</b> STERGMs</a>
+<ul>
+<li class="chapter" data-level="13.12.1" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-1-just-edges"><i class="fa fa-check"></i><b>13.12.1</b> Model 1: Just Edges</a></li>
+<li class="chapter" data-level="13.12.2" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-2-edges-homophily-and-nodefactor"><i class="fa fa-check"></i><b>13.12.2</b> Model 2: Edges, Homophily and Nodefactor</a></li>
+<li class="chapter" data-level="13.12.3" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-3-edges-nodefactor-and-seating"><i class="fa fa-check"></i><b>13.12.3</b> Model 3: Edges, Nodefactor, and Seating</a></li>
+<li class="chapter" data-level="13.12.4" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#model-4-adding-gwesp-to-the-model"><i class="fa fa-check"></i><b>13.12.4</b> Model 4: Adding GWESP to the Model</a></li>
+</ul></li>
+<li class="chapter" data-level="13.13" data-path="ch13-Longitudinal-Network-Models-STERGM-R.html"><a href="ch13-Longitudinal-Network-Models-STERGM-R.html#checking-model-fit"><i class="fa fa-check"></i><b>13.13</b> Checking Model Fit</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><i class="fa fa-check"></i>13, Part 3. Two-mode Network Models</a>
+<ul>
+<li class="chapter" data-level="13.14" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#affiliation-data"><i class="fa fa-check"></i><b>13.14</b> Affiliation Data</a></li>
+<li class="chapter" data-level="13.15" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#ergm-on-a-two-mode-network"><i class="fa fa-check"></i><b>13.15</b> ERGM on a Two-mode Network</a>
+<ul>
+<li class="chapter" data-level="13.15.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#edges"><i class="fa fa-check"></i><b>13.15.1</b> Edges</a></li>
+<li class="chapter" data-level="13.15.2" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#adjusting-for-structural-issues-gender-and-grade-specific-clubs"><i class="fa fa-check"></i><b>13.15.2</b> Adjusting for Structural Issues: Gender and Grade Specific Clubs</a></li>
+</ul></li>
+<li class="chapter" data-level="13.16" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#second-mode-terms"><i class="fa fa-check"></i><b>13.16</b> Second Mode Terms</a>
+<ul>
+<li class="chapter" data-level="13.16.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#nodefactor"><i class="fa fa-check"></i><b>13.16.1</b> Nodefactor</a></li>
+<li class="chapter" data-level="13.16.2" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#homophily"><i class="fa fa-check"></i><b>13.16.2</b> Homophily</a></li>
+</ul></li>
+<li class="chapter" data-level="13.17" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#first-mode-terms"><i class="fa fa-check"></i><b>13.17</b> First Mode Terms</a></li>
+<li class="chapter" data-level="13.18" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#clustering"><i class="fa fa-check"></i><b>13.18</b> Clustering</a></li>
+<li class="chapter" data-level="13.19" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#two-mode-longitudinal-networks"><i class="fa fa-check"></i><b>13.19</b> Two-mode Longitudinal Networks</a>
+<ul>
+<li class="chapter" data-level="13.19.1" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#entry-and-exit-of-nodes"><i class="fa fa-check"></i><b>13.19.1</b> Entry and Exit of Nodes</a></li>
+</ul></li>
+<li class="chapter" data-level="13.20" data-path="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html"><a href="ch13-Two-mode-Network-Models-ERGM-STERGM-R.html#stergm-on-a-two-mode-network"><i class="fa fa-check"></i><b>13.20</b> STERGM on a Two-mode Network</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html"><i class="fa fa-check"></i>13, Part 4. Relational Event Models</a>
+<ul>
+<li class="chapter" data-level="13.21" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#getting-the-data-ready-6"><i class="fa fa-check"></i><b>13.21</b> Getting the Data Ready</a></li>
+<li class="chapter" data-level="13.22" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#running-initial-models"><i class="fa fa-check"></i><b>13.22</b> Running Initial Models</a>
+<ul>
+<li class="chapter" data-level="13.22.1" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#intercept-only-model"><i class="fa fa-check"></i><b>13.22.1</b> Intercept Only Model</a></li>
+<li class="chapter" data-level="13.22.2" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#adding-sender-and-receiver-effects"><i class="fa fa-check"></i><b>13.22.2</b> Adding Sender and Receiver Effects</a></li>
+<li class="chapter" data-level="13.22.3" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#adding-covariate-event-terms"><i class="fa fa-check"></i><b>13.22.3</b> Adding Covariate Event Terms</a></li>
+</ul></li>
+<li class="chapter" data-level="13.23" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#micro-rules-of-interaction"><i class="fa fa-check"></i><b>13.23</b> Micro Rules of Interaction</a></li>
+<li class="chapter" data-level="13.24" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#assessing-model-fit"><i class="fa fa-check"></i><b>13.24</b> Assessing Model Fit</a></li>
+<li class="chapter" data-level="13.25" data-path="ch13-Relational-Event-Models-R.html"><a href="ch13-Relational-Event-Models-R.html#comparison-to-a-second-date"><i class="fa fa-check"></i><b>13.25</b> Comparison to a Second Date</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="ch14-Network-Diffusion-R.html"><a href="ch14-Network-Diffusion-R.html"><i class="fa fa-check"></i><b>14</b> Network Diffusion</a></li>
+<li class="chapter" data-level="" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html"><i class="fa fa-check"></i>14, Part 1. Network Diffusion: Infectious Diseases</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#reading-in-data"><i class="fa fa-check"></i><b>14.1</b> Reading in Data</a></li>
+<li class="chapter" data-level="14.2" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#specifying-the-network-model"><i class="fa fa-check"></i><b>14.2</b> Specifying the Network Model</a></li>
+<li class="chapter" data-level="14.3" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#estimating-the-network-model"><i class="fa fa-check"></i><b>14.3</b> Estimating the Network Model</a></li>
+<li class="chapter" data-level="14.4" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#specifying-the-epidemic-model"><i class="fa fa-check"></i><b>14.4</b> Specifying the Epidemic Model</a></li>
+<li class="chapter" data-level="14.5" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#running-simulations"><i class="fa fa-check"></i><b>14.5</b> Running Simulations</a>
+<ul>
+<li class="chapter" data-level="14.5.1" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#running-baseline-model"><i class="fa fa-check"></i><b>14.5.1</b> Running Baseline Model</a></li>
+<li class="chapter" data-level="14.5.2" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#varying-network-features"><i class="fa fa-check"></i><b>14.5.2</b> Varying Network Features</a></li>
+<li class="chapter" data-level="14.5.3" data-path="ch14-Network-Diffusion-Infectious-Diseases-R.html"><a href="ch14-Network-Diffusion-Infectious-Diseases-R.html#varying-epidemic-model"><i class="fa fa-check"></i><b>14.5.3</b> Varying Epidemic Model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html"><i class="fa fa-check"></i>14, Part 2. Social Diffusion Processes</a>
+<ul>
+<li class="chapter" data-level="14.6" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#setting-up-the-session-4"><i class="fa fa-check"></i><b>14.6</b> Setting up the Session</a></li>
+<li class="chapter" data-level="14.7" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simple-diffusion-models"><i class="fa fa-check"></i><b>14.7</b> Simple Diffusion Models</a></li>
+<li class="chapter" data-level="14.8" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#threshold-models-of-diffusion"><i class="fa fa-check"></i><b>14.8</b> Threshold Models of Diffusion</a>
+<ul>
+<li class="chapter" data-level="14.8.1" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simulating-diffusion-processes-using-the-netdiffuser-package"><i class="fa fa-check"></i><b>14.8.1</b> Simulating Diffusion Processes using the netdiffuseR Package</a></li>
+<li class="chapter" data-level="14.8.2" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#comparing-diffusion-under-different-network-and-adoption-behavior-conditions"><i class="fa fa-check"></i><b>14.8.2</b> Comparing Diffusion under Different Network and Adoption Behavior Conditions</a></li>
+<li class="chapter" data-level="14.8.3" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#simulations-using-multiple-runs"><i class="fa fa-check"></i><b>14.8.3</b> Simulations using Multiple Runs</a></li>
+</ul></li>
+<li class="chapter" data-level="14.9" data-path="ch14-Network-Diffusion-Social-Processes-R.html"><a href="ch14-Network-Diffusion-Social-Processes-R.html#working-with-empirical-data"><i class="fa fa-check"></i><b>14.9</b> Working with Empirical Data</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html"><i class="fa fa-check"></i><b>15</b> Social Influence: Coevolution of Networks and Behaviors</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#reading-in-classroom-data"><i class="fa fa-check"></i><b>15.1</b> Reading in Classroom Data</a></li>
+<li class="chapter" data-level="15.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#siena-model-setup"><i class="fa fa-check"></i><b>15.2</b> SIENA Model Setup</a></li>
+<li class="chapter" data-level="15.3" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification"><i class="fa fa-check"></i><b>15.3</b> Model Specification</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-behavioral-model"><i class="fa fa-check"></i><b>15.3.1</b> Model Specification: Behavioral Model</a></li>
+<li class="chapter" data-level="15.3.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-network-model"><i class="fa fa-check"></i><b>15.3.2</b> Model Specification: Network Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-estimation"><i class="fa fa-check"></i><b>15.4</b> Model Estimation</a></li>
+<li class="chapter" data-level="15.5" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpretation"><i class="fa fa-check"></i><b>15.5</b> Interpretation</a>
+<ul>
+<li class="chapter" data-level="15.5.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpreting-network-model"><i class="fa fa-check"></i><b>15.5.1</b> Interpreting Network Model</a></li>
+<li class="chapter" data-level="15.5.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#interpreting-behavioral-model"><i class="fa fa-check"></i><b>15.5.2</b> Interpreting Behavioral Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.6" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#checking-model-fit-1"><i class="fa fa-check"></i><b>15.6</b> Checking Model Fit</a></li>
+<li class="chapter" data-level="15.7" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#example-with-3-time-periods"><i class="fa fa-check"></i><b>15.7</b> Example with 3 Time Periods</a>
+<ul>
+<li class="chapter" data-level="15.7.1" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#model-specification-and-estimation"><i class="fa fa-check"></i><b>15.7.1</b> Model Specification and Estimation</a></li>
+<li class="chapter" data-level="15.7.2" data-path="ch15-coevolution-networks-behaviors-siena-saom-R.html"><a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#time-heterogeneity"><i class="fa fa-check"></i><b>15.7.2</b> Time Heterogeneity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="how-to-cite.html"><a href="how-to-cite.html"><i class="fa fa-check"></i>How to Cite</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Network Analysis: Integrating Social Network Theory, Method, and Application with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ch9-Network-Centrality-Hierarchy-R" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">9</span> Network Centrality and Hierarchy<a href="ch9-Network-Centrality-Hierarchy-R.html#ch9-Network-Centrality-Hierarchy-R" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This tutorial walks through the analysis of centrality and hierarchy in R. We will begin by looking at various centrality measures, to determine how they are interrelated, and to discern what they mean. In this way students develop different metrics for node network positioning. We will then explore network-level measures of hierarchy, moving away from individual level positioning to look at the structure of the whole network. This tutorial will build directly on the material from previous tutorials, most clearly from the network measurement tutorial (<a href="ch3-Network-Data-R.html#ch3-Network-Data-R">Chapter 3</a>) and the dyad/triad tutorial (<a href="ch7-Dyads-Triads-R.html#ch7-Dyads-Triads-R">Chapter 7</a>).</p>
+<div id="setting-up-the-session-2" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Setting up the Session<a href="ch9-Network-Centrality-Hierarchy-R.html#setting-up-the-session-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We will work primarily with the <strong>igraph</strong> package for this tutorial.</p>
+<div class="sourceCode" id="cb723"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb723-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb723-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span></code></pre></div>
+<p>This tutorial uses classroom network data collected by Daniel McFarland. The class is a biology 2 class at a public high school. We will focus on two network relations, one based on social interaction (i talks in a social way with j) and another based on task-based interactions (i actively engages in a task with j). Let's go ahead and read in the network data for the social relation (read in from a URL).</p>
+<div class="sourceCode" id="cb724"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb724-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb724-1" aria-hidden="true" tabindex="-1"></a>url1 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/social_interactions_s641.csv&quot;</span></span>
+<span id="cb724-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb724-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb724-3"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb724-3" aria-hidden="true" tabindex="-1"></a>social_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> url1)</span></code></pre></div>
+<p>Looking at the first six rows:</p>
+<div class="sourceCode" id="cb725"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb725-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb725-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(social_data) </span></code></pre></div>
+<pre><code>##   ego alter social_tie
+## 1   1     1      0.000
+## 2   1     2      0.000
+## 3   1     3      0.000
+## 4   1     4      0.000
+## 5   1     5      5.625
+## 6   1     6      1.500</code></pre>
+<p>We now have a data frame called <code>social_data</code>. The first column is the ego, the second column is the alter, and the third column shows the frequency of social interactions between the two students. We will reduce the data frame to just include those dyads where social interaction occurred:</p>
+<div class="sourceCode" id="cb727"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb727-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb727-1" aria-hidden="true" tabindex="-1"></a>edgelist_social <span class="ot">&lt;-</span> social_data[social_data<span class="sc">$</span>social_tie <span class="sc">&gt;</span> <span class="dv">0</span>, ] </span></code></pre></div>
+<div class="sourceCode" id="cb728"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb728-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb728-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(edgelist_social)</span></code></pre></div>
+<pre><code>##    ego alter social_tie
+## 5    1     5      5.625
+## 6    1     6      1.500
+## 22   1    22      1.875
+## 44   2    22      0.375
+## 74   4     8      1.875
+## 89   5     1      5.250</code></pre>
+<p>Now we can go ahead and create our igraph object based on the edgelist defined above. The size of the network is 22, so we will set the vertices input to define the ids of the nodes, running from 1 to 22.</p>
+<div class="sourceCode" id="cb730"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb730-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb730-1" aria-hidden="true" tabindex="-1"></a>s641_social <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> edgelist_social, <span class="at">directed =</span> T, </span>
+<span id="cb730-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb730-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">vertices =</span> (<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">22</span>)) </span></code></pre></div>
+<p>Note that if we did not want the isolates included we could have done:</p>
+<div class="sourceCode" id="cb731"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb731-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb731-1" aria-hidden="true" tabindex="-1"></a>net641_social_noisolates <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> edgelist_social, </span>
+<span id="cb731-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb731-2" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">directed =</span> T) </span></code></pre></div>
+<p>And now we read in the task data:</p>
+<div class="sourceCode" id="cb732"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb732-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb732-1" aria-hidden="true" tabindex="-1"></a>url2 <span class="ot">&lt;-</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/data/task_interactions_s641.csv&quot;</span></span>
+<span id="cb732-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb732-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb732-3"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb732-3" aria-hidden="true" tabindex="-1"></a>task_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> url2)</span></code></pre></div>
+<div class="sourceCode" id="cb733"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb733-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb733-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(task_data)</span></code></pre></div>
+<pre><code>##   ego alter task_tie
+## 1   1     1        0
+## 2   1     2        0
+## 3   1     3        0
+## 4   1     4        0
+## 5   1     5        0
+## 6   1     6        0</code></pre>
+<p>The <code>task_tie</code> variable shows the frequency of task-based interactions between nodes i and j. We will now reduce the data to just those dyads where a task interaction occurred and create the igraph object. We will treat the task network as undirected as if i does a task with j, j does a task with i. We will thus reduce the edgelist so that each edge is only listed once (accomplished by reducing the edgelist to rows where the ego id is smaller than the alter id).</p>
+<div class="sourceCode" id="cb735"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb735-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb735-1" aria-hidden="true" tabindex="-1"></a>edgelist_task <span class="ot">&lt;-</span> task_data[task_data<span class="sc">$</span>task_tie <span class="sc">&gt;</span> <span class="dv">0</span>, ] </span>
+<span id="cb735-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb735-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb735-3"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb735-3" aria-hidden="true" tabindex="-1"></a>edgelist_task <span class="ot">&lt;-</span> edgelist_task[edgelist_task<span class="sc">$</span>ego <span class="sc">&lt;</span> edgelist_task<span class="sc">$</span>alter, ]</span>
+<span id="cb735-4"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb735-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb735-5"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb735-5" aria-hidden="true" tabindex="-1"></a>s641_task <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(<span class="at">d =</span> edgelist_task, <span class="at">directed =</span> F,</span>
+<span id="cb735-6"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb735-6" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">vertices =</span> (<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">22</span>)) </span></code></pre></div>
+<p>We will now plot both networks.</p>
+<div class="sourceCode" id="cb736"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb736-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb736-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)) </span>
+<span id="cb736-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb736-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb736-3"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb736-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(s641_social, <span class="at">vertex.frame.color =</span> <span class="cn">NA</span>, <span class="at">edge.arrow.size =</span> .<span class="dv">25</span>, </span>
+<span id="cb736-4"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb736-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">8</span>, <span class="at">main =</span> <span class="st">&quot;Social Interactions&quot;</span>, <span class="at">margin =</span> <span class="sc">-</span>.<span class="dv">08</span>)</span>
+<span id="cb736-5"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb736-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb736-6"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb736-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(s641_task, <span class="at">vertex.frame.color =</span> <span class="cn">NA</span>, <span class="at">edge.arrow.size =</span> .<span class="dv">25</span>, </span>
+<span id="cb736-7"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb736-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">8</span>, <span class="at">main =</span> <span class="st">&quot;Task Interactions&quot;</span>, <span class="at">margin =</span> <span class="sc">-</span>.<span class="dv">08</span>)</span></code></pre></div>
+<p><img src="Chapter9_Integrated_Network_Science_Rtutorial_network_centrality_hierarchy_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>From the figure alone we can see that the features of these two networks are very different. The task network would appear to have one very central node, with lots of ties, while the social network splits more clearly into groups with one node acting as a bridge between the groups. We will use measures of centrality and centralization to more formally explore these features. Our main substantive goal is to determine which nodes are most important in the classroom and how (or if) this varies across network relation and measure of centrality. Are individuals who are prominent in the task network also prominent in the social interaction network? Which nodes act as bridges? Are they the same nodes with the highest degree? We also want to uncover something about the overall level of inequality and hierarchy that exists in this classroom. Is this a world where one node dominates?</p>
+</div>
+<div id="centrality" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Centrality<a href="ch9-Network-Centrality-Hierarchy-R.html#centrality" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="centrality-measures-for-social-interactions" class="section level3 hasAnchor" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> Centrality Measures for Social Interactions<a href="ch9-Network-Centrality-Hierarchy-R.html#centrality-measures-for-social-interactions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Centrality measures, such as degree and betweenness, capture something about which nodes are most important to the network. These node-level measures can be used as predictors of other outcomes, like attitudes, behaviors, etc. The centrality scores can also be used as the main outcome of interest. Here, we will walk through the code to calculate a number of commonly used measures, with a particular focus on how different measures offer similar or different pictures of which nodes are more central to the network. We begin with the social interaction network.</p>
+<p>Indegree centrality measures how many ties each node receives, in this case the number of people that talks to node i in a social way. The function is <code>degree()</code>. The main arguments are graph (the network, as an igraph object) and mode (in, out or total). For indegree we set mode to "in".</p>
+<div class="sourceCode" id="cb737"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb737-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb737-1" aria-hidden="true" tabindex="-1"></a>indegree_social <span class="ot">&lt;-</span> <span class="fu">degree</span>(<span class="at">graph =</span> s641_social, <span class="at">mode =</span> <span class="st">&quot;in&quot;</span>)</span></code></pre></div>
+<p>Let's look at first 6 values:</p>
+<div class="sourceCode" id="cb738"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb738-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb738-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(indegree_social) </span></code></pre></div>
+<pre><code>## 1 2 3 4 5 6 
+## 3 1 0 1 3 3</code></pre>
+<p>This means that 3 people talk to node 1, 1 person talks to node 2, and so on. Outdegree centrality measures how many ties the node sends out, in this case the number of people that the node talks to in a social way. For outdegree we set mode to "out".</p>
+<div class="sourceCode" id="cb740"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb740-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb740-1" aria-hidden="true" tabindex="-1"></a>outdegree_social <span class="ot">&lt;-</span> <span class="fu">degree</span>(<span class="at">graph =</span> s641_social, <span class="at">mode =</span> <span class="st">&quot;out&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb741"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb741-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb741-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(outdegree_social)</span></code></pre></div>
+<pre><code>## 1 2 3 4 5 6 
+## 3 1 0 1 3 3</code></pre>
+<p>Closeness is the inverse of the mean geodesic distance between a given node and all other nodes. In a directed network, we can think of in-closeness centrality as the average number of steps one would have to go through to get TO a given node FROM all other reachable nodes in the network. Out-closeness centrality measures the same thing with the directionality reversed (average number of steps to get from i to all other j nodes). We invert the mean distance to make it a closeness measure, where higher values mean the nodes are more central (i.e., closer to other nodes). When calculating closeness, igraph (at least more recent versions of the package) will only include nodes that actor i can reach in the calculation, and so is most easily interpreted for fully connected graphs, where all nodes can reach all other nodes. The function is <code>closeness()</code> and the arguments are:</p>
+<ul>
+<li>graph = network of interest, as igraph object</li>
+<li>mode = "in", or "out"</li>
+<li>normalized = T/F, should scores be normalized? (divided by n-1, where n is the number of people in the network)</li>
+</ul>
+<p>Let's first calculate out-closeness using the igraph function.</p>
+<div class="sourceCode" id="cb743"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb743-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb743-1" aria-hidden="true" tabindex="-1"></a>outcloseness_social <span class="ot">&lt;-</span> <span class="fu">closeness</span>(<span class="at">graph =</span> s641_social, <span class="at">mode =</span> <span class="st">&quot;out&quot;</span>,</span>
+<span id="cb743-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb743-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">normalized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb744"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb744-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb744-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(outcloseness_social)</span></code></pre></div>
+<pre><code>##         1         2         3         4         5         6 
+## 0.4210526 0.3720930       NaN 1.0000000 0.4210526 0.3200000</code></pre>
+<p>We can interpret those values as the inverse of the mean distance of each node to all other nodes that the focal node can reach. Isolates are assigned an NA value. Now we will do the same thing for in-closeness.</p>
+<div class="sourceCode" id="cb746"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb746-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb746-1" aria-hidden="true" tabindex="-1"></a>incloseness_social <span class="ot">&lt;-</span> <span class="fu">closeness</span>(<span class="at">graph =</span> s641_social, <span class="at">mode =</span> <span class="st">&quot;in&quot;</span>, </span>
+<span id="cb746-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb746-2" aria-hidden="true" tabindex="-1"></a>                                <span class="at">normalized =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb747"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb747-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb747-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(incloseness_social)</span></code></pre></div>
+<pre><code>##         1         2         3         4         5         6 
+## 0.4117647 0.3589744       NaN 1.0000000 0.4117647 0.3181818</code></pre>
+<p>An alternative version of this is to take the mean based on the inverse distance matrix. This avoids the problem of excluding unreachable nodes when calculating the mean distance to or from each node and is more appropriate when all nodes cannot reach all other nodes. Here we get the distance matrix in the right form for that calculation.</p>
+<div class="sourceCode" id="cb749"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb749-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb749-1" aria-hidden="true" tabindex="-1"></a>dist_mat_social <span class="ot">&lt;-</span> <span class="fu">distances</span>(<span class="at">graph =</span> s641_social, <span class="at">mode =</span> <span class="st">&quot;out&quot;</span>) </span>
+<span id="cb749-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb749-2" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(dist_mat_social) <span class="ot">&lt;-</span> <span class="cn">NA</span> <span class="co">#ignoring the diagonal</span></span>
+<span id="cb749-3"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb749-3" aria-hidden="true" tabindex="-1"></a>dist_mat_social_inverted <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> dist_mat_social <span class="co">#inverting distance matrix</span></span></code></pre></div>
+<p>Now we can use <code>apply()</code> to take the mean over all of the rows at once. Note that we use a 1 within the <code>apply()</code> function to take the mean over the rows, set FUN to the mean and include an argument to exclude the NAs.</p>
+<div class="sourceCode" id="cb750"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb750-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb750-1" aria-hidden="true" tabindex="-1"></a>outcloseness_social2 <span class="ot">&lt;-</span> <span class="fu">apply</span>(dist_mat_social_inverted, <span class="at">MARGIN =</span> <span class="dv">1</span>, </span>
+<span id="cb750-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb750-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">FUN =</span> mean, <span class="at">na.rm =</span> T) </span></code></pre></div>
+<div class="sourceCode" id="cb751"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb751-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb751-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(outcloseness_social2)</span></code></pre></div>
+<pre><code>##          1          2          3          4          5          6 
+## 0.39444444 0.32698413 0.00000000 0.04761905 0.39444444 0.32698413</code></pre>
+<p>Let's compare the two versions of out-closeness centrality:</p>
+<div class="sourceCode" id="cb753"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb753-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb753-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(outcloseness_social, outcloseness_social2, <span class="at">use =</span> <span class="st">&quot;complete.obs&quot;</span>) </span></code></pre></div>
+<pre><code>## [1] -0.6850724</code></pre>
+<p>We see a pretty strong, negative correlation. This is the case as the original calculation (outcloseness_social) calculates closeness only including the reachable nodes for each actor. This means that nodes like 4, 8, 11 and 15 get surprisingly high closeness values (1), as they reach only one other node at distance 1. This might not be what we want as these nodes are, in fact, not very central in the network (see figure above) but are assigned a high centrality value. The alternative version of out-closeness handles this better and assigns a low value for these nodes. If we remove those 'odd' cases, the two versions are very highly correlated:</p>
+<div class="sourceCode" id="cb755"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb755-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb755-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(outcloseness_social[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">11</span>, <span class="dv">15</span>)], </span>
+<span id="cb755-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb755-2" aria-hidden="true" tabindex="-1"></a>    outcloseness_social2[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">11</span>, <span class="dv">15</span>)], </span>
+<span id="cb755-3"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb755-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">use =</span> <span class="st">&quot;complete.obs&quot;</span>) </span></code></pre></div>
+<pre><code>## [1] 0.9806626</code></pre>
+<p>And now we calculate the alternative version of in-closeness. Here, we take the mean over each column of the inverted distance matrix to get the in-coming paths. This is accomplished by using a 2 for MARGIN in the <code>apply()</code> statement:</p>
+<div class="sourceCode" id="cb757"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb757-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb757-1" aria-hidden="true" tabindex="-1"></a>incloseness_social2 <span class="ot">&lt;-</span> <span class="fu">apply</span>(dist_mat_social_inverted, <span class="at">MARGIN =</span> <span class="dv">2</span>, </span>
+<span id="cb757-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb757-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">FUN =</span> mean, <span class="at">na.rm =</span> T) </span></code></pre></div>
+<div class="sourceCode" id="cb758"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb758-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb758-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(incloseness_social2)</span></code></pre></div>
+<pre><code>##          1          2          3          4          5          6 
+## 0.34682540 0.27936508 0.00000000 0.04761905 0.34682540 0.29523810</code></pre>
+<p>Betweenness centrality is based on the number of shortest paths going through a specific vertex; it is returned by the <code>betweenness()</code> function. We need to set normalized to T/F, determining if the scores should be normalized by the number of pairs of nodes (not including i), capturing the number of possible paths a node could be between.</p>
+<div class="sourceCode" id="cb760"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb760-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb760-1" aria-hidden="true" tabindex="-1"></a>betweenness_social <span class="ot">&lt;-</span> <span class="fu">betweenness</span>(<span class="at">graph =</span> s641_social, <span class="at">normalized =</span> F) </span></code></pre></div>
+<div class="sourceCode" id="cb761"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb761-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb761-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(betweenness_social)</span></code></pre></div>
+<pre><code>##  1  2  3  4  5  6 
+## 24  0  0  0 24 28</code></pre>
+<p>Eigenvector centrality gives greater weight to a node the more it is connected to other highly connected nodes. A node connected to five high-scoring nodes will have higher eigenvector centrality than a node connected to five low-scoring nodes. Thus, it is often interpreted as measuring a node's network importance. In directed networks, there are 'In' and 'Out' versions. In information flow studies, for instance, In-Eigenvector scores would reflect which nodes are high on receiving information, while Out-Eigenvector scores would reflect which nodes are high on broadcasting information. For these data, we will simply symmetrize to generate an undirected eigenvector centrality score. Unlike the other centrality measures, the <code>evcent()</code> function returns a complex object rather than a simple vector. Thus, we need to first get the evcent output and then select the eigenvector scores from it. Here we symmetrize our network before calculating eigenvector centrality, making a tie between i and j if i is tied with j or j is tied with i.</p>
+<div class="sourceCode" id="cb763"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb763-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb763-1" aria-hidden="true" tabindex="-1"></a>s641_social_undirected <span class="ot">&lt;-</span> <span class="fu">as.undirected</span>(s641_social, <span class="at">mode =</span> <span class="st">&quot;collapse&quot;</span>) </span></code></pre></div>
+<p>We now calculate eigenvector centrality:</p>
+<div class="sourceCode" id="cb764"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb764-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb764-1" aria-hidden="true" tabindex="-1"></a>ev_obj_social <span class="ot">&lt;-</span> <span class="fu">eigen_centrality</span>(s641_social_undirected)</span>
+<span id="cb764-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb764-2" aria-hidden="true" tabindex="-1"></a>eigen_social <span class="ot">&lt;-</span> ev_obj_social<span class="sc">$</span>vector</span></code></pre></div>
+<div class="sourceCode" id="cb765"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb765-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb765-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(eigen_social)</span></code></pre></div>
+<pre><code>##            1            2            3            4            5            6 
+## 2.418251e-01 1.735366e-01 0.000000e+00 1.851194e-17 2.418251e-01 1.004841e-01</code></pre>
+<p>Note that we can calculate a closely related Bonacich power centrality score using the <code>power_centrality()</code> function.</p>
+<p>We now have a basic set of centrality scores for our social interaction network. To facilitate comparison across the different measures, we'll construct a data frame with the nodes as rows and the centrality scores as columns. We include a variable for the network type, here social interaction, as well as the ids of the nodes. We first grab the ids from the igraph object.</p>
+<div class="sourceCode" id="cb767"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb767-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb767-1" aria-hidden="true" tabindex="-1"></a>ids <span class="ot">&lt;-</span> <span class="fu">V</span>(s641_social)<span class="sc">$</span>name</span></code></pre></div>
+<p>And now we put together the data frame.</p>
+<div class="sourceCode" id="cb768"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb768-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb768-1" aria-hidden="true" tabindex="-1"></a>central_social <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ids =</span> ids, <span class="at">net =</span> <span class="st">&quot;social&quot;</span>, </span>
+<span id="cb768-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb768-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">indegree =</span> indegree_social, </span>
+<span id="cb768-3"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb768-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">outdegree =</span> outdegree_social, </span>
+<span id="cb768-4"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb768-4" aria-hidden="true" tabindex="-1"></a>                             <span class="at">incloseness2 =</span> incloseness_social2, </span>
+<span id="cb768-5"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb768-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">outcloseness2 =</span> outcloseness_social2,</span>
+<span id="cb768-6"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb768-6" aria-hidden="true" tabindex="-1"></a>                             <span class="at">between =</span> betweenness_social, </span>
+<span id="cb768-7"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb768-7" aria-hidden="true" tabindex="-1"></a>                             <span class="at">eigen =</span> eigen_social)</span></code></pre></div>
+<div class="sourceCode" id="cb769"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb769-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb769-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(central_social)</span></code></pre></div>
+<pre><code>##   ids    net indegree outdegree incloseness2 outcloseness2 between        eigen
+## 1   1 social        3         3   0.34682540    0.39444444      24 2.418251e-01
+## 2   2 social        1         1   0.27936508    0.32698413       0 1.735366e-01
+## 3   3 social        0         0   0.00000000    0.00000000       0 0.000000e+00
+## 4   4 social        1         1   0.04761905    0.04761905       0 1.851194e-17
+## 5   5 social        3         3   0.34682540    0.39444444      24 2.418251e-01
+## 6   6 social        3         3   0.29523810    0.32698413      28 1.004841e-01</code></pre>
+<p>Now we'll examine the table to find the most central nodes according to the different measures we have. When looking at each of these measures, it's a good idea to have your plot of the social interaction network on hand so you can sanity-check the results.</p>
+<p>Let’s order each column from high to low centrality seeing which nodes have the top centrality on each measure. We will use an <code>order()</code> function to rank order the nodes. The <code>order()</code> function returns a vector in ascending or descending order, showing which cases have the highest/lowest values. We will set decreasing equal to T to make it descending (running high to low). We will set FUN to order within the <code>apply()</code> statement. We use<code>apply()</code> to order all of the columns at once. We exclude the first two columns as they are not centrality scores.</p>
+<div class="sourceCode" id="cb771"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb771-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb771-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(central_social[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)], <span class="at">MARGIN =</span> <span class="dv">2</span>, <span class="at">FUN =</span> order, <span class="at">decreasing =</span> T)</span></code></pre></div>
+<pre><code>##       indegree outdegree incloseness2 outcloseness2 between eigen
+##  [1,]       18        22           18            22      22    18
+##  [2,]       22        18           22            19      12    19
+##  [3,]       16        19           16            16      16    22
+##  [4,]       19        16           19            18      18    21
+##  [5,]       21        17           21            21       6    16
+##  [6,]       17        21           17             1      10    17
+##  [7,]        1         1           12             5       1    20
+##  [8,]        5         5           11            17       5    12
+##  [9,]        6         6            1            12      11     1
+## [10,]       12        12            5            20      19     5
+## [11,]       20        20           20             2      21    11
+## [12,]       10        10            6             6      17     2
+## [13,]       11         2            2            10      20     6
+## [14,]        2         4           10             9       2    10
+## [15,]        4         7           15             7       3    15
+## [16,]        7         8            9             4       4     9
+## [17,]        8         9            7             8       7     7
+## [18,]        9        11            4            11       8     8
+## [19,]       15        15            8            15       9     4
+## [20,]        3         3            3             3      13     3
+## [21,]       13        13           13            13      14    13
+## [22,]       14        14           14            14      15    14</code></pre>
+<p>If we start with indegree, we see the top nodes are 18, 22 and 16. Or, for outdegree, the top three nodes are 22, 18 and 19. We see nodes 18, 22 and 16 are most central for inclosenss. Finally, we see similar, but somewhat different ordering for betweenness, with nodes 22, 12 and 16 the top three. Node 12 in particular has much higher betweenness centrality than they do for degree, closeness, etc.</p>
+<p>Let's make a plot with these summary statistics. To visualize these data, we can create a barplot for our centrality measures. To make this task a little easier, we will first rearrange our data set to make it a 'long' format. We will focus on just a handful of our centrality measures, indegree, incloseness2, betweenness and eigen centrality. Here we use the <code>melt()</code> function (in the <strong>reshape</strong> package) to rearrange our data, basically stacking the variables of interest (here centrality scores) on top of each other, differentiated by an id.vars variables (here the ids of the nodes).</p>
+<div class="sourceCode" id="cb773"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb773-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb773-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape)</span></code></pre></div>
+<div class="sourceCode" id="cb774"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb774-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb774-1" aria-hidden="true" tabindex="-1"></a>vars_to_stack <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;ids&quot;</span>, <span class="st">&quot;indegree&quot;</span>, <span class="st">&quot;incloseness2&quot;</span>, <span class="st">&quot;between&quot;</span>, <span class="st">&quot;eigen&quot;</span>)</span>
+<span id="cb774-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb774-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb774-3"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb774-3" aria-hidden="true" tabindex="-1"></a>social_long <span class="ot">&lt;-</span> <span class="fu">melt</span>(central_social[, vars_to_stack], <span class="at">id.vars =</span> <span class="st">&quot;ids&quot;</span>)  </span></code></pre></div>
+<div class="sourceCode" id="cb775"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb775-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb775-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(social_long)</span></code></pre></div>
+<pre><code>##   ids variable value
+## 1   1 indegree     3
+## 2   2 indegree     1
+## 3   3 indegree     0
+## 4   4 indegree     1
+## 5   5 indegree     3
+## 6   6 indegree     3</code></pre>
+<p>We can see that we now have three variables. An ids variable corresponding to the node; a variable corresponding to the centrality measure and value corresponding to the actual score for that person on that centrality measure. Now, let's create a barplot using <code>ggplot()</code> for each of our centrality scores. The y-axis is the score, and the x-axis is the node. We will have 4 different panels, one for each measure of interest. We use the <code>aes()</code> function and the <code>geom_bar()</code> function to create the basic bar plot for each node (ids) based on the value variable; and a <code>facet_wrap()</code> function to set up the plot to have 2 columns.</p>
+<div class="sourceCode" id="cb777"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb777-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb777-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb777-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb777-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb777-3"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb777-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(social_long, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(ids, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(ids)), <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb777-4"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb777-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
+<span id="cb777-5"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb777-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> variable, <span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb777-6"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb777-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Ids&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Centrality&quot;</span>) <span class="sc">+</span></span>
+<span id="cb777-7"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb777-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fl">6.5</span>))</span></code></pre></div>
+<p><img src="Chapter9_Integrated_Network_Science_Rtutorial_network_centrality_hierarchy_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p>Given our results, what can we say about the social nodes if we compare the bar plots? Who seems to run the show in sociable affairs? Who seems to bridge sociable conversations? For example, we can see that node 22 plays a key bridging role and shows up as highly centrality in general, but particularly for betweenness. Node 22 has the highest centrality by far in betweenness but has similar indegree to other top nodes. This suggests that multiple nodes (16, 18, 19, 22) have high volume (or prominence) in the network, but only one plays the role of bridging different groups in the classroom (22). To highlight this, let's go back to our picture and size the nodes by betweenness centrality (scaled a bit to make the picture a little nicer):</p>
+<div class="sourceCode" id="cb778"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb778-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb778-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(s641_social, <span class="at">vertex.size =</span> central_social<span class="sc">$</span>between <span class="sc">/</span> <span class="dv">5</span>,</span>
+<span id="cb778-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb778-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="fu">V</span>(s641_social)<span class="sc">$</span>name, </span>
+<span id="cb778-3"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb778-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.arrow.size =</span> <span class="fl">0.25</span>, <span class="at">layout =</span> layout.fruchterman.reingold, </span>
+<span id="cb778-4"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb778-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Classroom S641 Social Talk&quot;</span>, <span class="at">margin =</span> <span class="sc">-</span>.<span class="dv">08</span>)</span></code></pre></div>
+<p><img src="Chapter9_Integrated_Network_Science_Rtutorial_network_centrality_hierarchy_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+</div>
+<div id="correlations-between-centrality-measures" class="section level3 hasAnchor" number="9.2.2">
+<h3><span class="header-section-number">9.2.2</span> Correlations between Centrality Measures<a href="ch9-Network-Centrality-Hierarchy-R.html#correlations-between-centrality-measures" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We have so far seen which nodes are the most central on different measures. We now want to formalize this a bit more by computing the correlations between the centrality scores, showing how closely these measures of centrality are interrelated. More substantively, we want to know which measures tend to yield the same nodes as central and which tend to disagree on the most important nodes. Here we generate a table of pairwise correlations. Again, we take out the first column of ids and the second column showing the network type when doing the correlation matrix (we also round the values in the correlation matrix when printing).</p>
+<div class="sourceCode" id="cb779"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb779-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb779-1" aria-hidden="true" tabindex="-1"></a>cor_tab1 <span class="ot">&lt;-</span> <span class="fu">cor</span>(central_social[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)])</span></code></pre></div>
+<div class="sourceCode" id="cb780"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb780-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb780-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(cor_tab1, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##               indegree outdegree incloseness2 outcloseness2 between eigen
+## indegree         1.000     0.960        0.874         0.860   0.629 0.940
+## outdegree        0.960     1.000        0.822         0.874   0.738 0.914
+## incloseness2     0.874     0.822        1.000         0.879   0.548 0.794
+## outcloseness2    0.860     0.874        0.879         1.000   0.595 0.800
+## between          0.629     0.738        0.548         0.595   1.000 0.507
+## eigen            0.940     0.914        0.794         0.800   0.507 1.000</code></pre>
+<p>Indegree and outdegree are very closely correlated (rho = 0.96), indicating that social talk with others is almost always reciprocated (i.e., if you talk to others, they tend to talk back to you). Indegree and outdegree are also highly correlated with eigenvector centrality, indicating that the students that talk the most to others (or, relatedly, are talked to the most by others) are also the ones that are connected to other highly connected students -- possibly indicating high density cliques around these individuals. The degree centralities are less correlated with our closeness centrality scores, suggesting that nodes with high degree are not always (although often) close to other nodes.</p>
+<p>Betweenness shows the highest correlation with outdegree, followed by indegree. In the case of this particular network, it seems that individuals that talk the most to others are the likeliest to serve as bridges between the particular cliques (see, e.g., 22 in the plot). Note that betweenness is not all that highly correlated with closeness centrality. This suggests that nodes may sit between groups, and thus have high betweenness, but not necessarily be close to all nodes, on average. For example, node 19 has high closeness centrality but not especially high betweenness centrality. If we look at the last plot, we can see that node is 19 deeply embedded in one social group and has ties to node 22, who has high betweenness, connecting different parts of the network. Thus, node 19 has high closeness as they can reach everyone else (through node 22) but low betweenness, as the shortest paths connecting different groups would not have to run through node 19.</p>
+<p>Thus, if the process that we thought was most important was about information flow based on shortest paths, we may think that node 19 is well positioned to influence the rest of the network. If, however, the key is being the bridge itself, then 19 is clearly not as important as node 22. Thus, while there is much agreement between the centrality scores (with nodes 22, 16, 18 and 19 showing up consistently as central) it is possible for a node to be high on one measure and low on another.</p>
+</div>
+<div id="centrality-for-task-interactions" class="section level3 hasAnchor" number="9.2.3">
+<h3><span class="header-section-number">9.2.3</span> Centrality for Task Interactions<a href="ch9-Network-Centrality-Hierarchy-R.html#centrality-for-task-interactions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We now repeat the analysis for the task interaction network. Note that the in and out measures will be the same as the network is undirected, meaning that we only need one calculation for measures like degree or closeness. It also means that we do not need to set mode as an argument.</p>
+<div class="sourceCode" id="cb782"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb782-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb782-1" aria-hidden="true" tabindex="-1"></a>degree_task <span class="ot">&lt;-</span> <span class="fu">degree</span>(s641_task)</span>
+<span id="cb782-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb782-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb782-3"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb782-3" aria-hidden="true" tabindex="-1"></a>dist_mat_task <span class="ot">&lt;-</span> <span class="fu">distances</span>(<span class="at">graph =</span> s641_task)</span>
+<span id="cb782-4"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb782-4" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(dist_mat_task) <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb782-5"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb782-5" aria-hidden="true" tabindex="-1"></a>dist_mat_task_inverted <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> dist_mat_task</span>
+<span id="cb782-6"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb782-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb782-7"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb782-7" aria-hidden="true" tabindex="-1"></a>closeness_task2 <span class="ot">&lt;-</span> <span class="fu">apply</span>(dist_mat_task_inverted, <span class="at">MARGIN =</span> <span class="dv">1</span>, </span>
+<span id="cb782-8"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb782-8" aria-hidden="true" tabindex="-1"></a>                         <span class="at">FUN =</span> mean, <span class="at">na.rm =</span> T)</span>
+<span id="cb782-9"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb782-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb782-10"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb782-10" aria-hidden="true" tabindex="-1"></a>betweenness_task <span class="ot">&lt;-</span> <span class="fu">betweenness</span>(s641_task, <span class="at">normalized =</span> F)</span>
+<span id="cb782-11"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb782-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb782-12"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb782-12" aria-hidden="true" tabindex="-1"></a>ev_obj_task <span class="ot">&lt;-</span> <span class="fu">evcent</span>(s641_task)</span>
+<span id="cb782-13"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb782-13" aria-hidden="true" tabindex="-1"></a>eigen_task <span class="ot">&lt;-</span> ev_obj_task<span class="sc">$</span>vector</span></code></pre></div>
+<p>And now we put the results together, as before, into a data frame with all the centrality values.</p>
+<div class="sourceCode" id="cb783"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb783-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb783-1" aria-hidden="true" tabindex="-1"></a>central_task <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ids =</span> ids, <span class="at">net =</span> <span class="st">&quot;task&quot;</span>, </span>
+<span id="cb783-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb783-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">degree =</span> degree_task,</span>
+<span id="cb783-3"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb783-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">closeness2 =</span> closeness_task2, </span>
+<span id="cb783-4"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb783-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">between =</span> betweenness_task, </span>
+<span id="cb783-5"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb783-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">eigen =</span> eigen_task)</span></code></pre></div>
+<div class="sourceCode" id="cb784"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb784-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb784-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(central_task)</span></code></pre></div>
+<pre><code>##   ids  net degree closeness2 between        eigen
+## 1   1 task      1 0.42857143       0 2.154856e-01
+## 2   2 task      1 0.42857143       0 2.154856e-01
+## 3   3 task      0 0.00000000       0 8.549252e-17
+## 4   4 task      1 0.04761905       0 4.274626e-17
+## 5   5 task      1 0.42857143       0 2.154856e-01
+## 6   6 task      1 0.42857143       0 2.154856e-01</code></pre>
+<p>We will now quickly take a look at the nodes with the top centrality scores for the task network.</p>
+<div class="sourceCode" id="cb786"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb786-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb786-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(central_task[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)], <span class="at">MARGIN =</span> <span class="dv">2</span>, <span class="at">FUN =</span> order, <span class="at">decreasing =</span> T)</span></code></pre></div>
+<pre><code>##       degree closeness2 between eigen
+##  [1,]     22         22      22    22
+##  [2,]     18         18      18    18
+##  [3,]     17         17      19    21
+##  [4,]     19         19       1    17
+##  [5,]     21         21       2    19
+##  [6,]     13         13       3    13
+##  [7,]     16         16       4    16
+##  [8,]     20         20       5    20
+##  [9,]      1          1       6    14
+## [10,]      2          2       7     6
+## [11,]      4          5       8    11
+## [12,]      5          6       9    15
+## [13,]      6          7      10     2
+## [14,]      7          9      11     7
+## [15,]      8         10      12     5
+## [16,]      9         11      13     9
+## [17,]     10         14      14    10
+## [18,]     11         15      15     1
+## [19,]     14          4      16     8
+## [20,]     15          8      17     3
+## [21,]      3          3      20    12
+## [22,]     12         12      21     4</code></pre>
+<p>In this case, we can see nodes 22, 18 and 17 are consistently the most important nodes, but node 22 is by the far most central. This becomes clear if we plot the network, scaling the nodes by degree:</p>
+<div class="sourceCode" id="cb788"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb788-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb788-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(s641_task, <span class="at">vertex.size =</span> central_task<span class="sc">$</span>degree, </span>
+<span id="cb788-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb788-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="fu">V</span>(s641_social)<span class="sc">$</span>name, </span>
+<span id="cb788-3"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb788-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.arrow.size =</span> <span class="fl">0.25</span>, <span class="at">layout =</span> layout.fruchterman.reingold, </span>
+<span id="cb788-4"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb788-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Classroom S641 Task Interactions&quot;</span>, <span class="at">margin =</span> <span class="sc">-</span>.<span class="dv">08</span>)</span></code></pre></div>
+<p><img src="Chapter9_Integrated_Network_Science_Rtutorial_network_centrality_hierarchy_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+</div>
+<div id="tasksocial-correlations" class="section level3 hasAnchor" number="9.2.4">
+<h3><span class="header-section-number">9.2.4</span> Task/Social Correlations<a href="ch9-Network-Centrality-Hierarchy-R.html#tasksocial-correlations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We have seen that node 22 dominates task interactions in a way that was less clear-cut in the social interactions network. Let's explore the similarities/differences between the two networks by doing a quick bar plot comparing four centrality measures (degree, closeness2, betweenness and eigen) on social and task centrality. We will first rearrange the task centrality data frame, as we did with the social centrality data frame, to make it in a long format.</p>
+<div class="sourceCode" id="cb789"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb789-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb789-1" aria-hidden="true" tabindex="-1"></a>vars_to_stack_task <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;ids&quot;</span>, <span class="st">&quot;degree&quot;</span>, <span class="st">&quot;closeness2&quot;</span>, <span class="st">&quot;between&quot;</span>, <span class="st">&quot;eigen&quot;</span>)</span>
+<span id="cb789-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb789-2" aria-hidden="true" tabindex="-1"></a>task_long <span class="ot">&lt;-</span> <span class="fu">melt</span>(central_task[, vars_to_stack_task], <span class="at">id.vars =</span> <span class="st">&quot;ids&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb790"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb790-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb790-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(task_long)</span></code></pre></div>
+<pre><code>##   ids variable value
+## 1   1   degree     1
+## 2   2   degree     1
+## 3   3   degree     0
+## 4   4   degree     1
+## 5   5   degree     1
+## 6   6   degree     1</code></pre>
+<p>Now, let's also add a variable in both the social and task data frames that indicate network type.</p>
+<div class="sourceCode" id="cb792"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb792-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb792-1" aria-hidden="true" tabindex="-1"></a>task_long<span class="sc">$</span>net <span class="ot">&lt;-</span> <span class="st">&quot;task&quot;</span></span>
+<span id="cb792-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb792-2" aria-hidden="true" tabindex="-1"></a>social_long<span class="sc">$</span>net <span class="ot">&lt;-</span> <span class="st">&quot;social&quot;</span></span></code></pre></div>
+<p>Now we will put together the two long format data frames:</p>
+<div class="sourceCode" id="cb793"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb793-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb793-1" aria-hidden="true" tabindex="-1"></a>social_task_long <span class="ot">&lt;-</span> <span class="fu">rbind</span>(social_long, task_long)</span></code></pre></div>
+<p>And let's make sure the labels are the same between the social and task rows. Let's change incloseness2 to closeness2 and indegree to degree, so the social labels match the task labels.</p>
+<div class="sourceCode" id="cb794"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb794-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb794-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb794-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb794-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb794-3"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb794-3" aria-hidden="true" tabindex="-1"></a>social_task_long<span class="sc">$</span>variable <span class="ot">&lt;-</span> <span class="fu">recode</span>(social_task_long<span class="sc">$</span>variable, <span class="at">as.factor =</span> T, </span>
+<span id="cb794-4"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb794-4" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;&#39;incloseness2&#39; = &#39;closeness2&#39;; </span></span>
+<span id="cb794-5"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb794-5" aria-hidden="true" tabindex="-1"></a><span class="st">                                    &#39;indegree&#39; = &#39;degree&#39;&quot;</span>,</span>
+<span id="cb794-6"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb794-6" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;degree&quot;</span>, <span class="st">&quot;closeness2&quot;</span>, </span>
+<span id="cb794-7"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb794-7" aria-hidden="true" tabindex="-1"></a>                                               <span class="st">&quot;between&quot;</span>, <span class="st">&quot;eigen&quot;</span>))</span></code></pre></div>
+<p>Now, let's produce the same barplot as before, but include the task centrality score along side the social centrality scores. This is accomplished by adding a fill argument (in the <code>aes()</code> function) set to the net variable, and by setting the colors using a <code>scale_fill_discrete()</code> function (to distinguish social from task).</p>
+<div class="sourceCode" id="cb795"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb795-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb795-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(social_task_long, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(ids, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(ids)), </span>
+<span id="cb795-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb795-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">y =</span> value, <span class="at">fill =</span> net)) <span class="sc">+</span></span>
+<span id="cb795-3"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb795-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
+<span id="cb795-4"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb795-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> variable, <span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>, <span class="at">ncol =</span> <span class="dv">2</span>)<span class="sc">+</span> </span>
+<span id="cb795-5"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb795-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Network&quot;</span>, </span>
+<span id="cb795-6"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb795-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">&quot;social&quot;</span>, <span class="st">&quot;task&quot;</span>), </span>
+<span id="cb795-7"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb795-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Social&quot;</span>, <span class="st">&quot;Task&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb795-8"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb795-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Ids&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Centrality&quot;</span>) <span class="sc">+</span></span>
+<span id="cb795-9"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb795-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fl">6.5</span>))</span></code></pre></div>
+<p><img src="Chapter9_Integrated_Network_Science_Rtutorial_network_centrality_hierarchy_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<p>We can see node 22 has extremely high centrality in the task network over all measures of centrality. Node 22 also tends to be high centrality in the social interaction network, but there are other nodes (like 16, 18 or 19) with similar centrality scores (except for betweenness). Now, let's calculate the correlation between task and social over all our measures.</p>
+<div class="sourceCode" id="cb796"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb796-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb796-1" aria-hidden="true" tabindex="-1"></a>cor_tab2 <span class="ot">&lt;-</span> <span class="fu">cor</span>(central_social[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)], central_task[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)])</span></code></pre></div>
+<p>Let’s add some useful row and column names to our correlation table. We will use a paste command to tack "_social" onto the existing row names.</p>
+<div class="sourceCode" id="cb797"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb797-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb797-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(cor_tab2) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">rownames</span>(cor_tab2), <span class="st">&quot;social&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>)</span></code></pre></div>
+<p>And here we add "_task" to the end of the column names.</p>
+<div class="sourceCode" id="cb798"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb798-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb798-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(cor_tab2) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">colnames</span>(cor_tab2), <span class="st">&quot;task&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>) </span></code></pre></div>
+<p>And let's look at the columns for <code>eigen_task</code>, <code>degree_task</code>, and <code>closeness2_task</code>.</p>
+<div class="sourceCode" id="cb799"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb799-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb799-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(cor_tab2[, <span class="fu">c</span>(<span class="st">&quot;eigen_task&quot;</span>, <span class="st">&quot;degree_task&quot;</span>, <span class="st">&quot;closeness2_task&quot;</span>)], <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##                      eigen_task degree_task closeness2_task
+## indegree_social           0.650       0.558           0.494
+## outdegree_social          0.734       0.700           0.536
+## incloseness2_social       0.553       0.394           0.554
+## outcloseness2_social      0.570       0.460           0.507
+## between_social            0.681       0.803           0.412
+## eigen_social              0.657       0.549           0.481</code></pre>
+<p><code>eigen_task</code> is correlated with <code>betweenness_social</code> (rho = .681) and <code>outdegree_social</code> (rho = .734), possibly because those who are important in tasks also serve as bridges for talk on social issues and have many outbound ties. <code>degree_task</code> and <code>between_social</code> (rho = .803) are correlated, possibly because the number of outdegree ties a node has with respect to task talk, the more they serve as a bridge on social talk. <code>closeness_task2</code> and <code>incloseness_social2</code> (rho = .554) are correlated, meaning that those who serve in shortest paths are equivalent for both social talk and task talk.</p>
+</div>
+</div>
+<div id="centralization" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Centralization<a href="ch9-Network-Centrality-Hierarchy-R.html#centralization" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We have so far seen which nodes are most important in the classroom using different definitions of centrality. We have also seen how this differs across social and task interactions. To flesh out the story more clearly, it will be useful to formally summarize the distribution of the centrality measures, telling us something about the network as a whole. For example, a network with one node capturing the vast majority of ties is highly centralized, or highly unequal, as all of the activity in the network is focused on a particular node. A highly centralized network is also relatively fragile, as removing the one central node would greatly reduce the connectivity of the network. We could examine the distribution of any of the centrality scores we calculated above. Here, let's focus on degree as a way of exploring the level of centralization in the two networks. Let's start with a summary of the degree distributions (indegree for social and degree for task).</p>
+<div class="sourceCode" id="cb801"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb801-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb801-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(indegree_social)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.000   1.000   2.500   2.591   3.750   7.000</code></pre>
+<div class="sourceCode" id="cb803"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb803-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb803-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(degree_task)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.000   1.000   1.000   2.182   2.000  17.000</code></pre>
+<div class="sourceCode" id="cb805"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb805-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb805-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(indegree_social)</span></code></pre></div>
+<pre><code>## [1] 2.03912</code></pre>
+<div class="sourceCode" id="cb807"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb807-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb807-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(degree_task)</span></code></pre></div>
+<pre><code>## [1] 3.459099</code></pre>
+<p>We can see that the mean and median of degree is higher in the social interaction network than in the task network. In contrast, the maximum value, as well as the standard deviation is much higher in the task network. This confirms our story from above, where the task network is centered strongly on one node, while the social interaction network is based more on groups, where a single node won't necessarily dominate. Note that a simple standard deviation score can serve as an effective measure of centralization. It is also possible to employ traditional centralization measures.</p>
+<p>To calculate centralization, we take the centrality scores of interest and sum up the total deviations from the highest value. We then typically divide the total summation by the maximum possible level of centralization in a network of that size (i.e., the centralization we would have observed in a hub and spoke structure).</p>
+<p><strong>igraph</strong> has different centralization functions for each centrality score. For degree the function is <code>cent_degree()</code>. The arguments are graph (network of interest), mode (in, out, total) loops (T/F should self-loops be considered), and normalized (T/F should divide by theoretical max?) Here we calculate indegree centralization for the social interaction network, ignoring self loops and dividing by the theoretical max.</p>
+<div class="sourceCode" id="cb809"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb809-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb809-1" aria-hidden="true" tabindex="-1"></a>cent_social <span class="ot">&lt;-</span> <span class="fu">centr_degree</span>(<span class="at">graph =</span> s641_social, <span class="at">mode =</span> <span class="st">&quot;in&quot;</span>, </span>
+<span id="cb809-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb809-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">loops =</span> <span class="cn">FALSE</span>, <span class="at">normalized =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb810"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb810-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb810-1" aria-hidden="true" tabindex="-1"></a>cent_social</span></code></pre></div>
+<pre><code>## $res
+##  [1] 3 1 0 1 3 3 1 1 1 2 2 3 0 0 1 5 4 7 5 3 5 6
+## 
+## $centralization
+## [1] 0.2199546
+## 
+## $theoretical_max
+## [1] 441</code></pre>
+<p>We could also calculate this directly by doing:</p>
+<div class="sourceCode" id="cb812"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb812-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb812-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">max</span>(indegree_social) <span class="sc">-</span> indegree_social) <span class="sc">/</span> <span class="fu">sum</span>(<span class="dv">21</span> <span class="sc">-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">21</span>)) </span></code></pre></div>
+<pre><code>## [1] 0.2199546</code></pre>
+<p>The code simply takes the max centrality score and subtracts the centrality of each node in the network, summing over all nodes. We then divide by the theoretical max, the centralization score if one node received nominations from everyone (indegree = 21 in this case) and everyone else received none (indegree = 0).</p>
+<p>And now we do the same thing for the task network.</p>
+<div class="sourceCode" id="cb814"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb814-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb814-1" aria-hidden="true" tabindex="-1"></a>cent_task <span class="ot">&lt;-</span> <span class="fu">centr_degree</span>(<span class="at">graph =</span> s641_task,</span>
+<span id="cb814-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb814-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">loops =</span> <span class="cn">FALSE</span>, <span class="at">normalized =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb815"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb815-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb815-1" aria-hidden="true" tabindex="-1"></a>cent_task</span></code></pre></div>
+<pre><code>## $res
+##  [1]  1  1  0  1  1  1  1  1  1  1  1  0  2  1  1  2  3  4  3  2  3 17
+## 
+## $centralization
+## [1] 0.7761905
+## 
+## $theoretical_max
+## [1] 420</code></pre>
+<p>Note that the theoretical max is a little different as we treated the task network as undirected. Clearly, the task network is considerably more centralized. In fact, the task network almost approaches maximum centralization, or a perfect hub and spoke structure.</p>
+<p>Now, let's do a simple plot of the two degree distributions. We will put degree on the x-axis and plot a smoothed density curve for each distribution. First, we need to get the density curves for each network, starting with the social interaction network (we set from to 0 in the <code>density()</code> function as indegree cannot be less than 0).</p>
+<div class="sourceCode" id="cb817"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb817-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb817-1" aria-hidden="true" tabindex="-1"></a>den_social <span class="ot">&lt;-</span> <span class="fu">density</span>(indegree_social, <span class="at">from =</span> <span class="dv">0</span>) </span></code></pre></div>
+<p>And now for the task network:</p>
+<div class="sourceCode" id="cb818"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb818-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb818-1" aria-hidden="true" tabindex="-1"></a>den_task <span class="ot">&lt;-</span> <span class="fu">density</span>(degree_task, <span class="at">from =</span> <span class="dv">0</span>)</span></code></pre></div>
+<p>And now we set up the plot, plot the two lines and add a legend.</p>
+<div class="sourceCode" id="cb819"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb819-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb819-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">range</span>(den_social<span class="sc">$</span>x, den_task<span class="sc">$</span>x), <span class="fu">range</span>(den_social<span class="sc">$</span>y, den_task<span class="sc">$</span>y), </span>
+<span id="cb819-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb819-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&quot;n&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;degree&quot;</span>, </span>
+<span id="cb819-3"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb819-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;density&quot;</span>, </span>
+<span id="cb819-4"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb819-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Degree Distribution for Social and Task Networks&quot;</span>)</span>
+<span id="cb819-5"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb819-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb819-6"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb819-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(den_social, <span class="at">col =</span> <span class="st">&quot;red&quot;</span> , <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb819-7"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb819-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(den_task, <span class="at">col =</span> <span class="st">&quot;light blue&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb819-8"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb819-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb819-9"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb819-9" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;Social&quot;</span>, <span class="st">&quot;Task&quot;</span>),</span>
+<span id="cb819-10"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb819-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;light blue&quot;</span>), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>) </span></code></pre></div>
+<p><img src="Chapter9_Integrated_Network_Science_Rtutorial_network_centrality_hierarchy_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
+<p>Here we see that for the task network most people have one or two ties and one person has a very high degree. The social interaction network has a much more even distribution, with many people close to the mean. The story is clear that the task network is highly centralized, with one node being the focal point of all of the task interactions. Social interactions are much evenly dispersed, occurring within groups of people but not centered on a single well-connected node.</p>
+<p>More generally, our centrality and centralization analyses paint a picture of two different kinds of interactional tendencies. For the social interaction network, we have a set of divided groups bridged by one focal node with high betweenness. Within each group there are prominent nodes with high degree, closeness, etc. but only one node holds the whole network together. For the task network, there is only one focal node, with everyone doing task interactions with them and few interactions happening otherwise.</p>
+</div>
+<div id="clustering-and-hierarchy" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> Clustering and Hierarchy<a href="ch9-Network-Centrality-Hierarchy-R.html#clustering-and-hierarchy" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We have so far used centrality and centralization to explore the classroom networks. Centrality is focused on individual positions in the network and can tell us who holds important positions and who does not. Centralization helps us understand how unequally distributed centrality is in the network. Neither measure (centrality nor centralization) can tell us much about hierarchy at the group level. We may, however, want to know if the groups that exist in our classroom are themselves hierarchically arranged.</p>
+<p>To explore hierarchy at the group-level, it will be useful to consider other kinds of measures. Here, we will use the tau statistic. The tau statistic captures how micro processes aggregate to create different macro structures. The basic idea is to create hypotheses in the form of different triad counts (the micro processes), that should yield different features at the macro-level. Thus, different micro hypotheses (about which triads should be in the network at high/low rates) correspond to different kinds of emergent features at the macro level. By comparing the observed triad counts to that expected under a null hypothesis, we can see what kinds of hierarchical arrangements exist in the network of interest. Formally, we compare the observed triad counts to the expectations under a null hypothesis of a random network with the same dyad census. This is analogous to the kinds of tests we explored in <a href="ch7-Dyads-Triads-R.html#ch7-Dyads-Triads-R">Chapter 7</a>, but the tau statistic is presented as a z-score (how many standard deviations from the null hypothesis is the observed value), making it akin to more traditional statistical tests.</p>
+<p>Let's first transform our network from an igraph object into a network object using the <strong>intergraph</strong> package (as the function we need assumes a network object).</p>
+<div class="sourceCode" id="cb820"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb820-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb820-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(intergraph)</span></code></pre></div>
+<p>For this analysis we will focus on the social interaction network.</p>
+<div class="sourceCode" id="cb821"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb821-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb821-1" aria-hidden="true" tabindex="-1"></a>s641_social_network <span class="ot">&lt;-</span> <span class="fu">asNetwork</span>(s641_social)</span></code></pre></div>
+<p>Here we read in a function to calculate the tau statistic.</p>
+<div class="sourceCode" id="cb822"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb822-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb822-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="at">file =</span> <span class="st">&quot;https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/R/tau_functions.R&quot;</span>)</span></code></pre></div>
+<p>Now we load the <strong>ergm</strong> and <strong>sna</strong> packages which is used by the tau function read in above.</p>
+<div class="sourceCode" id="cb823"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb823-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb823-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ergm)</span>
+<span id="cb823-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb823-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sna)</span></code></pre></div>
+<p>Let's test different hypotheses about the distribution of triads in the network, telling us something about the macro structure in terms of hierarchy. We will consider a ranked clustering hypothesis, a clustering hypothesis and a balance hypothesis. Each hypothesis is represented by a vector, indicating which triads should be summed up and compared to our baseline expectations. The triad types are:</p>
+<ul>
+<li>003 A, B, C, empty triad.</li>
+<li>012 A-&gt;B, C</li>
+<li>102 A&lt;-&gt;B, C<br />
+</li>
+<li>021D A&lt;-B-&gt;C</li>
+<li>021U A-&gt;B&lt;-C</li>
+<li>021C A-&gt;B-&gt;C</li>
+<li>111D A&lt;-&gt;B&lt;-C</li>
+<li>111U A&lt;-&gt;B-&gt;C</li>
+<li>030T A-&gt;B&lt;-C, A-&gt;C</li>
+<li>030C A&lt;-B&lt;-C, A-&gt;C.</li>
+<li>201 A&lt;-&gt;B&lt;-&gt;C.</li>
+<li>120D A&lt;-B-&gt;C, A&lt;-&gt;C.</li>
+<li>120U A-&gt;B&lt;-C, A&lt;-&gt;C.</li>
+<li>120C A-&gt;B-&gt;C, A&lt;-&gt;C.</li>
+<li>210 A-&gt;B&lt;-&gt;C, A&lt;-&gt;C.</li>
+<li>300 A&lt;-&gt;B&lt;-&gt;C, A&lt;-&gt;C, completely connected.</li>
+</ul>
+<p>A ranked clustering hypothesis poses that 003, 102, 021D, 021U, 030T, 120D, 120U and 300 should be present in the network at higher rates than we what we expect based on dyadic processes alone. The idea is that a network with these triads will tend to create macro structures that correspond to ranked clustering, where there are mutual ties within groups and asymmetric ties across groups; where the lower status groups send ties to higher status groups but not vice versa. Let's create a vector that corresponds to the ranked clustering hypothesis, putting a 1 in each spot of the triad census (following the order above) that corresponds to a triad in that hypothesis.</p>
+<div class="sourceCode" id="cb824"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb824-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb824-1" aria-hidden="true" tabindex="-1"></a>weights_rankedcluster <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
+<p>A clustering hypothesis poses that 003, 102, and 300 should be present in the network at higher rates than we what we expect based on dyadic processes alone. The clear difference with the ranked clustering hypothesis is that triads that create hierarchies (021U, 120U, etc.) are not included here. The macro network structure implied by a triad census fitting the clustering model is one with a number of social groups, with mutual ties within groups and few ties between groups. Thus, there are a number of groups differentiated by high internal rates of interaction (see <a href="ch8-Network-Cohesion-Communities-R.html#ch8-Network-Cohesion-Communities-R">Chapter 8</a>) but there is no clear hierarchy between the groups.</p>
+<div class="sourceCode" id="cb825"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb825-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb825-1" aria-hidden="true" tabindex="-1"></a>weights_cluster <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
+<p>A balance hypothesis is the simplest hypothesis and only includes 102 and 300. This is very similar to the clustering hypothesis but differs in the exclusion of the null triad, 003. The key macro structural difference is that the clustering hypothesis implies a number of social groups to emerge (with no hierarchy) while the balance hypothesis implies that only two groups should emerge, with mutual ties within the groups and few ties between.</p>
+<div class="sourceCode" id="cb826"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb826-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb826-1" aria-hidden="true" tabindex="-1"></a>weights_balance <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
+<p>The function is <code>tau_stat_function()</code>. The arguments are network and weight.vector (the vector of weights). For ranked clustering:</p>
+<div class="sourceCode" id="cb827"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb827-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb827-1" aria-hidden="true" tabindex="-1"></a>tau_rankedcluster <span class="ot">&lt;-</span> <span class="fu">tau_stat_function</span>(<span class="at">network =</span> s641_social_network, </span>
+<span id="cb827-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb827-2" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">weight.vector =</span> weights_rankedcluster)</span></code></pre></div>
+<div class="sourceCode" id="cb828"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb828-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb828-1" aria-hidden="true" tabindex="-1"></a>tau_rankedcluster </span></code></pre></div>
+<pre><code>## $tau
+##          [,1]
+## [1,] 2.968397
+## 
+## [[2]]
+##                  observed.triads expected.triads weight.vector
+## triadcensus.003             1029    1.012569e+03             1
+## triadcensus.012               37    4.579457e+01             0
+## triadcensus.102              403    4.121511e+02             1
+## triadcensus.021D               1    1.144864e-01             1
+## triadcensus.021U               0    1.144864e-01             1
+## triadcensus.021C               0    2.289728e-01             0
+## triadcensus.111D               4    6.182267e+00             0
+## triadcensus.111U              10    6.182267e+00             0
+## triadcensus.030T               0    5.695842e-04             1
+## triadcensus.030C               0    1.898614e-04             0
+## triadcensus.201               38    5.357965e+01             0
+## triadcensus.120D               0    1.537877e-02             1
+## triadcensus.120U               0    1.537877e-02             1
+## triadcensus.120C               0    3.075755e-02             0
+## triadcensus.210                7    7.996962e-01             0
+## triadcensus.300               11    2.221378e+00             1</code></pre>
+<p>The output is a list, with the first element the tau statistic and the second a data frame with the observed and expected triads, as well as the weighting vector. Now for the clustering hypothesis:</p>
+<div class="sourceCode" id="cb830"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb830-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb830-1" aria-hidden="true" tabindex="-1"></a>tau_cluster <span class="ot">&lt;-</span> <span class="fu">tau_stat_function</span>(<span class="at">network =</span> s641_social_network, </span>
+<span id="cb830-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb830-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">weight.vector =</span> weights_cluster)</span></code></pre></div>
+<div class="sourceCode" id="cb831"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb831-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb831-1" aria-hidden="true" tabindex="-1"></a>tau_cluster</span></code></pre></div>
+<pre><code>## $tau
+##          [,1]
+## [1,] 2.867246
+## 
+## [[2]]
+##                  observed.triads expected.triads weight.vector
+## triadcensus.003             1029    1.012569e+03             1
+## triadcensus.012               37    4.579457e+01             0
+## triadcensus.102              403    4.121511e+02             1
+## triadcensus.021D               1    1.144864e-01             0
+## triadcensus.021U               0    1.144864e-01             0
+## triadcensus.021C               0    2.289728e-01             0
+## triadcensus.111D               4    6.182267e+00             0
+## triadcensus.111U              10    6.182267e+00             0
+## triadcensus.030T               0    5.695842e-04             0
+## triadcensus.030C               0    1.898614e-04             0
+## triadcensus.201               38    5.357965e+01             0
+## triadcensus.120D               0    1.537877e-02             0
+## triadcensus.120U               0    1.537877e-02             0
+## triadcensus.120C               0    3.075755e-02             0
+## triadcensus.210                7    7.996962e-01             0
+## triadcensus.300               11    2.221378e+00             1</code></pre>
+<p>Now for the balance hypothesis:</p>
+<div class="sourceCode" id="cb833"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb833-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb833-1" aria-hidden="true" tabindex="-1"></a>tau_balance <span class="ot">&lt;-</span> <span class="fu">tau_stat_function</span>(<span class="at">network =</span> s641_social_network, </span>
+<span id="cb833-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb833-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">weight.vector =</span> weights_balance)</span></code></pre></div>
+<div class="sourceCode" id="cb834"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb834-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb834-1" aria-hidden="true" tabindex="-1"></a>tau_balance</span></code></pre></div>
+<pre><code>## $tau
+##             [,1]
+## [1,] -0.03377649
+## 
+## [[2]]
+##                  observed.triads expected.triads weight.vector
+## triadcensus.003             1029    1.012569e+03             0
+## triadcensus.012               37    4.579457e+01             0
+## triadcensus.102              403    4.121511e+02             1
+## triadcensus.021D               1    1.144864e-01             0
+## triadcensus.021U               0    1.144864e-01             0
+## triadcensus.021C               0    2.289728e-01             0
+## triadcensus.111D               4    6.182267e+00             0
+## triadcensus.111U              10    6.182267e+00             0
+## triadcensus.030T               0    5.695842e-04             0
+## triadcensus.030C               0    1.898614e-04             0
+## triadcensus.201               38    5.357965e+01             0
+## triadcensus.120D               0    1.537877e-02             0
+## triadcensus.120U               0    1.537877e-02             0
+## triadcensus.120C               0    3.075755e-02             0
+## triadcensus.210                7    7.996962e-01             0
+## triadcensus.300               11    2.221378e+00             1</code></pre>
+<p>In general, larger values offer support for the hypothesis in question. We can see here that there is little support for the balance hypothesis compared to the other hypotheses. This suggests that the balance hypothesis is too simple. More specifically, it looks like there are many more null triads (003) than we would expect in a network where everyone falls into two groups (under the balance hypothesis). The tau statistics are similar between the ranked clustering and clustering hypotheses. A value of 2.968 (for ranked clustering) suggests that the observed (summed) counts are about 3 standard deviations away from what we expect under the null. Values over 2 offer support for the hypothesis in question under traditional hypothesis testing criteria.</p>
+<p>Let's take a closer look at the results for the ranked clustering model. We will focus on the expected and observed triad counts, particularly those triads that are in the ranked clustering model but not the clustering model (021D, 021U, 030T, 120D, 120U). The idea is to grab the data frame from the ranked cluster results, only keeping those rows for certain triads.</p>
+<div class="sourceCode" id="cb836"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb836-1"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb836-1" aria-hidden="true" tabindex="-1"></a>triad_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;triadcensus.021D&quot;</span>, <span class="st">&quot;triadcensus.021U&quot;</span>, <span class="st">&quot;triadcensus.030T&quot;</span>,</span>
+<span id="cb836-2"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb836-2" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&quot;triadcensus.120D&quot;</span>,<span class="st">&quot;triadcensus.120U&quot;</span>)</span>
+<span id="cb836-3"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb836-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb836-4"><a href="ch9-Network-Centrality-Hierarchy-R.html#cb836-4" aria-hidden="true" tabindex="-1"></a>tau_rankedcluster[[<span class="dv">2</span>]][<span class="fu">rownames</span>(tau_rankedcluster[[<span class="dv">2</span>]]) <span class="sc">%in%</span> triad_names, ]</span></code></pre></div>
+<pre><code>##                  observed.triads expected.triads weight.vector
+## triadcensus.021D               1    0.1144864249             1
+## triadcensus.021U               0    0.1144864249             1
+## triadcensus.030T               0    0.0005695842             1
+## triadcensus.120D               0    0.0153787735             1
+## triadcensus.120U               0    0.0153787735             1</code></pre>
+<p>In every case but 021D, the observed counts are basically the same as that expected by the null model. In fact, we see 0 observed triads for 021U, 030T, 120D and 120U. This would suggest that the ranked clustering model really isn't offering much over the clustering model. The ranked clustering model offers similar fit to the clustering model but is more complicated, adding 5 triads that do not seem to deviate much from chance expectations. We may then have good reason to interpret the network in terms of the clustering model, where there are multiple groups but few asymmetries.</p>
+<p>Overall, the analysis shows that the social interaction network is best characterized as a network with multiple groups without a clear hierarchical arrangement. Given the very high levels of reciprocity in social interactions, asymmetries are rare and do not consistently emerge between groups. The tau statistic reinforces our story of the social interaction network consisting of distinct social groups with one bridge and no clear hierarchy. Compare this to the task network, which has a clear hub and spoke structure, but no emergent groups.</p>
+<p>We end the tutorial by noting that centrality and hierarchy will come up again in a number of tutorials; for example, in <a href="ch11-Two-mode-Networks.html#ch11-Two-mode-Networks">Chapter 11</a> (two-mode), <a href="ch13-Statistical-Models-Networks-R.html#ch13-Statistical-Models-Networks-R">Chapter 13</a> (statistical network models), <a href="ch14-Network-Diffusion-R.html#ch14-Network-Diffusion-R">Chapter 14</a> (diffusion) and <a href="ch15-coevolution-networks-behaviors-siena-saom-R.html#ch15-coevolution-networks-behaviors-siena-saom-R">Chapter 15</a> (social influence).</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ch8-Network-Cohesion-Communities-R.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ch10-Positions-Roles-R.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "serif",
+"size": 2.5
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"info": false
+});
+});
+</script>
+
+</body>
+
+</html>

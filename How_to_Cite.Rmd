@@ -1,0 +1,14 @@
+# How to Cite {-}
+
+---
+
+You can cite these tutorials as:
+
+```{block, type='boxempty'}
+
+Rawlings, Craig M., Jeffrey A. Smith, James Moody, and Daniel A. McFarland 2023. _Network Analysis: Integrating Social Network Theory, Method, and Application with R_. New York: Cambridge University Press.
+
+```
+
+You can download the reference as [BibTeX](https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/NetworkAnalysisR-book.bib) or
+[RIS](https://github.com/JeffreyAlanSmith/Integrated_Network_Science/raw/master/NetworkAnalysisR-book.ris).

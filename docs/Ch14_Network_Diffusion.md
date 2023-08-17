@@ -1,0 +1,3 @@
+# Network Diffusion {#ch14-Network-Diffusion-R}
+
+Chapter 14 covers models of diffusion. There are two tutorials. The first tutorial covers the diffusion of infectious diseases through a network. The second tutorial focuses on social diffusion processes, using the adoption of an innovation (like a new product) as the motivating case. Both tutorials build on the material from previous chapters, including the chapters on dyads/triads ([Chapter 7](#ch7-Dyads-Triads-R)), groups ([Chapter 8](#ch8-Network-Cohesion-Communities-R)), centrality ([Chapter 9](#ch9-Network-Centrality-Hierarchy-R)), and statistical network models ([Chapter 13](#ch13-Statistical-Models-Networks-R)).
