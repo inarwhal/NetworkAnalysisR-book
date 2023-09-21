@@ -679,9 +679,9 @@ Network Analysis with R</a></li>
 <p>Now let's take out any nodes that are missing and were not put back into the network, as before.</p>
 <div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="ch4-Missing-Network-Data-R.html#cb288-1" aria-hidden="true" tabindex="-1"></a>net_impute_sym <span class="ot">&lt;-</span> <span class="fu">delete_vertices</span>(<span class="at">graph =</span> net_impute_sym, <span class="at">v =</span> still_missing)</span></code></pre></div>
 <div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="ch4-Missing-Network-Data-R.html#cb289-1" aria-hidden="true" tabindex="-1"></a>net_impute_sym</span></code></pre></div>
-<pre><code>## IGRAPH cad98d4 DN-- 71 189 -- 
+<pre><code>## IGRAPH 3b32209 DN-- 71 189 -- 
 ## + attr: name (v/c)
-## + edges from cad98d4 (vertex names):
+## + edges from 3b32209 (vertex names):
 ##  [1] id1 -&gt;id39 id1 -&gt;id42 id2 -&gt;id13 id2 -&gt;id62 id3 -&gt;id1  id3 -&gt;id7 
 ##  [7] id3 -&gt;id26 id3 -&gt;id64 id3 -&gt;id66 id7 -&gt;id3  id8 -&gt;id1  id8 -&gt;id42
 ## [13] id8 -&gt;id55 id9 -&gt;id25 id9 -&gt;id28 id9 -&gt;id63 id9 -&gt;id64 id9 -&gt;id72

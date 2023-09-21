@@ -361,21 +361,21 @@ igraph_nets[1:3]
 
 ```
 ## $`19850001`
-## IGRAPH e6da677 UN-- 5 10 -- 
+## IGRAPH e803cb6 UN-- 5 10 -- 
 ## + attr: .egoID (g/n), name (v/c), AGE (v/n), EDUC (v/n), RACE (v/c), SEX (v/c), RELIG (v/c), AGE_CATEGORICAL (v/c), EDUC_CATEGORICAL (v/c), TALKTO (v/n), SPOUSE (v/n), KIN (v/n), WEIGHT (e/n)
-## + edges from e6da677 (vertex names):
+## + edges from e803cb6 (vertex names):
 ##  [1] 1--2 1--3 1--4 1--5 2--3 2--4 2--5 3--4 3--5 4--5
 ## 
 ## $`19850002`
-## IGRAPH 0897905 UN-- 5 8 -- 
+## IGRAPH e5a3b7e UN-- 5 8 -- 
 ## + attr: .egoID (g/n), name (v/c), AGE (v/n), EDUC (v/n), RACE (v/c), SEX (v/c), RELIG (v/c), AGE_CATEGORICAL (v/c), EDUC_CATEGORICAL (v/c), TALKTO (v/n), SPOUSE (v/n), KIN (v/n), WEIGHT (e/n)
-## + edges from 0897905 (vertex names):
+## + edges from e5a3b7e (vertex names):
 ## [1] 1--2 1--3 1--4 1--5 2--4 3--4 3--5 4--5
 ## 
 ## $`19850003`
-## IGRAPH 983be9d UN-- 5 6 -- 
+## IGRAPH b56831d UN-- 5 6 -- 
 ## + attr: .egoID (g/n), name (v/c), AGE (v/n), EDUC (v/n), RACE (v/c), SEX (v/c), RELIG (v/c), AGE_CATEGORICAL (v/c), EDUC_CATEGORICAL (v/c), TALKTO (v/n), SPOUSE (v/n), KIN (v/n), WEIGHT (e/n)
-## + edges from 983be9d (vertex names):
+## + edges from b56831d (vertex names):
 ## [1] 1--2 1--3 1--4 2--3 2--4 3--4
 ```
 

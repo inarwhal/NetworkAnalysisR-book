@@ -52,7 +52,7 @@ border-radius: 5px;
 <img src="NA_RawlingsSmithMoodyMcFarland3.png"
 style="float:right; margin: 0px 0px 0px 10px; width: 30%; height: 30%;" />
 
-Welcome to the website for *Network Analysis: Integrating Social Network Theory, Method, and Application with R*. Here you will find the R tutorials that accompany the printed manuscript, which is available through Cambridge University Press. 
+Welcome to the website for *Network Analysis: Integrating Social Network Theory, Method, and Application with R*. Here you will find the R tutorials that accompany the printed manuscript, which is available through [Cambridge University Press](https://www.cambridge.org/us/universitypress/subjects/sociology/research-methods-sociology-and-criminology/network-analysis-integrating-social-network-theory-method-and-application-r). 
 
 The printed manuscript offers substantive, theoretical and methodological discussions on how to conceptually conduct network analysis. The printed book thus offers the motivation and logic behind asking research questions from a network perspective. These tutorials serve as the practical counterpart, offering detailed examples on how to manipulate, visualize, summarize and analyze network data in R. The tutorials are motivated by substantive problems and include in-depth examples and interpretation. Many, but not all, of the examples are based on adolescents in school, as they serve as a familiar case study useful for drawing out larger, more general themes.
 
@@ -93,9 +93,9 @@ or contact one of the authors directly. You can also find additional functions a
 
 ## Acknowledgments
 
-There are many people we would like to thank for providing feedback and suggestions on these tutorials. Special thanks goes to Robin Gauthier, Sela Harcey and Julia McQuillan for their insightful comments and support, as well as graduate students Gabriel Varela, Tom Wolff, and Joe Quinn for reviews and beta testing. These tutorials have also been taught at various network analysis classes at Duke, Stanford and UNL. The advice and suggestions of our students have greatly strengthened the material presented here. 
+There are many people we would like to thank for providing feedback and suggestions on these tutorials. Special thanks goes to Robin Gauthier, Sela Harcey and Julia McQuillan for their insightful comments and support, as well as graduate students Gabriel Varela, Tom Wolff, and Joe Quinn for reviews and beta testing. These tutorials have also been taught at various network analysis classes at Duke, Stanford and UNL. The advice and suggestions of our students have greatly strengthened the material presented here. We would also like to thank Mark Granovetter for his continued support, enthusiasm and belief in this project.
 
-Many of the R tutorials presented in this textbook were built off prior versions developed at Stanford University by Daniel McFarland, Solomon Messing, Michael Nowak, Sean J. Westwood, and Sanne Smith. Chapter 5’s tutorial for NDTV drew on Skye Bender-deMoll’s materials; Chapter 12 on LDA/CA from Love Börjeson and Daniel McFarland; Chapter 13 concerning “ERGM” and “relevant” drew on Carter Butts’ materials; Chapter 15 on SIENA/SAOM drew on ICS materials. Finally, a great many resources from the Duke Network Analysis Center (DNAC) helped us in formulating elements in many of the tutorials. For example, Chapter 4 on missing data imputation drew on DNAC/James Moody and Jeffrey A. Smith’s work, as did Chapter 14 on diffusion. We are grateful to these institutions and individuals for sharing code and helping us formulate applications for each chapter’s theories.
+Many of the R tutorials presented in this textbook were built off prior versions developed at Stanford University by Daniel McFarland, Solomon Messing, Michael Nowak, Sean J. Westwood, and Sanne Smith. Chapter 5’s tutorial for NDTV drew on Skye Bender-deMoll’s materials; Chapter 12 on LDA/CA from Love Börjeson and Daniel McFarland; Chapter 13 concerning “ERGM” and “relevant” drew on Carter Butts’ materials; Chapter 15 on SIENA/SAOM drew on ICS materials. Finally, a great many resources from the Duke Network Analysis Center (DNAC) helped us in formulating elements in many of the tutorials. For example, Chapter 4 on missing data imputation drew on James Moody, Jeffrey A. Smith and Jon Morgan's work, as did Chapter 14 on diffusion. We are grateful to these institutions and individuals for sharing code and helping us formulate applications for each chapter’s theories.
 
 ## Author Informtion 
 
@@ -123,7 +123,7 @@ This version of the book was built using R version 4.3.0. See below for the sess
 ##  collate  en_US.UTF-8
 ##  ctype    en_US.UTF-8
 ##  tz       America/Halifax
-##  date     2023-08-17
+##  date     2023-09-20
 ##  pandoc   2.11.4 @ /Applications/RStudio.app/Contents/MacOS/pandoc/ (via rmarkdown)
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
